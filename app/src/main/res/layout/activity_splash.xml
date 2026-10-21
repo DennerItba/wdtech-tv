@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070B12">
+
+    <!-- Camada de Gradiente Futurista Escuro -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FA070B12" />
+
+    <!-- Conteúdo Central: Logotipo, Título e Animação -->
+    <LinearLayout
+        android:id="@+id/splash_center_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- Logotipo Futurista WDTECH TV -->
+        <ImageView
+            android:id="@+id/img_splash_logo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/logo"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="Logo WDTECH TV" />
+
+        <!-- Nome WDTECH TV com Neon Ciano -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WDTECH"
+                android:textColor="#FFFFFF"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/badge_hd"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="TV"
+                android:textColor="@color/neon_cyan"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Subtítulo Tecnológico -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="SISTEMA DE ENTRETENIMENTO INTELIGENTE"
+            android:textColor="#7A8FA6"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.15" />
+
+        <!-- Badge da Versão Atual -->
+        <TextView
+            android:id="@+id/txt_splash_version_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/badge_live"
+            android:backgroundTint="#2600E5FF"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="VERSÃO 2.1.0"
+            android:textColor="@color/neon_cyan"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.12" />
+
+        <!-- Barra de Carregamento Neon Ciano -->
+        <ProgressBar
+            android:id="@+id/splash_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="260dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="26dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/neon_cyan" />
+
+        <!-- Status de Inicialização Dinâmico -->
+        <TextView
+            android:id="@+id/txt_splash_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Iniciando sistema..."
+            android:textColor="@color/neon_cyan"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Rodapé: Versão e Recursos -->
+    <TextView
+        android:id="@+id/txt_splash_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:text="WDTECH TV v2.1.0 • 4K Ultra HD • Guia EPG Integrado"
+        android:textColor="#607D9B"
+        android:textSize="12sp" />
+
+</RelativeLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="540dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_selector"
+    android:backgroundTint="#F20B101D"
+    android:orientation="vertical"
+    android:padding="28dp">
+
+    <!-- Header com Badge de Sistema -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/badge_live"
+            android:backgroundTint="@color/neon_cyan"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:text="OTA UPDATE"
+            android:textColor="#000000"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_update_version_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Nova Versão v2.1.0 Disponível"
+            android:textColor="@color/neon_cyan"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_update_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Atualização de Sistema WDTECH TV"
+        android:textColor="@color/text_white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_update_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Uma nova versão com melhorias e correções está disponível para instalação direta."
+        android:textColor="#9DB2D8"
+        android:textSize="12sp" />
+
+    <!-- Caixa de Notas da Versão -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="#151D30"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Novidades e Correções:"
+            android:textColor="@color/text_white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_update_changelog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="4dp"
+            android:text="• Correção definitiva de erros de sinal (HTTP Status)\n• Grade com 159 canais HD 100% online\n• Nova categoria Fórmula 1 &amp; Motorsport\n• EPG ao vivo no player com sinopse e barra de progresso\n• Reconexão automática inteligente de stream"
+            android:textColor="#C7D7F5"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Botões de Ação para Controle Remoto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_update_dismiss"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_button_selector"
+            android:focusable="true"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:text="Mais Tarde"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_update_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_button_selector"
+            android:focusable="true"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
+            android:text="📥 Atualizar Agora"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

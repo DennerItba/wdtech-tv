@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WDTECH TV</string>
+    <string name="browse_title">Canais &amp; Transmissões</string>
+    <string name="category_live">TV Ao Vivo</string>
+    <string name="category_movies">Filmes</string>
+    <string name="category_series">Séries</string>
+    <string name="loading">Carregando canais...</string>
+    <string name="error_stream">Erro ao reproduzir o canal selecionado.</string>
+</resources>

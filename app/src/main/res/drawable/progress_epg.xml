@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fundo da barra de progresso -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="3dp" />
+            <solid android:color="#2A384C" />
+        </shape>
+    </item>
+    <!-- Progresso ativo em neon cyan -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="3dp" />
+                <gradient
+                    android:startColor="#00E5FF"
+                    android:endColor="#00B0FF"
+                    android:angle="0" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

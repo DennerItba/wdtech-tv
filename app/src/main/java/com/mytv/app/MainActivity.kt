@@ -1,0 +1,578 @@
+package com.mytv.app
+
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.KeyEvent
+import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.ui.PlayerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mytv.app.adapter.CategorySidebarAdapter
+import com.mytv.app.adapter.ChannelListAdapter
+import com.mytv.app.data.ChannelRepository
+import com.mytv.app.data.EpgRepository
+import com.mytv.app.data.UniTvCatalogManager
+import com.mytv.app.model.Channel
+import com.mytv.app.model.ChannelCategory
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var rvCategorySidebar: RecyclerView
+    private lateinit var rvChannelList: RecyclerView
+    private lateinit var categoryAdapter: CategorySidebarAdapter
+    private lateinit var channelAdapter: ChannelListAdapter
+
+    private lateinit var playerView: PlayerView
+    private lateinit var loadingLayout: LinearLayout
+    private lateinit var txtPreviewTitle: TextView
+    private lateinit var txtPreviewInfo: TextView
+    private lateinit var txtSelectedCategoryTitle: TextView
+    private lateinit var txtCategoryBadge: TextView
+    private lateinit var txtHeaderBreadcrumb: TextView
+    private lateinit var btnFullscreen: ImageButton
+
+    // Visualização EPG (Guia de Programação)
+    private lateinit var txtEpgNowTitle: TextView
+    private lateinit var txtEpgNowTime: TextView
+    private lateinit var pbEpgProgress: android.widget.ProgressBar
+    private lateinit var txtEpgSynopsis: TextView
+    private lateinit var txtEpgNext: TextView
+
+    private var exoPlayer: ExoPlayer? = null
+    private var allCategories: List<ChannelCategory> = emptyList()
+    private var currentChannel: Channel? = null
+    private var selectedCategory: ChannelCategory? = null
+
+    private var isAdultUnlocked: Boolean = false
+    private val DEFAULT_PIN = "0000"
+
+    private val switchHandler = Handler(Looper.getMainLooper())
+    private var pendingChannelSwitch: Runnable? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        rvCategorySidebar = findViewById(R.id.rv_category_sidebar)
+        rvChannelList = findViewById(R.id.rv_channel_list)
+        playerView = findViewById(R.id.player_preview_view)
+        loadingLayout = findViewById(R.id.preview_loading_layout)
+        txtPreviewTitle = findViewById(R.id.txt_preview_title)
+        txtPreviewInfo = findViewById(R.id.txt_preview_info)
+        txtSelectedCategoryTitle = findViewById(R.id.txt_selected_category_title)
+        txtCategoryBadge = findViewById(R.id.txt_category_badge)
+        txtHeaderBreadcrumb = findViewById(R.id.txt_header_breadcrumb)
+        btnFullscreen = findViewById(R.id.btn_fullscreen)
+
+        txtEpgNowTitle = findViewById(R.id.txt_epg_now_title)
+        txtEpgNowTime = findViewById(R.id.txt_epg_now_time)
+        pbEpgProgress = findViewById(R.id.pb_epg_progress)
+        txtEpgSynopsis = findViewById(R.id.txt_epg_synopsis)
+        txtEpgNext = findViewById(R.id.txt_epg_next)
+
+        setupExitActions()
+        setupPlayer()
+        loadData()
+
+        // Verificação automática de atualizações em segundo plano após inicialização do sistema
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (!isFinishing && !isDestroyed) {
+                com.mytv.app.utils.AppUpdateManager.checkForUpdates(this, isManualCheck = false)
+            }
+        }, 3000)
+    }
+
+    private fun loadData() {
+        val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
+        
+        // Filtra canais bloqueados da lista geral se não estiver desbloqueado
+        val safeChannels = repoCategories.filter { !it.isLocked }.flatMap { it.channels }
+
+        val masterCategory = ChannelCategory(
+            id = "cat_all",
+            name = "Todos os Canais",
+            isLocked = false,
+            channels = safeChannels
+        )
+
+        allCategories = listOf(masterCategory) + repoCategories
+
+        // 1. Configura a Barra Lateral de Categorias
+        rvCategorySidebar.setHasFixedSize(true)
+        rvCategorySidebar.setItemViewCacheSize(20)
+        rvCategorySidebar.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        categoryAdapter = CategorySidebarAdapter(
+            categories = allCategories,
+            onCategoryFocused = { category ->
+                handleCategorySelection(category, autoFocusChannels = false)
+            },
+            onCategoryClicked = { category ->
+                handleCategorySelection(category, autoFocusChannels = true)
+            }
+        )
+        rvCategorySidebar.adapter = categoryAdapter
+
+        // 2. Configura a Lista de Canais do Centro
+        rvChannelList.setHasFixedSize(true)
+        rvChannelList.setItemViewCacheSize(20)
+        rvChannelList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        channelAdapter = ChannelListAdapter(
+            channels = safeChannels,
+            onChannelSelected = { channel ->
+                onChannelFocused(channel)
+            },
+            onChannelClicked = { channel ->
+                openFullScreenPlayer(channel)
+            },
+            onNavigateToCategories = {
+                focusCurrentCategory()
+            },
+            onNavigateToPlayer = {
+                currentChannel?.let { openFullScreenPlayer(it) }
+            }
+        )
+        rvChannelList.adapter = channelAdapter
+
+        // Inicia na categoria "Todos os Canais"
+        displayCategoryChannels(masterCategory)
+
+        // Inicializa o primeiro canal
+        safeChannels.firstOrNull()?.let { first ->
+            currentChannel = first
+            updateChannelInfo(first)
+            playChannelPreview(first)
+        }
+
+        // Foco inicial garantido na primeira categoria ao abrir o aplicativo
+        rvCategorySidebar.post {
+            val vh = rvCategorySidebar.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus()
+        }
+
+        // 3. Sincronização Dinâmica em Segundo Plano via UNITV_BASE_URL
+        lifecycleScope.launch {
+            val updated = UniTvCatalogManager.syncCatalog(this@MainActivity)
+            if (updated != null && updated.isNotEmpty()) {
+                applyUpdatedCatalog(updated)
+            }
+        }
+    }
+
+    private fun applyUpdatedCatalog(newCategories: List<ChannelCategory>) {
+        val enrichedCategories = EpgRepository.enrichCategories(newCategories)
+        val safeChannels = enrichedCategories.filter { !it.isLocked }.flatMap { it.channels }
+        val masterCategory = ChannelCategory(
+            id = "cat_all",
+            name = "Todos os Canais",
+            isLocked = false,
+            channels = safeChannels
+        )
+
+        allCategories = listOf(masterCategory) + enrichedCategories
+        categoryAdapter.updateCategories(allCategories)
+
+        val currentCat = selectedCategory
+        if (currentCat != null) {
+            val refreshed = allCategories.find { it.id == currentCat.id } ?: masterCategory
+            displayCategoryChannels(refreshed)
+        } else {
+            displayCategoryChannels(masterCategory)
+        }
+    }
+
+    private fun handleCategorySelection(category: ChannelCategory, autoFocusChannels: Boolean) {
+        selectedCategory = category
+
+        if (category.isLocked && !isAdultUnlocked) {
+            // Categoria bloqueada por PIN (+18)
+            txtSelectedCategoryTitle.text = "🔒 ${category.name}"
+            txtCategoryBadge.text = "BLOQUEADO"
+            txtHeaderBreadcrumb.text = "WDTECH TV • CONTEÚDO ADULTO (+18)"
+            
+            pendingChannelSwitch?.let { switchHandler.removeCallbacks(it) }
+            exoPlayer?.stop()
+            exoPlayer?.clearMediaItems()
+            loadingLayout.visibility = View.GONE
+
+            channelAdapter.updateChannels(emptyList())
+            txtPreviewTitle.text = "🔒 Conteúdo Adulto Bloqueado (+18)"
+            txtPreviewInfo.text = "Pressione OK ou selecione para digitar o PIN de liberação"
+
+            if (autoFocusChannels) {
+                showPinDialog(category)
+            }
+            return
+        }
+
+        displayCategoryChannels(category)
+        if (autoFocusChannels) {
+            focusFirstChannel()
+        }
+    }
+
+    private fun focusFirstChannel() {
+        if (channelAdapter.itemCount == 0) return
+        rvChannelList.stopScroll()
+        rvChannelList.scrollToPosition(0)
+        rvChannelList.post {
+            val vh = rvChannelList.findViewHolderForAdapterPosition(0)
+            if (vh != null) {
+                vh.itemView.requestFocus()
+            } else {
+                val v = rvChannelList.layoutManager?.findViewByPosition(0)
+                if (v != null) {
+                    v.requestFocus()
+                } else {
+                    rvChannelList.postDelayed({
+                        val retryVh = rvChannelList.findViewHolderForAdapterPosition(0)
+                        retryVh?.itemView?.requestFocus()
+                            ?: rvChannelList.layoutManager?.findViewByPosition(0)?.requestFocus()
+                    }, 50)
+                }
+            }
+        }
+    }
+
+    private fun focusCurrentCategory() {
+        val pos = categoryAdapter.getSelectedPosition()
+        rvCategorySidebar.scrollToPosition(pos)
+        rvCategorySidebar.post {
+            val vh = rvCategorySidebar.findViewHolderForAdapterPosition(pos)
+            if (vh != null) {
+                vh.itemView.requestFocus()
+            } else {
+                val v = rvCategorySidebar.layoutManager?.findViewByPosition(pos)
+                if (v != null) {
+                    v.requestFocus()
+                } else {
+                    rvCategorySidebar.postDelayed({
+                        val retryVh = rvCategorySidebar.findViewHolderForAdapterPosition(pos)
+                        retryVh?.itemView?.requestFocus()
+                            ?: rvCategorySidebar.layoutManager?.findViewByPosition(pos)?.requestFocus()
+                    }, 50)
+                }
+            }
+        }
+    }
+
+    private fun displayCategoryChannels(category: ChannelCategory) {
+        txtSelectedCategoryTitle.text = category.name
+        txtCategoryBadge.text = category.channels.size.toString()
+        txtHeaderBreadcrumb.text = "WDTECH TV • ${category.name.uppercase()}"
+
+        channelAdapter.updateChannels(category.channels)
+        rvChannelList.scrollToPosition(0)
+
+        if (category.channels.isNotEmpty() && (currentChannel == null || !category.channels.contains(currentChannel))) {
+            val first = category.channels[0]
+            currentChannel = first
+            updateChannelInfo(first)
+            playChannelPreview(first)
+        }
+    }
+
+    private fun showPinDialog(category: ChannelCategory) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_pin_lock)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val dot1 = dialog.findViewById<TextView>(R.id.pin_dot_1)
+        val dot2 = dialog.findViewById<TextView>(R.id.pin_dot_2)
+        val dot3 = dialog.findViewById<TextView>(R.id.pin_dot_3)
+        val dot4 = dialog.findViewById<TextView>(R.id.pin_dot_4)
+        val txtError = dialog.findViewById<TextView>(R.id.txt_pin_error)
+        val dots = listOf(dot1, dot2, dot3, dot4)
+
+        var enteredPin = ""
+
+        fun updateDots() {
+            for (i in 0 until 4) {
+                if (i < enteredPin.length) {
+                    dots[i].text = "•"
+                    dots[i].setTextColor(Color.parseColor("#00E5FF"))
+                } else {
+                    dots[i].text = "—"
+                    dots[i].setTextColor(Color.parseColor("#5B6E8C"))
+                }
+            }
+        }
+
+        fun checkPin() {
+            val prefs = getSharedPreferences("mytv_prefs", Context.MODE_PRIVATE)
+            val correctPin = prefs.getString("adult_pin", DEFAULT_PIN) ?: DEFAULT_PIN
+
+            if (enteredPin == correctPin) {
+                isAdultUnlocked = true
+                txtError.visibility = View.INVISIBLE
+                Toast.makeText(this, "Acesso aos Canais Adultos Liberado!", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                displayCategoryChannels(category)
+                focusFirstChannel()
+            } else {
+                txtError.visibility = View.VISIBLE
+                enteredPin = ""
+                updateDots()
+            }
+        }
+
+        fun appendDigit(digit: String) {
+            if (enteredPin.length < 4) {
+                enteredPin += digit
+                updateDots()
+                if (enteredPin.length == 4) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        checkPin()
+                    }, 150)
+                }
+            }
+        }
+
+        fun removeDigit() {
+            if (enteredPin.isNotEmpty()) {
+                enteredPin = enteredPin.substring(0, enteredPin.length - 1)
+                txtError.visibility = View.INVISIBLE
+                updateDots()
+            }
+        }
+
+        // Mapeia cliques nos botões numéricos
+        dialog.findViewById<Button>(R.id.btn_num_1).setOnClickListener { appendDigit("1") }
+        dialog.findViewById<Button>(R.id.btn_num_2).setOnClickListener { appendDigit("2") }
+        dialog.findViewById<Button>(R.id.btn_num_3).setOnClickListener { appendDigit("3") }
+        dialog.findViewById<Button>(R.id.btn_num_4).setOnClickListener { appendDigit("4") }
+        dialog.findViewById<Button>(R.id.btn_num_5).setOnClickListener { appendDigit("5") }
+        dialog.findViewById<Button>(R.id.btn_num_6).setOnClickListener { appendDigit("6") }
+        dialog.findViewById<Button>(R.id.btn_num_7).setOnClickListener { appendDigit("7") }
+        dialog.findViewById<Button>(R.id.btn_num_8).setOnClickListener { appendDigit("8") }
+        dialog.findViewById<Button>(R.id.btn_num_9).setOnClickListener { appendDigit("9") }
+        dialog.findViewById<Button>(R.id.btn_num_0).setOnClickListener { appendDigit("0") }
+        dialog.findViewById<Button>(R.id.btn_num_clear).setOnClickListener { removeDigit() }
+        dialog.findViewById<Button>(R.id.btn_pin_cancel).setOnClickListener { dialog.dismiss() }
+
+        // Suporte para pressionar números direto no teclado do controle remoto
+        dialog.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_0 -> { appendDigit("0"); true }
+                    KeyEvent.KEYCODE_1 -> { appendDigit("1"); true }
+                    KeyEvent.KEYCODE_2 -> { appendDigit("2"); true }
+                    KeyEvent.KEYCODE_3 -> { appendDigit("3"); true }
+                    KeyEvent.KEYCODE_4 -> { appendDigit("4"); true }
+                    KeyEvent.KEYCODE_5 -> { appendDigit("5"); true }
+                    KeyEvent.KEYCODE_6 -> { appendDigit("6"); true }
+                    KeyEvent.KEYCODE_7 -> { appendDigit("7"); true }
+                    KeyEvent.KEYCODE_8 -> { appendDigit("8"); true }
+                    KeyEvent.KEYCODE_9 -> { appendDigit("9"); true }
+                    KeyEvent.KEYCODE_DEL -> { removeDigit(); true }
+                    else -> false
+                }
+            } else {
+                false
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun onChannelFocused(channel: Channel) {
+        currentChannel = channel
+        updateChannelInfo(channel)
+
+        pendingChannelSwitch?.let { switchHandler.removeCallbacks(it) }
+        
+        // Interrompe imediatamente decodificação anterior para evitar gargalo e congelamento na TV Box
+        exoPlayer?.stop()
+        exoPlayer?.clearMediaItems()
+        loadingLayout.visibility = View.GONE
+
+        val runnable = Runnable {
+            if (!isFinishing && !isDestroyed) {
+                playChannelPreview(channel)
+            }
+        }
+        pendingChannelSwitch = runnable
+        // Debounce de 1200ms: navegação ultra suave pelo controle remoto sem sobrecarregar o hardware
+        switchHandler.postDelayed(runnable, 1200)
+    }
+
+    private fun updateChannelInfo(channel: Channel) {
+        txtPreviewTitle.text = "${channel.number} • ${channel.title}"
+        txtPreviewInfo.text = "${channel.category} • ${channel.quality} • Ao Vivo"
+
+        val enriched = if (channel.currentProgram == null) {
+            EpgRepository.enrichChannel(channel)
+        } else {
+            channel
+        }
+
+        val epg = enriched.currentProgram
+        if (epg != null) {
+            txtEpgNowTitle.text = epg.title
+            txtEpgNowTime.text = "${epg.startTime} - ${epg.endTime} (${epg.getRemainingMinutes()}m rest.)"
+            pbEpgProgress.progress = epg.getProgressPercent()
+            txtEpgSynopsis.text = epg.synopsis.ifEmpty { "Transmissão contínua em alta definição." }
+        } else {
+            txtEpgNowTitle.text = "Transmissão Ao Vivo"
+            txtEpgNowTime.text = "Programação Regular"
+            pbEpgProgress.progress = 50
+            txtEpgSynopsis.text = "Acompanhe a programação oficial em tempo real."
+        }
+
+        val nextEpg = enriched.nextProgram
+        if (nextEpg != null) {
+            txtEpgNext.text = "▶ A Seguir (${nextEpg.startTime}): ${nextEpg.title}"
+        } else {
+            txtEpgNext.text = "▶ A Seguir: Grade Noturna"
+        }
+    }
+
+    private fun setupPlayer() {
+        val player = ExoPlayer.Builder(this).build()
+        player.playWhenReady = true
+        player.addListener(object : Player.Listener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_BUFFERING) {
+                    loadingLayout.visibility = View.VISIBLE
+                } else if (state == Player.STATE_READY) {
+                    loadingLayout.visibility = View.GONE
+                }
+            }
+
+            override fun onPlayerError(error: PlaybackException) {
+                loadingLayout.visibility = View.GONE
+            }
+        })
+
+        playerView.player = player
+        this.exoPlayer = player
+
+        btnFullscreen.setOnClickListener {
+            currentChannel?.let { openFullScreenPlayer(it) }
+        }
+        findViewById<View>(R.id.player_preview_container).setOnClickListener {
+            currentChannel?.let { openFullScreenPlayer(it) }
+        }
+    }
+
+    private fun playChannelPreview(channel: Channel) {
+        val player = exoPlayer ?: return
+        if (isFinishing || isDestroyed) return
+        
+        loadingLayout.visibility = View.VISIBLE
+
+        try {
+            player.stop()
+            player.clearMediaItems()
+
+            val httpFactory = DefaultHttpDataSource.Factory()
+                .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+                .setAllowCrossProtocolRedirects(true)
+                .setConnectTimeoutMs(10000)
+                .setReadTimeoutMs(10000)
+                .setDefaultRequestProperties(mapOf(
+                    "Accept" to "*/*",
+                    "Connection" to "keep-alive"
+                ))
+
+            val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
+            val mediaItem = MediaItem.fromUri(channel.streamUrl)
+
+            val mediaSource = if (channel.streamUrl.contains(".m3u8")) {
+                HlsMediaSource.Factory(dataSourceFactory)
+                    .setAllowChunklessPreparation(true)
+                    .createMediaSource(mediaItem)
+            } else {
+                androidx.media3.exoplayer.source.ProgressiveMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(mediaItem)
+            }
+
+            player.setMediaSource(mediaSource)
+            player.prepare()
+        } catch (t: Throwable) {
+            loadingLayout.visibility = View.GONE
+        }
+    }
+
+    private fun openFullScreenPlayer(channel: Channel) {
+        exoPlayer?.pause()
+        val intent = Intent(this, PlayerActivity::class.java).apply {
+            putExtra(PlayerActivity.EXTRA_CHANNEL, channel)
+        }
+        startActivity(intent)
+    }
+
+    private fun setupExitActions() {
+        findViewById<Button>(R.id.btn_top_exit).setOnClickListener {
+            showExitDialog()
+        }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (rvChannelList.hasFocus()) {
+                    focusCurrentCategory()
+                } else {
+                    showExitDialog()
+                }
+            }
+        })
+    }
+
+    private fun showExitDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_exit)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.findViewById<Button>(R.id.btn_cancel_exit).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.findViewById<Button>(R.id.btn_confirm_exit).setOnClickListener {
+            dialog.dismiss()
+            finishAffinity()
+        }
+
+        dialog.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        exoPlayer?.play()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        exoPlayer?.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        pendingChannelSwitch?.let { switchHandler.removeCallbacks(it) }
+        exoPlayer?.release()
+        exoPlayer = null
+    }
+}

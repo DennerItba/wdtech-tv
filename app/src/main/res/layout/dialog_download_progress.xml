@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="480dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_selector"
+    android:backgroundTint="#F20B101D"
+    android:orientation="vertical"
+    android:padding="26dp">
+
+    <TextView
+        android:id="@+id/txt_download_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="📥 Baixando Atualização..."
+        android:textColor="@color/text_white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_download_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Obtendo pacote de instalação da versão v2.1.0"
+        android:textColor="#9DB2D8"
+        android:textSize="12sp" />
+
+    <!-- Barra de Progresso Horizontal -->
+    <ProgressBar
+        android:id="@+id/pb_download_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="18dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_epg" />
+
+    <!-- Estatísticas de Download -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/txt_download_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="0%"
+            android:textColor="@color/neon_cyan"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_download_bytes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="0 MB / 0 MB"
+            android:textColor="#8EA2C6"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Ao concluir, a tela do instalador do sistema da TV Box será aberta para confirmação."
+        android:textColor="#607D8B"
+        android:textSize="11sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btn_download_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_button_selector"
+            android:focusable="true"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Cancelar"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>
