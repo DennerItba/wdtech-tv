@@ -1,6 +1,6 @@
 {
-  "versionCode": 7,
-  "versionName": "2.1.5",
-  "releaseNotes": "\u2022 Navega\u00e7\u00e3o por controle remoto (D-Pad) aprimorada\n\u2022 Foco autom\u00e1tico no canal 1 ao selecionar categorias\n\u2022 Bloqueio de escape para o bot\u00e3o Sair e sele\u00e7\u00e3o n\u00edtida",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.1.5/MyTvApp.apk"
+  "versionCode": 8,
+  "versionName": "2.2.0",
+  "releaseNotes": "\u2022 Grade completa com todos os canais solicitados adicionados\n\u2022 Cine Sky, SporTV, ESPN, PPV Premiere, 7 Cameras A Fazenda\n\u2022 Canais 4K, Canais H265, Sony Channel, Discovery, HBO, Telecine\n\u2022 Navegacao D-Pad aprimorada",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.0/MyTvApp.apk"
 }
