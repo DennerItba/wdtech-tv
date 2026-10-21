@@ -1,6 +1,6 @@
 {
-  "versionCode": 9,
-  "versionName": "2.2.1",
-  "releaseNotes": "\u2022 Atualizacao dos links de transmissao de A Fazenda 24H (Cameras 1 a 5)\n\u2022 Suporte nativo otimizado para transmissao TS e HLS\n\u2022 Melhoria na estabilidade de conexao dos realities",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.1/MyTvApp.apk"
+  "versionCode": 10,
+  "versionName": "2.2.2",
+  "releaseNotes": "\u2022 Correcao total dos canais SporTV (1, 2, 3, 4, 4K e H265)\n\u2022 Transmissao 100% estavel em Premiere, ESPN, A Fazenda e Discovery\n\u2022 Otimizacao do Player com User-Agent IPTV e saida rapida no botao Voltar\n\u2022 Grade auditada com mais de 135 canais ativos",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.2/MyTvApp.apk"
 }
