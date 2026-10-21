@@ -506,7 +506,7 @@ class MainActivity : AppCompatActivity() {
                     .setAllowChunklessPreparation(true)
                     .createMediaSource(mediaItem)
             } else {
-                androidx.media3.exoplayer.source.ProgressiveMediaSource.Factory(dataSourceFactory)
+                androidx.media3.exoplayer.source.DefaultMediaSourceFactory(dataSourceFactory)
                     .createMediaSource(mediaItem)
             }
 

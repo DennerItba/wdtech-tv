@@ -171,7 +171,7 @@ class PlayerActivity : AppCompatActivity() {
                 .setAllowChunklessPreparation(true)
                 .createMediaSource(MediaItem.fromUri(channel.streamUrl))
         } else {
-            androidx.media3.exoplayer.source.ProgressiveMediaSource.Factory(dataSourceFactory)
+            androidx.media3.exoplayer.source.DefaultMediaSourceFactory(dataSourceFactory)
                 .createMediaSource(MediaItem.fromUri(channel.streamUrl))
         }
 

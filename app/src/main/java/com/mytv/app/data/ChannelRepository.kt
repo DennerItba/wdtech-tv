@@ -84,7 +84,7 @@ object ChannelRepository {
                         number = "07",
                         title = "A Fazenda 24H - Camera 1 (Sede Principal)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://fsrv.me:80/e7ENe22Dhs/fireurl.co/29879",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Camera principal ao vivo 24 horas por dia dentro da sede de A Fazenda com todos os peoes.",
                         quality = "FHD"
@@ -94,7 +94,7 @@ object ChannelRepository {
                         number = "08",
                         title = "A Fazenda 24H - Camera 2 (Baia & Animais)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://45.162.64.114/RECORD_NEWS/index.m3u8",
+                        streamUrl = "http://tv.factoryiptv.com:80/DFnkV301hG/factoryiptv/63052",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Camera exclusiva na baia dos animais, rotina rural e conversas reservadas.",
                         quality = "HD"
@@ -104,7 +104,7 @@ object ChannelRepository {
                         number = "09",
                         title = "A Fazenda 24H - Camera 3 (Oficina & Varanda)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://tv.factoryiptv.com:80/DFnkV301hG/factoryiptv/62991",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Acompanhe as estrategias e reunioes secretas na area da varanda e oficina.",
                         quality = "HD"
@@ -114,7 +114,7 @@ object ChannelRepository {
                         number = "10",
                         title = "A Fazenda 24H - Camera 4 (Cozinha & Sala)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w1074634538.m3u8",
+                        streamUrl = "http://ssiptv.smartlista.org:8880/h89mv1uc23/42pwgmxfj5/26451",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Toda a movimentacao das refeicoes, discussoes na cozinha e momentos na sala de estar.",
                         quality = "HD"
@@ -124,7 +124,7 @@ object ChannelRepository {
                         number = "11",
                         title = "A Fazenda 24H - Camera 5 (Piscina & Academia)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "https://video05.logicahost.com.br/comunitariario/comunitariario/playlist.m3u8",
+                        streamUrl = "http://ssiptv.smartlista.org:8880/h89mv1uc23/42pwgmxfj5/26451",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Area externa, treinos na academia, banho de sol na piscina e conversas quentes.",
                         quality = "HD"
@@ -134,7 +134,7 @@ object ChannelRepository {
                         number = "12",
                         title = "A Fazenda 24H - Camera 6 (Quartos & Espelho)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "https://fallback1.nexustvplay.bbroot.com/nxs/stream/24h_simpsons/24h_simpsons.m3u8",
+                        streamUrl = "http://vaiagora.vip:80/live/5q8VUj/5BeUd8/397324.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Transmissao ao vivo dos quartos, pre-festas, fofocas e descanso dos peoes.",
                         quality = "HD"
