@@ -134,7 +134,7 @@ class PlayerActivity : AppCompatActivity() {
         player = null
 
         val httpFactory = androidx.media3.datasource.DefaultHttpDataSource.Factory()
-            .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+            .setUserAgent("IPTVSmartersPro")
             .setAllowCrossProtocolRedirects(true)
             .setConnectTimeoutMs(15000)
             .setReadTimeoutMs(15000)
@@ -218,6 +218,10 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN) {
+            if (event.keyCode == KeyEvent.KEYCODE_BACK) {
+                finish()
+                return true
+            }
             if (overlayView.visibility != View.VISIBLE) {
                 showOverlayTemporarily()
                 return true

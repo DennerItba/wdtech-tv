@@ -149,6 +149,7 @@ object UniTvCatalogManager {
                 if (remoteChs != null && remoteChs.isNotEmpty()) {
                     // Mantém canais especiais locais (como CazéTV, F1, Cine Sky, SporTV, ESPN, PPV, 4K, H265, Sony, etc.)
                     val preservedSpecial = cat.channels.filter { localCh ->
+                        localCh.streamUrl.contains("corruptx.org") ||
                         localCh.id.contains("caze", ignoreCase = true) ||
                         localCh.id.startsWith("ch_f1") ||
                         localCh.id.startsWith("prem_") ||
@@ -173,6 +174,11 @@ object UniTvCatalogManager {
                         localCh.id.startsWith("doc_") ||
                         localCh.id.startsWith("var_") ||
                         localCh.id.startsWith("ppv_") ||
+                        cat.name.contains("ESPN") ||
+                        cat.name.contains("SporTV") ||
+                        cat.name.contains("Premiere") ||
+                        cat.name.contains("Discovery") ||
+                        cat.name.contains("Fazenda") ||
                         cat.isLocked // Canais adultos protegidos
                     }
 
