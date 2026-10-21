@@ -1,6 +1,6 @@
 {
-  "versionCode": 6,
-  "versionName": "2.1.4",
-  "releaseNotes": "\u2022 Versao v2.1.4 atualizada automaticamente\n\u2022 Grade completa com 159 canais HD e EPG\n\u2022 Atualizacao 100% automatica pela nuvem sem botoes manuais",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.1.4/MyTvApp.apk"
+  "versionCode": 7,
+  "versionName": "2.1.5",
+  "releaseNotes": "\u2022 Navega\u00e7\u00e3o por controle remoto (D-Pad) aprimorada\n\u2022 Foco autom\u00e1tico no canal 1 ao selecionar categorias\n\u2022 Bloqueio de escape para o bot\u00e3o Sair e sele\u00e7\u00e3o n\u00edtida",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.1.5/MyTvApp.apk"
 }
