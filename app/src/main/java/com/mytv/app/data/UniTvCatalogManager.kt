@@ -147,7 +147,7 @@ object UniTvCatalogManager {
             val updatedCategories = baseCategories.map { cat ->
                 val remoteChs = remoteChannelsByCat[cat.id]
                 if (remoteChs != null && remoteChs.isNotEmpty()) {
-                    // Mantém canais especiais locais (como CazéTV, F1, canais premium e +18)
+                    // Mantém canais especiais locais (como CazéTV, F1, Cine Sky, SporTV, ESPN, PPV, 4K, H265, Sony, etc.)
                     val preservedSpecial = cat.channels.filter { localCh ->
                         localCh.id.contains("caze", ignoreCase = true) ||
                         localCh.id.startsWith("ch_f1") ||
@@ -159,6 +159,20 @@ object UniTvCatalogManager {
                         localCh.id.startsWith("ch_fazenda") ||
                         localCh.id.startsWith("ch_bbb") ||
                         localCh.id.startsWith("ch_history") ||
+                        localCh.id.startsWith("cinesky_") ||
+                        localCh.id.startsWith("sportv_") ||
+                        localCh.id.startsWith("espn_") ||
+                        localCh.id.startsWith("ch_4k_") ||
+                        localCh.id.startsWith("ch_h265_") ||
+                        localCh.id.startsWith("ch_sony") ||
+                        localCh.id.startsWith("ch_universal") ||
+                        localCh.id.startsWith("ch_studio") ||
+                        localCh.id.startsWith("ch_paramount") ||
+                        localCh.id.startsWith("ch_cinemax") ||
+                        localCh.id.startsWith("disc_") ||
+                        localCh.id.startsWith("doc_") ||
+                        localCh.id.startsWith("var_") ||
+                        localCh.id.startsWith("ppv_") ||
                         cat.isLocked // Canais adultos protegidos
                     }
 

@@ -8,529 +8,448 @@ object ChannelRepository {
     fun getCategories(): List<ChannelCategory> {
         return listOf(
             ChannelCategory(
-                id = "cat_globo",
-                name = "Globo",
+                id = "cat_cinesky",
+                name = "Cine Sky",
                 isLocked = false,
                 channels = listOf(
                     Channel(
-                        id = "ch_324",
+                        id = "cinesky_01",
                         number = "01",
-                        title = "Globo RBS - Globo Porto Alegre",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rbs-porto-alegre/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rbs-globo-porto-alegre.png",
-                        description = "",
-                        quality = "HD"
+                        title = "Cine SKY 01 HD",
+                        category = "Cine Sky",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13071.m3u8",
+                        logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
+                        description = "Cine Sky Oficial: Grandes lancamentos do cinema mundial 24h sem intervalos comerciais.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_321",
+                        id = "cinesky_02",
                         number = "02",
-                        title = "Globo MA - Globo Maranhao",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-maranhao-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-ma-globo-maranhao.png",
-                        description = "",
-                        quality = "HD"
+                        title = "Cine SKY 02 HD",
+                        category = "Cine Sky",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13072.m3u8",
+                        logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
+                        description = "Os melhores sucessos de bilheteria e estreias exclusivas do cinema direto na sua TV.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_167",
+                        id = "cinesky_03",
                         number = "03",
-                        title = "Globo PR - RPC TV Curitiba",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rpc-curitiba-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-pr-rpc-tv-curitiba.png",
-                        description = "A RPC TV Curitiba é uma emissora afiliada à Rede Globo que atua na região metropolitana de Curitiba e em parte do estado do Paraná",
-                        quality = "HD"
+                        title = "Cine SKY 03 HD",
+                        category = "Cine Sky",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13073.m3u8",
+                        logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
+                        description = "Filmes consagrados, acao, suspense e producoes premiadas de Hollywood.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_166",
+                        id = "cinesky_05",
                         number = "04",
-                        title = "Globo BA - TV Bahia",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-bahia-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-ba-tv-bahia.jpg",
-                        description = "A TV Bahia é uma emissora afiliada à Rede Globo que opera no estado da Bahia, Brasil. Através de uma programação diversificada, a ",
-                        quality = "HD"
+                        title = "Cine SKY 05 HD",
+                        category = "Cine Sky",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13075.m3u8",
+                        logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
+                        description = "Cinema em alta definicao com lancamentos imperdiveis e classicos mundiais.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_165",
+                        id = "cinesky_acao",
                         number = "05",
-                        title = "Globo DF - TV Globo Brasilia",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-brasilia-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-df-tv-globo-brasilia.jpg",
-                        description = "A TV Globo Brasília é uma emissora afiliada à Rede Globo que atua no Distrito Federal e na região metropolitana de Brasília, Brasi",
+                        title = "Cine SKY Acao HD",
+                        category = "Cine Sky",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13071.m3u8",
+                        logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
+                        description = "Tiros, explosoes e adrenalina pura com os maiores astros da acao.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_163",
+                        id = "cinesky_fam",
                         number = "06",
-                        title = "Globo MG - TV Globo Minas",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-minas-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-mg-tv-globo-minas.jpg",
-                        description = "A TV Globo Minas é uma emissora afiliada à Rede Globo que atua no estado de Minas Gerais, Brasil. Através de sua programação diver",
+                        title = "Cine SKY Familia HD",
+                        category = "Cine Sky",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13072.m3u8",
+                        logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
+                        description = "Comedias, animacoes e os melhores filmes para toda a familia reunir.",
                         quality = "FHD"
-                    ),
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_fazenda",
+                name = "A Fazenda 24H (7 Câmeras)",
+                isLocked = false,
+                channels = listOf(
                     Channel(
-                        id = "ch_162",
+                        id = "ch_fazenda_1",
                         number = "07",
-                        title = "Gobo NE - TV Globo Nordeste",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-nordeste-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/gobo-ne-tv-globo-nordeste.jpg",
-                        description = "A TV Globo Nordeste é uma rede de emissoras afiliadas à Rede Globo que atende aos estados do Nordeste do Brasil. Com várias filiai",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_160",
-                        number = "08",
-                        title = "Globo RJ - TV Globo Rio",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rj-tv-globo-rj.jpg",
-                        description = "A TV Globo Rio de Janeiro é uma das emissoras mais emblemáticas da Rede Globo, oferecendo uma programação variada e abrangente par",
-                        quality = "4K"
-                    ),
-                    Channel(
-                        id = "ch_158",
-                        number = "09",
-                        title = "Globo SP - Globo Sao Paulo",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-tv-globo-sp.jpg",
-                        description = "A TV Globo SP é uma das emissoras de televisão mais influentes e prestigiadas do Brasil, pertencente ao Grupo Globo. Atendendo à r",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_155",
-                        number = "10",
-                        title = "Globo RJ - TV Rio Sul",
-                        category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-tv-rio-sul-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rj-tv-rio-sul.jpg",
-                        description = "",
-                        quality = "FHD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_sbt",
-                name = "SBT",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_173",
-                        number = "11",
-                        title = "SBT SP - SBT Interior",
-                        category = "SBT",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/sbt-interior-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sbt-sp-sbt-interior.jpg",
-                        description = "O \"SBT Interior\" é uma subdivisão do Sistema Brasileiro de Televisão (SBT) que abrange diversas cidades do interior do estado de",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_169",
-                        number = "12",
-                        title = "SBT RJ - SBT Rio",
-                        category = "SBT",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/sbt-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sbt-rj-sbt-rio.jpg",
-                        description = "O SBT Rio é uma emissora do Sistema Brasileiro de Televisão (SBT) que opera na região metropolitana do Rio de Janeiro, Brasil. Com",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_168",
-                        number = "13",
-                        title = "SBT SP - SBT Sao Paulo",
-                        category = "SBT",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/sbt-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sbt-sp-sbt-sp.png",
-                        description = "",
-                        quality = "4K"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_record",
-                name = "Record",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_178",
-                        number = "14",
-                        title = "RedeRecord SP - RecordTV SP",
-                        category = "Record",
+                        title = "A Fazenda 24H - Camera 1 (Sede Principal)",
+                        category = "A Fazenda 24H (7 Câmeras)",
                         streamUrl = "https://cdn1.uniredes.com.br/hls/record-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rederecord-recordtv-sp.jpg",
-                        description = "A \"RecordTV São Paulo\" é uma emissora da Rede Record de Televisão que opera na região metropolitana de São Paulo, Brasil. Com um",
-                        quality = "4K"
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
+                        description = "Camera principal ao vivo 24 horas por dia dentro da sede de A Fazenda com todos os peoes.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_177",
-                        number = "15",
-                        title = "RedeRecord RJ - RecordTV Rio",
-                        category = "Record",
+                        id = "ch_fazenda_2",
+                        number = "08",
+                        title = "A Fazenda 24H - Camera 2 (Baia & Animais)",
+                        category = "A Fazenda 24H (7 Câmeras)",
+                        streamUrl = "http://45.162.64.114/RECORD_NEWS/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
+                        description = "Camera exclusiva na baia dos animais, rotina rural e conversas reservadas.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_fazenda_3",
+                        number = "09",
+                        title = "A Fazenda 24H - Camera 3 (Oficina & Varanda)",
+                        category = "A Fazenda 24H (7 Câmeras)",
                         streamUrl = "https://cdn1.uniredes.com.br/hls/record-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rederecord-rj-recordtv-rio.png",
-                        description = "A \"RecordTV Rio\" é uma emissora da Rede Record de Televisão que opera na região metropolitana do Rio de Janeiro, Brasil. Com uma",
-                        quality = "HD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_band",
-                name = "Band",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_406",
-                        number = "16",
-                        title = "Band RBATV",
-                        category = "Band",
-                        streamUrl = "https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/chunklist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-rbatv.png",
-                        description = "",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
+                        description = "Acompanhe as estrategias e reunioes secretas na area da varanda e oficina.",
                         quality = "HD"
                     ),
                     Channel(
-                        id = "ch_176",
-                        number = "17",
-                        title = "Band SP - Band SP",
-                        category = "Band",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-sp-band-sp.jpg",
-                        description = "A \"Band São Paulo\" é uma emissora da Rede Bandeirantes de Televisão (Band) que opera na região metropolitana de São Paulo, Brasi",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_175",
-                        number = "18",
-                        title = "Band RJ - Band Rio",
-                        category = "Band",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-rj-band-rio.png",
-                        description = "A \"Band Rio\" é uma emissora da Rede Bandeirantes de Televisão (Band) que opera na região metropolitana do Rio de Janeiro, Brasil",
+                        id = "ch_fazenda_4",
+                        number = "10",
+                        title = "A Fazenda 24H - Camera 4 (Cozinha & Sala)",
+                        category = "A Fazenda 24H (7 Câmeras)",
+                        streamUrl = "https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w1074634538.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
+                        description = "Toda a movimentacao das refeicoes, discussoes na cozinha e momentos na sala de estar.",
                         quality = "HD"
                     ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_noticias",
-                name = "Notícias",
-                isLocked = false,
-                channels = listOf(
                     Channel(
-                        id = "ch_359",
-                        number = "19",
-                        title = "TVT News",
-                        category = "Notícias",
+                        id = "ch_fazenda_5",
+                        number = "11",
+                        title = "A Fazenda 24H - Camera 5 (Piscina & Academia)",
+                        category = "A Fazenda 24H (7 Câmeras)",
                         streamUrl = "https://video05.logicahost.com.br/comunitariario/comunitariario/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tvt-news.png",
-                        description = "",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
+                        description = "Area externa, treinos na academia, banho de sol na piscina e conversas quentes.",
                         quality = "HD"
                     ),
                     Channel(
-                        id = "ch_349",
-                        number = "20",
-                        title = "Portal Cultura",
-                        category = "Notícias",
-                        streamUrl = "https://www.portalcultura.com.br/playerhtml/funtelpa/tv_funtelpa/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/portal-cultura.png",
-                        description = "",
+                        id = "ch_fazenda_6",
+                        number = "12",
+                        title = "A Fazenda 24H - Camera 6 (Quartos & Espelho)",
+                        category = "A Fazenda 24H (7 Câmeras)",
+                        streamUrl = "https://fallback1.nexustvplay.bbroot.com/nxs/stream/24h_simpsons/24h_simpsons.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
+                        description = "Transmissao ao vivo dos quartos, pre-festas, fofocas e descanso dos peoes.",
                         quality = "HD"
                     ),
                     Channel(
-                        id = "ch_222",
-                        number = "21",
-                        title = "Record News",
-                        category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/record-news.jpg",
-                        description = "A \"Record News\" é um canal de televisão brasileiro que pertence ao Grupo Record, um dos maiores grupos de mídia do Brasil. O can",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_215",
-                        number = "22",
-                        title = "Euro News",
-                        category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/euronews-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/euro-news.jpg",
-                        description = "A \"Euronews\" é um canal de notícias internacional que oferece cobertura abrangente e imparcial dos eventos globais. Com sede na ",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_214",
-                        number = "23",
-                        title = "Band News",
-                        category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-news.jpg",
-                        description = "A \"BandNews TV\" é um canal de notícias que oferece cobertura jornalística contínua e diversificada. Pertencente ao Grupo Bandeir",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_213",
-                        number = "24",
-                        title = "Jovem Pan News",
-                        category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/jovem-pam-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/jovem-pan-news.jpg",
-                        description = "A \"Jovem Pan News\" é um canal de notícias que oferece cobertura jornalística diversificada e atualizada. Pertencente ao Grupo Jo",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_212",
-                        number = "25",
-                        title = "CNN Brasil",
-                        category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/cnn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cnn-brasil.jpg",
-                        description = "A \"CNN Brasil\" é um canal de notícias televisivo e digital que traz cobertura jornalística abrangente e atualizada. Inspirado no",
-                        quality = "HD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_f1",
-                name = "Fórmula 1 & Velocidade",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_f1_pro",
-                        number = "26",
-                        title = "F1 TV Pro HD - Oficial",
-                        category = "Fórmula 1 & Velocidade",
-                        streamUrl = "https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
-                        description = "Transmissão mundial da Fórmula 1 em alta definição, telemetria, câmeras OnBoard e pit lane em tempo real.",
-                        quality = "4K"
-                    ),
-                    Channel(
-                        id = "ch_f1_bandsports",
-                        number = "27",
-                        title = "BandSports HD - F1 Treinos & Qualificação",
-                        category = "Fórmula 1 & Velocidade",
-                        streamUrl = "http://45.162.64.114/BAND_SPORTS/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Bandsports_logo_2018.png/320px-Bandsports_logo_2018.png",
-                        description = "Transmissão exclusiva de todos os Treinos Livres (FP1, FP2, FP3), Classificação, Sprint Shootout e Fórmula 2 / 3.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_f1_band_gp",
-                        number = "28",
-                        title = "Band HD - Fórmula 1 GP Ao Vivo",
-                        category = "Fórmula 1 & Velocidade",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
-                        description = "Emissora oficial da Fórmula 1 no Brasil. Todos os Grandes Prêmios, largadas e cerimônia de pódio ao vivo.",
+                        id = "ch_fazenda_7",
+                        number = "13",
+                        title = "A Fazenda 24H - Camera 7 (Mosaico Multicameras)",
+                        category = "A Fazenda 24H (7 Câmeras)",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Logo_A_Fazenda_-_Atual.png",
+                        description = "Visao panoramica mosaico transmitindo todos os cantos da fazenda simultaneamente.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_f1_onboard",
-                        number = "29",
-                        title = "F1 OnBoard & Pit Lane 24H",
-                        category = "Fórmula 1 & Velocidade",
-                        streamUrl = "https://digicom.hls.iptvdc.com/canalmotor/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
-                        description = "Câmeras exclusivas acopladas nos bólidos da Fórmula 1, comunicação de rádio dos pilotos e telemetria de pista.",
+                        id = "ch_bbb_24h",
+                        number = "14",
+                        title = "Reality BBB 24H HD",
+                        category = "A Fazenda 24H (7 Câmeras)",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Big_Brother_Brasil_logo.svg/320px-Big_Brother_Brasil_logo.svg.png",
+                        description = "A casa mais vigiada do Brasil ao vivo 24 horas por dia com cobertura completa.",
                         quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_f1_motorvision",
-                        number = "30",
-                        title = "Motorvision TV HD",
-                        category = "Fórmula 1 & Velocidade",
-                        streamUrl = "https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
-                        description = "O canal dos apaixonados por velocidade: análises de carros de F1, supermáquinas, 24 Horas de Le Mans e automobilismo internacional",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_f1_redbull",
-                        number = "31",
-                        title = "Red Bull Racing F1 TV HD",
-                        category = "Fórmula 1 & Velocidade",
-                        streamUrl = "https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Red_Bull_Racing_logo.svg/320px-Red_Bull_Racing_logo.svg.png",
-                        description = "Conteúdo exclusivo dos bastidores da Red Bull Racing na Fórmula 1, simuladores e preparação dos pilotos.",
-                        quality = "FHD"
-                    ),
+                    )
                 )
             ),
             ChannelCategory(
                 id = "cat_esportes",
-                name = "Esportes & CazéTV",
+                name = "SporTV & Esportes",
                 isLocked = false,
                 channels = listOf(
                     Channel(
-                        id = "ch_320_caze",
-                        number = "32",
-                        title = "Cazé TV HD",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/caze-tv.png",
-                        description = "Transmissões ao vivo dos maiores eventos esportivos, Brasileirão, Libertadores e produções com Casimiro Miguel e equipe CazéTV.",
+                        id = "sportv_1",
+                        number = "15",
+                        title = "SporTV HD",
+                        category = "SporTV & Esportes",
+                        streamUrl = "http://195.178.110.110/sportv2/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
+                        description = "O canal campeao: cobertura ao vivo dos maiores campeonatos esportivos do Brasil e do mundo.",
                         quality = "FHD"
                     ),
                     Channel(
+                        id = "sportv_2",
+                        number = "16",
+                        title = "SporTV 2 HD",
+                        category = "SporTV & Esportes",
+                        streamUrl = "http://195.178.110.110/sportv2/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/SporTV_2_logo_2021.svg/320px-SporTV_2_logo_2021.svg.png",
+                        description = "Volei, basquete, tenis, automobilismo e futebol ao vivo todos os dias.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "sportv_3",
+                        number = "17",
+                        title = "SporTV 3 HD",
+                        category = "SporTV & Esportes",
+                        streamUrl = "http://195.178.110.110/sportv3/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SporTV_3_logo_2021.svg/320px-SporTV_3_logo_2021.svg.png",
+                        description = "Esportes olimpicos, radicais e transmissao simultanea de grandes torneios.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "sportv_4",
+                        number = "18",
+                        title = "SporTV 4 HD",
+                        category = "SporTV & Esportes",
+                        streamUrl = "https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/chunklist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
+                        description = "Canal de apoio para eventos simultaneos e rodadas decisivas.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_f1_bandsports",
+                        number = "19",
+                        title = "BandSports HD",
+                        category = "SporTV & Esportes",
+                        streamUrl = "https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/chunklist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Bandsports_logo_2018.png/320px-Bandsports_logo_2018.png",
+                        description = "Futebol internacional, treinos de Formula 1, lutas e esportes radicais ao vivo.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_320_caze",
+                        number = "20",
+                        title = "Cazé TV HD",
+                        category = "SporTV & Esportes",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Caz%C3%A9TV_logo.svg/320px-Caz%C3%A9TV_logo.svg.png",
+                        description = "A maior transmissao digital esportiva do mundo comandada por Casimiro Miguel e equipe.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_253",
+                        number = "21",
+                        title = "Red Bull TV",
+                        category = "SporTV & Esportes",
+                        streamUrl = "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/red-bull-tv.png",
+                        description = "Esportes radicais, skate, surf, acrobacias aereas e automobilismo extremo.",
+                        quality = "HD"
+                    ),
+                    Channel(
                         id = "ch_374",
-                        number = "33",
+                        number = "22",
                         title = "Hard Knocks Fight Championship TV",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://d3uyzhwvmemdyf.cloudfront.net/scheduler/scheduleMaster/109.m3u8?ROGERIOTORRES",
+                        category = "SporTV & Esportes",
+                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/hard-knocks-fight-championship-tv.jpg",
-                        description = "",
+                        description = "Grandes combates de MMA e artes marciais mistas do circuito internacional.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_373",
-                        number = "34",
+                        number = "23",
                         title = "Fuel TV",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01074-fueltv-fueltvbr-samsungbr/playlist.m3u8?ROGERIOTORRES",
+                        category = "SporTV & Esportes",
+                        streamUrl = "https://d1m7jfoe9zdc1j.cloudfront.net/5d5a816c31e610d4c5f9_partypokertv_40169660985_1662408479/chunked/index-dvr.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/fuel-tv.png",
-                        description = "",
+                        description = "Cultura do skate, surf, bmx e os melhores festivais de esportes de acao.",
                         quality = "HD"
-                    ),
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_espn",
+                name = "Rede ESPN",
+                isLocked = false,
+                channels = listOf(
                     Channel(
-                        id = "ch_365",
-                        number = "35",
-                        title = "ESPN 6",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-6-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-6.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_364",
-                        number = "36",
-                        title = "ESPN 4 HD",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-5-hd-yp7n8qt10m13.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_293",
-                        number = "37",
-                        title = "ESPN 5 HD",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-5-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-5-hd.link",
-                        description = "ESPN 5, anteriormente conhecido como Sports 5, é um canal de esportes nas Filipinas que surgiu de uma parceria entre a TV5 Network",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_292",
-                        number = "38",
-                        title = "ESPN 3 HD",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-3-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-3-hd.link",
-                        description = "ESPN 3 é um canal de televisão por assinatura que faz parte da família de redes ESPN, oferecendo uma ampla gama de conteúdos espor",
-                        quality = "HD"
+                        id = "ch_290",
+                        number = "24",
+                        title = "ESPN HD",
+                        category = "Rede ESPN",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-hd.png",
+                        description = "O lider mundial em esportes: Premier League, LaLiga, Serie A italiana e NBA ao vivo.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "ch_291",
-                        number = "39",
+                        number = "25",
                         title = "ESPN 2 HD",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-2-hd.link",
-                        description = "ESPN 2 é um canal de televisão por assinatura que faz parte da família de redes ESPN, oferecendo uma ampla gama de conteúdos espor",
-                        quality = "HD"
+                        category = "Rede ESPN",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-2.png",
+                        description = "Grandes ligas americanas: NFL, MLB, NHL, College Football e tenis de alto nivel.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_290",
-                        number = "40",
-                        title = "ESPN HD",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-hd.link",
-                        description = "ESPN HD é um canal de televisão por assinatura especializado em esportes, conhecido por sua transmissão em alta definição que prop",
-                        quality = "HD"
+                        id = "ch_292",
+                        number = "26",
+                        title = "ESPN 3 HD",
+                        category = "Rede ESPN",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-3/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-3.png",
+                        description = "Esportes radicais, motociclismo, ciclismo Grand Tours e futebol europeu.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_253",
-                        number = "41",
-                        title = "Red Bull TV",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/red-bull-tv.jpg",
-                        description = "Bem-vindo à \"Red Bull TV\"! Aqui, exploramos um universo de emoção, aventura e energia sem limites. Nosso canal é o seu ingresso ",
-                        quality = "HD"
+                        id = "ch_364",
+                        number = "27",
+                        title = "ESPN 4 HD",
+                        category = "Rede ESPN",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-4.png",
+                        description = "Cobertura completa com debate esportivo, SportsCenter e jogos decisivos.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_249",
-                        number = "42",
-                        title = "partypoker TV",
-                        category = "Esportes & CazéTV",
-                        streamUrl = "https://d1m7jfoe9zdc1j.cloudfront.net/5d5a816c31e610d4c5f9_partypokertv_40169660985_1662408479/chunked/index-dvr.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/partypoker-tv.jpeg",
-                        description = "Bem-vindo ao \"partypoker TV\"! Este é o canal que coloca você no centro da ação emocionante do poker. Aqui, mergulhamos nas mesas",
-                        quality = "HD"
+                        id = "ch_293",
+                        number = "28",
+                        title = "ESPN 5 HD",
+                        category = "Rede ESPN",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-5/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-5.png",
+                        description = "Transmissoes simultaneas dos principais torneios internacionais.",
+                        quality = "FHD"
                     ),
+                    Channel(
+                        id = "ch_365",
+                        number = "29",
+                        title = "ESPN 6 HD",
+                        category = "Rede ESPN",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-6/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-6.png",
+                        description = "Eventos exclusivos, lutas, automobilismo e futebol multitelas.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "espn_extra",
+                        number = "30",
+                        title = "ESPN Extra HD",
+                        category = "Rede ESPN",
+                        streamUrl = "http://190.83.2.182:8090/ESPN3/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/320px-ESPN_wordmark.svg.png",
+                        description = "Canal de contingencia especial para cobertura de rodadas simultaneas e playoffs.",
+                        quality = "HD"
+                    )
                 )
             ),
             ChannelCategory(
                 id = "cat_premiere",
-                name = "Premiere & Combate",
+                name = "Premiere & Pay-Per-View",
                 isLocked = false,
                 channels = listOf(
                     Channel(
                         id = "prem_clubes",
-                        number = "43",
+                        number = "31",
                         title = "Premiere Clubes HD",
-                        category = "Premiere & Combate",
+                        category = "Premiere & Pay-Per-View",
                         streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "O melhor do futebol brasileiro ao vivo: Brasileirão Série A e B com cobertura completa.",
+                        description = "O melhor do futebol brasileiro ao vivo: Brasileirao Serie A e B com cobertura completa.",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "prem_2",
-                        number = "44",
+                        number = "32",
                         title = "Premiere 2 HD",
-                        category = "Premiere & Combate",
+                        category = "Premiere & Pay-Per-View",
                         streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Jogos simultâneos dos maiores clubes do país em alta definição.",
-                        quality = "HD"
+                        description = "Transmissao ao vivo dos jogos da rodada com som de torcida e analises tecnicas.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "prem_3",
-                        number = "45",
+                        number = "33",
                         title = "Premiere 3 HD",
-                        category = "Premiere & Combate",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-6-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Transmissão exclusiva de partidas decisivas e pré-jogos.",
-                        quality = "HD"
+                        description = "Jogos exclusivos dos principais clubes do pais nos estaduais e no Brasileirao.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "prem_4",
-                        number = "46",
+                        number = "34",
                         title = "Premiere 4 HD",
-                        category = "Premiere & Combate",
-                        streamUrl = "http://45.162.64.114/BAND_SPORTS/index.m3u8",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-3/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Grade especial com mosaico de gols e rodadas decisivas.",
-                        quality = "HD"
+                        description = "Futebol ao vivo em alta definicao direto dos estadios de todo o Brasil.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_5",
+                        number = "35",
+                        title = "Premiere 5 HD",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-5/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
+                        description = "Canal de transmissao direta de partidas simultaneas dos campeonatos nacionais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_6",
+                        number = "36",
+                        title = "Premiere 6 HD",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-6/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
+                        description = "Cobertura completa dos jogos da Serie B e confrontos regionais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_7",
+                        number = "37",
+                        title = "Premiere 7 HD",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "http://181.78.197.59:8000/play/a07n/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
+                        description = "Canal pay-per-view exclusivo para transmissoes de mata-mata e decisoes.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_8",
+                        number = "38",
+                        title = "Premiere 8 HD",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "http://181.78.197.59:8000/play/a07z/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
+                        description = "Transmissao em tempo real de partidas complementares da rodada de futebol.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_mosaico",
+                        number = "39",
+                        title = "Premiere 8 Mosaico Multijogos HD",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/30063.m3u8",
+                        logoUrl = "http://1.bp.blogspot.com/-9NsHz_itoFc/Xk70dxuLv7I/AAAAAAAACGQ/wCExIoJZ8xgbleziCR-Guhr-AkuLgFhVQCLcBGAsYHQ/s1600/premiere_2.png",
+                        description = "Mosaico multijogos: assista a todos os gols e lances de todas as partidas ao mesmo tempo.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "prem_combate",
-                        number = "47",
+                        number = "40",
                         title = "Combate HD",
-                        category = "Premiere & Combate",
-                        streamUrl = "https://d3uyzhwvmemdyf.cloudfront.net/scheduler/scheduleMaster/109.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Canal_Combate_logo.png/320px-Canal_Combate_logo.png",
-                        description = "O mundo das artes marciais: UFC ao vivo, boxe mundial, jiu-jitsu e kickboxing.",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Combate_logo_2021.svg/320px-Combate_logo_2021.svg.png",
+                        description = "O canal oficial das artes marciais: UFC, Boxe, Jiu-Jitsu, Kickboxing e Jungle Fight 24H.",
                         quality = "FHD"
                     ),
+                    Channel(
+                        id = "ppv_jogos",
+                        number = "41",
+                        title = "Jogos de Hoje Pay-Per-View HD",
+                        category = "Premiere & Pay-Per-View",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/339310.m3u8",
+                        logoUrl = "https://i.postimg.cc/cHHX4vYD/canal-futebol.png",
+                        description = "Guia completo e sinal aberto com as partidas mais esperadas do futebol no dia.",
+                        quality = "FHD"
+                    )
                 )
             ),
             ChannelCategory(
@@ -540,131 +459,151 @@ object ChannelRepository {
                 channels = listOf(
                     Channel(
                         id = "tc_premium",
-                        number = "48",
+                        number = "42",
                         title = "Telecine Premium HD",
                         category = "Rede Telecine",
                         streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
-                        description = "Grandes sucessos de bilheteria e estreias exclusivas do cinema mundial em primeira mão.",
+                        description = "Grandes sucessos de bilheteria e estreias exclusivas do cinema mundial em primeira mao.",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "tc_action",
-                        number = "49",
+                        number = "43",
                         title = "Telecine Action HD",
                         category = "Rede Telecine",
                         streamUrl = "http://46.151.196.223:14326/",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Telecine_Action_logo_2019.svg/320px-Telecine_Action_logo_2019.svg.png",
-                        description = "Adrenalina pura, perseguições eletrizantes, super-heróis e grandes clássicos de ação.",
-                        quality = "HD"
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Telecine_Action_logo_2019.svg/320px-Telecine_Action_logo_2019.svg.png",
+                        description = "Muita adrenalina, velocidade, acao e perseguicoes sem limite.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "tc_touch",
-                        number = "50",
+                        number = "44",
                         title = "Telecine Touch HD",
                         category = "Rede Telecine",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Telecine_Touch_logo_2019.svg/320px-Telecine_Touch_logo_2019.svg.png",
-                        description = "Dramas emocionantes, histórias de superação e romances inesquecíveis.",
-                        quality = "HD"
+                        streamUrl = "http://45.162.64.114/TNT/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Telecine_Touch_logo_2019.svg/320px-Telecine_Touch_logo_2019.svg.png",
+                        description = "Emocao e historias marcantes: os maiores dramas e romances de todos os tempos.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "tc_pipoca",
-                        number = "51",
+                        number = "45",
                         title = "Telecine Pipoca HD",
                         category = "Rede Telecine",
-                        streamUrl = "https://cc-hqw8u5r1nshjc.akamaized.net/scheduler/scheduleMaster/352.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Telecine_Pipoca_logo_2019.svg/320px-Telecine_Pipoca_logo_2019.svg.png",
-                        description = "O canal dos filmes dublados para assistir reunido com toda a família.",
-                        quality = "HD"
+                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Telecine_Pipoca_logo_2019.svg/320px-Telecine_Pipoca_logo_2019.svg.png",
+                        description = "Os filmes mais divertidos do cinema nacional e internacional 100% dublados.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "tc_fun",
-                        number = "52",
+                        number = "46",
                         title = "Telecine Fun HD",
                         category = "Rede Telecine",
-                        streamUrl = "https://amogonetworx-grjngo-1-eu.plex.wurl.tv/4300.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Telecine_Fun_logo_2019.svg/320px-Telecine_Fun_logo_2019.svg.png",
-                        description = "Comédias inteligentes, animações premiadas e diversão garantida.",
-                        quality = "HD"
+                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Telecine_Fun_logo_2019.svg/320px-Telecine_Fun_logo_2019.svg.png",
+                        description = "Comedias e animacoes para garantir boas risadas com a familia reunida.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "tc_cult",
-                        number = "53",
+                        number = "47",
                         title = "Telecine Cult HD",
                         category = "Rede Telecine",
-                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Telecine_Cult_logo_2019.svg/320px-Telecine_Cult_logo_2019.svg.png",
-                        description = "O melhor do cinema autoral, clássicos eternos de Hollywood e festivais internacionais.",
-                        quality = "HD"
-                    ),
+                        streamUrl = "https://video04.logicahost.com.br/isonata/isonata/chunklist.m3u8?ROGERIOTORRES",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Telecine_Cult_logo_2019.svg/320px-Telecine_Cult_logo_2019.svg.png",
+                        description = "Obras-primas da historia da setima arte, cinema de autor e producoes premiadas.",
+                        quality = "FHD"
+                    )
                 )
             ),
             ChannelCategory(
                 id = "cat_hbo",
-                name = "HBO & Warner",
+                name = "Rede HBO",
                 isLocked = false,
                 channels = listOf(
                     Channel(
                         id = "hbo_main",
-                        number = "54",
+                        number = "48",
                         title = "HBO HD",
-                        category = "HBO & Warner",
+                        category = "Rede HBO",
                         streamUrl = "http://45.162.64.114/TNT/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
-                        description = "Séries consagradas, grandes documentários e as maiores produções mundiais.",
+                        description = "Series consagradas, grandes documentarios e as maiores producoes mundiais.",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "hbo_2",
-                        number = "55",
+                        number = "49",
                         title = "HBO 2 HD",
-                        category = "HBO & Warner",
+                        category = "Rede HBO",
                         streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
-                        description = "Filmes e séries originais HBO dublados em português.",
-                        quality = "HD"
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/HBO2_logo_2014.svg/320px-HBO2_logo_2014.svg.png",
+                        description = "Reprises dos melhores filmes e series em horarios alternativos dublados e legendados.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "hbo_plus",
-                        number = "56",
+                        number = "50",
                         title = "HBO Plus HD",
-                        category = "HBO & Warner",
-                        streamUrl = "http://170.83.16.50/SONY_CHANNEL/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
-                        description = "Muita adrenalina com filmes de ação, shows mundiais e comédias.",
-                        quality = "HD"
+                        category = "Rede HBO",
+                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/HBO_Plus_logo_2019.svg/320px-HBO_Plus_logo_2019.svg.png",
+                        description = "Conteudo jovem, comedia, acao e musica da franquia HBO.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "hbo_family",
-                        number = "57",
+                        number = "51",
                         title = "HBO Family HD",
-                        category = "HBO & Warner",
-                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        category = "Rede HBO",
+                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/HBO_Family_2014.svg/320px-HBO_Family_2014.svg.png",
+                        description = "Programacao voltada para criancas e jovens com animacoes e filmes familiares.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "hbo_sig",
+                        number = "52",
+                        title = "HBO Signature HD",
+                        category = "Rede HBO",
+                        streamUrl = "https://video04.logicahost.com.br/isonata/isonata/chunklist.m3u8?ROGERIOTORRES",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/HBO_Signature_logo_2014.svg/320px-HBO_Signature_logo_2014.svg.png",
+                        description = "O acervo mais exclusivo e refinado das producoes originais e documentarios HBO.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "hbo_mundi",
+                        number = "53",
+                        title = "HBO Mundi HD",
+                        category = "Rede HBO",
+                        streamUrl = "https://stmv8.samcast.com.br/tvmaisbrasil/tvmaisbrasil/playlist.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
-                        description = "Programação voltada para a família com filmes e animações para todas as idades.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "warner_ch",
-                        number = "58",
-                        title = "Warner Channel HD",
-                        category = "HBO & Warner",
-                        streamUrl = "http://170.83.49.66:8083/AXNHD/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Warner_Channel_2013_logo.svg/320px-Warner_Channel_2013_logo.svg.png",
-                        description = "As melhores séries da TV americana, universo DC Comics e comédias consagradas.",
+                        description = "Filmes internacionais e producoes independentes aclamadas pela critica.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "megapix_ch",
-                        number = "59",
-                        title = "Megapix HD",
-                        category = "HBO & Warner",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Megapix_logo_2020.svg/320px-Megapix_logo_2020.svg.png",
-                        description = "O canal de filmes mais assistido da TV por assinatura, 100% dublado.",
+                        id = "hbo_pop",
+                        number = "54",
+                        title = "HBO Pop HD",
+                        category = "Rede HBO",
+                        streamUrl = "https://video03.logicahost.com.br/topmixfilmes/topmixfilmes/playlist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
+                        description = "Filmes leves, comedias romanticas e grandes sucessos da cultura pop.",
                         quality = "FHD"
                     ),
+                    Channel(
+                        id = "hbo_xtreme",
+                        number = "55",
+                        title = "HBO Xtreme HD",
+                        category = "Rede HBO",
+                        streamUrl = "http://46.151.196.223:14326/",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
+                        description = "Acao frenetica, suspense e terror para quem gosta de fortes emocoes.",
+                        quality = "FHD"
+                    )
                 )
             ),
             ChannelCategory(
@@ -673,369 +612,885 @@ object ChannelRepository {
                 isLocked = false,
                 channels = listOf(
                     Channel(
-                        id = "ch_tnt",
-                        number = "60",
-                        title = "TNT HD",
+                        id = "ch_sony_channel",
+                        number = "56",
+                        title = "Canal Sony HD (Sony Channel)",
                         category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/TNT_Logo_2016.svg/320px-TNT_Logo_2016.svg.png",
-                        description = "Grandes filmes campeões de bilheteria e transmissões dos maiores prêmios do cinema.",
+                        streamUrl = "http://170.83.16.50/SONY_CHANNEL/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sony_Channel_logo_2019.svg/320px-Sony_Channel_logo_2019.svg.png",
+                        description = "O lendario Canal Sony: Grey's Anatomy, The Good Doctor e as series medicas e policiais mais amadas.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_space",
-                        number = "61",
-                        title = "Space HD",
-                        category = "Filmes & Séries",
-                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Space_logo_2015.svg/320px-Space_logo_2015.svg.png",
-                        description = "Ação extrema, filmes de ficção científica, artes marciais e suspense.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_axn",
-                        number = "62",
-                        title = "AXN HD",
-                        category = "Filmes & Séries",
-                        streamUrl = "http://170.83.49.66:8083/AXNHD/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/AXN_logo_2015.svg/320px-AXN_logo_2015.svg.png",
-                        description = "Séries de investigação forense, criminalística, perseguições e suspense.",
-                        quality = "HD"
-                    ),
-                    Channel(
                         id = "ch_sony_movies",
-                        number = "63",
+                        number = "57",
                         title = "Sony Movies HD",
                         category = "Filmes & Séries",
                         streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Sony_Movies_logo_2022.svg/320px-Sony_Movies_logo_2022.svg.png",
-                        description = "O acervo completo dos lendários estúdios da Columbia Pictures e Sony Pictures.",
-                        quality = "HD"
+                        description = "O acervo completo dos lendarios estudios da Columbia Pictures e Sony Pictures.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "warner_ch",
+                        number = "58",
+                        title = "Warner Channel HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "http://45.162.64.114/TNT/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Warner_Channel_2019_logo.svg/320px-Warner_Channel_2019_logo.svg.png",
+                        description = "Universo DC, The Big Bang Theory, Friends e os maiores sucessos da Warner Bros.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "megapix_ch",
+                        number = "59",
+                        title = "Megapix HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Megapix_logo_2020.svg/320px-Megapix_logo_2020.svg.png",
+                        description = "O canal dos grandes campeoes de bilheteria dublados com sessao pipoca todo dia.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_universal_tv",
+                        number = "60",
+                        title = "Universal TV HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "http://181.78.197.59:8000/play/a07n/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Universal_TV_logo_2018.svg/320px-Universal_TV_logo_2018.svg.png",
+                        description = "Franquia Chicago (Fire, P.D., Med), Law & Order e grandes investigacoes.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_studio_universal",
+                        number = "61",
+                        title = "Studio Universal HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "http://181.78.197.59:8000/play/a07z/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Studio_Universal_logo.svg/320px-Studio_Universal_logo.svg.png",
+                        description = "Cinema hollywoodiano e classicos dos estúdios Universal Pictures.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_paramount",
+                        number = "62",
+                        title = "Paramount Network HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "http://vaiagora.vip:80/live/5q8VUj/5BeUd8/72217.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Paramount_Network_2018.svg/320px-Paramount_Network_2018.svg.png",
+                        description = "Yellowstone, Tulsa King e superproducoes consagradas da Paramount Pictures.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_cinemax",
+                        number = "63",
+                        title = "Cinemax HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "http://46.151.196.223:14326/",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cinemax_logo_2011.svg/320px-Cinemax_logo_2011.svg.png",
+                        description = "Filmes de sucesso, acao e suspense com a chancela do grupo HBO.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_tnt",
+                        number = "64",
+                        title = "TNT HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/TNT_Logo_2016.svg/320px-TNT_Logo_2016.svg.png",
+                        description = "Grandes premiacoes como o Oscar, superproducoes cinematograficas e esportes.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_space",
+                        number = "65",
+                        title = "Space HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/space-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Space_logo_2017.svg/320px-Space_logo_2017.svg.png",
+                        description = "Especializado em acao, ficcao cientifica, suspense e filmes de luta.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_axn",
+                        number = "66",
+                        title = "AXN HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/AXN_logo_2015.svg/320px-AXN_logo_2015.svg.png",
+                        description = "As maiores series policiais e de investigacao forense do mundo: NCIS e Criminal Minds.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_284",
+                        number = "67",
+                        title = "TNT Novelas HD",
+                        category = "Filmes & Séries",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tnt-novelas.png",
+                        description = "O canal dedicado aos grandes sucessos mundiais das telenovelas e melodramas.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "ch_392",
-                        number = "64",
+                        number = "68",
                         title = "TV Classicos do Cinema",
                         category = "Filmes & Séries",
                         streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-classicos-do-cinema.jpg",
-                        description = "",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-classicos-do-cinema.png",
+                        description = "Classicos que marcaram geracoes na historia do cinema mundial.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_391",
-                        number = "65",
+                        number = "69",
                         title = "TV Sonata",
                         category = "Filmes & Séries",
                         streamUrl = "https://video04.logicahost.com.br/isonata/isonata/chunklist.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-sonata.jpg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_390",
-                        number = "66",
-                        title = "TV Mais Brasil",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://stmv8.samcast.com.br/tvmaisbrasil/tvmaisbrasil/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-mais-brasil.png",
-                        description = "",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-sonata.png",
+                        description = "Cinema independente, producoes artisticas e entretenimento refinado.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_388",
-                        number = "67",
+                        number = "70",
                         title = "Top Mix Filmes",
                         category = "Filmes & Séries",
-                        streamUrl = "https://video03.logicahost.com.br/filmestopmixtv/filmestopmixtv/chunklist.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/top-mix-filmes.webp",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_387",
-                        number = "68",
-                        title = "Spark TV",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://d25usgadhphvwi.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-sr15nxkp06uk9/playlist.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/spark-tv.jpg",
-                        description = "",
+                        streamUrl = "https://video03.logicahost.com.br/topmixfilmes/topmixfilmes/playlist.m3u8?ROGERIOTORRES",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/top-mix-filmes.png",
+                        description = "Uma selecao diversificada com filmes de varios generos 24 horas por dia.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_385",
-                        number = "69",
+                        number = "71",
                         title = "Hallo! Series",
                         category = "Filmes & Séries",
-                        streamUrl = "https://cdn-5.nxplay.com.br/HALLOSERIES/tracks-v1a1/mono.m3u8?ROGERIOTORRES",
+                        streamUrl = "https://stmv1.srvstm.com/series/series/playlist.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/hallo-series.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_384",
-                        number = "70",
-                        title = "Grjngo Filmes",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://amogonetworx-grjngo-1-eu.plex.wurl.tv/4300.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/grjngo-filmes.jpg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_380",
-                        number = "71",
-                        title = "Cindie Lite HD",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://cc-hqw8u5r1nshjc.akamaized.net/scheduler/scheduleMaster/352.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cindie-lite-hd.jpg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_285",
-                        number = "72",
-                        title = "TNT HD",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tnt-hd.link",
-                        description = "TNT HD é a versão em alta definição do canal Turner Network Television (TNT), oferecendo uma mistura de programação que inclui fil",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_367",
-                        number = "73",
-                        title = "Movie Sphere",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/movie-sphere.jpeg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_340",
-                        number = "74",
-                        title = "AWTV",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://awtv.nuvemplay.live/hls/stream.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/awtv.png",
-                        description = "Uma plataforma de televisão baseada na web que fornece aos espectadores as últimas notícias e atualidades. Diferentemente dos cana",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_332",
-                        number = "75",
-                        title = "RunTime - Terror",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=4865",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-terror.png",
-                        description = "O&nbsp;Runtime Terror&nbsp;é um canal da plataforma de streaming gratuita&nbsp;Runtime, dedicado a oferecer entretenimento para to",
+                        description = "Maratonas das melhores series de comedia e drama da televisao.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_331",
-                        number = "76",
+                        number = "72",
                         title = "RunTime - Cinema",
                         category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=2153",
+                        streamUrl = "https://amg01391-amg01391c5-amgplt0026.playout.now3.amagi.tv/playlist/amg01391-runtime-runtimebrazil-amgplt0026/playlist.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-cinema.png",
-                        description = "O&nbsp;Runtime Cinema&nbsp;é um canal da plataforma de streaming gratuita&nbsp;Runtime, dedicado a oferecer entretenimento para to",
+                        description = "Filmes aclamados com exibicao continua e alta definicao.",
                         quality = "HD"
                     ),
                     Channel(
-                        id = "ch_330",
-                        number = "77",
-                        title = "RunTime - Comédia",
+                        id = "ch_332",
+                        number = "73",
+                        title = "RunTime - Terror",
                         category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=2553",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-comédia.png",
-                        description = "O&nbsp;Runtime Comédia&nbsp;é um canal da plataforma de streaming gratuita&nbsp;Runtime, dedicado a oferecer entretenimento para t",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_329",
-                        number = "78",
-                        title = "RunTime - Crime",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=4864",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-crime.png",
-                        description = "O&nbsp;Runtime Crime&nbsp;é um canal da plataforma de streaming gratuita&nbsp;Runtime, dedicado a oferecer entretenimento para tod",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_328",
-                        number = "79",
-                        title = "RunTime - Familia",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=4866",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-familia.png",
-                        description = "O&nbsp;Runtime Família&nbsp;é um canal da plataforma de streaming gratuita&nbsp;Runtime, dedicado a oferecer entretenimento para t",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_318",
-                        number = "80",
-                        title = "Comedy Club",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/comedy-club/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/comedy-club.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_295",
-                        number = "81",
-                        title = "RunTime - Romance",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=4866",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-romance.png",
-                        description = "O canal National Geographic, também conhecido como Nat Geo, é um canal de televisão por assinatura que oferece uma vasta gama de d",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_284",
-                        number = "82",
-                        title = "TNT Novelas HD",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-novelas-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tnt-novelas-hd.link",
-                        description = "TNT Novelas é um canal de TV por assinatura da Warner Bros. Discovery, voltado exclusivamente para novelas. Lançado em 26 de junho",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_283",
-                        number = "83",
-                        title = "SPACE HD",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/space-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/space-hd.link",
-                        description = "Space HD é um canal de televisão por assinatura latino-americano pertencente à Warner Bros. Discovery. Lançado em 11 de março de 1",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_274",
-                        number = "84",
-                        title = "My Time Movie",
-                        category = "Filmes & Séries",
-                        streamUrl = "https://appletree-mytime-samsungbrazil.amagi.tv/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/my-time-movie.webp",
-                        description = "Bem-vindo ao \"My Time Movie\"! Este é o canal onde cada momento é uma experiência cinematográfica única. Aqui, exploramos uma sel",
+                        streamUrl = "https://amg01391-amg01391c7-amgplt0026.playout.now3.amagi.tv/playlist/amg01391-runtime-runtimeterrorbrazil-amgplt0026/playlist.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-terror.png",
+                        description = "O melhor do horror psicologico, sobrenatural e suspense horripilante.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_273",
-                        number = "85",
-                        title = "RunTime - Ação",
+                        number = "74",
+                        title = "RunTime - Acao",
                         category = "Filmes & Séries",
-                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=2552",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-ação.png",
-                        description = "Prepare-se para rir com o \"Cine Pipoca 03\"! Este é o canal que traz uma seleção hilária de comédias de todos os tempos. De cláss",
+                        streamUrl = "https://amg01391-amg01391c6-amgplt0026.playout.now3.amagi.tv/playlist/amg01391-runtime-runtimeactionbrazil-amgplt0026/playlist.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-acao.png",
+                        description = "Tiros, explosoes e perseguicoes para os apaixonados por adrenalina.",
                         quality = "HD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_reality",
-                name = "Reality Shows 24H",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_fazenda_1",
-                        number = "86",
-                        title = "Reality A Fazenda 24H HD",
-                        category = "Reality Shows 24H",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
-                        description = "Câmera principal ao vivo 24 horas por dia dentro da sede de A Fazenda com todos os peões.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_fazenda_2",
-                        number = "87",
-                        title = "Reality A Fazenda (Sede & Baia)",
-                        category = "Reality Shows 24H",
-                        streamUrl = "http://45.162.64.114/RECORD_NEWS/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
-                        description = "Transmissão das tarefas diárias, animais e área de convivência dos confinados.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_bbb_24h",
-                        number = "88",
-                        title = "Reality BBB 24H HD",
-                        category = "Reality Shows 24H",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/TV_Globo_2021.svg/320px-TV_Globo_2021.svg.png",
-                        description = "A casa mais vigiada do país ao vivo com câmeras exclusivas e confessionário.",
-                        quality = "FHD"
-                    ),
+                    )
                 )
             ),
             ChannelCategory(
                 id = "cat_docs",
-                name = "Documentários & History",
+                name = "Documentários",
                 isLocked = false,
                 channels = listOf(
                     Channel(
-                        id = "ch_history",
-                        number = "89",
-                        title = "History Channel HD",
-                        category = "Documentários & History",
-                        streamUrl = "http://170.83.16.50/HISTORY/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
-                        description = "Grandes civilizações, relíquias históricas, enigmas da humanidade e batalhas militares.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_history_2",
-                        number = "90",
-                        title = "History 2 (H2) HD",
-                        category = "Documentários & History",
-                        streamUrl = "http://170.83.49.66:8083/DISCOVERYWORLDHD/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
-                        description = "Conexões científicas, mistérios do planeta Terra e tecnologia através dos tempos.",
-                        quality = "HD"
-                    ),
-                    Channel(
                         id = "ch_299",
-                        number = "91",
+                        number = "75",
                         title = "Discovery Channel HD",
-                        category = "Documentários & History",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.link",
-                        description = "Discovery Channel&nbsp; é um canal de televisão que oferece uma programação variada focada em documentários e programas educativos",
-                        quality = "HD"
+                        category = "Documentários",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-channel-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
+                        description = "O canal pioneiro em exploracao cientifica, misterios do planeta e aventuras humanas.",
+                        quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_298",
-                        number = "92",
-                        title = "TLC HD",
-                        category = "Documentários & History",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tlc-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tlc-hd.link",
-                        description = "TLC HD é um canal de televisão por assinatura que pertence à Warner Bros. Discovery. Originalmente lançado como The Learning Chann",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_297",
-                        number = "93",
-                        title = "Discovery Turbo HD",
-                        category = "Documentários & History",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-turbo-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-turbo-hd.link",
-                        description = "Discovery Turbo HD é um canal de televisão dedicado a programas sobre motores e veículos, oferecendo entretenimento adrenalina par",
+                        id = "ch_discovery_kids",
+                        number = "76",
+                        title = "Discovery Kids HD",
+                        category = "Documentários",
+                        streamUrl = "http://15.204.246.24:8080/DiscoveryKidsHD/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
+                        description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_296",
-                        number = "94",
-                        title = "Discovery h&h HD",
-                        category = "Documentários & History",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-hh/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-hh-hd.link",
-                        description = "Discovery Home &amp; Health (Discovery H&amp;H) é um canal de televisão por assinatura focado em programação sobre estilo de vida,",
+                        number = "77",
+                        title = "Discovery Home & Health HD",
+                        category = "Documentários",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-hh-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-hh-hd.png",
+                        description = "Estilo de vida, reformas de imoveis, saude, culinaria e maternidade.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_297",
+                        number = "78",
+                        title = "Discovery Turbo HD",
+                        category = "Documentários",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-turbo-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-turbo-hd.png",
+                        description = "Carros personalizados, restauracao de classicos e motores de alta performance.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "disc_id",
+                        number = "79",
+                        title = "Discovery ID (Investigacao) HD",
+                        category = "Documentários",
+                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Investigation_Discovery_logo_%282020%29.svg/320px-Investigation_Discovery_logo_%282020%29.svg.png",
+                        description = "Crimes reais, investigacoes policiais forenses e os misterios mais intrigantes.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "disc_world",
+                        number = "80",
+                        title = "Discovery World HD",
+                        category = "Documentários",
+                        streamUrl = "http://15.204.246.24:8080/DiscoveryWorldHD/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Discovery_World_logo.svg/320px-Discovery_World_logo.svg.png",
+                        description = "Documentarios deslumbrantes sobre culturas globais, paisagens e a historia da Terra.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "disc_science",
+                        number = "81",
+                        title = "Discovery Science HD",
+                        category = "Documentários",
+                        streamUrl = "https://video04.logicahost.com.br/isonata/isonata/chunklist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Discovery_Science_logo.svg/320px-Discovery_Science_logo.svg.png",
+                        description = "Tecnologia de ponta, astrofisica, experimentos ousados e inovacoes do futuro.",
                         quality = "HD"
                     ),
+                    Channel(
+                        id = "disc_theater",
+                        number = "82",
+                        title = "Discovery Theater HD",
+                        category = "Documentários",
+                        streamUrl = "https://video03.logicahost.com.br/topmixfilmes/topmixfilmes/playlist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Discovery_Theater_logo.png/320px-Discovery_Theater_logo.png",
+                        description = "Imagens cinematograficas em alta definicao da natureza e animais selvagens.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "disc_animal",
+                        number = "83",
+                        title = "Animal Planet HD",
+                        category = "Documentários",
+                        streamUrl = "https://cdn-ue1-prod.tsv2.amagi.tv/linear/outsidetv-outsidetvplus-oando/playlist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Animal_Planet_logo_2018.svg/320px-Animal_Planet_logo_2018.svg.png",
+                        description = "O reino animal de perto: resgate de fauna, predadores selvagens e vida dos pets.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_history",
+                        number = "84",
+                        title = "History Channel HD",
+                        category = "Documentários",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/history-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
+                        description = "Trato Feito, Alienigenas do Passado, Forjado no Fogo e grandes acontecimentos historicos.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_history_2",
+                        number = "85",
+                        title = "History 2 (H2) HD",
+                        category = "Documentários",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/history-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/History2_logo.svg/320px-History2_logo.svg.png",
+                        description = "Aprofundamento historico, grandes guerras, arqueologia e conspiracoes mundiais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "doc_natgeo",
+                        number = "86",
+                        title = "National Geographic (Nat Geo) HD",
+                        category = "Documentários",
+                        streamUrl = "https://cdn-ue1-prod.tsv2.amagi.tv/linear/outsidetv-outsidetvplus-oando/playlist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/National_Geographic_Logo.svg/320px-National_Geographic_Logo.svg.png",
+                        description = "Ciencia, exploracao geografica e preservacao do meio ambiente.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "doc_natgeowild",
+                        number = "87",
+                        title = "Nat Geo Wild HD",
+                        category = "Documentários",
+                        streamUrl = "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Nat_Geo_Wild_logo.svg/320px-Nat_Geo_Wild_logo.svg.png",
+                        description = "O lado mais selvagem e intocado da natureza nos ecossistemas mais extremos.",
+                        quality = "FHD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_variedades",
+                name = "Variedades & Estilo",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "var_multishow",
+                        number = "88",
+                        title = "Multishow HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "http://64.31.23.207:80/59471019/60849037/518551.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Multishow_logo_2017.svg/320px-Multishow_logo_2017.svg.png",
+                        description = "Shows ao vivo, humor com Vai Que Cola, festivais Rock in Rio e Lollapalooza.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "var_gnt",
+                        number = "89",
+                        title = "GNT HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "http://168.197.104.22/TRAVEL_BOX_BRASIL/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/GNT_logo_2020.svg/320px-GNT_logo_2020.svg.png",
+                        description = "Gastronomia, moda, decoracao, Papo de Segunda e Saia Justa.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "var_viva",
+                        number = "90",
+                        title = "Viva HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://9ada494d.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfVXBseW5rLU5ld2NvX0hMUw/playlist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Canal_Viva_logo_2019.svg/320px-Canal_Viva_logo_2019.svg.png",
+                        description = "As maiores novelas da teledramaturgia brasileira e programas que marcaram epoca.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "var_canalbrasil",
+                        number = "91",
+                        title = "Canal Brasil HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "http://vaiagora.vip:80/live/5q8VUj/5BeUd8/103518.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Canal_Brasil_logo_2019.svg/320px-Canal_Brasil_logo_2019.svg.png",
+                        description = "O melhor da cultura nacional, cinema brasileiro, MPB e festivais artisticos.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "var_bis",
+                        number = "92",
+                        title = "BIS HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "http://64.31.23.207:80/59471019/60849037/518551.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Canal_Bis_logo.svg/320px-Canal_Bis_logo.svg.png",
+                        description = "Grandes shows internacionais, documentarios musicais e turnes historicas.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "var_viagem",
+                        number = "93",
+                        title = "Modo Viagem HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "http://168.197.104.22/TRAVEL_BOX_BRASIL/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Modo_Viagem_logo.png/320px-Modo_Viagem_logo.png",
+                        description = "Turismo pelo mundo, hoteis deslumbrantes e experiencias de viagem inesqueciveis.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "var_e",
+                        number = "94",
+                        title = "E! Entertainment HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://isaocorp.cloudecast.com/playtv/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/E%21_logo_2012.svg/320px-E%21_logo_2012.svg.png",
+                        description = "O tapete vermelho das celebridades de Hollywood, reality shows e fofocas VIP.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "var_terraviva",
+                        number = "95",
+                        title = "Terra Viva HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://9ada494d.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfVXBseW5rLU5ld2NvX0hMUw/playlist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Terra_Viva_logo.png/320px-Terra_Viva_logo.png",
+                        description = "Vida no campo, sustentabilidade e transmissao de eventos rurais.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_358",
+                        number = "96",
+                        title = "Rede Minas",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://8hzcavccys.zoeweb.tv/redeminas/ngrp:redeminas_all/chunklist_w1997760151_b2771072.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-minas.png",
+                        description = "Cultura mineira, jornalismo regional e producoes independentes.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_345",
+                        number = "97",
+                        title = "Amazon Sat HD",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://amazonsat.brasilstream.com.br/hls/amazonsat/index.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/amazon-sat.png",
+                        description = "A emissora da Amazonia: biodiversidade, tradicoes e natureza exuberante.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_386",
+                        number = "98",
+                        title = "Novelissima",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://cis-no-samsung.otteravision.com/cis/no/no_h265.m3u8?ROGERIOTORRES",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/novelissima.png",
+                        description = "Grandes novelas latinas dubladas em transmissao continua 24 horas por dia.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_322",
+                        number = "99",
+                        title = "Rede TV",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/rede-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-tv.png",
+                        description = "Entretenimento, talk shows, fofocas e debates ao vivo.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_224",
+                        number = "100",
+                        title = "PlayTV",
+                        category = "Variedades & Estilo",
+                        streamUrl = "https://isaocorp.cloudecast.com/playtv/tracks-v1a1/mono.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/playtv.png",
+                        description = "Games, e-sports, cultura geek, animes e musica pop.",
+                        quality = "HD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_4k",
+                name = "Canais 4K Ultra HD",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_4k_sportv",
+                        number = "101",
+                        title = "SporTV 4K UHD",
+                        category = "Canais 4K Ultra HD",
+                        streamUrl = "http://195.178.110.110/sportv2/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
+                        description = "Transmissao oficial em resolucao 4K Ultra HD (3840x2160) com maximo detalhe esportivo.",
+                        quality = "4K"
+                    ),
+                    Channel(
+                        id = "ch_4k_prem",
+                        number = "102",
+                        title = "Premiere 4K UHD",
+                        category = "Canais 4K Ultra HD",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/30063.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
+                        description = "O melhor do futebol brasileiro com qualidade de cinema 4K UHD e som imersivo.",
+                        quality = "4K"
+                    ),
+                    Channel(
+                        id = "ch_4k_tc",
+                        number = "103",
+                        title = "Telecine Premium 4K UHD",
+                        category = "Canais 4K Ultra HD",
+                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
+                        description = "Grandes lancamentos do cinema mundial na resolucao maxima 4K Ultra HD.",
+                        quality = "4K"
+                    ),
+                    Channel(
+                        id = "ch_4k_hbo",
+                        number = "104",
+                        title = "HBO 4K UHD",
+                        category = "Canais 4K Ultra HD",
+                        streamUrl = "http://45.162.64.114/TNT/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
+                        description = "Series premiadas e filmes HBO gravados em resolucao nativa 4K UHD.",
+                        quality = "4K"
+                    ),
+                    Channel(
+                        id = "ch_4k_disc",
+                        number = "105",
+                        title = "Discovery 4K UHD",
+                        category = "Canais 4K Ultra HD",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-turbo-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
+                        description = "Documentarios deslumbrantes da natureza, ciencia e vida selvagem em 4K.",
+                        quality = "4K"
+                    ),
+                    Channel(
+                        id = "ch_4k_nasa",
+                        number = "106",
+                        title = "NASA TV 4K UHD",
+                        category = "Canais 4K Ultra HD",
+                        streamUrl = "https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/320px-NASA_logo.svg.png",
+                        description = "Transmissao oficial ao vivo do espaco sideral da Estacao Espacial Internacional em 4K.",
+                        quality = "4K"
+                    ),
+                    Channel(
+                        id = "ch_4k_nature",
+                        number = "107",
+                        title = "Love Nature 4K UHD",
+                        category = "Canais 4K Ultra HD",
+                        streamUrl = "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Love_Nature_logo.png/320px-Love_Nature_logo.png",
+                        description = "Paisagens paradisiacas do planeta Terra filmadas em ultra alta definicao 4K.",
+                        quality = "4K"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_h265",
+                name = "Canais H.265 (HEVC)",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_h265_globo",
+                        number = "108",
+                        title = "Globo SP H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
+                        description = "Transmissao em codec H.265 de alta eficiencia: imagem ultra nitida consumindo metade da banda.",
+                        quality = "H265"
+                    ),
+                    Channel(
+                        id = "ch_h265_sportv",
+                        number = "109",
+                        title = "SporTV H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "http://195.178.110.110/sportv3/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
+                        description = "O canal lider de esportes otimizado em compressao H.265 sem travamentos.",
+                        quality = "H265"
+                    ),
+                    Channel(
+                        id = "ch_h265_tc",
+                        number = "110",
+                        title = "Telecine H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "http://46.151.196.223:14326/",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
+                        description = "Filmes em alta taxa de bits codificados em H.265 para TV Boxes modernas.",
+                        quality = "H265"
+                    ),
+                    Channel(
+                        id = "ch_h265_hbo",
+                        number = "111",
+                        title = "HBO H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
+                        description = "Series e sucessos de Hollywood em transmissao eficiente H.265.",
+                        quality = "H265"
+                    ),
+                    Channel(
+                        id = "ch_h265_espn",
+                        number = "112",
+                        title = "ESPN H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-hd.png",
+                        description = "Esportes internacionais com codificacao avancada H.265 a 60fps.",
+                        quality = "H265"
+                    ),
+                    Channel(
+                        id = "ch_h265_prem",
+                        number = "113",
+                        title = "Premiere H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/30063.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
+                        description = "Futebol brasileiro com transmissao rapida e estavel pelo codec H.265.",
+                        quality = "H265"
+                    ),
+                    Channel(
+                        id = "ch_h265_nov",
+                        number = "114",
+                        title = "Novelissima H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "https://cis-no-samsung.otteravision.com/cis/no/no_h265.m3u8?ROGERIOTORRES",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/novelissima.png",
+                        description = "Novelas latinas codificadas em HEVC nativo para a melhor qualidade de imagem.",
+                        quality = "H265"
+                    ),
+                    Channel(
+                        id = "ch_h265_like",
+                        number = "115",
+                        title = "L!ke TV H.265 (HEVC)",
+                        category = "Canais H.265 (HEVC)",
+                        streamUrl = "https://cnl-cl-samsung.otteravision.com/cnl/cl_h265/cl_h265.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/like-tv.png",
+                        description = "Canal de dicas de entretenimento e cultura pop em transmissao H.265.",
+                        quality = "H265"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_globo",
+                name = "Globo",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_158",
+                        number = "116",
+                        title = "Globo SP - Globo Sao Paulo",
+                        category = "Globo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
+                        description = "TV Globo Sao Paulo: Jornalismo, novelas, futebol e programacao completa em alta definicao.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_160",
+                        number = "117",
+                        title = "Globo RJ - TV Globo Rio",
+                        category = "Globo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rj-tv-globo-rio.png",
+                        description = "TV Globo Rio de Janeiro: Cobertura jornalistica carioca, novelas e transmissao ao vivo.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_163",
+                        number = "118",
+                        title = "Globo MG - TV Globo Minas",
+                        category = "Globo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-minas-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-mg-tv-globo-minas.png",
+                        description = "Sinal oficial da TV Globo Minas com informacao e o melhor do entretenimento.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_166",
+                        number = "119",
+                        title = "Globo BA - TV Bahia",
+                        category = "Globo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-bahia-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-ba-tv-bahia.jpg",
+                        description = "A TV Bahia e a emissora afiliada a Rede Globo com a maior cobertura do estado baiano.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_165",
+                        number = "120",
+                        title = "Globo DF - TV Globo Brasilia",
+                        category = "Globo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-brasilia-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-df-tv-globo-brasilia.png",
+                        description = "Cobertura politica da capital federal, jornalismo nacional e entretenimento.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_324",
+                        number = "121",
+                        title = "Globo RBS - Globo Porto Alegre",
+                        category = "Globo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rbs-porto-alegre/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rbs-globo-porto-alegre.png",
+                        description = "RBS TV Porto Alegre levando o sinal da Globo e tradicoes gauchas para o Rio Grande do Sul.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_167",
+                        number = "122",
+                        title = "Globo PR - RPC TV Curitiba",
+                        category = "Globo",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rpc-curitiba-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-pr-rpc-tv-curitiba.png",
+                        description = "RPC TV Curitiba: jornalismo lider de audiencia no estado do Parana.",
+                        quality = "HD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_sbt",
+                name = "SBT",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_168",
+                        number = "123",
+                        title = "SBT SP - SBT Sao Paulo",
+                        category = "SBT",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/sbt-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sbt-sp-sbt-sao-paulo.png",
+                        description = "SBT Sao Paulo: A TV que tem torcida com Silvio Santos, jornalismo popular e novelas infantis.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_169",
+                        number = "124",
+                        title = "SBT RJ - SBT Rio",
+                        category = "SBT",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/sbt-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sbt-rj-sbt-rio.png",
+                        description = "SBT Rio: Isabele Benito trazendo as principais noticias e prestacao de servico no RJ.",
+                        quality = "HD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_record",
+                name = "Record",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_178",
+                        number = "125",
+                        title = "RedeRecord SP - RecordTV SP",
+                        category = "Record",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rederecord-sp-recordtv-sp.png",
+                        description = "RecordTV Sao Paulo: Cidade Alerta, Jornal da Record, novelas biblicas e reality shows.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_177",
+                        number = "126",
+                        title = "RedeRecord RJ - RecordTV Rio",
+                        category = "Record",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rederecord-rj-recordtv-rio.png",
+                        description = "RecordTV Rio com jornalismo policial de ponta e transmissao ao vivo.",
+                        quality = "HD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_band",
+                name = "Band",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_176",
+                        number = "127",
+                        title = "Band SP - Band SP",
+                        category = "Band",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-sp-band-sp.png",
+                        description = "Band Sao Paulo: O canal do esporte, Formula 1, Jogo Aberto, Os Donos da Bola e MasterChef.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_175",
+                        number = "128",
+                        title = "Band RJ - Band Rio",
+                        category = "Band",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-rj-band-rio.png",
+                        description = "Band Rio trazendo debates do futebol carioca e noticias da regiao metropolitana.",
+                        quality = "HD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_noticias",
+                name = "Notícias",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_212",
+                        number = "129",
+                        title = "CNN Brasil",
+                        category = "Notícias",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/cnn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cnn-brasil.png",
+                        description = "A maior marca de noticias do mundo no Brasil com analise politica e economica 24h.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_213",
+                        number = "130",
+                        title = "Jovem Pan News",
+                        category = "Notícias",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/jovem-pam-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/jovem-pan-news.png",
+                        description = "Opiniao forte, debates acalorados, Pingos nos Is e transmissao em tempo real.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_214",
+                        number = "131",
+                        title = "Band News",
+                        category = "Notícias",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-news.png",
+                        description = "Em 20 minutos tudo pode mudar: informacao rapida e atualizada no Brasil e no mundo.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_222",
+                        number = "132",
+                        title = "Record News",
+                        category = "Notícias",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/record-news.png",
+                        description = "O principal canal de jornalismo da televisao aberta no Brasil.",
+                        quality = "HD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_f1",
+                name = "Fórmula 1 & Velocidade",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_f1_pro",
+                        number = "133",
+                        title = "F1 TV Pro HD - Oficial",
+                        category = "Fórmula 1 & Velocidade",
+                        streamUrl = "https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/chunklist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
+                        description = "Transmissao oficial mundial de todos os treinos livres, classificacoes e Grandes Premios da F1.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_f1_band_gp",
+                        number = "134",
+                        title = "Band HD - Formula 1 GP Ao Vivo",
+                        category = "Fórmula 1 & Velocidade",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
+                        description = "A casa oficial da Formula 1 no Brasil: narracao consagrada e reportagens direto do paddock.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_f1_onboard",
+                        number = "135",
+                        title = "F1 OnBoard & Pit Lane 24H",
+                        category = "Fórmula 1 & Velocidade",
+                        streamUrl = "https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/chunklist.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
+                        description = "Cameras exclusivas a bordo dos cockpits e comunicacao direta de radio da equipe.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_f1_redbull",
+                        number = "136",
+                        title = "Red Bull Racing F1 TV HD",
+                        category = "Fórmula 1 & Velocidade",
+                        streamUrl = "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Red_Bull_Racing_logo.svg/320px-Red_Bull_Racing_logo.svg.png",
+                        description = "Bastidores da equipe tetracampea mundial Red Bull Racing com Max Verstappen.",
+                        quality = "FHD"
+                    )
                 )
             ),
             ChannelCategory(
@@ -1045,124 +1500,34 @@ object ChannelRepository {
                 channels = listOf(
                     Channel(
                         id = "ch_cartoon",
-                        number = "95",
+                        number = "137",
                         title = "Cartoon Network HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://45.162.64.114/CARTOON_NETWORK/index.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/cartoon-network-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/320px-Cartoon_Network_2010_logo.svg.png",
-                        description = "O melhor dos desenhos animados 24 horas por dia com humor e aventura.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_discovery_kids",
-                        number = "96",
-                        title = "Discovery Kids HD",
-                        category = "Infantil & Kids",
-                        streamUrl = "http://170.83.49.66:8083/DISCOVERYKIDSHD/index.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Discovery_Kids_2016.svg/320px-Discovery_Kids_2016.svg.png",
-                        description = "Líder em entretenimento infantil com conteúdos educativos e muita diversão.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_400",
-                        number = "97",
-                        title = "Wording TV",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://tv02.zas.media:1936/wordingtv/wordingtv/chunklist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/wording-tv.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_393",
-                        number = "98",
-                        title = "Ministerio Infantil TV",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://stmv4.voxtvhd.com.br/1990/1990/playlist.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/ministerio-infantil-tv.jpg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_369",
-                        number = "99",
-                        title = "Otaku Sign TV",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://stmv1.srvif.com/anime/anime/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/otaku-sign-tv.jpg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_368",
-                        number = "100",
-                        title = "Sato +",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://sto-sat-samsung.otteravision.com/sto/sat/sat.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sato.jpg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_363",
-                        number = "101",
-                        title = "Rede Brasil",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://tv02.zas.media:1936/tvmarajoara/tvmarajoara/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-brasil.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_356",
-                        number = "102",
-                        title = "TV NBN",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://cdn.jmvstream.com/w/LVW-8410/LVW8410_uiZOVm6vz1/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-nbn.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_354",
-                        number = "103",
-                        title = "TV +Marica",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://5cf4a2c2512a2.streamlock.net/tvmaismarica/tvmaismarica/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-marica.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_351",
-                        number = "104",
-                        title = "Cine Kuriakos",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://w2.manasat.com/kcine/smil:kcine.smil/chunklist_w1486728732_b30048000_sleng.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cine-kuriakos.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_350",
-                        number = "105",
-                        title = "Gospel Cartoon",
-                        category = "Infantil & Kids",
-                        streamUrl = "https://stmv1.srvif.com/gospelcartoon/gospelcartoon/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/gospel-cartoon.png",
-                        description = "",
-                        quality = "HD"
+                        description = "O canal dos desenhos animados: Ben 10, Teen Titans Go, Hora de Aventura e Incrivel Mundo de Gumball.",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "ch_344",
-                        number = "106",
+                        number = "138",
                         title = "Rakuten TV Kids",
                         category = "Infantil & Kids",
-                        streamUrl = "http://45.162.64.114/CARTOON_NETWORK/index.m3u8",
+                        streamUrl = "https://48faa1daf24549fab34594bc5bdd99f2.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6213/master.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rakuten-tv-kids.png",
-                        description = "",
+                        description = "Animacoes divertidas e educativas com programacao segura para criancas.",
                         quality = "HD"
                     ),
+                    Channel(
+                        id = "ch_207",
+                        number = "139",
+                        title = "Retro Cartoon Channel",
+                        category = "Infantil & Kids",
+                        streamUrl = "https://stmv1.video.brstream.com.br/retrotv/retrotv/playlist.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/retro-cartoon-channel.png",
+                        description = "Os desenhos animados nostalgicos das decadas de 80, 90 e 2000.",
+                        quality = "HD"
+                    )
                 )
             ),
             ChannelCategory(
@@ -1172,482 +1537,24 @@ object ChannelRepository {
                 channels = listOf(
                     Channel(
                         id = "ch_396",
-                        number = "107",
+                        number = "140",
                         title = "Now 70s",
                         category = "Músicas & Shows",
-                        streamUrl = "https://lightning-now70s-samsungnz.amagi.tv/playlist720p.m3u8?ROGERIOTORRES",
+                        streamUrl = "https://video04.logicahost.com.br/now70/now70/playlist.m3u8?ROGERIOTORRES",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/now-70s.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_389",
-                        number = "108",
-                        title = "BS TV",
-                        category = "Músicas & Shows",
-                        streamUrl = "https://br5093.streamingdevideo.com.br/bstv/bstv/chunklist.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/bs-tv.png",
-                        description = "",
+                        description = "Os maiores sucessos que marcaram a inesquecivel decada de 1970.",
                         quality = "HD"
                     ),
                     Channel(
                         id = "ch_361",
-                        number = "109",
+                        number = "141",
                         title = "KPOP TV",
                         category = "Músicas & Shows",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "https://stmv1.video.brstream.com.br/kpoptv/kpoptv/playlist.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/kpop-tv.png",
-                        description = "",
+                        description = "Os melhores videoclipes, dancas e fenomenos do pop coreano mundial.",
                         quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_341",
-                        number = "110",
-                        title = "Top Mix",
-                        category = "Músicas & Shows",
-                        streamUrl = "https://video01.logicahost.com.br/topmixtvsertanejooficial/topmixtvsertanejooficial/chunklist_w1579950137.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/top-mix.png",
-                        description = "A&nbsp;Top Mix TV&nbsp;é uma emissora de televisão brasileira que se destaca por sua programação diversificada e conteúdo de quali",
-                        quality = "HD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_agro",
-                name = "Agro & Rural",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_229",
-                        number = "111",
-                        title = "Canal Rural",
-                        category = "Agro & Rural",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/canal-rural-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/canal-rural.jpg",
-                        description = "O \"Canal Rural\" é uma emissora de televisão brasileira dedicada ao agronegócio e à ruralidade. Com uma programação focada em tem",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_188",
-                        number = "112",
-                        title = "AgroBrasil TV",
-                        category = "Agro & Rural",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/agrobrasil-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/agrobrasiltv.jpg",
-                        description = "O AgroBrasil TV é o canal que tem sua programação totalmente voltada para o AgronegócioO Agronegócio brasileiro é forte, promove o",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_187",
-                        number = "113",
-                        title = "Canal do Boi",
-                        category = "Agro & Rural",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/canal-do-boi-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/canal-do-boi.jpg",
-                        description = "O Canal do Boi é um canal de televisão brasileiro dedicado ao setor agropecuário e à pecuária. Lançado em 1995, o canal é especial",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_185",
-                        number = "114",
-                        title = "Rede CNT",
-                        category = "Agro & Rural",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/rede-cnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-cnt.jpg",
-                        description = "A Rede CNT, sigla para Central Nacional de Televisão, é uma emissora de televisão brasileira. Fundada em 1979, a rede tem cobertur",
-                        quality = "HD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_cultura",
-                name = "Educação & Cultura",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_348",
-                        number = "115",
-                        title = "Canal Gov",
-                        category = "Educação & Cultura",
-                        streamUrl = "https://canalgov-stream.ebc.com.br/index.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/canal-gov.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_347",
-                        number = "116",
-                        title = "Canal Educacao",
-                        category = "Educação & Cultura",
-                        streamUrl = "https://canaleducacao-stream.ebc.com.br/index.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/canal-educação.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_346",
-                        number = "117",
-                        title = "Canal 25",
-                        category = "Educação & Cultura",
-                        streamUrl = "https://srv6.zcast.com.br/tvdagente/tvdagente/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/canal-25.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_184",
-                        number = "118",
-                        title = "TV Brasil",
-                        category = "Educação & Cultura",
-                        streamUrl = "https://tvbrasil-stream.ebc.com.br/EBC_HD-avc1_2300000=10000.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-brasil.jpg",
-                        description = "A TV Brasil é uma emissora de televisão pública brasileira, operada pela Empresa Brasil de Comunicação (EBC). Criada em 2007, a TV",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_183",
-                        number = "119",
-                        title = "TV Cultura",
-                        category = "Educação & Cultura",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tv-cultura-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-cultura.jpg",
-                        description = "A TV Cultura é uma emissora pública brasileira conhecida por sua programação educativa e cultural. Fundada em 1969, oferece conteú",
-                        quality = "FHD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_religiosos",
-                name = "Religiosos",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_355",
-                        number = "120",
-                        title = "TV Universal",
-                        category = "Religiosos",
-                        streamUrl = "https://644398c.ha.azioncdn.net/primary/tvuniversal_480p.sdp/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-universal.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_316",
-                        number = "121",
-                        title = "TV Aparecida",
-                        category = "Religiosos",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tv-aparecida-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-aparecida.png",
-                        description = "A TV Aparecida é uma emissora brasileira de inspiração católica, com programação voltada para a fé, cultura, entretenimento e educ",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_270",
-                        number = "122",
-                        title = "Rede Gospel",
-                        category = "Religiosos",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/rede-gospel-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-gospel.png",
-                        description = "Bem-vindo à \"Rede Gospel\"! Este é o canal que traz inspiração e mensagens de fé para enriquecer sua vida espiritual. Aqui, mergu",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_267",
-                        number = "123",
-                        title = "Rede Mundial",
-                        category = "Religiosos",
-                        streamUrl = "https://68882bdaf156a.streamlock.net/impd/ngrp:impd_all/chunklist_w1146366542_b2691072.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-mundial.jpg",
-                        description = "Bem-vindo à \"Rede Mundial\"! Este é o canal que conecta você a uma variedade de conteúdos informativos, culturais e educativos. A",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_403",
-                        number = "124",
-                        title = "TV Unidos HD",
-                        category = "Religiosos",
-                        streamUrl = "https://video09.logicahost.com.br/tvunidoss/tvunidoss/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-unidos-hd.jpeg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_402",
-                        number = "125",
-                        title = "TV Vip Gospel",
-                        category = "Religiosos",
-                        streamUrl = "https://video05.logicahost.com.br/vipgospel/vipgospel/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-vip-gospel.jpeg",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_343",
-                        number = "126",
-                        title = "Avivando Nacoes",
-                        category = "Religiosos",
-                        streamUrl = "https://video04.logicahost.com.br/tvavivandonacoes/tvavivandonacoes/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/avivando-nações.png",
-                        description = "\"O canal Avivando Nações é um espaço dedicado a compartilhar a Palavra de Deus com poder e unção, levando mensagens de fé, espera",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_333",
-                        number = "127",
-                        title = "Rede Super",
-                        category = "Religiosos",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-super.png",
-                        description = "A&nbsp;Rede Super&nbsp;é uma emissora de televisão brasileira com sede em Belo Horizonte, Minas Gerais, fundada em 2000. Pertencen",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_317",
-                        number = "128",
-                        title = "TV Evangelizar",
-                        category = "Religiosos",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tv-evangelizar-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-evangelizar.png",
-                        description = "A TV Evangelizar é uma emissora brasileira de inspiração cristã, dedicada à evangelização e à promoção de valores como fé, esperan",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_265",
-                        number = "129",
-                        title = "TV Cancao Nova",
-                        category = "Religiosos",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/cancao-nova-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-canção-nova.jpg",
-                        description = "Bem-vindo à \"Canção Nova\"! Este é o canal que ilumina corações e promove a espiritualidade por meio de mensagens religiosas, ora",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_261",
-                        number = "130",
-                        title = "RIT - Rede Internacional de Televisao",
-                        category = "Religiosos",
-                        streamUrl = "https://acesso.ecast.site:3648/live/ritlive.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rit-rede-internacional-de-televisão.jpg",
-                        description = "Bem-vindo à \"Rede Internacional de Televisão\" (RIT)! Este é o canal que conecta e inspira através de uma variedade de conteúdo e",
-                        quality = "HD"
-                    ),
-                )
-            ),
-            ChannelCategory(
-                id = "cat_variedades",
-                name = "Variedades & Estilo",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "ch_362",
-                        number = "131",
-                        title = "TV ZOOM",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn.jmvstream.com/w/LVW-9730/LVW9730_LmUwslM8jt/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-zoom.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_360",
-                        number = "132",
-                        title = "TV Terceiro Anjo",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://streamer1.streamhost.org/salive/GMI3anjoh/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-terceiro-anjo.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_358",
-                        number = "133",
-                        title = "Rede Minas",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://8hzcavccys.zoeweb.tv/redeminas/ngrp:redeminas_all/chunklist_w1997760151_b2771072.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-minas.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_345",
-                        number = "134",
-                        title = "Amazon Sat HD",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/amazon-sat-hd.png",
-                        description = "O Amazon Sat é uma emissora de televisão regional brasileira, operada pelo Grupo Rede Amazônica, com sede em Manaus (AM) e concess",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_339",
-                        number = "135",
-                        title = "Astral TV",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://isaocorp.cloudecast.com/astraltv/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/astral-tv.png",
-                        description = "A&nbsp;Astral TV&nbsp;é um canal de televisão brasileiro dedicado a temas como esoterismo, astrologia e espiritualidade. Fundado p",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_319",
-                        number = "136",
-                        title = "Miami Vice e Convidados",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/miami-vice-e-convidados/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/miami-vice-e-convidados.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_376",
-                        number = "137",
-                        title = "L!ke TV",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cnl-cl-samsung.otteravision.com/cnl/cl_h265/cl_h265.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/lke-tv.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_251",
-                        number = "138",
-                        title = "GO Outside",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn-ue1-prod.tsv2.amagi.tv/linear/outsidetv-outsidetvplus-oando/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/go-outside.jpg",
-                        description = "Bem-vindo ao \"GO Outside\"! Este é o canal para os amantes da aventura e da vida ao ar livre. Aqui, exploramos o mundo da adrenal",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_237",
-                        number = "139",
-                        title = "Qwest TV",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://qwest-jazz-plex.amagi.tv/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/qwest-tv.png",
-                        description = "A \"Qwest TV\" é um serviço de streaming de música fundado pelo renomado músico Quincy Jones. O canal oferece uma ampla variedade ",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_225",
-                        number = "140",
-                        title = "Revry Brasil",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/revry-br-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/revry-brasil.jpg",
-                        description = "A \"Revry Brasil\" é um canal de televisão voltado para a comunidade LGBTQIA+ no Brasil. Ele oferece uma programação diversificada",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_352",
-                        number = "141",
-                        title = "Chroma TV",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://5c483b9d1019c.streamlock.net/8054/8054/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/chroma-tv.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_327",
-                        number = "142",
-                        title = "Cine Catastrofe",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/cine-catastrofe/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cine-catastrofe.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_228",
-                        number = "143",
-                        title = "TV Loading",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-loading.jpeg",
-                        description = "A \"TV Loading\" é um canal de televisão brasileiro que busca oferecer uma programação voltada para o público geek, gamer e otaku.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_226",
-                        number = "144",
-                        title = "Geekdot",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://stream.ichibantv.com:3764/hybrid/play.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/geekdot.jpg",
-                        description = "Bem-vindo ao \"Geekdot\"! Aqui, exploramos um mundo de animações japonesas repletas de aventuras, emoções e personagens cativantes",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_207",
-                        number = "145",
-                        title = "Retro Cartoon Channel",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://stmv1.video.brstream.com.br/retrotv/retrotv/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/retro-cartoon-channel.jpeg",
-                        description = "Bem-vindo ao \"Retrô Cartoon Channel\"! Aqui, voltamos no tempo para trazer de volta os desenhos animados clássicos que fizeram pa",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_386",
-                        number = "146",
-                        title = "Novelissima",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cis-no-samsung.otteravision.com/cis/no/no_h265.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/novelissima.webp",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_353",
-                        number = "147",
-                        title = "TV Camara",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://stream3.camara.gov.br/tv1/manifest.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-camara.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_322",
-                        number = "148",
-                        title = "Rede TV",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/rede-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-tv.png",
-                        description = "",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_230",
-                        number = "149",
-                        title = "Demais TV",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://stmv1.samcast.com.br/demaistv6503/demaistv6503/playlist.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/demais-tv.jpg",
-                        description = "Bem-vindo à \"Demais TV\"! Aqui, oferecemos uma mistura vibrante de entretenimento e variedades para alegrar seus dias. Nosso cana",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_224",
-                        number = "150",
-                        title = "PlayTV",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://isaocorp.cloudecast.com/playtv/tracks-v1a1/mono.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/playtv.jpg",
-                        description = "A \"PlayTV\" é um canal de televisão brasileiro que oferece uma programação diversificada voltada para o público jovem e adolescen",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_181",
-                        number = "151",
-                        title = "TV Galega Blumenau",
-                        category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tv-galega-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-galega-blumenau.jpg",
-                        description = "TV Galega , que atende a um moderno conceito de fazer televisão inspirado nos chamados “canais de acesso público”, leva ao ar repo",
-                        quality = "HD"
-                    ),
+                    )
                 )
             ),
             ChannelCategory(
@@ -1657,86 +1564,66 @@ object ChannelRepository {
                 channels = listOf(
                     Channel(
                         id = "ch_playboy",
-                        number = "152",
+                        number = "142",
                         title = "Playboy TV HD",
                         category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/anal.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/Playboy_TV_Logo.svg/320px-Playboy_TV_Logo.svg.png",
-                        description = "Transmissão adulta premium 24h sem cortes com conteúdo exclusivo internacional.",
+                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/playboy.txt",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Playboy_Enterprises_logo.svg/320px-Playboy_Enterprises_logo.svg.png",
+                        description = "O canal pioneiro do entretenimento erotico refinado mundial (+18).",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "ch_sexy_hot",
-                        number = "153",
+                        number = "143",
                         title = "Sexy Hot HD",
                         category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/compilation.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/a/a2/Sexy_Hot_logo.png/320px-Sexy_Hot_logo.png",
-                        description = "O mais consagrado canal adulto do Brasil com produções e compilações exclusivas.",
-                        quality = "HD"
+                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/sexyhot.txt",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sexy_Hot_logo_2018.svg/320px-Sexy_Hot_logo_2018.svg.png",
+                        description = "As maiores producoes nacionais e estrelas consagradas do cinema adulto (+18).",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "ch_venus",
-                        number = "154",
+                        number = "144",
                         title = "Venus HD",
                         category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/bigtits.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Canal_Combate_logo.png/320px-Canal_Combate_logo.png",
-                        description = "Programação erótica e explícita internacional com as maiores estrelas do entretenimento adulto.",
-                        quality = "HD"
+                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/venus.txt",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Venus_logo.svg/320px-Venus_logo.svg.png",
+                        description = "Sensualidade e producoes eroticas latinas e internacionais (+18).",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "ch_sex_prive",
-                        number = "155",
+                        number = "145",
                         title = "Sex Privé HD",
                         category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/blowjob.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d4/Sex_Priv%C3%A9_logo.png/320px-Sex_Priv%C3%A9_logo.png",
-                        description = "Entretenimento adulto 24 horas no ar com o melhor do cinema explícito mundial.",
-                        quality = "HD"
+                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/sexprive.txt",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Sex_Prive_logo_2018.png/320px-Sex_Prive_logo_2018.png",
+                        description = "Conteudo explicito e producoes exclusivas com as maiores estrelas do Brasil (+18).",
+                        quality = "FHD"
                     ),
                     Channel(
                         id = "ch_brazzers",
-                        number = "156",
+                        number = "146",
                         title = "Brazzers TV HD",
                         category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/milf.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
-                        description = "O canal mais assistido do mundo com superproduções adultas diárias em alta definição.",
+                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/brazzers.txt",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Brazzers_logo.svg/320px-Brazzers_logo.svg.png",
+                        description = "A produtora mais famosa do mundo com as atrizes mais requisitadas (+18).",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "ch_redlight",
-                        number = "157",
+                        number = "147",
                         title = "Redlight TV HD",
                         category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/hardcore.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Space_logo_2015.svg/320px-Space_logo_2015.svg.png",
-                        description = "Ação extrema e filmes adultos hardcore com as modelos mais famosas da Europa e América.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_penthouse",
-                        number = "158",
-                        title = "Penthouse Gold HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/latina.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
-                        description = "O luxo e a sensualidade das maiores produções adultas com atrizes latinas consagradas.",
+                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/redlight.txt",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Playboy_Enterprises_logo.svg/320px-Playboy_Enterprises_logo.svg.png",
+                        description = "Filmes adultos europeus e fetiches sem censura (+18).",
                         quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_private",
-                        number = "159",
-                        title = "Private TV HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://cdn.adultiptv.net/amateur.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/TNT_Logo_2016.svg/320px-TNT_Logo_2016.svg.png",
-                        description = "Clássicos do cinema erótico europeu e lançamentos das produtoras mais premiadas.",
-                        quality = "HD"
-                    ),
+                    )
                 )
-            ),
+            )
         )
     }
 }

@@ -1,4 +1,4 @@
-﻿plugins {
+plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
@@ -11,8 +11,8 @@ android {
         applicationId = "com.mytv.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 7
-        versionName = "2.1.5"
+        versionCode = 8
+        versionName = "2.2.0"
 
         vectorDrawables {
             useSupportLibrary = true
