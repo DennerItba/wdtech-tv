@@ -1,6 +1,6 @@
 {
-  "versionCode": 8,
-  "versionName": "2.2.0",
-  "releaseNotes": "\u2022 Grade completa com todos os canais solicitados adicionados\n\u2022 Cine Sky, SporTV, ESPN, PPV Premiere, 7 Cameras A Fazenda\n\u2022 Canais 4K, Canais H265, Sony Channel, Discovery, HBO, Telecine\n\u2022 Navegacao D-Pad aprimorada",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.0/MyTvApp.apk"
+  "versionCode": 9,
+  "versionName": "2.2.1",
+  "releaseNotes": "\u2022 Atualizacao dos links de transmissao de A Fazenda 24H (Cameras 1 a 5)\n\u2022 Suporte nativo otimizado para transmissao TS e HLS\n\u2022 Melhoria na estabilidade de conexao dos realities",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.1/MyTvApp.apk"
 }
