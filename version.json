@@ -1,6 +1,6 @@
 {
-  "versionCode": 12,
-  "versionName": "2.2.4",
+  "versionCode": 13,
+  "versionName": "2.2.5",
   "releaseNotes": "\u2022 Corre\u00e7\u00e3o completa do Guia de Programa\u00e7\u00e3o (EPG) dos canais!\n\u2022 EPG ao vivo integrado via API dos servidores e grades aut\u00eanticas por canal\n\u2022 Informa\u00e7\u00f5es precisas para SporTV, ESPN, Cine Sky, Telecine, HBO, Discovery, Fazenda e mais\n\u2022 Renomeado arquivo oficial do instalador para wdtechtv.apk\n\u2022 Playback 7 Dias sincronizado com os programas reais da grade",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.4/wdtechtv.apk"
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.5/wdtechtv.apk"
 }
