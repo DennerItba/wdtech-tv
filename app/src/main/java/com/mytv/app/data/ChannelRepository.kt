@@ -2,6 +2,11 @@ package com.mytv.app.data
 
 import com.mytv.app.model.Channel
 import com.mytv.app.model.ChannelCategory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import java.net.HttpURLConnection
+import java.net.URL
 
 object ChannelRepository {
 
@@ -161,293 +166,306 @@ object ChannelRepository {
                     )
                 )
             ),
+                        ChannelCategory(
+                id = "cat_jogos_dia",
+                name = "⚽ Jogos do Dia (Ao Vivo)",
+                isLocked = false,
+                channels = dynamicJogosDoDia ?: getFallbackJogosDoDia()
+            ),
+            ChannelCategory(
+                id = "cat_premiere",
+                name = "⚽ Premiere FC (Todos os Jogos)",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "prem_clubes",
+                        number = "49",
+                        title = "Premiere Clubes FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72262.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "O melhor do futebol brasileiro 24 horas por dia com jogos ao vivo e programas exclusivos.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_2",
+                        number = "50",
+                        title = "Premiere 2 FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72237.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "Transmissões ao vivo das Séries A e B do Brasileirão e campeonatos regionais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_3",
+                        number = "51",
+                        title = "Premiere 3 FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72241.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "Partidas simultâneas ao vivo e transmissão completa dos principais clubes do Brasil.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_4",
+                        number = "52",
+                        title = "Premiere 4 FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72245.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "Futebol ao vivo em alta definição direto dos estádios de todo o Brasil.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_5",
+                        number = "53",
+                        title = "Premiere 5 FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72249.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "Canal de transmissão direta de partidas simultâneas dos campeonatos nacionais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_6",
+                        number = "54",
+                        title = "Premiere 6 FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72253.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "Cobertura completa dos jogos da Série B e confrontos regionais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_7",
+                        number = "55",
+                        title = "Premiere 7 FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72257.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "Canal pay-per-view exclusivo para transmissões de mata-mata e decisões.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "prem_8",
+                        number = "56",
+                        title = "Premiere 8 FHD",
+                        category = "⚽ Premiere FC (Todos os Jogos)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/180158.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
+                        description = "Transmissão em tempo real de partidas complementares da rodada de futebol.",
+                        quality = "FHD"
+                    )
+                )
+            ),
+            ChannelCategory(
+                id = "cat_campeonatos",
+                name = "🏆 Campeonatos & Estaduais",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "sportynet_1",
+                        number = "57",
+                        title = "SportyNet 1 FHD",
+                        category = "🏆 Campeonatos & Estaduais",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184569.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
+                        description = "Transmissões ao vivo dos Campeonatos Estaduais, divisões de acesso e copas regionais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "sportynet_2",
+                        number = "58",
+                        title = "SportyNet 2 FHD",
+                        category = "🏆 Campeonatos & Estaduais",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184578.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
+                        description = "Canal complementar com múltiplos jogos ao vivo simultâneos dos campeonatos estaduais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "dazn_1",
+                        number = "59",
+                        title = "DAZN 1 FHD",
+                        category = "🏆 Campeonatos & Estaduais",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184550.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/dazn.png",
+                        description = "O serviço global de esportes: Série C, futebol europeu, boxe e torneios mundiais.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "fcf_tv_1",
+                        number = "60",
+                        title = "FCF TV 1 FHD",
+                        category = "🏆 Campeonatos & Estaduais",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/247976.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
+                        description = "Transmissão oficial das federações estaduais com jogos ao vivo e copas do Nordeste.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "xsports_fhd",
+                        number = "61",
+                        title = "X Sports FHD",
+                        category = "🏆 Campeonatos & Estaduais",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/340449.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
+                        description = "Esportes alternativos, campeonatos internacionais e partidas ao vivo.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "bandsports_campeonatos",
+                        number = "62",
+                        title = "BandSports FHD",
+                        category = "🏆 Campeonatos & Estaduais",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71801.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/bandsports.png",
+                        description = "Futebol internacional, campeonatos de base, tênis, automobilismo e esportes olímpicos.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "combate_campeonatos",
+                        number = "63",
+                        title = "Combate FHD",
+                        category = "🏆 Campeonatos & Estaduais",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71842.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/combate.png",
+                        description = "O canal oficial das lutas: UFC, Boxe, Jiu-Jitsu e grandes torneios de artes marciais.",
+                        quality = "FHD"
+                    )
+                )
+            ),
             ChannelCategory(
                 id = "cat_esportes",
-                name = "SporTV & Esportes",
+                name = "📺 SporTV & Canais Esportivos",
                 isLocked = false,
                 channels = listOf(
                     Channel(
                         id = "sportv_1",
-                        number = "15",
-                        title = "SporTV HD",
-                        category = "SporTV & Esportes",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9107.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
-                        description = "O canal campeao: cobertura ao vivo dos maiores campeonatos esportivos do Brasil e do mundo.",
+                        number = "64",
+                        title = "SporTV FHD",
+                        category = "📺 SporTV & Canais Esportivos",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72329.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/sportv.png",
+                        description = "O canal campeão: cobertura ao vivo dos maiores campeonatos esportivos do Brasil e do mundo.",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "sportv_2",
-                        number = "16",
-                        title = "SporTV 2 HD",
-                        category = "SporTV & Esportes",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13586.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/SporTV_2_logo_2021.svg/320px-SporTV_2_logo_2021.svg.png",
-                        description = "Volei, basquete, tenis, automobilismo e futebol ao vivo todos os dias.",
+                        number = "65",
+                        title = "SporTV 2 FHD",
+                        category = "📺 SporTV & Canais Esportivos",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72321.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/sportv2.png",
+                        description = "Vôlei, basquete, tênis, automobilismo e futebol ao vivo todos os dias.",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "sportv_3",
-                        number = "17",
-                        title = "SporTV 3 HD",
-                        category = "SporTV & Esportes",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9105.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SporTV_3_logo_2021.svg/320px-SporTV_3_logo_2021.svg.png",
-                        description = "Esportes olimpicos, radicais e transmissao simultanea de grandes torneios.",
+                        number = "66",
+                        title = "SporTV 3 FHD",
+                        category = "📺 SporTV & Canais Esportivos",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72325.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/sportv3.png",
+                        description = "Esportes olímpicos, atletismo, natação e transmissão simultânea de grandes torneios.",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "sportv_4",
-                        number = "18",
-                        title = "SporTV 4 HD",
-                        category = "SporTV & Esportes",
-                        streamUrl = "https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/chunklist.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
-                        description = "Canal de apoio para eventos simultaneos e rodadas decisivas.",
+                        number = "67",
+                        title = "SporTV 4 FHD",
+                        category = "📺 SporTV & Canais Esportivos",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/276092.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/sportv2.png",
+                        description = "Canal de apoio para eventos simultâneos e rodadas decisivas em alta resolução.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_f1_bandsports",
-                        number = "19",
-                        title = "BandSports HD",
-                        category = "SporTV & Esportes",
-                        streamUrl = "https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/chunklist.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Bandsports_logo_2018.png/320px-Bandsports_logo_2018.png",
-                        description = "Futebol internacional, treinos de Formula 1, lutas e esportes radicais ao vivo.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_320_caze",
-                        number = "20",
-                        title = "Cazé TV HD",
-                        category = "SporTV & Esportes",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Caz%C3%A9TV_logo.svg/320px-Caz%C3%A9TV_logo.svg.png",
-                        description = "A maior transmissao digital esportiva do mundo comandada por Casimiro Miguel e equipe.",
+                        id = "bandsports_fhd",
+                        number = "68",
+                        title = "BandSports FHD",
+                        category = "📺 SporTV & Canais Esportivos",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71801.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/bandsports.png",
+                        description = "Futebol internacional, treinos de Fórmula 1, lutas e esportes radicais ao vivo.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_253",
-                        number = "21",
-                        title = "Red Bull TV",
-                        category = "SporTV & Esportes",
-                        streamUrl = "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/red-bull-tv.png",
-                        description = "Esportes radicais, skate, surf, acrobacias aereas e automobilismo extremo.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_374",
-                        number = "22",
-                        title = "Hard Knocks Fight Championship TV",
-                        category = "SporTV & Esportes",
-                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/hard-knocks-fight-championship-tv.jpg",
-                        description = "Grandes combates de MMA e artes marciais mistas do circuito internacional.",
-                        quality = "HD"
-                    ),
-                    Channel(
-                        id = "ch_373",
-                        number = "23",
-                        title = "Fuel TV",
-                        category = "SporTV & Esportes",
-                        streamUrl = "https://d1m7jfoe9zdc1j.cloudfront.net/5d5a816c31e610d4c5f9_partypokertv_40169660985_1662408479/chunked/index-dvr.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/fuel-tv.png",
-                        description = "Cultura do skate, surf, bmx e os melhores festivais de esportes de acao.",
-                        quality = "HD"
+                        id = "combate_fhd",
+                        number = "69",
+                        title = "Combate FHD",
+                        category = "📺 SporTV & Canais Esportivos",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71842.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/combate.png",
+                        description = "O canal oficial das artes marciais: UFC, Boxe, Jiu-Jitsu, Kickboxing e Jungle Fight 24H.",
+                        quality = "FHD"
                     )
                 )
             ),
             ChannelCategory(
                 id = "cat_espn",
-                name = "Rede ESPN",
+                name = "🌐 Rede ESPN (Champions & Ligas)",
                 isLocked = false,
                 channels = listOf(
                     Channel(
-                        id = "ch_290",
-                        number = "24",
-                        title = "ESPN HD",
-                        category = "Rede ESPN",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/598914.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-hd.png",
-                        description = "O lider mundial em esportes: Premier League, LaLiga, Serie A italiana e NBA ao vivo.",
+                        id = "espn_fhd",
+                        number = "70",
+                        title = "ESPN FHD",
+                        category = "🌐 Rede ESPN (Champions & Ligas)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71911.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/espn.png",
+                        description = "O lider mundial em esportes: Premier League, LaLiga, Serie A italiana e NFL.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_291",
-                        number = "25",
-                        title = "ESPN 2 HD",
-                        category = "Rede ESPN",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/30071.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-2.png",
-                        description = "Grandes ligas americanas: NFL, MLB, NHL, College Football e tenis de alto nivel.",
+                        id = "espn_2",
+                        number = "71",
+                        title = "ESPN 2 FHD",
+                        category = "🌐 Rede ESPN (Champions & Ligas)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71919.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/espn2.png",
+                        description = "Futebol europeu, NBA, beisebol da MLB, college football e programas esportivos de debate.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_292",
-                        number = "26",
-                        title = "ESPN 3 HD",
-                        category = "Rede ESPN",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8788.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-3.png",
-                        description = "Esportes radicais, motociclismo, ciclismo Grand Tours e futebol europeu.",
+                        id = "espn_3",
+                        number = "72",
+                        title = "ESPN 3 FHD",
+                        category = "🌐 Rede ESPN (Champions & Ligas)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71907.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/espn.png",
+                        description = "Tenis com Grand Slams ao vivo, ciclismo, esportes a motor e jogos internacionais.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_364",
-                        number = "27",
-                        title = "ESPN 4 HD",
-                        category = "Rede ESPN",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8828.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-4.png",
-                        description = "Cobertura completa com debate esportivo, SportsCenter e jogos decisivos.",
+                        id = "espn_4",
+                        number = "73",
+                        title = "ESPN 4 FHD",
+                        category = "🌐 Rede ESPN (Champions & Ligas)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71957.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/foxsports1.png",
+                        description = "A casa da Copa Libertadores da América, Copa Sul-Americana e futebol sul-americano.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_293",
-                        number = "28",
-                        title = "ESPN 5 HD",
-                        category = "Rede ESPN",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8826.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-5.png",
-                        description = "Transmissoes simultaneas dos principais torneios internacionais.",
+                        id = "espn_5",
+                        number = "74",
+                        title = "ESPN 5 FHD",
+                        category = "🌐 Rede ESPN (Champions & Ligas)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71952.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/foxsports2.png",
+                        description = "Cobertura multiplataforma e grandes eventos de esportes de combate e automobilismo.",
                         quality = "FHD"
                     ),
                     Channel(
-                        id = "ch_365",
-                        number = "29",
-                        title = "ESPN 6 HD",
-                        category = "Rede ESPN",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81590.m3u8",
-                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-6.png",
-                        description = "Eventos exclusivos, lutas, automobilismo e futebol multitelas.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "espn_extra",
-                        number = "30",
-                        title = "ESPN Extra HD",
-                        category = "Rede ESPN",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8794.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/320px-ESPN_wordmark.svg.png",
-                        description = "Canal de contingencia especial para cobertura de rodadas simultaneas e playoffs.",
-                        quality = "HD"
-                    )
-                )
-            ),
-            ChannelCategory(
-                id = "cat_premiere",
-                name = "Premiere & Pay-Per-View",
-                isLocked = false,
-                channels = listOf(
-                    Channel(
-                        id = "prem_clubes",
-                        number = "31",
-                        title = "Premiere Clubes HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "O melhor do futebol brasileiro ao vivo: Brasileirao Serie A e B com cobertura completa.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_2",
-                        number = "32",
-                        title = "Premiere 2 HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9022.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Transmissao ao vivo dos jogos da rodada com som de torcida e analises tecnicas.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_3",
-                        number = "33",
-                        title = "Premiere 3 HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13577.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Jogos exclusivos dos principais clubes do pais nos estaduais e no Brasileirao.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_4",
-                        number = "34",
-                        title = "Premiere 4 HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108295.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Futebol ao vivo em alta definicao direto dos estadios de todo o Brasil.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_5",
-                        number = "35",
-                        title = "Premiere 5 HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108301.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Canal de transmissao direta de partidas simultaneas dos campeonatos nacionais.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_6",
-                        number = "36",
-                        title = "Premiere 6 HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108307.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Cobertura completa dos jogos da Serie B e confrontos regionais.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_7",
-                        number = "37",
-                        title = "Premiere 7 HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108313.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Canal pay-per-view exclusivo para transmissoes de mata-mata e decisoes.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_8",
-                        number = "38",
-                        title = "Premiere 8 HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13582.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
-                        description = "Transmissao em tempo real de partidas complementares da rodada de futebol.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_mosaico",
-                        number = "39",
-                        title = "Premiere 8 Mosaico Multijogos HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/30063.m3u8",
-                        logoUrl = "http://1.bp.blogspot.com/-9NsHz_itoFc/Xk70dxuLv7I/AAAAAAAACGQ/wCExIoJZ8xgbleziCR-Guhr-AkuLgFhVQCLcBGAsYHQ/s1600/premiere_2.png",
-                        description = "Mosaico multijogos: assista a todos os gols e lances de todas as partidas ao mesmo tempo.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "prem_combate",
-                        number = "40",
-                        title = "Combate HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Combate_logo_2021.svg/320px-Combate_logo_2021.svg.png",
-                        description = "O canal oficial das artes marciais: UFC, Boxe, Jiu-Jitsu, Kickboxing e Jungle Fight 24H.",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ppv_jogos",
-                        number = "41",
-                        title = "Jogos de Hoje Pay-Per-View HD",
-                        category = "Premiere & Pay-Per-View",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/339310.m3u8",
-                        logoUrl = "https://i.postimg.cc/cHHX4vYD/canal-futebol.png",
-                        description = "Guia completo e sinal aberto com as partidas mais esperadas do futebol no dia.",
+                        id = "espn_6",
+                        number = "75",
+                        title = "ESPN 6 FHD",
+                        category = "🌐 Rede ESPN (Champions & Ligas)",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71915.m3u8",
+                        logoUrl = "http://vivlar.me/static/logos/canais/espnextra.png",
+                        description = "Transmissoes simultaneas de rodadas europeias, campeonatos de rugby e esportes radicais.",
                         quality = "FHD"
                     )
                 )
@@ -1087,7 +1105,7 @@ object ChannelRepository {
                         number = "101",
                         title = "SporTV 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9107.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131188.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "Transmissao oficial em resolucao 4K Ultra HD (3840x2160) com maximo detalhe esportivo.",
                         quality = "4K"
@@ -1097,7 +1115,7 @@ object ChannelRepository {
                         number = "102",
                         title = "Premiere 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/103481.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "O melhor do futebol brasileiro com qualidade de cinema 4K UHD e som imersivo.",
                         quality = "4K"
@@ -1174,7 +1192,7 @@ object ChannelRepository {
                         number = "109",
                         title = "SporTV H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81591.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72330.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "O canal lider de esportes otimizado em compressao H.265 sem travamentos.",
                         quality = "H265"
@@ -1204,7 +1222,7 @@ object ChannelRepository {
                         number = "112",
                         title = "ESPN H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81588.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71912.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-hd.png",
                         description = "Esportes internacionais com codificacao avancada H.265 a 60fps.",
                         quality = "H265"
@@ -1214,7 +1232,7 @@ object ChannelRepository {
                         number = "113",
                         title = "Premiere H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81616.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72238.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "Futebol brasileiro com transmissao rapida e estavel pelo codec H.265.",
                         quality = "H265"
@@ -1645,5 +1663,428 @@ object ChannelRepository {
                 )
             )
         )
+    }
+    private const val SERVER_BASE = "http://vivlar.me:80"
+    private const val USERNAME = "497238"
+    private const val PASSWORD = "KK8Kdy"
+
+    @Volatile
+    private var dynamicJogosDoDia: List<Channel>? = null
+    private var lastJogosFetchTime: Long = 0L
+
+    fun getFallbackJogosDoDia(): List<Channel> {
+        return listOf(
+            Channel(
+                id = "jogo_dia_317686",
+                number = "15",
+                title = "[15:00] Ah-Ali x Al-Khaleej",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317686.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Partida ao vivo de hoje: [15:00] Ah-Ali x Al-Khaleej",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317687",
+                number = "16",
+                title = "[21:30] Flamengo x Estudiantes",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317687.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Partida ao vivo de hoje: [21:30] Flamengo x Estudiantes",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317688",
+                number = "17",
+                title = "Jogos Ao Vivo (Canal 03)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317688.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317689",
+                number = "18",
+                title = "Jogos Ao Vivo (Canal 04)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317689.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317690",
+                number = "19",
+                title = "Jogos Ao Vivo (Canal 05)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317690.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317691",
+                number = "20",
+                title = "Jogos Ao Vivo (Canal 06)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317691.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317692",
+                number = "21",
+                title = "Jogos Ao Vivo (Canal 07)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317692.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317693",
+                number = "22",
+                title = "Jogos Ao Vivo (Canal 08)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317693.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317694",
+                number = "23",
+                title = "Jogos Ao Vivo (Canal 09)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317694.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317695",
+                number = "24",
+                title = "Jogos Ao Vivo (Canal 10)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317695.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_317696",
+                number = "25",
+                title = "Jogos Ao Vivo (Canal 11)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317696.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318080",
+                number = "26",
+                title = "Jogos Ao Vivo (Canal 12)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318080.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318081",
+                number = "27",
+                title = "Jogos Ao Vivo (Canal 13)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318081.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318082",
+                number = "28",
+                title = "Jogos Ao Vivo (Canal 14)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318082.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318083",
+                number = "29",
+                title = "Jogos Ao Vivo (Canal 15)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318083.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318084",
+                number = "30",
+                title = "Jogos Ao Vivo (Canal 16)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318084.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318085",
+                number = "31",
+                title = "Jogos Ao Vivo (Canal 17)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318085.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318086",
+                number = "32",
+                title = "Jogos Ao Vivo (Canal 18)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318086.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318606",
+                number = "33",
+                title = "Jogos Ao Vivo (Canal 19)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318606.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318607",
+                number = "34",
+                title = "Jogos Ao Vivo (Canal 20)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318607.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318608",
+                number = "35",
+                title = "Jogos Ao Vivo (Canal 21)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318608.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318609",
+                number = "36",
+                title = "Jogos Ao Vivo (Canal 22)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318609.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318610",
+                number = "37",
+                title = "Jogos Ao Vivo (Canal 23)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318610.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318611",
+                number = "38",
+                title = "Jogos Ao Vivo (Canal 24)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318611.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318612",
+                number = "39",
+                title = "Jogos Ao Vivo (Canal 25)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318612.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_318613",
+                number = "40",
+                title = "Jogos Ao Vivo (Canal 26)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318613.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_361372",
+                number = "41",
+                title = "Jogos Ao Vivo (Canal 27)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361372.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_361373",
+                number = "42",
+                title = "Jogos Ao Vivo (Canal 28)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361373.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_361374",
+                number = "43",
+                title = "Jogos Ao Vivo (Canal 29)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361374.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_362685",
+                number = "44",
+                title = "Jogos Ao Vivo (Canal 30)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362685.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_362686",
+                number = "45",
+                title = "Jogos Ao Vivo (Canal 31)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362686.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_362687",
+                number = "46",
+                title = "Jogos Ao Vivo (Canal 32)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362687.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_362688",
+                number = "47",
+                title = "Jogos Ao Vivo (Canal 33)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362688.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_362826",
+                number = "48",
+                title = "Jogos Ao Vivo (Canal 34)",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362826.m3u8",
+                logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
+                description = "Canal reservado para transmissões dos jogos do dia.",
+                quality = "FHD"
+            )
+        )
+    }
+
+    suspend fun fetchJogosDoDia(): List<Channel> = withContext(Dispatchers.IO) {
+        val now = System.currentTimeMillis()
+        if (dynamicJogosDoDia != null && dynamicJogosDoDia!!.isNotEmpty() && now - lastJogosFetchTime < 5 * 60 * 1000L) {
+            return@withContext dynamicJogosDoDia!!
+        }
+        try {
+            val urlStr = "$SERVER_BASE/player_api.php?username=$USERNAME&password=$PASSWORD&action=get_live_streams&category_id=4024"
+            val jsonText = httpGet(urlStr) ?: return@withContext dynamicJogosDoDia ?: getFallbackJogosDoDia()
+            val array = JSONArray(jsonText)
+            val list = mutableListOf<Channel>()
+
+            for (i in 0 until array.length()) {
+                val obj = array.getJSONObject(i)
+                val sid = obj.optString("stream_id", "")
+                val rawName = obj.optString("name", "").trim()
+                val icon = obj.optString("stream_icon", "http://vivlar.me/static/logos/canais/jogos.png").ifEmpty {
+                    "http://vivlar.me/static/logos/canais/jogos.png"
+                }
+
+                if (sid.isNotEmpty()) {
+                    val streamUrl = "$SERVER_BASE/live/$USERNAME/$PASSWORD/$sid.m3u8"
+                    val isRealMatch = rawName.isNotEmpty() && !rawName.contains("Breve", ignoreCase = true)
+                    val displayName = if (isRealMatch) rawName else "Jogos Ao Vivo (Canal ${String.format("%02d", i + 1)})"
+
+                    list.add(
+                        Channel(
+                            id = "jogo_dia_$sid",
+                            number = String.format("%02d", i + 15),
+                            title = displayName,
+                            category = "⚽ Jogos do Dia (Ao Vivo)",
+                            streamUrl = streamUrl,
+                            logoUrl = icon,
+                            description = if (isRealMatch) {
+                                "Partida ao vivo de hoje: $displayName"
+                            } else {
+                                "Canal reservado para transmissões dos jogos do dia."
+                            },
+                            quality = "FHD"
+                        )
+                    )
+                }
+            }
+
+            val sorted = list.sortedWith(
+                compareByDescending<Channel> { it.title.startsWith("[") }
+                    .thenBy { it.number }
+            )
+            dynamicJogosDoDia = sorted
+            lastJogosFetchTime = now
+            sorted
+        } catch (e: Exception) {
+            dynamicJogosDoDia ?: getFallbackJogosDoDia()
+        }
+    }
+
+    private fun httpGet(urlStr: String): String? {
+        return try {
+            val url = URL(urlStr)
+            val conn = (url.openConnection() as HttpURLConnection).apply {
+                connectTimeout = 6000
+                readTimeout = 6000
+                setRequestProperty("User-Agent", "IPTVSmartersPro")
+            }
+            if (conn.responseCode == HttpURLConnection.HTTP_OK) {
+                conn.inputStream.bufferedReader().use { it.readText() }
+            } else null
+        } catch (e: Exception) {
+            null
+        }
     }
 }

@@ -19,7 +19,9 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
@@ -144,7 +146,37 @@ class MainActivity : AppCompatActivity() {
 
         setupExitActions()
         setupPlayer()
-        loadData()
+                loadData()
+
+        // Atualização dinâmica em tempo real da grade de Jogos do Dia
+        lifecycleScope.launch(Dispatchers.IO) {
+            val freshJogos = ChannelRepository.fetchJogosDoDia()
+            if (freshJogos.isNotEmpty()) {
+                withContext(Dispatchers.Main) {
+                    if (!isFinishing && !isDestroyed) {
+                        val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
+                        val safeChannels = repoCategories.filter { !it.isLocked }.flatMap { it.channels }
+                        val masterCategory = ChannelCategory(
+                            id = "cat_all",
+                            name = "Todos os Canais",
+                            isLocked = false,
+                            channels = safeChannels
+                        )
+                        allCategories = listOf(masterCategory) + repoCategories
+                        categoryAdapter.updateCategories(allCategories)
+
+                        if (selectedCategory?.id == "cat_jogos_dia") {
+                            val curCat = allCategories.find { it.id == "cat_jogos_dia" }
+                            if (curCat != null) {
+                                displayCategoryChannels(curCat)
+                            }
+                        } else if (selectedCategory?.id == "cat_all") {
+                            channelAdapter.updateChannels(safeChannels)
+                        }
+                    }
+                }
+            }
+        }
 
         // Verificação automática de atualizações em segundo plano após inicialização do sistema
         Handler(Looper.getMainLooper()).postDelayed({

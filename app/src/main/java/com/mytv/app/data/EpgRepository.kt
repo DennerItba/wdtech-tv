@@ -281,6 +281,26 @@ object EpgRepository {
         val catLower = channel.category.lowercase()
         val idLower = channel.id.lowercase()
 
+                // 0. Jogos do Dia (Ao Vivo)
+        if (catLower.contains("jogos") || idLower.startsWith("jogo_dia")) {
+            val gameTitle = if (channel.title.startsWith("[")) channel.title else "Futebol Ao Vivo - Jogos do Dia"
+            return Pair(gameTitle, "Transmissão ao vivo de hoje com lances, estatísticas e cobertura completa da partida.")
+        }
+
+        // 0.1 Campeonatos & Estaduais
+        if (catLower.contains("campeonato") || catLower.contains("estadual") || titleLower.contains("sportynet")) {
+            val campGrid = listOf(
+                Pair("Giro dos Campeonatos Estaduais", "Notícias, escalações e tabela de classificação dos estaduais."),
+                Pair("Futebol Madrugada: Melhores Momentos", "Os gols e lances mais bonitos das rodadas dos campeonatos."),
+                Pair("Aquecimento da Rodada do Brasileirão", "Prévia dos confrontos das Séries A, B e C com comentaristas."),
+                Pair("Campeonatos Regionais: Partida Ao Vivo", "Transmissão completa com emoção do início ao fim."),
+                Pair("Debate da Rodada & Entrevistas", "Entrevistas com técnicos e jogadores nos vestiários."),
+                Pair("Futebol Ao Vivo - Duelo Decisivo", "Confronto direto valendo classificação nos campeonatos estaduais."),
+                Pair("Show dos Gols da Rodada", "Todos os gols narrados com emoção e replay em câmera lenta.")
+            )
+            return campGrid[slotIdx % campGrid.size]
+        }
+
         // 1. Fórmula 1 & Velocidade
         if (catLower.contains("f1") || catLower.contains("fórmula") || catLower.contains("formula") ||
             titleLower.contains("f1") || titleLower.contains("motorvision") || titleLower.contains("pit lane") || idLower.startsWith("ch_f1")) {
