@@ -1,6 +1,6 @@
 {
-  "versionCode": 18,
-  "versionName": "2.4.2",
-  "releaseNotes": "\u2022 Atualiza\u00e7\u00e3o visual: confirma\u00e7\u00e3o de encerramento ajustada para 'Deseja realmente sair do WDTECHTV?'\n\u2022 Otimiza\u00e7\u00f5es de estabilidade e navega\u00e7\u00e3o fluida pelo controle remoto\n\u2022 EPG e cat\u00e1logo sincronizados com m\u00e1xima performance",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.2/wdtechtv.apk"
+  "versionCode": 19,
+  "versionName": "2.4.3",
+  "releaseNotes": "\u2022 Rede Telecine e Rede HBO 100% atualizadas com transmiss\u00f5es oficiais Vivlar em Full HD\n\u2022 Corre\u00e7\u00e3o do Telecine Premium (resolvido stream indevido do Sony Movies)\n\u2022 Corre\u00e7\u00e3o do Guia de Programa\u00e7\u00e3o (EPG) do Telecine Premium (grade de filmes de cinema aut\u00eantica)\n\u2022 Corre\u00e7\u00e3o de caracteres especiais na barra inferior de atalhos e informa\u00e7\u00f5es de canal",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.3/wdtechtv.apk"
 }
