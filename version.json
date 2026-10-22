@@ -1,6 +1,6 @@
 {
-  "versionCode": 17,
-  "versionName": "2.4.1",
-  "releaseNotes": "\u2022 Corre\u00e7\u00e3o Definitiva de Estabilidade: resolvido problema de fechamento inesperado ao navegar com controle remoto\n\u2022 Prote\u00e7\u00e3o global contra travamentos em TV Boxes e renderiza\u00e7\u00e3o segura dos adaptadores de canal e categoria\n\u2022 EPG Real Ao Vivo: integra\u00e7\u00e3o completa com os sinais de EPG do servidor Vivlar (mais de 75 canais mapeados)\n\u2022 Guia esportivo aprimorado para 'Jogos do Dia', exibindo confrontos, hor\u00e1rios e sinopses din\u00e2micas\n\u2022 Melhores hor\u00e1rios de in\u00edcio e fim com contagem regressiva de minutos restantes",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.1/wdtechtv.apk"
+  "versionCode": 18,
+  "versionName": "2.4.2",
+  "releaseNotes": "\u2022 Atualiza\u00e7\u00e3o visual: confirma\u00e7\u00e3o de encerramento ajustada para 'Deseja realmente sair do WDTECHTV?'\n\u2022 Otimiza\u00e7\u00f5es de estabilidade e navega\u00e7\u00e3o fluida pelo controle remoto\n\u2022 EPG e cat\u00e1logo sincronizados com m\u00e1xima performance",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.2/wdtechtv.apk"
 }
