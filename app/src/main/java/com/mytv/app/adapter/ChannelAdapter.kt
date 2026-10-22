@@ -18,6 +18,7 @@ class ChannelAdapter(
 
     class ChannelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtNumber: TextView = view.findViewById(R.id.txt_channel_number)
+        val txtPlayback: TextView = view.findViewById(R.id.txt_channel_playback)
         val imgLogo: ImageView = view.findViewById(R.id.img_channel_logo)
         val txtFallback: TextView = view.findViewById(R.id.txt_logo_fallback)
         val txtTitle: TextView = view.findViewById(R.id.txt_channel_title)
@@ -34,6 +35,7 @@ class ChannelAdapter(
         val channel = channels[position]
 
         holder.txtNumber.text = "CH ${channel.number}"
+        holder.txtPlayback.visibility = if (channel.hasPlayback) View.VISIBLE else View.GONE
         holder.txtTitle.text = channel.title
         holder.txtCategory.text = "${channel.category} • FHD 1080p"
 

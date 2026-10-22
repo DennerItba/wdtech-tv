@@ -813,7 +813,7 @@ object ChannelRepository {
                         number = "75",
                         title = "Discovery Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/43928.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8735.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
                         description = "O canal pioneiro em exploracao cientifica, misterios do planeta e aventuras humanas.",
                         quality = "FHD"
@@ -833,7 +833,7 @@ object ChannelRepository {
                         number = "77",
                         title = "Discovery Home & Health HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8740.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8739.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-hh-hd.png",
                         description = "Estilo de vida, reformas de imoveis, saude, culinaria e maternidade.",
                         quality = "FHD"
@@ -843,7 +843,7 @@ object ChannelRepository {
                         number = "78",
                         title = "Discovery Turbo HD",
                         category = "Documentários",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-turbo-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8755.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-turbo-hd.png",
                         description = "Carros personalizados, restauracao de classicos e motores de alta performance.",
                         quality = "FHD"
@@ -853,7 +853,7 @@ object ChannelRepository {
                         number = "79",
                         title = "Discovery ID (Investigacao) HD",
                         category = "Documentários",
-                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8932.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Investigation_Discovery_logo_%282020%29.svg/320px-Investigation_Discovery_logo_%282020%29.svg.png",
                         description = "Crimes reais, investigacoes policiais forenses e os misterios mais intrigantes.",
                         quality = "FHD"
@@ -893,7 +893,7 @@ object ChannelRepository {
                         number = "83",
                         title = "Animal Planet HD",
                         category = "Documentários",
-                        streamUrl = "https://cdn-ue1-prod.tsv2.amagi.tv/linear/outsidetv-outsidetvplus-oando/playlist.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304491.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Animal_Planet_logo_2018.svg/320px-Animal_Planet_logo_2018.svg.png",
                         description = "O reino animal de perto: resgate de fauna, predadores selvagens e vida dos pets.",
                         quality = "FHD"

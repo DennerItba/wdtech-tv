@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loadingLayout: LinearLayout
     private lateinit var txtPreviewTitle: TextView
     private lateinit var txtPreviewInfo: TextView
+    private lateinit var txtPreviewPlayback: TextView
     private lateinit var txtSelectedCategoryTitle: TextView
     private lateinit var txtCategoryBadge: TextView
     private lateinit var txtHeaderBreadcrumb: TextView
@@ -82,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         loadingLayout = findViewById(R.id.preview_loading_layout)
         txtPreviewTitle = findViewById(R.id.txt_preview_title)
         txtPreviewInfo = findViewById(R.id.txt_preview_info)
+        txtPreviewPlayback = findViewById(R.id.txt_preview_playback)
         txtSelectedCategoryTitle = findViewById(R.id.txt_selected_category_title)
         txtCategoryBadge = findViewById(R.id.txt_category_badge)
         txtHeaderBreadcrumb = findViewById(R.id.txt_header_breadcrumb)
@@ -429,6 +431,8 @@ class MainActivity : AppCompatActivity() {
             channel
         }
 
+        txtPreviewPlayback.visibility = if (enriched.hasPlayback) View.VISIBLE else View.GONE
+
         val epg = enriched.currentProgram
         if (epg != null) {
             txtEpgNowTitle.text = epg.title
@@ -447,6 +451,23 @@ class MainActivity : AppCompatActivity() {
             txtEpgNext.text = "▶ A Seguir (${nextEpg.startTime}): ${nextEpg.title}"
         } else {
             txtEpgNext.text = "▶ A Seguir: Grade Noturna"
+        }
+
+        // Busca assincronamente o EPG ao vivo direto do servidor para máxima precisão
+        lifecycleScope.launch {
+            val livePrograms = EpgRepository.fetchLiveEpg(enriched)
+            if (livePrograms != null && currentChannel?.id == enriched.id && !isFinishing && !isDestroyed) {
+                val liveNow = livePrograms.first
+                val liveNext = livePrograms.second
+                txtEpgNowTitle.text = liveNow.title
+                txtEpgNowTime.text = "${liveNow.startTime} - ${liveNow.endTime} (${liveNow.getRemainingMinutes()}m rest.)"
+                pbEpgProgress.progress = liveNow.getProgressPercent()
+                txtEpgSynopsis.text = liveNow.synopsis.ifEmpty { "Transmissão contínua em alta definição." }
+                if (liveNext != null) {
+                    txtEpgNext.text = "▶ A Seguir (${liveNext.startTime}): ${liveNext.title}"
+                }
+                channelAdapter.notifyItemChanged(channelAdapter.getSelectedPosition())
+            }
         }
     }
 

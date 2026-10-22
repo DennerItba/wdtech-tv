@@ -28,6 +28,7 @@ class ChannelListAdapter(
         val txtTitle: TextView = view.findViewById(R.id.txt_row_title)
         val txtEpg: TextView = view.findViewById(R.id.txt_row_epg)
         val txtBadge: TextView = view.findViewById(R.id.txt_row_badge)
+        val txtPlayback: TextView = view.findViewById(R.id.txt_row_playback)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChannelViewHolder {
@@ -42,6 +43,7 @@ class ChannelListAdapter(
         holder.txtNumber.text = channel.number
         holder.txtTitle.text = channel.title
         holder.txtBadge.text = channel.quality
+        holder.txtPlayback.visibility = if (channel.hasPlayback) View.VISIBLE else View.GONE
 
         val epg = channel.currentProgram
         if (epg != null) {

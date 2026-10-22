@@ -343,9 +343,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="1080p Full HD â€¢ Ao Vivo"
+                            android:text="1080p Full HD • Ao Vivo"
                             android:textColor="@color/neon_cyan"
                             android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/txt_preview_playback"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/badge_playback"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingTop="1dp"
+                            android:paddingBottom="1dp"
+                            android:text="⟲ 7 Dias Gravados"
+                            android:textColor="@color/neon_cyan"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <!-- EPG: Programa no Ar e HorÃ¡rio -->

@@ -201,6 +201,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/txt_player_badge_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/badge_live"
@@ -212,6 +213,22 @@
                     android:textColor="#FFFFFF"
                     android:textSize="10sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_player_playback_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/badge_playback"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="⟲ 7D PLAYBACK"
+                    android:textColor="@color/neon_cyan"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txt_player_epg_now_title"
@@ -273,6 +290,108 @@
                     android:layout_marginStart="16dp"
                     android:text="▶ A Seguir: Próximo Programa"
                     android:textColor="#607D8B"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Barra de Ações do Playback 7 Dias -->
+            <LinearLayout
+                android:id="@+id/layout_player_playback_controls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <!-- Botão Voltar 1 Minuto -->
+                <Button
+                    android:id="@+id/btn_player_rewind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_button_selector"
+                    android:focusable="true"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="⏮ -1m"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_playback_text_selector"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- Botão Avançar 1 Minuto -->
+                <Button
+                    android:id="@+id/btn_player_forward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_button_selector"
+                    android:focusable="true"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="⏭ +1m"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_playback_text_selector"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- Botão Voltar ao Início do Programa -->
+                <Button
+                    android:id="@+id/btn_player_restart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_button_selector"
+                    android:focusable="true"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:text="⟲ Início"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_playback_text_selector"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- Botão Retornar ao Ao Vivo -->
+                <Button
+                    android:id="@+id/btn_player_live"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_button_selector"
+                    android:focusable="true"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:text="🔴 Ao Vivo"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_playback_text_selector"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- Botão Abrir Guia dos Últimos 7 Dias -->
+                <Button
+                    android:id="@+id/btn_player_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/bg_button_selector"
+                    android:focusable="true"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="📅 7 Dias Gravados"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_playback_text_selector"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_player_playback_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Controle remoto: ◀ e ▶ para retroceder / avançar"
+                    android:textColor="@color/neon_cyan"
                     android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>

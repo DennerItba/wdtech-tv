@@ -84,4 +84,21 @@
         android:textSize="9sp"
         android:textStyle="bold" />
 
+    <!-- Selo de Playback / 7 Dias Gravados -->
+    <TextView
+        android:id="@+id/txt_row_playback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/badge_playback"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="⟲ 7D"
+        android:textColor="@color/neon_cyan"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
 </LinearLayout>

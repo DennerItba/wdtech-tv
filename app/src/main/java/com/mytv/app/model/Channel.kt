@@ -13,7 +13,10 @@ data class Channel(
     val isHls: Boolean = true,
     val quality: String = "HD",
     var currentProgram: EpgProgram? = null,
-    var nextProgram: EpgProgram? = null
+    var nextProgram: EpgProgram? = null,
+    var hasPlayback: Boolean = false,
+    var playbackDays: Int = 0,
+    var playbackStreamId: String? = null
 ) : Serializable
 
 data class ChannelCategory(

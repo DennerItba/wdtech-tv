@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_channel_item_selector"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="false"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="10dp">
+
+    <!-- Horário do Programa Gravado -->
+    <TextView
+        android:id="@+id/txt_history_time"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="20:00 - 21:30"
+        android:textColor="@color/neon_cyan"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <!-- Título e Sinopse -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_history_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Título do Programa Gravado"
+            android:textColor="@color/text_white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_history_synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Sinopse do programa gravado disponível para reprodução..."
+            android:textColor="#9AB0CF"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Botão de Ação / Assistir -->
+    <TextView
+        android:id="@+id/txt_history_play_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/badge_playback"
+        android:paddingStart="10dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="6dp"
+        android:text="▶ Assistir"
+        android:textColor="@color/neon_cyan"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
