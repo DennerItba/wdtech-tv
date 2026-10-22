@@ -1,6 +1,6 @@
 {
-  "versionCode": 10,
-  "versionName": "2.2.2",
-  "releaseNotes": "\u2022 Correcao total dos canais SporTV (1, 2, 3, 4, 4K e H265)\n\u2022 Transmissao 100% estavel em Premiere, ESPN, A Fazenda e Discovery\n\u2022 Otimizacao do Player com User-Agent IPTV e saida rapida no botao Voltar\n\u2022 Grade auditada com mais de 135 canais ativos",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.2/MyTvApp.apk"
+  "versionCode": 11,
+  "versionName": "2.2.3",
+  "releaseNotes": "\u2022 Novo Recurso de Playback 7 Dias (Catchup / Replay / Timeshift)!\n\u2022 72 canais habilitados com gravacao completa dos ultimos 7 dias na nuvem (SporTV, Premiere, ESPN, Telecine, HBO, Discovery, Globo e mais)\n\u2022 Selo visual '\u27f2 7D' na lista de canais e no painel de pre-visualizacao\n\u2022 Controles no player: Retroceder (-1m), Avancar (+1m), Do Inicio e Retornar ao Vivo\n\u2022 Guia completo dos ultimos 7 dias para selecionar e assistir qualquer programa do inicio",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.3/MyTvApp.apk"
 }
