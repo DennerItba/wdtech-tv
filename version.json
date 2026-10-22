@@ -1,6 +1,6 @@
 {
-  "versionCode": 13,
-  "versionName": "2.2.5",
-  "releaseNotes": "\u2022 Corre\u00e7\u00e3o completa do Guia de Programa\u00e7\u00e3o (EPG) dos canais!\n\u2022 EPG ao vivo integrado via API dos servidores e grades aut\u00eanticas por canal\n\u2022 Informa\u00e7\u00f5es precisas para SporTV, ESPN, Cine Sky, Telecine, HBO, Discovery, Fazenda e mais\n\u2022 Renomeado arquivo oficial do instalador para wdtechtv.apk\n\u2022 Playback 7 Dias sincronizado com os programas reais da grade",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.5/wdtechtv.apk"
+  "versionCode": 14,
+  "versionName": "2.3.0",
+  "releaseNotes": "\u2022 Novo Cat\u00e1logo de Filmes e S\u00e9ries On Demand integrado (VOD)!\n\u2022 Navega\u00e7\u00e3o por abas no topo: [TV Ao Vivo], [Filmes] e [S\u00e9ries] estilo UniTV / TVExpress\n\u2022 Milhares de filmes em Full HD e 4K (Lan\u00e7amentos, A\u00e7\u00e3o, Com\u00e9dia, Terror, etc.)\n\u2022 Milhares de s\u00e9ries completas com sele\u00e7\u00e3o de temporadas e epis\u00f3dios (Netflix, Prime, Max, Disney+)\n\u2022 Player avan\u00e7ado com suporte a pausar, avan\u00e7ar e retroceder no controle remoto\n\u2022 Detalhes completos com p\u00f4steres, sinopse, classifica\u00e7\u00e3o e notas",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.3.0/wdtechtv.apk"
 }
