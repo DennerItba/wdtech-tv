@@ -14,7 +14,8 @@ import com.mytv.app.model.ChannelCategory
 class CategorySidebarAdapter(
     private var categories: List<ChannelCategory>,
     private val onCategoryFocused: (ChannelCategory) -> Unit,
-    private val onCategoryClicked: (ChannelCategory) -> Unit
+    private val onCategoryClicked: (ChannelCategory) -> Unit,
+    private val onNavigateUpToTabs: (() -> Unit)? = null
 ) : RecyclerView.Adapter<CategorySidebarAdapter.CategoryViewHolder>() {
 
     private var selectedIndex = 0
@@ -82,9 +83,10 @@ class CategorySidebarAdapter(
                             onCategoryClicked(categories[pos])
                             return@setOnKeyListener true
                         }
-                        // D-Pad Cima no primeiro item: não escapa para fora do painel
+                        // D-Pad Cima no primeiro item: sobe para as abas superiores
                         KeyEvent.KEYCODE_DPAD_UP -> {
                             if (pos == 0) {
+                                onNavigateUpToTabs?.invoke()
                                 return@setOnKeyListener true
                             }
                         }

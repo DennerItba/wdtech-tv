@@ -17,7 +17,8 @@ class ChannelListAdapter(
     private val onChannelSelected: (Channel) -> Unit,
     private val onChannelClicked: (Channel) -> Unit,
     private val onNavigateToCategories: () -> Unit,
-    private val onNavigateToPlayer: () -> Unit
+    private val onNavigateToPlayer: () -> Unit,
+    private val onNavigateUpToTabs: (() -> Unit)? = null
 ) : RecyclerView.Adapter<ChannelListAdapter.ChannelViewHolder>() {
 
     private var selectedIndex = 0
@@ -111,9 +112,10 @@ class ChannelListAdapter(
                             onNavigateToPlayer()
                             return@setOnKeyListener true
                         }
-                        // Seta para Cima no primeiro canal: NÃO deixa subir para o 'Sair'
+                        // Seta para Cima no primeiro canal: sobe para as abas superiores
                         KeyEvent.KEYCODE_DPAD_UP -> {
                             if (pos == 0) {
+                                onNavigateUpToTabs?.invoke()
                                 return@setOnKeyListener true
                             }
                         }

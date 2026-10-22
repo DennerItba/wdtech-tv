@@ -526,8 +526,17 @@ class PlayerActivity : AppCompatActivity() {
                     return true
                 }
                 KeyEvent.KEYCODE_DPAD_LEFT -> {
-                    // Se o overlay NÃO estiver visível, executa atalho de retroceder 1 minuto
-                    if (overlayView.visibility != View.VISIBLE) {
+                    val isVod = currentChannel?.id?.startsWith("vod_") == true || currentStreamUrl?.contains("/movie/") == true || currentStreamUrl?.contains("/series/") == true
+                    if (isVod) {
+                        player?.let { p ->
+                            val target = (p.currentPosition - 15000L).coerceAtLeast(0)
+                            p.seekTo(target)
+                            val sec = target / 1000
+                            Toast.makeText(this, "⏮ ${sec / 60}:${String.format("%02d", sec % 60)}", Toast.LENGTH_SHORT).show()
+                            showOverlayTemporarily()
+                            return true
+                        }
+                    } else if (overlayView.visibility != View.VISIBLE) {
                         currentChannel?.let {
                             if (it.hasPlayback) {
                                 rewind(60)
@@ -537,14 +546,41 @@ class PlayerActivity : AppCompatActivity() {
                     }
                 }
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    // Se o overlay NÃO estiver visível, executa atalho de avançar 1 minuto
-                    if (overlayView.visibility != View.VISIBLE) {
+                    val isVod = currentChannel?.id?.startsWith("vod_") == true || currentStreamUrl?.contains("/movie/") == true || currentStreamUrl?.contains("/series/") == true
+                    if (isVod) {
+                        player?.let { p ->
+                            val dur = p.duration
+                            val target = (p.currentPosition + 15000L).coerceAtMost(if (dur > 0) dur else Long.MAX_VALUE)
+                            p.seekTo(target)
+                            val sec = target / 1000
+                            Toast.makeText(this, "⏭ ${sec / 60}:${String.format("%02d", sec % 60)}", Toast.LENGTH_SHORT).show()
+                            showOverlayTemporarily()
+                            return true
+                        }
+                    } else if (overlayView.visibility != View.VISIBLE) {
                         currentChannel?.let {
                             if (it.hasPlayback && isPlaybackMode) {
                                 forward(60)
                                 return true
                             }
                         }
+                    }
+                }
+                KeyEvent.KEYCODE_DPAD_CENTER,
+                KeyEvent.KEYCODE_ENTER,
+                KeyEvent.KEYCODE_NUMPAD_ENTER -> {
+                    if (overlayView.visibility != View.VISIBLE) {
+                        player?.let { p ->
+                            if (p.isPlaying) {
+                                p.pause()
+                                Toast.makeText(this, "⏸ Pausado", Toast.LENGTH_SHORT).show()
+                            } else {
+                                p.play()
+                                Toast.makeText(this, "▶ Reproduzindo", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        showOverlayTemporarily()
+                        return true
                     }
                 }
             }

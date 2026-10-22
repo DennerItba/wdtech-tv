@@ -54,15 +54,70 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+                <!-- Abas de Navegação Superior (Estilo UniTV / TVExpress) -->
+        <LinearLayout
+            android:id="@+id/layout_mode_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@id/logo_layout"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_tab_live"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_tab_selector"
+                android:focusable="true"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="📺 TV Ao Vivo"
+                android:textAllCaps="false"
+                android:textColor="@color/tab_text_selector"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_tab_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_tab_selector"
+                android:focusable="true"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="🎬 Filmes"
+                android:textAllCaps="false"
+                android:textColor="@color/tab_text_selector"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_tab_series"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_tab_selector"
+                android:focusable="true"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="🍿 Séries"
+                android:textAllCaps="false"
+                android:textColor="@color/tab_text_selector"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <!-- Indicador da Categoria Atual no Topo -->
         <TextView
             android:id="@+id/txt_header_breadcrumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="24dp"
-            android:layout_toEndOf="@id/logo_layout"
-            android:text="WDTECH TV â€¢ AO VIVO"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/layout_mode_tabs"
+            android:text="WDTECH TV • AO VIVO"
             android:textColor="@color/text_mid"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -215,6 +270,21 @@
                 android:nextFocusRight="@id/player_preview_container"
                 android:nextFocusUp="@id/rv_channel_list"
                 android:scrollbars="none" />
+
+            <!-- Lista de Filmes / Séries (VOD) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_vod_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:descendantFocusability="afterDescendants"
+                android:focusable="false"
+                android:nextFocusLeft="@id/rv_category_sidebar"
+                android:nextFocusRight="@id/player_preview_container"
+                android:nextFocusUp="@id/rv_vod_list"
+                android:scrollbars="none"
+                android:visibility="gone" />
 
             <!-- RodapÃ© com InstruÃ§Ã£o -->
             <TextView
@@ -466,6 +536,90 @@
                     android:contentDescription="Tela Cheia" />
             </RelativeLayout>
 
+            <!-- Painel de Detalhes do Filme / Série (VOD Mode) -->
+            <LinearLayout
+                android:id="@+id/layout_vod_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#E8070B14"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!-- Pôster Grande do Filme / Série -->
+                    <ImageView
+                        android:id="@+id/img_vod_preview_poster"
+                        android:layout_width="155dp"
+                        android:layout_height="match_parent"
+                        android:background="#151E2D"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Poster" />
+
+                    <!-- Informações: Título, Metadados e Sinopse -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="18dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_vod_preview_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Título do Filme / Série"
+                            android:textColor="@color/text_white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_vod_preview_meta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="⭐ 8.5 • 2025 • Lançamento • FHD"
+                            android:textColor="@color/neon_cyan"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_vod_preview_plot"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="8"
+                            android:lineSpacingExtra="3dp"
+                            android:text="Carregando sinopse..."
+                            android:textColor="#C0D1EC"
+                            android:textSize="12sp" />
+
+                        <!-- Botão de Ação Primário do VOD -->
+                        <Button
+                            android:id="@+id/btn_vod_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_button_selector"
+                            android:focusable="true"
+                            android:paddingStart="24dp"
+                            android:paddingEnd="24dp"
+                            android:text="▶ Assistir Filme (OK)"
+                            android:textAllCaps="false"
+                            android:textColor="@color/btn_playback_text_selector"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
         </RelativeLayout>
 
     </LinearLayout>

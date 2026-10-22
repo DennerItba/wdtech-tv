@@ -38,7 +38,40 @@ import com.mytv.app.data.UniTvCatalogManager
 import com.mytv.app.model.Channel
 import com.mytv.app.model.ChannelCategory
 
+import android.widget.ImageView
+import android.widget.ProgressBar
+import coil.load
+import coil.transform.RoundedCornersTransformation
+import com.mytv.app.adapter.VodListAdapter
+import com.mytv.app.adapter.SeasonAdapter
+import com.mytv.app.adapter.EpisodeAdapter
+import com.mytv.app.data.VodRepository
+import com.mytv.app.model.VodItem
+import com.mytv.app.model.VodSeason
+import com.mytv.app.model.VodEpisode
+
+enum class AppMode {
+    LIVE_TV,
+    MOVIES,
+    SERIES
+}
+
 class MainActivity : AppCompatActivity() {
+
+    private var currentAppMode = AppMode.LIVE_TV
+    private lateinit var btnTabLive: Button
+    private lateinit var btnTabMovies: Button
+    private lateinit var btnTabSeries: Button
+    private lateinit var rvVodList: RecyclerView
+    private lateinit var vodAdapter: VodListAdapter
+    private lateinit var layoutVodPreview: View
+    private lateinit var imgVodPreviewPoster: ImageView
+    private lateinit var txtVodPreviewTitle: TextView
+    private lateinit var txtVodPreviewMeta: TextView
+    private lateinit var txtVodPreviewPlot: TextView
+    private lateinit var btnVodAction: Button
+    private var currentVodItem: VodItem? = null
+
 
     private lateinit var rvCategorySidebar: RecyclerView
     private lateinit var rvChannelList: RecyclerView
@@ -89,6 +122,20 @@ class MainActivity : AppCompatActivity() {
         txtHeaderBreadcrumb = findViewById(R.id.txt_header_breadcrumb)
         btnFullscreen = findViewById(R.id.btn_fullscreen)
 
+        btnTabLive = findViewById(R.id.btn_tab_live)
+        btnTabMovies = findViewById(R.id.btn_tab_movies)
+        btnTabSeries = findViewById(R.id.btn_tab_series)
+        rvVodList = findViewById(R.id.rv_vod_list)
+        layoutVodPreview = findViewById(R.id.layout_vod_preview)
+        imgVodPreviewPoster = findViewById(R.id.img_vod_preview_poster)
+        txtVodPreviewTitle = findViewById(R.id.txt_vod_preview_title)
+        txtVodPreviewMeta = findViewById(R.id.txt_vod_preview_meta)
+        txtVodPreviewPlot = findViewById(R.id.txt_vod_preview_plot)
+        btnVodAction = findViewById(R.id.btn_vod_action)
+
+        setupModeTabs()
+        setupVodList()
+
         txtEpgNowTitle = findViewById(R.id.txt_epg_now_title)
         txtEpgNowTime = findViewById(R.id.txt_epg_now_time)
         pbEpgProgress = findViewById(R.id.pb_epg_progress)
@@ -133,6 +180,9 @@ class MainActivity : AppCompatActivity() {
             },
             onCategoryClicked = { category ->
                 handleCategorySelection(category, autoFocusChannels = true)
+            },
+            onNavigateUpToTabs = {
+                focusActiveTab()
             }
         )
         rvCategorySidebar.adapter = categoryAdapter
@@ -154,6 +204,9 @@ class MainActivity : AppCompatActivity() {
             },
             onNavigateToPlayer = {
                 currentChannel?.let { openFullScreenPlayer(it) }
+            },
+            onNavigateUpToTabs = {
+                focusActiveTab()
             }
         )
         rvChannelList.adapter = channelAdapter
@@ -229,9 +282,51 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        displayCategoryChannels(category)
-        if (autoFocusChannels) {
-            focusFirstChannel()
+        when (currentAppMode) {
+            AppMode.LIVE_TV -> {
+                displayCategoryChannels(category)
+                if (autoFocusChannels) {
+                    focusFirstChannel()
+                }
+            }
+            AppMode.MOVIES -> {
+                txtSelectedCategoryTitle.text = category.name
+                txtCategoryBadge.text = "..."
+                txtHeaderBreadcrumb.text = "WDTECH TV • FILMES • ${category.name.uppercase()}"
+                lifecycleScope.launch {
+                    val movies = VodRepository.getMoviesByCategory(category.id, category.name)
+                    if (currentAppMode == AppMode.MOVIES && selectedCategory?.id == category.id) {
+                        txtCategoryBadge.text = movies.size.toString()
+                        vodAdapter.updateItems(movies)
+                        if (movies.isNotEmpty()) {
+                            currentVodItem = movies.first()
+                            updateVodPreview(movies.first())
+                            if (autoFocusChannels) {
+                                focusFirstVodItem()
+                            }
+                        }
+                    }
+                }
+            }
+            AppMode.SERIES -> {
+                txtSelectedCategoryTitle.text = category.name
+                txtCategoryBadge.text = "..."
+                txtHeaderBreadcrumb.text = "WDTECH TV • SÉRIES • ${category.name.uppercase()}"
+                lifecycleScope.launch {
+                    val series = VodRepository.getSeriesByCategory(category.id, category.name)
+                    if (currentAppMode == AppMode.SERIES && selectedCategory?.id == category.id) {
+                        txtCategoryBadge.text = series.size.toString()
+                        vodAdapter.updateItems(series)
+                        if (series.isNotEmpty()) {
+                            currentVodItem = series.first()
+                            updateVodPreview(series.first())
+                            if (autoFocusChannels) {
+                                focusFirstVodItem()
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -596,4 +691,254 @@ class MainActivity : AppCompatActivity() {
         exoPlayer?.release()
         exoPlayer = null
     }
+
+    private fun setupModeTabs() {
+        btnTabLive.isSelected = true
+        btnTabMovies.isSelected = false
+        btnTabSeries.isSelected = false
+
+        btnTabLive.setOnClickListener { switchAppMode(AppMode.LIVE_TV) }
+        btnTabMovies.setOnClickListener { switchAppMode(AppMode.MOVIES) }
+        btnTabSeries.setOnClickListener { switchAppMode(AppMode.SERIES) }
+
+        val tabKeyListener = View.OnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_DPAD_DOWN -> {
+                        focusCurrentCategory()
+                        true
+                    }
+                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
+                        v.performClick()
+                        true
+                    }
+                    else -> false
+                }
+            } else false
+        }
+        btnTabLive.setOnKeyListener(tabKeyListener)
+        btnTabMovies.setOnKeyListener(tabKeyListener)
+        btnTabSeries.setOnKeyListener(tabKeyListener)
+    }
+
+    private fun setupVodList() {
+        rvVodList.setHasFixedSize(true)
+        rvVodList.setItemViewCacheSize(20)
+        rvVodList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        vodAdapter = VodListAdapter(
+            items = emptyList(),
+            onItemSelected = { item ->
+                currentVodItem = item
+                updateVodPreview(item)
+            },
+            onItemClicked = { item ->
+                handleVodClick(item)
+            },
+            onNavigateToCategories = {
+                focusCurrentCategory()
+            },
+            onNavigateToDetails = {
+                btnVodAction.requestFocus()
+            },
+            onNavigateUpToTabs = {
+                focusActiveTab()
+            }
+        )
+        rvVodList.adapter = vodAdapter
+
+        btnVodAction.setOnClickListener {
+            currentVodItem?.let { handleVodClick(it) }
+        }
+    }
+
+    private fun switchAppMode(mode: AppMode) {
+        if (currentAppMode == mode) return
+        currentAppMode = mode
+
+        btnTabLive.isSelected = (mode == AppMode.LIVE_TV)
+        btnTabMovies.isSelected = (mode == AppMode.MOVIES)
+        btnTabSeries.isSelected = (mode == AppMode.SERIES)
+
+        when (mode) {
+            AppMode.LIVE_TV -> {
+                rvChannelList.visibility = View.VISIBLE
+                rvVodList.visibility = View.GONE
+                layoutVodPreview.visibility = View.GONE
+                playerView.visibility = View.VISIBLE
+                txtHeaderBreadcrumb.text = "WDTECH TV • AO VIVO"
+
+                categoryAdapter.updateCategories(allCategories)
+                val cat = selectedCategory ?: allCategories.firstOrNull()
+                cat?.let { displayCategoryChannels(it) }
+                currentChannel?.let { playChannelPreview(it) }
+            }
+            AppMode.MOVIES -> {
+                exoPlayer?.stop()
+                exoPlayer?.clearMediaItems()
+                rvChannelList.visibility = View.GONE
+                rvVodList.visibility = View.VISIBLE
+                layoutVodPreview.visibility = View.VISIBLE
+                playerView.visibility = View.GONE
+                txtHeaderBreadcrumb.text = "WDTECH TV • CATÁLOGO DE FILMES"
+                txtSelectedCategoryTitle.text = "Carregando Filmes..."
+                txtCategoryBadge.text = "..."
+
+                lifecycleScope.launch {
+                    val vodCats = VodRepository.getMovieCategories()
+                    val catList = vodCats.map { vc ->
+                        ChannelCategory(
+                            id = vc.id,
+                            name = vc.name,
+                            isLocked = vc.isAdult,
+                            channels = emptyList()
+                        )
+                    }
+                    categoryAdapter.updateCategories(catList)
+                    if (catList.isNotEmpty()) {
+                        handleCategorySelection(catList.first(), autoFocusChannels = false)
+                    }
+                }
+            }
+            AppMode.SERIES -> {
+                exoPlayer?.stop()
+                exoPlayer?.clearMediaItems()
+                rvChannelList.visibility = View.GONE
+                rvVodList.visibility = View.VISIBLE
+                layoutVodPreview.visibility = View.VISIBLE
+                playerView.visibility = View.GONE
+                txtHeaderBreadcrumb.text = "WDTECH TV • CATÁLOGO DE SÉRIES"
+                txtSelectedCategoryTitle.text = "Carregando Séries..."
+                txtCategoryBadge.text = "..."
+
+                lifecycleScope.launch {
+                    val seriesCats = VodRepository.getSeriesCategories()
+                    val catList = seriesCats.map { sc ->
+                        ChannelCategory(
+                            id = sc.id,
+                            name = sc.name,
+                            isLocked = sc.isAdult,
+                            channels = emptyList()
+                        )
+                    }
+                    categoryAdapter.updateCategories(catList)
+                    if (catList.isNotEmpty()) {
+                        handleCategorySelection(catList.first(), autoFocusChannels = false)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateVodPreview(item: VodItem) {
+        txtVodPreviewTitle.text = item.name
+        val meta = buildString {
+            append(item.getFormattedRating())
+            if (!item.year.isNullOrEmpty()) append(" • ").append(item.year)
+            if (!item.genre.isNullOrEmpty()) append(" • ").append(item.genre)
+            if (item.isSeries) append(" • Série Completa") else append(" • Filme FHD")
+        }
+        txtVodPreviewMeta.text = meta
+        txtVodPreviewPlot.text = item.plot ?: "Sem sinopse disponível para este título."
+        btnVodAction.text = if (item.isSeries) "📺 Ver Temporadas & Episódios (OK)" else "▶ Assistir Filme (OK)"
+
+        if (!item.posterUrl.isNullOrEmpty()) {
+            imgVodPreviewPoster.load(item.posterUrl) {
+                crossfade(true)
+                transformations(RoundedCornersTransformation(10f))
+            }
+        } else {
+            imgVodPreviewPoster.setImageResource(R.drawable.logo)
+        }
+    }
+
+    private fun handleVodClick(item: VodItem) {
+        if (item.isSeries) {
+            showSeriesEpisodesDialog(item)
+        } else {
+            openFullScreenPlayer(item.toChannel())
+        }
+    }
+
+    private fun focusFirstVodItem() {
+        if (vodAdapter.itemCount == 0) return
+        rvVodList.stopScroll()
+        rvVodList.scrollToPosition(0)
+        rvVodList.post {
+            val vh = rvVodList.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus()
+                ?: rvVodList.layoutManager?.findViewByPosition(0)?.requestFocus()
+        }
+    }
+
+    private fun showSeriesEpisodesDialog(series: VodItem) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_series_episodes)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.90).toInt(),
+            (resources.displayMetrics.heightPixels * 0.88).toInt()
+        )
+
+        val txtTitle = dialog.findViewById<TextView>(R.id.txt_dialog_series_title)
+        val txtGenre = dialog.findViewById<TextView>(R.id.txt_dialog_series_genre)
+        val txtPlot = dialog.findViewById<TextView>(R.id.txt_dialog_series_plot)
+        val imgCover = dialog.findViewById<ImageView>(R.id.img_dialog_series_cover)
+        val btnClose = dialog.findViewById<Button>(R.id.btn_dialog_close)
+        val pbLoading = dialog.findViewById<ProgressBar>(R.id.pb_dialog_loading)
+        val rvSeasons = dialog.findViewById<RecyclerView>(R.id.rv_dialog_seasons)
+        val rvEpisodes = dialog.findViewById<RecyclerView>(R.id.rv_dialog_episodes)
+
+        txtTitle.text = series.name
+        txtGenre.text = "${series.getFormattedRating()} • ${series.genre ?: "Série Completa"}"
+        txtPlot.text = series.plot ?: "Sinopse não disponível."
+
+        if (!series.posterUrl.isNullOrEmpty()) {
+            imgCover.load(series.posterUrl) {
+                crossfade(true)
+                transformations(RoundedCornersTransformation(8f))
+            }
+        }
+
+        btnClose.setOnClickListener { dialog.dismiss() }
+
+        rvSeasons.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvEpisodes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        val episodeAdapter = EpisodeAdapter(emptyList()) { ep ->
+            dialog.dismiss()
+            openFullScreenPlayer(ep.toChannel(series.name, series.posterUrl))
+        }
+        rvEpisodes.adapter = episodeAdapter
+
+        val seasonAdapter = SeasonAdapter(emptyList()) { season ->
+            episodeAdapter.updateEpisodes(season.episodes)
+            rvEpisodes.scrollToPosition(0)
+        }
+        rvSeasons.adapter = seasonAdapter
+
+        pbLoading.visibility = View.VISIBLE
+        lifecycleScope.launch {
+            val seasons = VodRepository.getSeriesInfo(series.id)
+            pbLoading.visibility = View.GONE
+            if (seasons.isNotEmpty()) {
+                seasonAdapter.updateSeasons(seasons)
+                episodeAdapter.updateEpisodes(seasons.first().episodes)
+            } else {
+                Toast.makeText(this@MainActivity, "Nenhum episódio encontrado para esta série.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dialog.show()
+    }
+
+
+    private fun focusActiveTab() {
+        when (currentAppMode) {
+            AppMode.LIVE_TV -> btnTabLive.requestFocus()
+            AppMode.MOVIES -> btnTabMovies.requestFocus()
+            AppMode.SERIES -> btnTabSeries.requestFocus()
+        }
+    }
+
 }

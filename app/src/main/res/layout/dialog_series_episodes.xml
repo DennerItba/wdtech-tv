@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="850dp"
+    android:layout_height="520dp"
+    android:background="@drawable/bg_dialog_playback"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Topo do Diálogo: Título e Botão Fechar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/badge_playback"
+                    android:paddingStart="8dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="3dp"
+                    android:text="🍿 SÉRIES ON DEMAND"
+                    android:textColor="@color/neon_cyan"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_dialog_series_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Nome da Série"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_dialog_series_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Escolha a temporada e selecione o episódio no controle remoto"
+                android:textColor="@color/neon_cyan"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_dialog_close"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_button_selector"
+            android:focusable="true"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="✕ Fechar"
+            android:textAllCaps="false"
+            android:textColor="@color/btn_playback_text_selector"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Barra de Temporadas (Horizontal) -->
+    <LinearLayout
+        android:id="@+id/layout_seasons_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_dialog_seasons"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <!-- Conteúdo: Capa da Série + Sinopse à Esquerda, Lista de Episódios à Direita -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Lado Esquerdo: Capa e Sinopse -->
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:id="@+id/img_dialog_series_cover"
+                android:layout_width="160dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center_horizontal"
+                android:background="#151E2D"
+                android:scaleType="centerCrop"
+                android:contentDescription="Cover" />
+
+            <TextView
+                android:id="@+id/txt_dialog_series_plot"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="6"
+                android:text="Sinopse da série..."
+                android:textColor="#C0D1EC"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Lado Direito: Lista de Episódios -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/pb_dialog_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:indeterminateTint="@color/neon_cyan"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_dialog_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
