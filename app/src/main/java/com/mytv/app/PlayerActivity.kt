@@ -21,12 +21,16 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.extractor.DefaultExtractorsFactory
+import androidx.media3.extractor.ts.TsExtractor
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -203,7 +207,12 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun startStream(channel: Channel, customUrl: String? = null) {
-        val targetUrl = customUrl ?: channel.streamUrl
+        val rawUrl = customUrl ?: channel.streamUrl
+        val targetUrl = if (rawUrl.contains("vivlar.me") && rawUrl.endsWith(".m3u8")) {
+            rawUrl.replace(".m3u8", ".ts")
+        } else {
+            rawUrl
+        }
         this.currentStreamUrl = targetUrl
 
         // Limpa estado de erro anterior
@@ -260,13 +269,27 @@ class PlayerActivity : AppCompatActivity() {
             })
         }
 
+        val extractorsFactory = DefaultExtractorsFactory().apply {
+            setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
+            setConstantBitrateSeekingEnabled(true)
+        }
+
+        val mediaItem = MediaItem.Builder()
+            .setUri(targetUrl)
+            .apply {
+                if (targetUrl.endsWith(".ts") || targetUrl.contains(".ts?")) {
+                    setMimeType(MimeTypes.VIDEO_MP2T)
+                }
+            }
+            .build()
+
         val mediaSource = if (targetUrl.contains(".m3u8")) {
             HlsMediaSource.Factory(dataSourceFactory)
                 .setAllowChunklessPreparation(true)
-                .createMediaSource(MediaItem.fromUri(targetUrl))
+                .createMediaSource(mediaItem)
         } else {
-            androidx.media3.exoplayer.source.DefaultMediaSourceFactory(dataSourceFactory)
-                .createMediaSource(MediaItem.fromUri(targetUrl))
+            DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
+                .createMediaSource(mediaItem)
         }
 
         exo.setMediaSource(mediaSource)
@@ -658,6 +681,9 @@ class PlayerActivity : AppCompatActivity() {
             for ((fhdId, hdId) in STREAM_FALLBACKS) {
                 if (url.contains("/$fhdId.m3u8")) {
                     return url.replace("/$fhdId.m3u8", "/$hdId.m3u8")
+                }
+                if (url.contains("/$fhdId.ts")) {
+                    return url.replace("/$fhdId.ts", "/$hdId.ts")
                 }
             }
             return null

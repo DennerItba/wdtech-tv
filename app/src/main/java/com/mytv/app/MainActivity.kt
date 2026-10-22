@@ -23,13 +23,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.extractor.DefaultExtractorsFactory
+import androidx.media3.extractor.ts.TsExtractor
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -679,14 +683,33 @@ class MainActivity : AppCompatActivity() {
                 ))
 
             val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
-            val mediaItem = MediaItem.fromUri(channel.streamUrl)
+            val rawUrl = channel.streamUrl
+            val targetUrl = if (rawUrl.contains("vivlar.me") && rawUrl.endsWith(".m3u8")) {
+                rawUrl.replace(".m3u8", ".ts")
+            } else {
+                rawUrl
+            }
 
-            val mediaSource = if (channel.streamUrl.contains(".m3u8")) {
+            val extractorsFactory = DefaultExtractorsFactory().apply {
+                setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
+                setConstantBitrateSeekingEnabled(true)
+            }
+
+            val mediaItem = MediaItem.Builder()
+                .setUri(targetUrl)
+                .apply {
+                    if (targetUrl.endsWith(".ts") || targetUrl.contains(".ts?")) {
+                        setMimeType(MimeTypes.VIDEO_MP2T)
+                    }
+                }
+                .build()
+
+            val mediaSource = if (targetUrl.contains(".m3u8")) {
                 HlsMediaSource.Factory(dataSourceFactory)
                     .setAllowChunklessPreparation(true)
                     .createMediaSource(mediaItem)
             } else {
-                androidx.media3.exoplayer.source.DefaultMediaSourceFactory(dataSourceFactory)
+                DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
                     .createMediaSource(mediaItem)
             }
 
