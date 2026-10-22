@@ -24,6 +24,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.ui.PlayerView
@@ -225,7 +226,20 @@ class PlayerActivity : AppCompatActivity() {
 
         val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
 
-        val exo = ExoPlayer.Builder(this).build().apply {
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                15_000,
+                30_000,
+                1_500,
+                2_500
+            )
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .setBackBuffer(10_000, false)
+            .build()
+
+        val exo = ExoPlayer.Builder(this)
+            .setLoadControl(loadControl)
+            .build().apply {
             playWhenReady = true
             addListener(object : Player.Listener {
                 override fun onPlaybackStateChanged(state: Int) {
@@ -466,9 +480,11 @@ class PlayerActivity : AppCompatActivity() {
             txtErrorCountdown.text = "Tentativa $retryCount de $maxAutoRetries em 3 segundos..."
             txtErrorCountdown.visibility = View.VISIBLE
 
+            val fallbackUrl = currentStreamUrl?.let { getFallbackUrl(it) }
+            val streamToUse = if (fallbackUrl != null && retryCount > 1) fallbackUrl else currentStreamUrl
             val runnable = Runnable {
                 if (!isFinishing && !isDestroyed) {
-                    startStream(channel, currentStreamUrl)
+                    startStream(channel, streamToUse)
                 }
             }
             retryRunnable = runnable
@@ -610,5 +626,41 @@ class PlayerActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_CHANNEL = "extra_channel"
+        private val STREAM_FALLBACKS = mapOf(
+            "71862" to "71865", // Discovery Channel FHD -> HD
+            "71871" to "71873", // Discovery Kids FHD -> HD
+            "71867" to "71869", // Discovery H&H FHD -> HD
+            "71883" to "71885", // Discovery Turbo FHD -> HD
+            "72150" to "72152", // ID FHD -> HD
+            "71875" to "71877", // Discovery Science FHD -> HD
+            "71879" to "71881", // Discovery Theater FHD -> HD
+            "71887" to "71889", // Discovery World FHD -> HD
+            "71772" to "71775", // Animal Planet FHD -> HD
+            "72146" to "72148", // History FHD -> HD
+            "72106" to "72108", // H2 FHD -> HD
+            "72362" to "72364", // Telecine Premium FHD -> HD
+            "72346" to "72348", // Telecine Action FHD -> HD
+            "72366" to "72368", // Telecine Touch FHD -> HD
+            "72358" to "72360", // Telecine Pipoca FHD -> HD
+            "72354" to "72356", // Telecine Fun FHD -> HD
+            "72350" to "72352", // Telecine Cult FHD -> HD
+            "72118" to "72120", // HBO FHD -> HD
+            "72110" to "72112", // HBO 2 FHD -> HD
+            "72125" to "72127", // HBO Plus FHD -> HD
+            "72114" to "72116", // HBO Family FHD -> HD
+            "72134" to "72136", // HBO Signature FHD -> HD
+            "72121" to "72123", // HBO Mundi FHD -> HD
+            "72129" to "72131", // HBO Pop FHD -> HD
+            "72138" to "72140"  // HBO Xtreme FHD -> HD
+        )
+
+        fun getFallbackUrl(url: String): String? {
+            for ((fhdId, hdId) in STREAM_FALLBACKS) {
+                if (url.contains("/$fhdId.m3u8")) {
+                    return url.replace("/$fhdId.m3u8", "/$hdId.m3u8")
+                }
+            }
+            return null
+        }
     }
 }

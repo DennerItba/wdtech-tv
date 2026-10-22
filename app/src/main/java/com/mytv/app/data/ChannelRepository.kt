@@ -22,7 +22,7 @@ object ChannelRepository {
                         number = "01",
                         title = "Cine SKY 01 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13071.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72364.m3u8",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Cine Sky Oficial: Grandes lancamentos do cinema mundial 24h sem intervalos comerciais.",
                         quality = "FHD"
@@ -32,7 +32,7 @@ object ChannelRepository {
                         number = "02",
                         title = "Cine SKY 02 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13072.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72348.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Os melhores sucessos de bilheteria e estreias exclusivas do cinema direto na sua TV.",
                         quality = "FHD"
@@ -42,7 +42,7 @@ object ChannelRepository {
                         number = "03",
                         title = "Cine SKY 03 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13073.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72120.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Filmes consagrados, acao, suspense e producoes premiadas de Hollywood.",
                         quality = "FHD"
@@ -52,7 +52,7 @@ object ChannelRepository {
                         number = "04",
                         title = "Cine SKY 05 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13075.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72112.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Cinema em alta definicao com lancamentos imperdiveis e classicos mundiais.",
                         quality = "FHD"
@@ -62,7 +62,7 @@ object ChannelRepository {
                         number = "05",
                         title = "Cine SKY Acao HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13071.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72319.m3u8",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Tiros, explosoes e adrenalina pura com os maiores astros da acao.",
                         quality = "FHD"
@@ -72,7 +72,7 @@ object ChannelRepository {
                         number = "06",
                         title = "Cine SKY Familia HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13072.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72360.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Comedias, animacoes e os melhores filmes para toda a familia reunir.",
                         quality = "FHD"
@@ -831,7 +831,7 @@ object ChannelRepository {
                         number = "75",
                         title = "Discovery Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8735.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71862.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
                         description = "O canal pioneiro em exploracao cientifica, misterios do planeta e aventuras humanas.",
                         quality = "FHD"
@@ -841,7 +841,7 @@ object ChannelRepository {
                         number = "76",
                         title = "Discovery Kids HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8742.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71871.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD"
@@ -851,7 +851,7 @@ object ChannelRepository {
                         number = "77",
                         title = "Discovery Home & Health HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8739.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71867.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-hh-hd.png",
                         description = "Estilo de vida, reformas de imoveis, saude, culinaria e maternidade.",
                         quality = "FHD"
@@ -861,7 +861,7 @@ object ChannelRepository {
                         number = "78",
                         title = "Discovery Turbo HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8755.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71883.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-turbo-hd.png",
                         description = "Carros personalizados, restauracao de classicos e motores de alta performance.",
                         quality = "FHD"
@@ -871,7 +871,7 @@ object ChannelRepository {
                         number = "79",
                         title = "Discovery ID (Investigacao) HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8932.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72150.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Investigation_Discovery_logo_%282020%29.svg/320px-Investigation_Discovery_logo_%282020%29.svg.png",
                         description = "Crimes reais, investigacoes policiais forenses e os misterios mais intrigantes.",
                         quality = "FHD"
@@ -881,7 +881,7 @@ object ChannelRepository {
                         number = "80",
                         title = "Discovery World HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8758.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71887.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Discovery_World_logo.svg/320px-Discovery_World_logo.svg.png",
                         description = "Documentarios deslumbrantes sobre culturas globais, paisagens e a historia da Terra.",
                         quality = "FHD"
@@ -891,7 +891,7 @@ object ChannelRepository {
                         number = "81",
                         title = "Discovery Science HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8745.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71875.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Discovery_Science_logo.svg/320px-Discovery_Science_logo.svg.png",
                         description = "Tecnologia de ponta, astrofisica, experimentos ousados e inovacoes do futuro.",
                         quality = "HD"
@@ -901,7 +901,7 @@ object ChannelRepository {
                         number = "82",
                         title = "Discovery Theater HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8748.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71879.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Discovery_Theater_logo.png/320px-Discovery_Theater_logo.png",
                         description = "Imagens cinematograficas em alta definicao da natureza e animais selvagens.",
                         quality = "HD"
@@ -911,7 +911,7 @@ object ChannelRepository {
                         number = "83",
                         title = "Animal Planet HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304491.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71772.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Animal_Planet_logo_2018.svg/320px-Animal_Planet_logo_2018.svg.png",
                         description = "O reino animal de perto: resgate de fauna, predadores selvagens e vida dos pets.",
                         quality = "FHD"
@@ -921,7 +921,7 @@ object ChannelRepository {
                         number = "84",
                         title = "History Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304494.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72146.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
                         description = "Trato Feito, Alienigenas do Passado, Forjado no Fogo e grandes acontecimentos historicos.",
                         quality = "FHD"
@@ -931,7 +931,7 @@ object ChannelRepository {
                         number = "85",
                         title = "History 2 (H2) HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304498.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72106.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/History2_logo.svg/320px-History2_logo.svg.png",
                         description = "Aprofundamento historico, grandes guerras, arqueologia e conspiracoes mundiais.",
                         quality = "FHD"
@@ -968,7 +968,7 @@ object ChannelRepository {
                         number = "88",
                         title = "Multishow HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8975.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131193.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Multishow_logo_2017.svg/320px-Multishow_logo_2017.svg.png",
                         description = "Shows ao vivo, humor com Vai Que Cola, festivais Rock in Rio e Lollapalooza.",
                         quality = "FHD"
@@ -978,7 +978,7 @@ object ChannelRepository {
                         number = "89",
                         title = "GNT HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8891.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72102.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/GNT_logo_2020.svg/320px-GNT_logo_2020.svg.png",
                         description = "Gastronomia, moda, decoracao, Papo de Segunda e Saia Justa.",
                         quality = "FHD"
@@ -1018,7 +1018,7 @@ object ChannelRepository {
                         number = "93",
                         title = "Modo Viagem HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8883.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72162.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Modo_Viagem_logo.png/320px-Modo_Viagem_logo.png",
                         description = "Turismo pelo mundo, hoteis deslumbrantes e experiencias de viagem inesqueciveis.",
                         quality = "FHD"
@@ -1145,7 +1145,7 @@ object ChannelRepository {
                         number = "105",
                         title = "Discovery 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8748.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/103510.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
                         description = "Documentarios deslumbrantes da natureza, ciencia e vida selvagem em 4K.",
                         quality = "4K"
@@ -1521,7 +1521,7 @@ object ChannelRepository {
                         number = "137",
                         title = "Cartoon Network HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8699.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71828.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/320px-Cartoon_Network_2010_logo.svg.png",
                         description = "O canal dos desenhos animados: Ben 10, Teen Titans Go, Hora de Aventura e Incrivel Mundo de Gumball.",
                         quality = "FHD"

@@ -27,6 +27,7 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.ui.PlayerView
@@ -619,7 +620,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupPlayer() {
-        val player = ExoPlayer.Builder(this).build()
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                10_000,
+                20_000,
+                1_000,
+                2_000
+            )
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .build()
+        val player = ExoPlayer.Builder(this)
+            .setLoadControl(loadControl)
+            .build()
         player.playWhenReady = true
         player.addListener(object : Player.Listener {
             override fun onPlaybackStateChanged(state: Int) {

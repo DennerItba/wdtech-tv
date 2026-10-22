@@ -91,23 +91,28 @@ object PlaybackRepository {
         "ch_paramount" to "72217",
 
         // Documentários
-        "ch_299" to "71865", // Discovery Channel
-        "ch_discovery_kids" to "71873",
-        "ch_296" to "71869", // Discovery H&H
-        "ch_297" to "71885", // Discovery Turbo
-        "disc_id" to "72152", // ID
-        "disc_science" to "71877",
-        "disc_theater" to "71881",
-        "disc_world" to "71889",
-        "ch_4k_disc" to "71881",
-        "ch_animal_planet" to "71775",
-        "disc_animal" to "71775",
-        "disc_tlc" to "72373",
-        "ch_history" to "72148",
-        "ch_history_2" to "72108",
+        "ch_299" to "71862", // Discovery Channel
+        "ch_discovery_kids" to "71871",
+        "ch_296" to "71867", // Discovery H&H
+        "ch_297" to "71883", // Discovery Turbo
+        "disc_id" to "72150", // ID
+        "disc_science" to "71875",
+        "disc_theater" to "71879",
+        "disc_world" to "71887",
+        "ch_4k_disc" to "103510",
+        "ch_animal_planet" to "71772",
+        "disc_animal" to "71772",
+        "disc_tlc" to "72371",
+        "ch_history" to "72146",
+        "ch_history_2" to "72106",
 
         // Infantil
-        "ch_cartoon" to "71831",
+        "ch_cartoon" to "71828",
+        
+        // Variedades
+        "var_multishow" to "131193",
+        "var_gnt" to "72102",
+        "var_viagem" to "72162",
 
         // Abertos & Notícias
         "globo_sp" to "72598",
