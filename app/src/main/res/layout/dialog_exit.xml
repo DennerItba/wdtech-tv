@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Deseja realmente sair do My TV+?"
+        android:text="Deseja realmente sair do WDTECHTV?"
         android:textColor="@color/text_gray"
         android:textSize="15sp" />
 
