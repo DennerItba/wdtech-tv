@@ -1,6 +1,6 @@
 {
-  "versionCode": 14,
-  "versionName": "2.3.0",
-  "releaseNotes": "\u2022 Novo Cat\u00e1logo de Filmes e S\u00e9ries On Demand integrado (VOD)!\n\u2022 Navega\u00e7\u00e3o por abas no topo: [TV Ao Vivo], [Filmes] e [S\u00e9ries] estilo UniTV / TVExpress\n\u2022 Milhares de filmes em Full HD e 4K (Lan\u00e7amentos, A\u00e7\u00e3o, Com\u00e9dia, Terror, etc.)\n\u2022 Milhares de s\u00e9ries completas com sele\u00e7\u00e3o de temporadas e epis\u00f3dios (Netflix, Prime, Max, Disney+)\n\u2022 Player avan\u00e7ado com suporte a pausar, avan\u00e7ar e retroceder no controle remoto\n\u2022 Detalhes completos com p\u00f4steres, sinopse, classifica\u00e7\u00e3o e notas",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.3.0/wdtechtv.apk"
+  "versionCode": 15,
+  "versionName": "2.3.1",
+  "releaseNotes": "\u2022 Integra\u00e7\u00e3o de Canais e Conte\u00fados Adultos (+18) & OnlyFans!\n\u2022 Novos Canais 24 Horas: OnlyFans & Privacy Stars 24H e OnlyFans VIP & Amador 24H (FHD)\n\u2022 Atualiza\u00e7\u00e3o e restaura\u00e7\u00e3o dos canais adultos: Playboy TV FHD, Sexy Hot FHD, A Casa das Brasileirinhas, Venus, Sex Priv\u00e9 e Brazzers TV\n\u2022 S\u00e9ries Adultas On-Demand integradas no cat\u00e1logo de S\u00e9ries (+150 epis\u00f3dios OnlyFans, Bella da Semana, etc.)\n\u2022 Prote\u00e7\u00e3o integral por controle parental com senha PIN (padr\u00e3o: 0000) em canais ao vivo e VOD",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.3.1/wdtechtv.apk"
 }
