@@ -1,6 +1,6 @@
 {
-  "versionCode": 16,
-  "versionName": "2.4.0",
-  "releaseNotes": "\u2022 Novo Hub de Futebol Completo & Jogos do Dia!\n\u2022 Categoria \u26bd Jogos do Dia (Ao Vivo) com 34 canais e sincroniza\u00e7\u00e3o din\u00e2mica em tempo real (confrontos e hor\u00e1rios atualizados automaticamente)\n\u2022 Categoria \u26bd Premiere FC (Todos os Jogos) com Premiere Clubes e Premiere 2 ao 8 em Full HD e 4K\n\u2022 Categoria \ud83c\udfc6 Campeonatos & Estaduais com transmiss\u00f5es de divis\u00f5es de acesso, copas e estaduais (SportyNet 1 e 2, DAZN, FCF TV, X Sports)\n\u2022 Redes SporTV (1 ao 4) e ESPN (1 ao 6) com m\u00e1xima estabilidade e sinal em Full HD\n\u2022 Guia de programa\u00e7\u00e3o (EPG) com hor\u00e1rios e sinopses esportivas ao vivo",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.0/wdtechtv.apk"
+  "versionCode": 17,
+  "versionName": "2.4.1",
+  "releaseNotes": "\u2022 Corre\u00e7\u00e3o Definitiva de Estabilidade: resolvido problema de fechamento inesperado ao navegar com controle remoto\n\u2022 Prote\u00e7\u00e3o global contra travamentos em TV Boxes e renderiza\u00e7\u00e3o segura dos adaptadores de canal e categoria\n\u2022 EPG Real Ao Vivo: integra\u00e7\u00e3o completa com os sinais de EPG do servidor Vivlar (mais de 75 canais mapeados)\n\u2022 Guia esportivo aprimorado para 'Jogos do Dia', exibindo confrontos, hor\u00e1rios e sinopses din\u00e2micas\n\u2022 Melhores hor\u00e1rios de in\u00edcio e fim com contagem regressiva de minutos restantes",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.1/wdtechtv.apk"
 }
