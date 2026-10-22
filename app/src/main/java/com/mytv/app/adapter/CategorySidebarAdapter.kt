@@ -47,24 +47,19 @@ class CategorySidebarAdapter(
             holder.txtName.setTextColor(Color.parseColor("#E6EDF8"))
         }
 
-        // Foco pelo controle remoto
+        // Foco suave e seguro pelo controle remoto (sem chamar notifyItemChanged durante layout)
         holder.itemView.setOnFocusChangeListener { _, hasFocus ->
             val pos = holder.bindingAdapterPosition
             if (hasFocus) {
                 holder.txtName.setTextColor(Color.parseColor("#00E5FF"))
+                holder.itemView.isSelected = true
                 if (pos != RecyclerView.NO_POSITION && pos < categories.size) {
-                    val oldPos = selectedIndex
                     selectedIndex = pos
-                    if (oldPos != pos) {
-                        notifyItemChanged(oldPos)
-                        notifyItemChanged(pos)
-                    }
                     onCategoryFocused(categories[pos])
                 }
             } else {
-                if (pos != selectedIndex) {
-                    holder.txtName.setTextColor(Color.parseColor("#E6EDF8"))
-                }
+                holder.itemView.isSelected = false
+                holder.txtName.setTextColor(Color.parseColor("#E6EDF8"))
             }
         }
 

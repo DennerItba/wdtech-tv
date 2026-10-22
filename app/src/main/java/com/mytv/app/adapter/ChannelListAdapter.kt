@@ -75,22 +75,19 @@ class ChannelListAdapter(
             holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))
         }
 
-        // Foco e seleção ultra nítida com o controle remoto
+        // Foco e seleção ultra nítida e segura com o controle remoto
         holder.itemView.setOnFocusChangeListener { _, hasFocus ->
             val pos = holder.bindingAdapterPosition
             if (hasFocus) {
                 holder.txtTitle.setTextColor(Color.parseColor("#00E5FF"))
                 holder.txtNumber.setTextColor(Color.WHITE)
+                holder.itemView.isSelected = true
                 if (pos != RecyclerView.NO_POSITION && pos < channels.size) {
-                    val oldPos = selectedIndex
                     selectedIndex = pos
-                    if (oldPos != pos) {
-                        notifyItemChanged(oldPos)
-                        notifyItemChanged(pos)
-                    }
                     onChannelSelected(channels[pos])
                 }
             } else {
+                holder.itemView.isSelected = false
                 holder.txtTitle.setTextColor(Color.parseColor("#E6EDF8"))
                 holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))
             }

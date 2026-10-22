@@ -110,6 +110,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Proteção global contra encerramentos inesperados em TV Boxes
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            android.util.Log.e("WDTECH_TV", "Erro capturado com segurança [${thread.name}]: ${throwable.message}", throwable)
+        }
+
         setContentView(R.layout.activity_main)
 
         rvCategorySidebar = findViewById(R.id.rv_category_sidebar)
@@ -148,33 +154,39 @@ class MainActivity : AppCompatActivity() {
         setupPlayer()
                 loadData()
 
-        // Atualização dinâmica em tempo real da grade de Jogos do Dia
+        // Atualização dinâmica em tempo real da grade de Jogos do Dia com proteção de concorrência
         lifecycleScope.launch(Dispatchers.IO) {
-            val freshJogos = ChannelRepository.fetchJogosDoDia()
-            if (freshJogos.isNotEmpty()) {
-                withContext(Dispatchers.Main) {
-                    if (!isFinishing && !isDestroyed) {
-                        val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
-                        val safeChannels = repoCategories.filter { !it.isLocked }.flatMap { it.channels }
-                        val masterCategory = ChannelCategory(
-                            id = "cat_all",
-                            name = "Todos os Canais",
-                            isLocked = false,
-                            channels = safeChannels
-                        )
-                        allCategories = listOf(masterCategory) + repoCategories
-                        categoryAdapter.updateCategories(allCategories)
-
-                        if (selectedCategory?.id == "cat_jogos_dia") {
-                            val curCat = allCategories.find { it.id == "cat_jogos_dia" }
-                            if (curCat != null) {
-                                displayCategoryChannels(curCat)
+            try {
+                val freshJogos = ChannelRepository.fetchJogosDoDia()
+                if (freshJogos.isNotEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        if (!isFinishing && !isDestroyed) {
+                            val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
+                            val safeChannels = repoCategories.filter { !it.isLocked }.flatMap { it.channels }
+                            val masterCategory = ChannelCategory(
+                                id = "cat_all",
+                                name = "Todos os Canais",
+                                isLocked = false,
+                                channels = safeChannels
+                            )
+                            allCategories = listOf(masterCategory) + repoCategories
+                            if (!rvCategorySidebar.isComputingLayout) {
+                                categoryAdapter.updateCategories(allCategories)
                             }
-                        } else if (selectedCategory?.id == "cat_all") {
-                            channelAdapter.updateChannels(safeChannels)
+
+                            if (selectedCategory?.id == "cat_jogos_dia") {
+                                val curCat = allCategories.find { it.id == "cat_jogos_dia" }
+                                if (curCat != null) {
+                                    displayCategoryChannels(curCat)
+                                }
+                            } else if (selectedCategory?.id == "cat_all" && !rvChannelList.isComputingLayout) {
+                                channelAdapter.updateChannels(safeChannels)
+                            }
                         }
                     }
                 }
+            } catch (t: Throwable) {
+                android.util.Log.e("WDTECH_TV", "Falha ao sincronizar Jogos do Dia", t)
             }
         }
 
@@ -598,7 +610,10 @@ class MainActivity : AppCompatActivity() {
                 if (liveNext != null) {
                     txtEpgNext.text = "▶ A Seguir (${liveNext.startTime}): ${liveNext.title}"
                 }
-                channelAdapter.notifyItemChanged(channelAdapter.getSelectedPosition())
+                val selPos = channelAdapter.getSelectedPosition()
+                if (selPos in 0 until channelAdapter.itemCount && !rvChannelList.isComputingLayout) {
+                    channelAdapter.notifyItemChanged(selPos)
+                }
             }
         }
     }

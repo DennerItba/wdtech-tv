@@ -73,6 +73,86 @@ object EpgRepository {
      * Busca o Guia de Programação (EPG) AO VIVO diretamente da API do servidor de streaming.
      * Atualiza o canal imediatamente com os nomes reais de programas e sinopses.
      */
+        // Mapeamento preciso de IDs de canais para o servidor de EPG ao vivo da Vivlar
+    val VIVLAR_EPG_MAP: Map<String, String> = mapOf(
+        "sportv_1" to "72332",
+        "sportv_2" to "131176",
+        "sportv_3" to "131113",
+        "sportv_4" to "72332",
+        "ch_4k_sportv" to "72332",
+        "ch_h265_sportv" to "72332",
+        "prem_clubes" to "72265",
+        "prem_2" to "72239",
+        "prem_3" to "72243",
+        "prem_4" to "72247",
+        "prem_5" to "72251",
+        "prem_6" to "72255",
+        "prem_7" to "72259",
+        "prem_8" to "72265",
+        "ch_4k_prem" to "72265",
+        "ch_h265_prem" to "72239",
+        "espn_fhd" to "71922",
+        "espn_2" to "71922",
+        "espn_3" to "71909",
+        "espn_4" to "71960",
+        "espn_5" to "71955",
+        "espn_6" to "71955",
+        "ch_h265_espn" to "71922",
+        "bandsports_fhd" to "71803",
+        "bandsports_campeonatos" to "71803",
+        "combate_fhd" to "71845",
+        "combate_campeonatos" to "71845",
+        "tc_premium" to "72368",
+        "tc_action" to "72348",
+        "tc_touch" to "72368",
+        "tc_pipoca" to "72360",
+        "tc_fun" to "72356",
+        "tc_cult" to "72352",
+        "ch_4k_tc" to "72368",
+        "ch_h265_tc" to "72348",
+        "hbo_main" to "72120",
+        "hbo_2" to "72120",
+        "hbo_plus" to "72127",
+        "hbo_family" to "72120",
+        "hbo_sig" to "72120",
+        "hbo_mundi" to "72120",
+        "ch_4k_hbo" to "72120",
+        "ch_h265_hbo" to "72120",
+        "warner_ch" to "72433",
+        "megapix_ch" to "72169",
+        "ch_universal_tv" to "72421",
+        "ch_studio_universal" to "72336",
+        "ch_sony_channel" to "71826",
+        "ch_sony_movies" to "71826",
+        "ch_space" to "72319",
+        "ch_tnt" to "72378",
+        "ch_tnt_novelas" to "72344",
+        "ch_axn" to "71783",
+        "ch_paramount" to "72219",
+        "ch_299" to "71865",
+        "ch_discovery_kids" to "71873",
+        "ch_296" to "71869",
+        "ch_297" to "71885",
+        "disc_id" to "72152",
+        "disc_science" to "71877",
+        "disc_theater" to "71881",
+        "disc_world" to "71889",
+        "ch_4k_disc" to "71865",
+        "ch_158" to "72096",
+        "ch_160" to "72096",
+        "ch_163" to "72096",
+        "ch_166" to "72096",
+        "ch_165" to "72096",
+        "ch_168" to "72305",
+        "ch_169" to "72305",
+        "ch_178" to "72272",
+        "ch_177" to "72272",
+        "ch_176" to "71791",
+        "ch_175" to "71791",
+        "ch_214" to "71791",
+        "ch_222" to "72272"
+    )
+
     suspend fun fetchLiveEpg(channel: Channel): Pair<EpgProgram, EpgProgram?>? = withContext(Dispatchers.IO) {
         val now = System.currentTimeMillis()
         val cached = liveEpgCache[channel.id]
@@ -82,24 +162,23 @@ object EpgRepository {
             return@withContext cached.programs
         }
 
-        val streamId = channel.playbackStreamId
-            ?: PlaybackRepository.PLAYBACK_STREAM_MAP[channel.id]
-            ?: extractStreamIdFromUrl(channel.streamUrl)
-
-        val corruptxId = if (channel.streamUrl.contains("corruptx.org")) extractStreamIdFromUrl(channel.streamUrl) else null
-        val vivlarId = channel.playbackStreamId
-            ?: PlaybackRepository.PLAYBACK_STREAM_MAP[channel.id]
-            ?: if (channel.streamUrl.contains("vivlar.me")) extractStreamIdFromUrl(channel.streamUrl) else null
-
-        val serverUrl = when {
-            corruptxId != null ->
-                "http://corruptx.org:80/player_api.php?username=hfp5ejnrey&password=zq0u3kzads&action=get_short_epg&stream_id=$corruptxId&limit=6"
-            vivlarId != null ->
-                "http://vivlar.me:80/player_api.php?username=497238&password=KK8Kdy&action=get_short_epg&stream_id=$vivlarId&limit=6"
-            else -> null
+        // Se for canal de Jogos do Dia, o EPG é a própria partida de hoje
+        if (channel.category.contains("Jogos") || channel.id.startsWith("jogo_dia")) {
+            val (cur, next) = getProgramsForChannel(channel)
+            val pair = Pair(cur, next)
+            liveEpgCache[channel.id] = CachedEpg(pair)
+            channel.currentProgram = cur
+            channel.nextProgram = next
+            return@withContext pair
         }
 
-        if (serverUrl == null) return@withContext null
+        val vivlarId = VIVLAR_EPG_MAP[channel.id]
+            ?: channel.playbackStreamId
+            ?: if (channel.streamUrl.contains("vivlar.me")) extractStreamIdFromUrl(channel.streamUrl) else null
+
+        if (vivlarId == null) return@withContext null
+
+        val serverUrl = "http://vivlar.me:80/player_api.php?username=497238&password=KK8Kdy&action=get_short_epg&stream_id=$vivlarId&limit=8"
 
         try {
             val url = URL(serverUrl)
@@ -119,6 +198,9 @@ object EpgRepository {
                     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).apply {
                         timeZone = EpgRepository.timeZone
                     }
+                    val sdfHour = SimpleDateFormat("HH:mm", Locale.US).apply {
+                        timeZone = EpgRepository.timeZone
+                    }
 
                     for (i in 0 until listings.length()) {
                         val item = listings.getJSONObject(i)
@@ -127,7 +209,7 @@ object EpgRepository {
                         val rawDesc = item.optString("description", "")
                         val desc = decodeBase64(rawDesc).ifEmpty { rawDesc }
                         val startStr = item.optString("start", "")
-                        val stopStr = item.optString("stop", "")
+                        val stopStr = item.optString("stop", "").ifEmpty { item.optString("end", "") }
 
                         val startTs = item.optLong("start_timestamp").let {
                             if (it > 0) it * 1000L else sdf.parse(startStr)?.time ?: 0L
@@ -136,8 +218,10 @@ object EpgRepository {
                             if (it > 0) it * 1000L else sdf.parse(stopStr)?.time ?: 0L
                         }
 
-                        val startH = if (startStr.length >= 16) startStr.substring(11, 16) else "00:00"
-                        val stopH = if (stopStr.length >= 16) stopStr.substring(11, 16) else "00:00"
+                        val startH = if (startStr.length >= 16) startStr.substring(11, 16)
+                                     else if (startTs > 0) sdfHour.format(java.util.Date(startTs)) else "00:00"
+                        val stopH = if (stopStr.length >= 16) stopStr.substring(11, 16)
+                                    else if (stopTs > 0) sdfHour.format(java.util.Date(stopTs)) else "00:00"
 
                         if (title.isNotEmpty() && title != "VT") {
                             parsedPrograms.add(
@@ -176,7 +260,7 @@ object EpgRepository {
                 }
             }
         } catch (_: Exception) {
-            // Ignora falhas de conexão e usa o modelo offline realista
+            // Usa fallback offline em caso de falha de conexão
         }
 
         return@withContext null
@@ -192,11 +276,45 @@ object EpgRepository {
     }
 
     private fun extractStreamIdFromUrl(streamUrl: String): String? {
-        val match = Regex("""/(\d+)\.m3u8""").find(streamUrl)
+        val match = Regex("""/(\\d+)\\.m3u8""").find(streamUrl)
         return match?.groupValues?.get(1)
     }
 
     fun getProgramsForChannel(channel: Channel): Pair<EpgProgram, EpgProgram?> {
+        // Se for Jogos do Dia, extrai o jogo e horário diretamente do nome do canal
+        if (channel.category.contains("Jogos") || channel.id.startsWith("jogo_dia")) {
+            val title = channel.title
+            val timeMatch = Regex("""\[(\\d{1,2}:\\d{2})\]\\s*(.*)""").find(title)
+            val (gameTime, gameName) = if (timeMatch != null) {
+                Pair(timeMatch.groupValues[1], timeMatch.groupValues[2].trim())
+            } else {
+                Pair("Ao Vivo", if (title.contains("Canal")) "Transmissão Esportiva do Dia" else title)
+            }
+
+            val now = System.currentTimeMillis()
+            val cur = EpgProgram(
+                title = gameName,
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                startTime = gameTime,
+                endTime = "23:59",
+                startTimestamp = now - 30 * 60 * 1000L,
+                endTimestamp = now + 90 * 60 * 1000L,
+                synopsis = "Partida ao vivo de hoje com escalações, estatísticas e lances em tempo real.",
+                rating = "L"
+            )
+            val next = EpgProgram(
+                title = "Giro dos Campeonatos & Melhores Momentos",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                startTime = "23:59",
+                endTime = "01:30",
+                startTimestamp = now + 90 * 60 * 1000L,
+                endTimestamp = now + 180 * 60 * 1000L,
+                synopsis = "Análise detalhada de todos os resultados da rodada de hoje.",
+                rating = "L"
+            )
+            return Pair(cur, next)
+        }
+
         val cal = Calendar.getInstance(timeZone)
         val currentMinutesOfDay = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)
 
@@ -256,7 +374,7 @@ object EpgRepository {
         return Pair(currentProgram, nextProgram)
     }
 
-    private fun formatTime(minutes: Int): String {
+private fun formatTime(minutes: Int): String {
         val h = (minutes / 60) % 24
         val m = minutes % 60
         return String.format("%02d:%02d", h, m)
