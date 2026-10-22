@@ -480,7 +480,7 @@ object ChannelRepository {
                         number = "42",
                         title = "Telecine Premium HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72362.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Grandes sucessos de bilheteria e estreias exclusivas do cinema mundial em primeira mao.",
                         quality = "FHD"
@@ -490,7 +490,7 @@ object ChannelRepository {
                         number = "43",
                         title = "Telecine Action HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://46.151.196.223:14326/",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72346.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Telecine_Action_logo_2019.svg/320px-Telecine_Action_logo_2019.svg.png",
                         description = "Muita adrenalina, velocidade, acao e perseguicoes sem limite.",
                         quality = "FHD"
@@ -500,7 +500,7 @@ object ChannelRepository {
                         number = "44",
                         title = "Telecine Touch HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://45.162.64.114/TNT/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72366.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Telecine_Touch_logo_2019.svg/320px-Telecine_Touch_logo_2019.svg.png",
                         description = "Emocao e historias marcantes: os maiores dramas e romances de todos os tempos.",
                         quality = "FHD"
@@ -510,7 +510,7 @@ object ChannelRepository {
                         number = "45",
                         title = "Telecine Pipoca HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72358.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Telecine_Pipoca_logo_2019.svg/320px-Telecine_Pipoca_logo_2019.svg.png",
                         description = "Os filmes mais divertidos do cinema nacional e internacional 100% dublados.",
                         quality = "FHD"
@@ -520,7 +520,7 @@ object ChannelRepository {
                         number = "46",
                         title = "Telecine Fun HD",
                         category = "Rede Telecine",
-                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72354.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Telecine_Fun_logo_2019.svg/320px-Telecine_Fun_logo_2019.svg.png",
                         description = "Comedias e animacoes para garantir boas risadas com a familia reunida.",
                         quality = "FHD"
@@ -530,7 +530,7 @@ object ChannelRepository {
                         number = "47",
                         title = "Telecine Cult HD",
                         category = "Rede Telecine",
-                        streamUrl = "https://video04.logicahost.com.br/isonata/isonata/chunklist.m3u8?ROGERIOTORRES",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72350.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Telecine_Cult_logo_2019.svg/320px-Telecine_Cult_logo_2019.svg.png",
                         description = "Obras-primas da historia da setima arte, cinema de autor e producoes premiadas.",
                         quality = "FHD"
@@ -547,7 +547,7 @@ object ChannelRepository {
                         number = "48",
                         title = "HBO HD",
                         category = "Rede HBO",
-                        streamUrl = "http://45.162.64.114/TNT/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72118.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series consagradas, grandes documentarios e as maiores producoes mundiais.",
                         quality = "FHD"
@@ -557,7 +557,7 @@ object ChannelRepository {
                         number = "49",
                         title = "HBO 2 HD",
                         category = "Rede HBO",
-                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72110.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/HBO2_logo_2014.svg/320px-HBO2_logo_2014.svg.png",
                         description = "Reprises dos melhores filmes e series em horarios alternativos dublados e legendados.",
                         quality = "FHD"
@@ -567,7 +567,7 @@ object ChannelRepository {
                         number = "50",
                         title = "HBO Plus HD",
                         category = "Rede HBO",
-                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72125.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/HBO_Plus_logo_2019.svg/320px-HBO_Plus_logo_2019.svg.png",
                         description = "Conteudo jovem, comedia, acao e musica da franquia HBO.",
                         quality = "FHD"
@@ -577,7 +577,7 @@ object ChannelRepository {
                         number = "51",
                         title = "HBO Family HD",
                         category = "Rede HBO",
-                        streamUrl = "https://live20.bozztv.com/giatvplayout7/giatv-208272/tracks-v1a1/mono.ts.m3u8?ROGERIOTORRES",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72114.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/HBO_Family_2014.svg/320px-HBO_Family_2014.svg.png",
                         description = "Programacao voltada para criancas e jovens com animacoes e filmes familiares.",
                         quality = "FHD"
@@ -587,7 +587,7 @@ object ChannelRepository {
                         number = "52",
                         title = "HBO Signature HD",
                         category = "Rede HBO",
-                        streamUrl = "https://video04.logicahost.com.br/isonata/isonata/chunklist.m3u8?ROGERIOTORRES",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72134.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/HBO_Signature_logo_2014.svg/320px-HBO_Signature_logo_2014.svg.png",
                         description = "O acervo mais exclusivo e refinado das producoes originais e documentarios HBO.",
                         quality = "FHD"
@@ -597,7 +597,7 @@ object ChannelRepository {
                         number = "53",
                         title = "HBO Mundi HD",
                         category = "Rede HBO",
-                        streamUrl = "https://stmv8.samcast.com.br/tvmaisbrasil/tvmaisbrasil/playlist.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72121.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Filmes internacionais e producoes independentes aclamadas pela critica.",
                         quality = "FHD"
@@ -607,7 +607,7 @@ object ChannelRepository {
                         number = "54",
                         title = "HBO Pop HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/24593.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72129.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Filmes leves, comedias romanticas e grandes sucessos da cultura pop.",
                         quality = "FHD"
@@ -617,7 +617,7 @@ object ChannelRepository {
                         number = "55",
                         title = "HBO Xtreme HD",
                         category = "Rede HBO",
-                        streamUrl = "http://46.151.196.223:14326/",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72138.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Acao frenetica, suspense e terror para quem gosta de fortes emocoes.",
                         quality = "FHD"
@@ -634,7 +634,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Canal Sony HD (Sony Channel)",
                         category = "Filmes & Séries",
-                        streamUrl = "http://170.83.16.50/SONY_CHANNEL/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71824.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sony_Channel_logo_2019.svg/320px-Sony_Channel_logo_2019.svg.png",
                         description = "O lendario Canal Sony: Grey's Anatomy, The Good Doctor e as series medicas e policiais mais amadas.",
                         quality = "FHD"
@@ -654,7 +654,7 @@ object ChannelRepository {
                         number = "58",
                         title = "Warner Channel HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://45.162.64.114/TNT/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72431.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Warner_Channel_2019_logo.svg/320px-Warner_Channel_2019_logo.svg.png",
                         description = "Universo DC, The Big Bang Theory, Friends e os maiores sucessos da Warner Bros.",
                         quality = "FHD"
@@ -664,7 +664,7 @@ object ChannelRepository {
                         number = "59",
                         title = "Megapix HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72166.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Megapix_logo_2020.svg/320px-Megapix_logo_2020.svg.png",
                         description = "O canal dos grandes campeoes de bilheteria dublados com sessao pipoca todo dia.",
                         quality = "FHD"
@@ -674,7 +674,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Universal TV HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://181.78.197.59:8000/play/a07n/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72419.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Universal_TV_logo_2018.svg/320px-Universal_TV_logo_2018.svg.png",
                         description = "Franquia Chicago (Fire, P.D., Med), Law & Order e grandes investigacoes.",
                         quality = "FHD"
@@ -684,7 +684,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Studio Universal HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://181.78.197.59:8000/play/a07z/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72334.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Studio_Universal_logo.svg/320px-Studio_Universal_logo.svg.png",
                         description = "Cinema hollywoodiano e classicos dos estúdios Universal Pictures.",
                         quality = "FHD"
@@ -694,7 +694,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Paramount Network HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vaiagora.vip:80/live/5q8VUj/5BeUd8/72217.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72217.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Paramount_Network_2018.svg/320px-Paramount_Network_2018.svg.png",
                         description = "Yellowstone, Tulsa King e superproducoes consagradas da Paramount Pictures.",
                         quality = "FHD"
@@ -704,7 +704,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Cinemax HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://46.151.196.223:14326/",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71833.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cinemax_logo_2011.svg/320px-Cinemax_logo_2011.svg.png",
                         description = "Filmes de sucesso, acao e suspense com a chancela do grupo HBO.",
                         quality = "FHD"
@@ -714,7 +714,7 @@ object ChannelRepository {
                         number = "64",
                         title = "TNT HD",
                         category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72375.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/TNT_Logo_2016.svg/320px-TNT_Logo_2016.svg.png",
                         description = "Grandes premiacoes como o Oscar, superproducoes cinematograficas e esportes.",
                         quality = "FHD"
@@ -724,7 +724,7 @@ object ChannelRepository {
                         number = "65",
                         title = "Space HD",
                         category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/space-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72317.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Space_logo_2017.svg/320px-Space_logo_2017.svg.png",
                         description = "Especializado em acao, ficcao cientifica, suspense e filmes de luta.",
                         quality = "FHD"
@@ -734,7 +734,7 @@ object ChannelRepository {
                         number = "66",
                         title = "AXN HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71781.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/AXN_logo_2015.svg/320px-AXN_logo_2015.svg.png",
                         description = "As maiores series policiais e de investigacao forense do mundo: NCIS e Criminal Minds.",
                         quality = "FHD"
@@ -744,7 +744,7 @@ object ChannelRepository {
                         number = "67",
                         title = "TNT Novelas HD",
                         category = "Filmes & Séries",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72342.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tnt-novelas.png",
                         description = "O canal dedicado aos grandes sucessos mundiais das telenovelas e melodramas.",
                         quality = "FHD"
@@ -1125,7 +1125,7 @@ object ChannelRepository {
                         number = "103",
                         title = "Telecine Premium 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/90237.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Grandes lancamentos do cinema mundial na resolucao maxima 4K Ultra HD.",
                         quality = "4K"
@@ -1135,7 +1135,7 @@ object ChannelRepository {
                         number = "104",
                         title = "HBO 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://45.162.64.114/TNT/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/90247.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series premiadas e filmes HBO gravados em resolucao nativa 4K UHD.",
                         quality = "4K"
@@ -1202,7 +1202,7 @@ object ChannelRepository {
                         number = "110",
                         title = "Telecine H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://46.151.196.223:14326/",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72363.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Filmes em alta taxa de bits codificados em H.265 para TV Boxes modernas.",
                         quality = "H265"
@@ -1212,7 +1212,7 @@ object ChannelRepository {
                         number = "111",
                         title = "HBO H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://45.162.64.114/SPACE/index.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72119.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series e sucessos de Hollywood em transmissao eficiente H.265.",
                         quality = "H265"

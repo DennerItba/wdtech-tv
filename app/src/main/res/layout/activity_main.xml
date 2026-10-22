@@ -292,7 +292,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:paddingStart="8dp"
-                android:text="â—€ Categorias  â€¢  OK Tela Cheia  â€¢  â–¶ Player"
+                android:text="&#9668; Categorias  &#8226;  OK Tela Cheia  &#8226;  &#9658; Player"
                 android:textColor="@color/text_low"
                 android:textSize="10sp" />
         </LinearLayout>
@@ -516,7 +516,7 @@
                             android:layout_marginTop="2dp"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="â–¶ A Seguir: Carregando prÃ³ximo programa..."
+                            android:text="&#9658; A Seguir: Carregando pr&#243;ximo programa..."
                             android:textColor="#5B7398"
                             android:textSize="10sp" />
                     </LinearLayout>

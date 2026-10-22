@@ -102,33 +102,41 @@ object EpgRepository {
         "bandsports_campeonatos" to "71803",
         "combate_fhd" to "71845",
         "combate_campeonatos" to "71845",
-        "tc_premium" to "72368",
-        "tc_action" to "72348",
-        "tc_touch" to "72368",
-        "tc_pipoca" to "72360",
-        "tc_fun" to "72356",
-        "tc_cult" to "72352",
-        "ch_4k_tc" to "72368",
-        "ch_h265_tc" to "72348",
-        "hbo_main" to "72120",
-        "hbo_2" to "72120",
-        "hbo_plus" to "72127",
-        "hbo_family" to "72120",
-        "hbo_sig" to "72120",
-        "hbo_mundi" to "72120",
-        "ch_4k_hbo" to "72120",
-        "ch_h265_hbo" to "72120",
-        "warner_ch" to "72433",
-        "megapix_ch" to "72169",
-        "ch_universal_tv" to "72421",
-        "ch_studio_universal" to "72336",
-        "ch_sony_channel" to "71826",
-        "ch_sony_movies" to "71826",
-        "ch_space" to "72319",
-        "ch_tnt" to "72378",
-        "ch_tnt_novelas" to "72344",
-        "ch_axn" to "71783",
-        "ch_paramount" to "72219",
+        "tc_premium" to "72362",
+        "tc_action" to "72346",
+        "tc_touch" to "72366",
+        "tc_pipoca" to "72358",
+        "tc_fun" to "72354",
+        "tc_cult" to "72350",
+        "ch_4k_tc" to "90237",
+        "ch_h265_tc" to "72363",
+        "hbo_main" to "72118",
+        "hbo_2" to "72110",
+        "hbo_plus" to "72125",
+        "hbo_family" to "72114",
+        "hbo_sig" to "72134",
+        "hbo_signature" to "72134",
+        "hbo_mundi" to "72121",
+        "hbo_pop" to "72129",
+        "hbo_xtreme" to "72138",
+        "ch_4k_hbo" to "90247",
+        "ch_h265_hbo" to "72119",
+        "warner_ch" to "72431",
+        "warner_channel" to "72431",
+        "megapix_ch" to "72166",
+        "megapix" to "72166",
+        "ch_universal_tv" to "72419",
+        "ch_universal" to "72419",
+        "ch_studio_universal" to "72334",
+        "ch_studio" to "72334",
+        "ch_sony_channel" to "71824",
+        "ch_sony_movies" to "71824",
+        "ch_space" to "72317",
+        "ch_tnt" to "72375",
+        "ch_tnt_novelas" to "72342",
+        "ch_axn" to "71781",
+        "ch_paramount" to "72217",
+        "ch_cinemax" to "71833",
         "ch_299" to "71865",
         "ch_discovery_kids" to "71873",
         "ch_296" to "71869",
@@ -501,7 +509,7 @@ private fun formatTime(minutes: Int): String {
         }
 
         // 5. Premiere (Clubes, 2, 3, 4, 5, 6, 7, 8, 4K, H265)
-        if (titleLower.contains("prem") || titleLower.contains("premiere") || idLower.contains("prem")) {
+        if (!titleLower.contains("telecine") && !idLower.contains("tc_") && (titleLower.contains("premiere") || titleLower.startsWith("prem") || idLower.startsWith("prem_") || idLower.contains("_prem"))) {
             val premGrid = listOf(
                 Pair("Gols da Rodada & Melhores Lances", "Todos os gols dos jogos de ontem com replays em alta definição."),
                 Pair("Arquivo Premiere: Grandes Decisões", "Relembre jogos inesquecíveis da história do Campeonato Brasileiro."),
@@ -581,7 +589,7 @@ private fun formatTime(minutes: Int): String {
         }
 
         // 9. Telecine (Premium, Action, Touch, Pipoca, Fun, Cult, 4K, H265)
-        if (titleLower.contains("telecine") || catLower.contains("telecine") || idLower.startsWith("tc_")) {
+        if (titleLower.contains("telecine") || catLower.contains("telecine") || idLower.startsWith("tc_") || idLower.contains("_tc")) {
             val tcGrid = when {
                 titleLower.contains("action") -> listOf(
                     Pair("Madrugada de Ação: Tiroteio Letal", "Adrenalina pura com os maiores filmes de confronto."),
@@ -613,6 +621,36 @@ private fun formatTime(minutes: Int): String {
                     Pair("As Branquelas: Sessão Cult", "Dois agentes do FBI disfarçados em confusões nos Hamptons."),
                     Pair("Cine Pipoca Madrugada Animada", "Grandes animações premiadas do cinema infantil.")
                 )
+                titleLower.contains("touch") -> listOf(
+                    Pair("Cine Madrugada: Histórias de Superação", "Dramas emocionantes e trajetórias inspiradoras baseadas em fatos reais."),
+                    Pair("Nasce uma Estrela com Lady Gaga", "Um músico decadente e uma cantora talentosa em ascensão apaixonados."),
+                    Pair("A Culpa é das Estrelas", "Dois jovens com câncer se apaixonam e descobrem o verdadeiro valor de cada momento."),
+                    Pair("Como Eu Era Antes de Você", "O encontro transformador de Louisa Clark e Will Traynor."),
+                    Pair("Extraordinário com Julia Roberts", "A comovente história de Auggie Pullman enfrentando preconceitos na escola."),
+                    Pair("Questão de Tempo (About Time)", "Viagens no tempo usadas para conquistar o amor e valorizar a família."),
+                    Pair("Intocáveis (The Intouchables)", "A amizade improvável entre um milionário tetraplégico e seu cuidador."),
+                    Pair("Sessão Romance Especial das 18h", "Grandes produções românticas internacionais na sua televisão."),
+                    Pair("Superestreia Touch: Amor & Emoção", "O grande drama do ano aclamado pela crítica mundial."),
+                    Pair("Para Sempre (The Vow)", "Um marido luta incansavelmente para reconquistar o amor de sua esposa."),
+                    Pair("Diário de uma Paixão", "A inesquecível história de amor entre Noah e Allie nos anos 40."),
+                    Pair("Cine Emoção: A Vida É Bela", "A comovente obra-prima italiana sobre o amor incondicional de um pai na guerra."),
+                    Pair("Touch Fim de Noite: Grandes Histórias", "Filmes tocantes para encerrar a noite com sensibilidade e reflexão.")
+                )
+                titleLower.contains("fun") -> listOf(
+                    Pair("Cine Fun Madrugada: Comédias Sem Noção", "Gargalhadas garantidas com paródias e comédias malucas."),
+                    Pair("Gente Grande com Adam Sandler", "Amigos de infância passam um fim de semana hilário reunidos com suas famílias."),
+                    Pair("Debi & Lóide: Dois Idiotas em Apuros", "Jim Carrey e Jeff Daniels em uma viagem caótica pelo país."),
+                    Pair("Se Beber, Não Case! (The Hangover)", "A busca desesperada pelo noivo após uma despedida de solteiro insana."),
+                    Pair("Todo Mundo em Pânico: O Clássico", "A paródia definitiva dos maiores filmes de terror do cinema."),
+                    Pair("Click com Adam Sandler", "Um controle remoto mágico que pausa e avança a vida de um homem ocupado."),
+                    Pair("As Branquelas: Gargalhadas Sem Fim", "Dois agentes do FBI disfarçados aprontando altas confusões nos Hamptons."),
+                    Pair("Cine Fun Especial das 18h", "Supercomédia campeã de bilheteria para relaxar com a família reunida."),
+                    Pair("Superestreia Fun: A Grande Comédia do Ano", "O filme mais engraçado dos cinemas direto na sua tela."),
+                    Pair("Uma Noite no Museu com Ben Stiller", "As peças e fósseis do museu ganham vida e aprontam confusões históricas."),
+                    Pair("Esposa de Mentirinha com Jennifer Aniston", "Um cirurgião plástico cria uma teia de mentiras românticas hilárias."),
+                    Pair("Ted com Mark Wahlberg", "A vida adulta de um homem ao lado de seu ursinho de pelúcia desbocado."),
+                    Pair("Fun Madrugada dos Ricos & Famosos", "Comédias inteligentes e sátiras de sucesso de Hollywood.")
+                )
                 titleLower.contains("cult") -> listOf(
                     Pair("Festival de Cannes: Clássicos Premiados", "Obras que revolucionaram a linguagem cinematográfica."),
                     Pair("Cinema Paradiso de Giuseppe Tornatore", "Uma declaração de amor eterna à magia do cinema."),
@@ -627,6 +665,21 @@ private fun formatTime(minutes: Int): String {
                     Pair("Tár com Cate Blanchett", "O drama psicológico de uma maestrina no auge de sua carreira."),
                     Pair("Taxi Driver de Scorsese", "Robert De Niro nas ruas decadentes de Nova York."),
                     Pair("Clássicos Franceses da Madrugada", "A Nouvelle Vague e o cinema poético europeu.")
+                )
+                titleLower.contains("premium") || idLower.contains("premium") || idLower == "tc_premium" || idLower == "ch_4k_tc" -> listOf(
+                    Pair("Cine Madrugada Premium: Suspense & Mistério", "Superproduções envolventes de suspense psicológico em alta resolução."),
+                    Pair("Top Gun: Maverick com Tom Cruise", "Caças supersônicos, manobras vertiginosas e uma missão quase impossível nos céus."),
+                    Pair("Duna: Parte 2 de Denis Villeneuve", "Paul Atreides e os Fremen na batalha definitiva pelo destino do planeta Arrakis."),
+                    Pair("Oppenheimer de Christopher Nolan", "O premiado drama histórico vencedor de 7 Oscars sobre o Projeto Manhattan."),
+                    Pair("Avatar: O Caminho da Água de James Cameron", "A família Sully enfrenta novos perigos nas profundezas e recifes de Pandora."),
+                    Pair("Super Mario Bros: O Filme", "Mario e Luigi na emocionante jornada para salvar o Reino dos Cogumelos e derrotar Bowser."),
+                    Pair("John Wick 4: Baba Yaga com Keanu Reeves", "Confrontos marciais de tirar o fôlego pelas ruas e monumentos de Paris e Osaka."),
+                    Pair("Missão Impossível: Acerto de Contas Parte 1", "Ethan Hunt e sua equipe contra uma perigosa inteligência artificial rebelde."),
+                    Pair("Sessão Superestreia Telecine Premium", "O maior blockbuster recém-saído dos cinemas em exibição exclusiva e sem intervalos."),
+                    Pair("Barbie: O Filme com Margot Robbie", "A boneca mais famosa do mundo em uma aventura colorida descobrindo a vida real."),
+                    Pair("Guardiões da Galáxia Vol. 3 da Marvel", "A despedida emocionante e cheia de ação da equipe de heróis espaciais."),
+                    Pair("Cine Noite Premium: Astros de Hollywood", "Filmes campeões de bilheteria mundial com elencos estelares consagrados."),
+                    Pair("Telecine Premium: Bastidores de Hollywood", "Entrevistas exclusivas com diretores, making of e segredos das superproduções.")
                 )
                 else -> listOf(
                     Pair("Cine Madrugada: Suspense & Drama", "Grandes filmes para quem gosta de boas histórias cinematográficas."),
