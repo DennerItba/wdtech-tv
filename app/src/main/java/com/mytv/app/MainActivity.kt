@@ -273,8 +273,14 @@ class MainActivity : AppCompatActivity() {
             loadingLayout.visibility = View.GONE
 
             channelAdapter.updateChannels(emptyList())
+            vodAdapter.updateItems(emptyList())
             txtPreviewTitle.text = "🔒 Conteúdo Adulto Bloqueado (+18)"
             txtPreviewInfo.text = "Pressione OK ou selecione para digitar o PIN de liberação"
+            txtVodPreviewTitle.text = "🔒 Conteúdo Adulto Bloqueado (+18)"
+            txtVodPreviewMeta.text = "PIN padrão: 0000"
+            txtVodPreviewPlot.text = "Este conteúdo é protegido pelo controle dos pais. Pressione OK no botão abaixo ou no controle para desbloquear."
+            btnVodAction.text = "🔒 Desbloquear com PIN (OK)"
+            btnVodAction.setOnClickListener { showPinDialog(category) }
 
             if (autoFocusChannels) {
                 showPinDialog(category)
@@ -425,10 +431,9 @@ class MainActivity : AppCompatActivity() {
             if (enteredPin == correctPin) {
                 isAdultUnlocked = true
                 txtError.visibility = View.INVISIBLE
-                Toast.makeText(this, "Acesso aos Canais Adultos Liberado!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Acesso aos Canais e Conteúdos Adultos Liberado!", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
-                displayCategoryChannels(category)
-                focusFirstChannel()
+                handleCategorySelection(category, autoFocusChannels = true)
             } else {
                 txtError.visibility = View.VISIBLE
                 enteredPin = ""

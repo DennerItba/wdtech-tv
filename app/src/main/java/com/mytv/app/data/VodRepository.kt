@@ -39,9 +39,14 @@ object VodRepository {
             for (i in 0 until array.length()) {
                 val obj = array.getJSONObject(i)
                 val id = obj.optString("category_id", "")
-                val name = obj.optString("category_name", "").trim()
+                var name = obj.optString("category_name", "").trim()
                 if (id.isNotEmpty() && name.isNotEmpty()) {
-                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
+                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true) || name.contains("Bella", ignoreCase = true)
+                    if (id == "4030") {
+                        name = "Bella da Semana & Ensaios (+18)"
+                    } else if (id == "40") {
+                        name = "Filmes Adultos (+18)"
+                    }
                     list.add(VodCategory(id = id, name = name, isAdult = isAdult, isSeries = false))
                 }
             }
@@ -129,9 +134,12 @@ object VodRepository {
             for (i in 0 until array.length()) {
                 val obj = array.getJSONObject(i)
                 val id = obj.optString("category_id", "")
-                val name = obj.optString("category_name", "").trim()
+                var name = obj.optString("category_name", "").trim()
                 if (id.isNotEmpty() && name.isNotEmpty()) {
-                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
+                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true) || name.contains("OnlyFans", ignoreCase = true)
+                    if (id == "71") {
+                        name = "OnlyFans & Séries Adultas (+18)"
+                    }
                     list.add(VodCategory(id = id, name = name, isAdult = isAdult, isSeries = true))
                 }
             }

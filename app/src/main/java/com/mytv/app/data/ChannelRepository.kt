@@ -1559,67 +1559,87 @@ object ChannelRepository {
             ),
             ChannelCategory(
                 id = "cat_adultos",
-                name = "Adultos (+18)",
+                name = "Adultos (+18) & OnlyFans",
                 isLocked = true,
                 channels = listOf(
                     Channel(
-                        id = "ch_playboy",
+                        id = "ch_onlyfans",
                         number = "142",
-                        title = "Playboy TV HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/playboy.txt",
+                        title = "OnlyFans & Privacy Stars 24H",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/149548.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OnlyFans_logo.svg/320px-OnlyFans_logo.svg.png",
+                        description = "Transmissao continua com as principais criadoras e ensaios do OnlyFans e Privacy (+18).",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_onlyfans_vip",
+                        number = "143",
+                        title = "OnlyFans VIP & Amador 24H",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/149544.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OnlyFans_logo.svg/320px-OnlyFans_logo.svg.png",
+                        description = "Conteudo exclusivo de criadores independentes e bastidores sem censura (+18).",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_playboy",
+                        number = "144",
+                        title = "Playboy TV FHD",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72221.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Playboy_Enterprises_logo.svg/320px-Playboy_Enterprises_logo.svg.png",
                         description = "O canal pioneiro do entretenimento erotico refinado mundial (+18).",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "ch_sexy_hot",
-                        number = "143",
-                        title = "Sexy Hot HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/sexyhot.txt",
+                        number = "145",
+                        title = "Sexy Hot FHD",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/180153.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sexy_Hot_logo_2018.svg/320px-Sexy_Hot_logo_2018.svg.png",
                         description = "As maiores producoes nacionais e estrelas consagradas do cinema adulto (+18).",
                         quality = "FHD"
                     ),
                     Channel(
+                        id = "ch_brasileirinhas",
+                        number = "146",
+                        title = "A Casa das Brasileirinhas 24H",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140487.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sexy_Hot_logo_2018.svg/320px-Sexy_Hot_logo_2018.svg.png",
+                        description = "O reality show mais quente do Brasil com exibicao continua 24 horas por dia (+18).",
+                        quality = "FHD"
+                    ),
+                    Channel(
                         id = "ch_venus",
-                        number = "144",
+                        number = "147",
                         title = "Venus HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/venus.txt",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140536.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Venus_logo.svg/320px-Venus_logo.svg.png",
                         description = "Sensualidade e producoes eroticas latinas e internacionais (+18).",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "ch_sex_prive",
-                        number = "145",
+                        number = "148",
                         title = "Sex Privé HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/sexprive.txt",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140537.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Sex_Prive_logo_2018.png/320px-Sex_Prive_logo_2018.png",
                         description = "Conteudo explicito e producoes exclusivas com as maiores estrelas do Brasil (+18).",
                         quality = "FHD"
                     ),
                     Channel(
                         id = "ch_brazzers",
-                        number = "146",
+                        number = "149",
                         title = "Brazzers TV HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/brazzers.txt",
+                        category = "Adultos (+18) & OnlyFans",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/166035.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Brazzers_logo.svg/320px-Brazzers_logo.svg.png",
                         description = "A produtora mais famosa do mundo com as atrizes mais requisitadas (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_redlight",
-                        number = "147",
-                        title = "Redlight TV HD",
-                        category = "Adultos (+18)",
-                        streamUrl = "https://52d080a3e172c33fd6886a37e7.s23-cloudfront-net.lat/8e8e8b142192ea65/redlight.txt",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Playboy_Enterprises_logo.svg/320px-Playboy_Enterprises_logo.svg.png",
-                        description = "Filmes adultos europeus e fetiches sem censura (+18).",
                         quality = "FHD"
                     )
                 )
