@@ -1,6 +1,6 @@
 {
-  "versionCode": 11,
-  "versionName": "2.2.3",
-  "releaseNotes": "\u2022 Novo Recurso de Playback 7 Dias (Catchup / Replay / Timeshift)!\n\u2022 72 canais habilitados com gravacao completa dos ultimos 7 dias na nuvem (SporTV, Premiere, ESPN, Telecine, HBO, Discovery, Globo e mais)\n\u2022 Selo visual '\u27f2 7D' na lista de canais e no painel de pre-visualizacao\n\u2022 Controles no player: Retroceder (-1m), Avancar (+1m), Do Inicio e Retornar ao Vivo\n\u2022 Guia completo dos ultimos 7 dias para selecionar e assistir qualquer programa do inicio",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.3/MyTvApp.apk"
+  "versionCode": 12,
+  "versionName": "2.2.4",
+  "releaseNotes": "\u2022 Corre\u00e7\u00e3o completa do Guia de Programa\u00e7\u00e3o (EPG) dos canais!\n\u2022 EPG ao vivo integrado via API dos servidores e grades aut\u00eanticas por canal\n\u2022 Informa\u00e7\u00f5es precisas para SporTV, ESPN, Cine Sky, Telecine, HBO, Discovery, Fazenda e mais\n\u2022 Renomeado arquivo oficial do instalador para wdtechtv.apk\n\u2022 Playback 7 Dias sincronizado com os programas reais da grade",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.2.4/wdtechtv.apk"
 }
