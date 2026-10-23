@@ -576,11 +576,6 @@ class MainActivity : AppCompatActivity() {
         updateChannelInfo(channel)
 
         pendingChannelSwitch?.let { switchHandler.removeCallbacks(it) }
-        
-        // Interrompe imediatamente decodificação anterior para evitar gargalo e congelamento na TV Box
-        exoPlayer?.stop()
-        exoPlayer?.clearMediaItems()
-        loadingLayout.visibility = View.GONE
 
         val runnable = Runnable {
             if (!isFinishing && !isDestroyed) {
@@ -588,8 +583,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         pendingChannelSwitch = runnable
-        // Debounce de 1200ms: navegação ultra suave pelo controle remoto sem sobrecarregar o hardware
-        switchHandler.postDelayed(runnable, 1200)
+        // Debounce de 700ms: navegação ágil pelo controle remoto sem tela preta/piscadeira a cada clique
+        switchHandler.postDelayed(runnable, 700)
     }
 
     private fun updateChannelInfo(channel: Channel) {
@@ -689,13 +684,20 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-        findViewById<View>(R.id.player_preview_container).setOnClickListener {
+        val previewContainer = findViewById<View>(R.id.player_preview_container)
+        previewContainer.setOnClickListener {
             currentChannel?.let { openFullScreenPlayer(it) }
         }
-        findViewById<View>(R.id.player_preview_container).setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                focusCurrentChannel()
-                return@setOnKeyListener true
+        previewContainer.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    focusCurrentChannel()
+                    return@setOnKeyListener true
+                }
+                if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                    currentChannel?.let { openFullScreenPlayer(it) }
+                    return@setOnKeyListener true
+                }
             }
             false
         }
@@ -760,7 +762,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFullScreenPlayer(channel: Channel) {
-        exoPlayer?.pause()
+        pendingChannelSwitch?.let { switchHandler.removeCallbacks(it) }
+        exoPlayer?.stop()
+        exoPlayer?.clearMediaItems()
+        loadingLayout.visibility = View.GONE
         val currentCategoryChannels = selectedCategory?.channels ?: allCategories.firstOrNull()?.channels ?: listOf(channel)
         val currentIndex = currentCategoryChannels.indexOfFirst { it.id == channel.id }.coerceAtLeast(0)
         val intent = Intent(this, PlayerActivity::class.java).apply {
@@ -811,12 +816,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        exoPlayer?.play()
+        if (currentAppMode == AppMode.LIVE_TV && currentChannel != null && exoPlayer?.currentMediaItem == null) {
+            currentChannel?.let { playChannelPreview(it) }
+        } else {
+            exoPlayer?.play()
+        }
     }
 
     override fun onPause() {
         super.onPause()
         exoPlayer?.pause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        pendingChannelSwitch?.let { switchHandler.removeCallbacks(it) }
+        exoPlayer?.stop()
+        exoPlayer?.clearMediaItems()
     }
 
     override fun onDestroy() {

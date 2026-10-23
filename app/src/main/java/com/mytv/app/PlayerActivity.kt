@@ -28,6 +28,8 @@ import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.extractor.DefaultExtractorsFactory
 import androidx.media3.extractor.ts.TsExtractor
 import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.DefaultRenderersFactory
+import androidx.media3.extractor.ts.DefaultTsPayloadReaderFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -85,7 +87,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private var currentChannel: Channel? = null
     private var retryCount = 0
-    private val maxAutoRetries = 2
+    private val maxAutoRetries = 6
     private val retryHandler = Handler(Looper.getMainLooper())
     private var retryRunnable: Runnable? = null
 
@@ -333,20 +335,37 @@ class PlayerActivity : AppCompatActivity() {
             .setBackBuffer(10_000, false)
             .build()
 
-        val exo = ExoPlayer.Builder(this)
+        val renderersFactory = DefaultRenderersFactory(this).apply {
+            setEnableDecoderFallback(true)
+            setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+        }
+
+        val exo = ExoPlayer.Builder(this, renderersFactory)
             .setLoadControl(loadControl)
             .build().apply {
             playWhenReady = true
             addListener(object : Player.Listener {
                 override fun onPlaybackStateChanged(state: Int) {
-                    if (state == Player.STATE_BUFFERING) {
-                        bufferingProgress.visibility = View.VISIBLE
-                    } else if (state == Player.STATE_READY) {
-                        bufferingProgress.visibility = View.GONE
-                        errorLayout.visibility = View.GONE
-                        retryCount = 0
-                    } else {
-                        bufferingProgress.visibility = View.GONE
+                    when (state) {
+                        Player.STATE_BUFFERING -> {
+                            bufferingProgress.visibility = View.VISIBLE
+                        }
+                        Player.STATE_READY -> {
+                            bufferingProgress.visibility = View.GONE
+                            errorLayout.visibility = View.GONE
+                            retryCount = 0
+                        }
+                        Player.STATE_ENDED -> {
+                            bufferingProgress.visibility = View.GONE
+                            if (!isPlaybackMode) {
+                                // Em transmissões ao vivo, STATE_ENDED indica queda de conexão / EOF no stream.
+                                // Reconecta automaticamente sem congelar a imagem na tela!
+                                handleLiveStreamEnded(channel)
+                            }
+                        }
+                        Player.STATE_IDLE -> {
+                            bufferingProgress.visibility = View.GONE
+                        }
                     }
                 }
 
@@ -358,6 +377,11 @@ class PlayerActivity : AppCompatActivity() {
 
         val extractorsFactory = DefaultExtractorsFactory().apply {
             setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
+            setTsExtractorFlags(
+                DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES or
+                DefaultTsPayloadReaderFactory.FLAG_DETECT_ACCESS_UNITS or
+                DefaultTsPayloadReaderFactory.FLAG_IGNORE_SPLICE_INFO_STREAM
+            )
             setConstantBitrateSeekingEnabled(true)
         }
 
@@ -579,6 +603,26 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleLiveStreamEnded(channel: Channel) {
+        if (isFinishing || isDestroyed) return
+        if (retryCount < maxAutoRetries) {
+            retryCount++
+            bufferingProgress.visibility = View.VISIBLE
+            val fallbackUrl = currentStreamUrl?.let { getFallbackUrl(it) }
+            val nextUrl = if (fallbackUrl != null && retryCount > 1) fallbackUrl else currentStreamUrl
+            retryHandler.postDelayed({
+                if (!isFinishing && !isDestroyed) {
+                    startStream(channel, nextUrl)
+                }
+            }, 800)
+        } else {
+            handlePlaybackError(
+                PlaybackException("Fim de transmissão ao vivo inesperado (EOF)", null, PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_CLOSED),
+                channel
+            )
+        }
+    }
+
     private fun handlePlaybackError(error: PlaybackException, channel: Channel) {
         bufferingProgress.visibility = View.GONE
         errorLayout.visibility = View.VISIBLE
@@ -613,11 +657,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun showOverlayTemporarily() {
         overlayView.alpha = 1f
         overlayView.visibility = View.VISIBLE
-        if (!btnBack.isFocused && !btnAspectRatio.isFocused &&
-            !btnRewind.isFocused && !btnForward.isFocused &&
-            !btnRestart.isFocused && !btnLive.isFocused && !btnHistory.isFocused) {
-            btnBack.requestFocus()
-        }
+        // Não força foco em btnBack para evitar que comandos do controle remoto sejam interceptados
 
         hideHandler.removeCallbacks(hideRunnable)
         hideHandler.postDelayed(hideRunnable, 6000)
@@ -631,6 +671,11 @@ class PlayerActivity : AppCompatActivity() {
             }
             when (event.keyCode) {
                 KeyEvent.KEYCODE_BACK -> {
+                    if (overlayView.visibility == View.VISIBLE) {
+                        hideHandler.removeCallbacks(hideRunnable)
+                        overlayView.visibility = View.GONE
+                        return true
+                    }
                     finish()
                     return true
                 }
@@ -647,19 +692,15 @@ class PlayerActivity : AppCompatActivity() {
                     }
                 }
                 KeyEvent.KEYCODE_DPAD_UP -> {
-                    if (overlayView.visibility != View.VISIBLE) {
-                        if (channelList.isNotEmpty()) {
-                            zapChannel(-1)
-                            return true
-                        }
+                    if (channelList.isNotEmpty()) {
+                        zapChannel(-1)
+                        return true
                     }
                 }
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
-                    if (overlayView.visibility != View.VISIBLE) {
-                        if (channelList.isNotEmpty()) {
-                            zapChannel(1)
-                            return true
-                        }
+                    if (channelList.isNotEmpty()) {
+                        zapChannel(1)
+                        return true
                     }
                 }
                 KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE,
@@ -759,7 +800,15 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        player?.pause()
+        player?.stop()
+        player?.clearMediaItems()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (player != null && player?.currentMediaItem == null && currentChannel != null) {
+            currentChannel?.let { startStream(it, currentStreamUrl) }
+        }
     }
 
     override fun onDestroy() {
@@ -802,7 +851,43 @@ class PlayerActivity : AppCompatActivity() {
             "72138" to "72140"  // HBO Xtreme FHD -> HD
         )
 
+        private val CROSS_CDN_FALLBACKS = mapOf(
+            // Corruptx -> Vivlar
+            "8736.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71865.ts",
+            "8743.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71873.ts",
+            "8740.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71869.ts",
+            "8756.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71885.ts",
+            "8933.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72152.ts",
+            "8759.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71889.ts",
+            "8746.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71877.ts",
+            "8751.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71881.ts",
+            "304492.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71775.ts",
+            "304496.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72148.ts",
+            "304500.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72108.ts",
+            "1168918.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72040.ts",
+            "1168916.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72037.ts",
+            // Vivlar -> Corruptx
+            "71862.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8736.m3u8",
+            "71865.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8736.m3u8",
+            "71871.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8743.m3u8",
+            "71867.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8740.m3u8",
+            "71883.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8756.m3u8",
+            "72150.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8933.m3u8",
+            "71887.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8759.m3u8",
+            "71875.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8746.m3u8",
+            "71879.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8751.m3u8",
+            "71772.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304492.m3u8",
+            "72146.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304496.m3u8",
+            "72106.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304500.m3u8",
+            "72040.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1168918.m3u8"
+        )
+
         fun getFallbackUrl(url: String): String? {
+            for ((key, target) in CROSS_CDN_FALLBACKS) {
+                if (url.endsWith(key) || url.contains("/$key")) {
+                    return target
+                }
+            }
             for ((fhdId, hdId) in STREAM_FALLBACKS) {
                 if (url.contains("/$fhdId.m3u8")) {
                     return url.replace("/$fhdId.m3u8", "/$hdId.m3u8")

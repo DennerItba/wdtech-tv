@@ -831,17 +831,17 @@ object ChannelRepository {
                         number = "75",
                         title = "Discovery Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71862.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8736.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
                         description = "O canal pioneiro em exploracao cientifica, misterios do planeta e aventuras humanas.",
-                        quality = "FHD"
+                        quality = "HD"
                     ),
                     Channel(
                         id = "ch_discovery_kids",
                         number = "76",
                         title = "Discovery Kids HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71871.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8743.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD"
@@ -851,7 +851,7 @@ object ChannelRepository {
                         number = "77",
                         title = "Discovery Home & Health HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71867.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8740.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-hh-hd.png",
                         description = "Estilo de vida, reformas de imoveis, saude, culinaria e maternidade.",
                         quality = "FHD"
@@ -861,7 +861,7 @@ object ChannelRepository {
                         number = "78",
                         title = "Discovery Turbo HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71883.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8756.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-turbo-hd.png",
                         description = "Carros personalizados, restauracao de classicos e motores de alta performance.",
                         quality = "FHD"
@@ -871,7 +871,7 @@ object ChannelRepository {
                         number = "79",
                         title = "Discovery ID (Investigacao) HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72150.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8933.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Investigation_Discovery_logo_%282020%29.svg/320px-Investigation_Discovery_logo_%282020%29.svg.png",
                         description = "Crimes reais, investigacoes policiais forenses e os misterios mais intrigantes.",
                         quality = "FHD"
@@ -881,7 +881,7 @@ object ChannelRepository {
                         number = "80",
                         title = "Discovery World HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71887.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8759.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Discovery_World_logo.svg/320px-Discovery_World_logo.svg.png",
                         description = "Documentarios deslumbrantes sobre culturas globais, paisagens e a historia da Terra.",
                         quality = "FHD"
@@ -891,7 +891,7 @@ object ChannelRepository {
                         number = "81",
                         title = "Discovery Science HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71875.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8746.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Discovery_Science_logo.svg/320px-Discovery_Science_logo.svg.png",
                         description = "Tecnologia de ponta, astrofisica, experimentos ousados e inovacoes do futuro.",
                         quality = "HD"
@@ -901,7 +901,7 @@ object ChannelRepository {
                         number = "82",
                         title = "Discovery Theater HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71879.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8751.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Discovery_Theater_logo.png/320px-Discovery_Theater_logo.png",
                         description = "Imagens cinematograficas em alta definicao da natureza e animais selvagens.",
                         quality = "HD"
@@ -911,7 +911,7 @@ object ChannelRepository {
                         number = "83",
                         title = "Animal Planet HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71772.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304492.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Animal_Planet_logo_2018.svg/320px-Animal_Planet_logo_2018.svg.png",
                         description = "O reino animal de perto: resgate de fauna, predadores selvagens e vida dos pets.",
                         quality = "FHD"
@@ -921,7 +921,7 @@ object ChannelRepository {
                         number = "84",
                         title = "History Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72146.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304496.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
                         description = "Trato Feito, Alienigenas do Passado, Forjado no Fogo e grandes acontecimentos historicos.",
                         quality = "FHD"
@@ -931,7 +931,7 @@ object ChannelRepository {
                         number = "85",
                         title = "History 2 (H2) HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72106.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304500.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/History2_logo.svg/320px-History2_logo.svg.png",
                         description = "Aprofundamento historico, grandes guerras, arqueologia e conspiracoes mundiais.",
                         quality = "FHD"
@@ -1182,7 +1182,7 @@ object ChannelRepository {
                         number = "108",
                         title = "Globo SP H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131215.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1168916.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Transmissao em codec H.265 de alta eficiencia: imagem ultra nitida consumindo metade da banda.",
                         quality = "H265"
@@ -1269,7 +1269,7 @@ object ChannelRepository {
                         number = "116",
                         title = "Globo SP - Globo Sao Paulo",
                         category = "Globo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72040.ts",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1168918.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo: Jornalismo, novelas, futebol e programacao completa em alta definicao.",
                         quality = "HD"
