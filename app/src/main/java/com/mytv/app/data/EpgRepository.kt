@@ -291,8 +291,8 @@ object EpgRepository {
     }
 
     private fun extractStreamIdFromUrl(streamUrl: String): String? {
-        val match = Regex("""/(\\d+)\\.m3u8""").find(streamUrl)
-        return match?.groupValues?.get(1)
+        val match = Regex("""/(\\d+)\\.(?:m3u8|ts)""").find(streamUrl)
+        return match?.groupValues?.getOrNull(1)
     }
 
     fun getProgramsForChannel(channel: Channel): Pair<EpgProgram, EpgProgram?> {

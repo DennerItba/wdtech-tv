@@ -32,6 +32,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.ui.PlayerView
+import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mytv.app.adapter.PlaybackHistoryAdapter
@@ -50,6 +51,12 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var overlayView: View
     private lateinit var bufferingProgress: ProgressBar
     private lateinit var btnBack: Button
+    private lateinit var btnAspectRatio: Button
+
+    // Navegacao por Canais (Zapping)
+    private var channelList: ArrayList<Channel> = arrayListOf()
+    private var currentChannelIndex: Int = -1
+    private var currentResizeMode: Int = AspectRatioFrameLayout.RESIZE_MODE_FIT
 
     // Componentes de Playback / 7 Dias Gravados
     private lateinit var txtBadgeMode: TextView
@@ -98,6 +105,10 @@ class PlayerActivity : AppCompatActivity() {
         overlayView = findViewById(R.id.player_overlay)
         bufferingProgress = findViewById(R.id.player_buffering)
         btnBack = findViewById(R.id.btn_player_back)
+        btnAspectRatio = findViewById(R.id.btn_player_aspect_ratio)
+        btnAspectRatio.setOnClickListener {
+            toggleAspectRatio()
+        }
 
         // Controles de Playback
         txtBadgeMode = findViewById(R.id.txt_player_badge_mode)
@@ -148,6 +159,21 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         this.currentChannel = enriched
+
+        // Recebe a lista completa de canais para zapping direto pelo controle remoto
+        val extraList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(EXTRA_CHANNEL_LIST, ArrayList::class.java) as? ArrayList<Channel>
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getSerializableExtra(EXTRA_CHANNEL_LIST) as? ArrayList<Channel>
+        }
+        if (!extraList.isNullOrEmpty()) {
+            this.channelList = extraList
+            this.currentChannelIndex = intent.getIntExtra(EXTRA_CHANNEL_INDEX, -1)
+            if (this.currentChannelIndex == -1) {
+                this.currentChannelIndex = extraList.indexOfFirst { it.id == channel.id }
+            }
+        }
 
         findViewById<TextView>(R.id.txt_player_channel_title).text = enriched.title
         findViewById<TextView>(R.id.txt_player_channel_category).text =
@@ -204,6 +230,67 @@ class PlayerActivity : AppCompatActivity() {
 
         startStream(enriched, null)
         showOverlayTemporarily()
+    }
+
+    private fun toggleAspectRatio() {
+        currentResizeMode = when (currentResizeMode) {
+            AspectRatioFrameLayout.RESIZE_MODE_FIT -> AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+            AspectRatioFrameLayout.RESIZE_MODE_ZOOM -> AspectRatioFrameLayout.RESIZE_MODE_FILL
+            else -> AspectRatioFrameLayout.RESIZE_MODE_FIT
+        }
+        playerView.resizeMode = currentResizeMode
+        val label = when (currentResizeMode) {
+            AspectRatioFrameLayout.RESIZE_MODE_FIT -> "Original (16:9)"
+            AspectRatioFrameLayout.RESIZE_MODE_ZOOM -> "Zoom (Sem Bordas)"
+            else -> "Esticar (Preencher)"
+        }
+        btnAspectRatio.text = "📐 $label"
+        Toast.makeText(this, "Formato: $label", Toast.LENGTH_SHORT).show()
+        showOverlayTemporarily()
+    }
+
+    private fun zapChannel(direction: Int) {
+        if (channelList.isEmpty()) return
+        val newIndex = (currentChannelIndex + direction).coerceIn(0, channelList.size - 1)
+        if (newIndex == currentChannelIndex) return
+        currentChannelIndex = newIndex
+        val nextChannel = channelList[newIndex]
+
+        val enriched = if (nextChannel.currentProgram == null || !nextChannel.hasPlayback) {
+            com.mytv.app.data.EpgRepository.enrichChannel(nextChannel)
+        } else nextChannel
+        this.currentChannel = enriched
+
+        findViewById<TextView>(R.id.txt_player_channel_title).text = enriched.title
+        findViewById<TextView>(R.id.txt_player_channel_category).text =
+            "${enriched.category} • Transmissão em Alta Definição"
+
+        val epg = enriched.currentProgram
+        if (epg != null) {
+            findViewById<TextView>(R.id.txt_player_epg_now_title).text = epg.title
+            findViewById<TextView>(R.id.txt_player_epg_time).text = "${epg.startTime} - ${epg.endTime}"
+            findViewById<ProgressBar>(R.id.pb_player_epg).progress = epg.getProgressPercent()
+            findViewById<TextView>(R.id.txt_player_epg_synopsis).text = epg.synopsis.ifEmpty { "Transmissão ao vivo de alta definição." }
+        }
+
+        val nextEpg = enriched.nextProgram
+        if (nextEpg != null) {
+            findViewById<TextView>(R.id.txt_player_epg_next).text = "▶ A Seguir (${nextEpg.startTime}): ${nextEpg.title}"
+        }
+
+        // Atualiza controles de Playback
+        if (enriched.hasPlayback) {
+            txtPlaybackBadge.visibility = View.VISIBLE
+            layoutPlaybackControls.visibility = View.VISIBLE
+        } else {
+            txtPlaybackBadge.visibility = View.GONE
+            layoutPlaybackControls.visibility = View.GONE
+        }
+
+        // Inicia a nova transmissão imediatamente
+        startStream(enriched, null)
+        showOverlayTemporarily()
+        Toast.makeText(this, "CH ${enriched.number} • ${enriched.title}", Toast.LENGTH_SHORT).show()
     }
 
     private fun startStream(channel: Channel, customUrl: String? = null) {
@@ -539,6 +626,20 @@ class PlayerActivity : AppCompatActivity() {
                     finish()
                     return true
                 }
+                KeyEvent.KEYCODE_DPAD_UP,
+                KeyEvent.KEYCODE_CHANNEL_UP -> {
+                    if (channelList.isNotEmpty()) {
+                        zapChannel(-1)
+                        return true
+                    }
+                }
+                KeyEvent.KEYCODE_DPAD_DOWN,
+                KeyEvent.KEYCODE_CHANNEL_DOWN -> {
+                    if (channelList.isNotEmpty()) {
+                        zapChannel(1)
+                        return true
+                    }
+                }
                 KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE,
                 KeyEvent.KEYCODE_MEDIA_PLAY,
                 KeyEvent.KEYCODE_MEDIA_PAUSE -> {
@@ -649,6 +750,8 @@ class PlayerActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_CHANNEL = "extra_channel"
+        const val EXTRA_CHANNEL_LIST = "extra_channel_list"
+        const val EXTRA_CHANNEL_INDEX = "extra_channel_index"
         private val STREAM_FALLBACKS = mapOf(
             "71862" to "71865", // Discovery Channel FHD -> HD
             "71871" to "71873", // Discovery Kids FHD -> HD

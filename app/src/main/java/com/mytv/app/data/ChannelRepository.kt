@@ -22,7 +22,7 @@ object ChannelRepository {
                         number = "01",
                         title = "Cine SKY 01 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72364.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72364.ts",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Cine Sky Oficial: Grandes lancamentos do cinema mundial 24h sem intervalos comerciais.",
                         quality = "FHD"
@@ -32,7 +32,7 @@ object ChannelRepository {
                         number = "02",
                         title = "Cine SKY 02 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72348.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72348.ts",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Os melhores sucessos de bilheteria e estreias exclusivas do cinema direto na sua TV.",
                         quality = "FHD"
@@ -42,7 +42,7 @@ object ChannelRepository {
                         number = "03",
                         title = "Cine SKY 03 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72120.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72120.ts",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Filmes consagrados, acao, suspense e producoes premiadas de Hollywood.",
                         quality = "FHD"
@@ -52,7 +52,7 @@ object ChannelRepository {
                         number = "04",
                         title = "Cine SKY 05 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72112.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72112.ts",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Cinema em alta definicao com lancamentos imperdiveis e classicos mundiais.",
                         quality = "FHD"
@@ -62,7 +62,7 @@ object ChannelRepository {
                         number = "05",
                         title = "Cine SKY Acao HD",
                         category = "Cine Sky",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72319.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72319.ts",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Tiros, explosoes e adrenalina pura com os maiores astros da acao.",
                         quality = "FHD"
@@ -72,7 +72,7 @@ object ChannelRepository {
                         number = "06",
                         title = "Cine SKY Familia HD",
                         category = "Cine Sky",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72360.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72360.ts",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Comedias, animacoes e os melhores filmes para toda a familia reunir.",
                         quality = "FHD"
@@ -159,7 +159,7 @@ object ChannelRepository {
                         number = "14",
                         title = "Reality BBB 24H HD",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72598.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Big_Brother_Brasil_logo.svg/320px-Big_Brother_Brasil_logo.svg.png",
                         description = "A casa mais vigiada do Brasil ao vivo 24 horas por dia com cobertura completa.",
                         quality = "FHD"
@@ -182,7 +182,7 @@ object ChannelRepository {
                         number = "49",
                         title = "Premiere Clubes FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72262.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72262.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "O melhor do futebol brasileiro 24 horas por dia com jogos ao vivo e programas exclusivos.",
                         quality = "FHD"
@@ -192,7 +192,7 @@ object ChannelRepository {
                         number = "50",
                         title = "Premiere 2 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72237.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72237.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "Transmissões ao vivo das Séries A e B do Brasileirão e campeonatos regionais.",
                         quality = "FHD"
@@ -202,7 +202,7 @@ object ChannelRepository {
                         number = "51",
                         title = "Premiere 3 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72241.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72241.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "Partidas simultâneas ao vivo e transmissão completa dos principais clubes do Brasil.",
                         quality = "FHD"
@@ -212,7 +212,7 @@ object ChannelRepository {
                         number = "52",
                         title = "Premiere 4 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72245.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72245.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "Futebol ao vivo em alta definição direto dos estádios de todo o Brasil.",
                         quality = "FHD"
@@ -222,7 +222,7 @@ object ChannelRepository {
                         number = "53",
                         title = "Premiere 5 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72249.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72249.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "Canal de transmissão direta de partidas simultâneas dos campeonatos nacionais.",
                         quality = "FHD"
@@ -232,7 +232,7 @@ object ChannelRepository {
                         number = "54",
                         title = "Premiere 6 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72253.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72253.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "Cobertura completa dos jogos da Série B e confrontos regionais.",
                         quality = "FHD"
@@ -242,7 +242,7 @@ object ChannelRepository {
                         number = "55",
                         title = "Premiere 7 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72257.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72257.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "Canal pay-per-view exclusivo para transmissões de mata-mata e decisões.",
                         quality = "FHD"
@@ -252,7 +252,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Premiere 8 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/180158.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/180158.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/premiere.png",
                         description = "Transmissão em tempo real de partidas complementares da rodada de futebol.",
                         quality = "FHD"
@@ -269,7 +269,7 @@ object ChannelRepository {
                         number = "57",
                         title = "SportyNet 1 FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184569.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184569.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Transmissões ao vivo dos Campeonatos Estaduais, divisões de acesso e copas regionais.",
                         quality = "FHD"
@@ -279,7 +279,7 @@ object ChannelRepository {
                         number = "58",
                         title = "SportyNet 2 FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184578.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184578.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Canal complementar com múltiplos jogos ao vivo simultâneos dos campeonatos estaduais.",
                         quality = "FHD"
@@ -289,7 +289,7 @@ object ChannelRepository {
                         number = "59",
                         title = "DAZN 1 FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184550.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/184550.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/dazn.png",
                         description = "O serviço global de esportes: Série C, futebol europeu, boxe e torneios mundiais.",
                         quality = "FHD"
@@ -299,7 +299,7 @@ object ChannelRepository {
                         number = "60",
                         title = "FCF TV 1 FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/247976.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/247976.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Transmissão oficial das federações estaduais com jogos ao vivo e copas do Nordeste.",
                         quality = "FHD"
@@ -309,7 +309,7 @@ object ChannelRepository {
                         number = "61",
                         title = "X Sports FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/340449.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/340449.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Esportes alternativos, campeonatos internacionais e partidas ao vivo.",
                         quality = "FHD"
@@ -319,7 +319,7 @@ object ChannelRepository {
                         number = "62",
                         title = "BandSports FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71801.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71801.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/bandsports.png",
                         description = "Futebol internacional, campeonatos de base, tênis, automobilismo e esportes olímpicos.",
                         quality = "FHD"
@@ -329,7 +329,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Combate FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71842.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71842.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/combate.png",
                         description = "O canal oficial das lutas: UFC, Boxe, Jiu-Jitsu e grandes torneios de artes marciais.",
                         quality = "FHD"
@@ -346,7 +346,7 @@ object ChannelRepository {
                         number = "64",
                         title = "SporTV FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72329.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72329.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/sportv.png",
                         description = "O canal campeão: cobertura ao vivo dos maiores campeonatos esportivos do Brasil e do mundo.",
                         quality = "FHD"
@@ -356,7 +356,7 @@ object ChannelRepository {
                         number = "65",
                         title = "SporTV 2 FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72321.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72321.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/sportv2.png",
                         description = "Vôlei, basquete, tênis, automobilismo e futebol ao vivo todos os dias.",
                         quality = "FHD"
@@ -366,7 +366,7 @@ object ChannelRepository {
                         number = "66",
                         title = "SporTV 3 FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72325.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72325.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/sportv3.png",
                         description = "Esportes olímpicos, atletismo, natação e transmissão simultânea de grandes torneios.",
                         quality = "FHD"
@@ -376,7 +376,7 @@ object ChannelRepository {
                         number = "67",
                         title = "SporTV 4 FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/276092.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/276092.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/sportv2.png",
                         description = "Canal de apoio para eventos simultâneos e rodadas decisivas em alta resolução.",
                         quality = "FHD"
@@ -386,7 +386,7 @@ object ChannelRepository {
                         number = "68",
                         title = "BandSports FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71801.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71801.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/bandsports.png",
                         description = "Futebol internacional, treinos de Fórmula 1, lutas e esportes radicais ao vivo.",
                         quality = "FHD"
@@ -396,7 +396,7 @@ object ChannelRepository {
                         number = "69",
                         title = "Combate FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71842.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71842.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/combate.png",
                         description = "O canal oficial das artes marciais: UFC, Boxe, Jiu-Jitsu, Kickboxing e Jungle Fight 24H.",
                         quality = "FHD"
@@ -413,7 +413,7 @@ object ChannelRepository {
                         number = "70",
                         title = "ESPN FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71911.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71911.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/espn.png",
                         description = "O lider mundial em esportes: Premier League, LaLiga, Serie A italiana e NFL.",
                         quality = "FHD"
@@ -423,7 +423,7 @@ object ChannelRepository {
                         number = "71",
                         title = "ESPN 2 FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71919.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71919.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/espn2.png",
                         description = "Futebol europeu, NBA, beisebol da MLB, college football e programas esportivos de debate.",
                         quality = "FHD"
@@ -433,7 +433,7 @@ object ChannelRepository {
                         number = "72",
                         title = "ESPN 3 FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71907.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71907.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/espn.png",
                         description = "Tenis com Grand Slams ao vivo, ciclismo, esportes a motor e jogos internacionais.",
                         quality = "FHD"
@@ -443,7 +443,7 @@ object ChannelRepository {
                         number = "73",
                         title = "ESPN 4 FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71957.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71957.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/foxsports1.png",
                         description = "A casa da Copa Libertadores da América, Copa Sul-Americana e futebol sul-americano.",
                         quality = "FHD"
@@ -453,7 +453,7 @@ object ChannelRepository {
                         number = "74",
                         title = "ESPN 5 FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71952.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71952.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/foxsports2.png",
                         description = "Cobertura multiplataforma e grandes eventos de esportes de combate e automobilismo.",
                         quality = "FHD"
@@ -463,7 +463,7 @@ object ChannelRepository {
                         number = "75",
                         title = "ESPN 6 FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71915.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71915.ts",
                         logoUrl = "http://vivlar.me/static/logos/canais/espnextra.png",
                         description = "Transmissoes simultaneas de rodadas europeias, campeonatos de rugby e esportes radicais.",
                         quality = "FHD"
@@ -480,7 +480,7 @@ object ChannelRepository {
                         number = "42",
                         title = "Telecine Premium HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72362.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72362.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Grandes sucessos de bilheteria e estreias exclusivas do cinema mundial em primeira mao.",
                         quality = "FHD"
@@ -490,7 +490,7 @@ object ChannelRepository {
                         number = "43",
                         title = "Telecine Action HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72346.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72346.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Telecine_Action_logo_2019.svg/320px-Telecine_Action_logo_2019.svg.png",
                         description = "Muita adrenalina, velocidade, acao e perseguicoes sem limite.",
                         quality = "FHD"
@@ -500,7 +500,7 @@ object ChannelRepository {
                         number = "44",
                         title = "Telecine Touch HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72366.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72366.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Telecine_Touch_logo_2019.svg/320px-Telecine_Touch_logo_2019.svg.png",
                         description = "Emocao e historias marcantes: os maiores dramas e romances de todos os tempos.",
                         quality = "FHD"
@@ -510,7 +510,7 @@ object ChannelRepository {
                         number = "45",
                         title = "Telecine Pipoca HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72358.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72358.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Telecine_Pipoca_logo_2019.svg/320px-Telecine_Pipoca_logo_2019.svg.png",
                         description = "Os filmes mais divertidos do cinema nacional e internacional 100% dublados.",
                         quality = "FHD"
@@ -520,7 +520,7 @@ object ChannelRepository {
                         number = "46",
                         title = "Telecine Fun HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72354.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72354.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Telecine_Fun_logo_2019.svg/320px-Telecine_Fun_logo_2019.svg.png",
                         description = "Comedias e animacoes para garantir boas risadas com a familia reunida.",
                         quality = "FHD"
@@ -530,7 +530,7 @@ object ChannelRepository {
                         number = "47",
                         title = "Telecine Cult HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72350.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72350.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Telecine_Cult_logo_2019.svg/320px-Telecine_Cult_logo_2019.svg.png",
                         description = "Obras-primas da historia da setima arte, cinema de autor e producoes premiadas.",
                         quality = "FHD"
@@ -547,7 +547,7 @@ object ChannelRepository {
                         number = "48",
                         title = "HBO HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72118.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72118.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series consagradas, grandes documentarios e as maiores producoes mundiais.",
                         quality = "FHD"
@@ -557,7 +557,7 @@ object ChannelRepository {
                         number = "49",
                         title = "HBO 2 HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72110.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72110.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/HBO2_logo_2014.svg/320px-HBO2_logo_2014.svg.png",
                         description = "Reprises dos melhores filmes e series em horarios alternativos dublados e legendados.",
                         quality = "FHD"
@@ -567,7 +567,7 @@ object ChannelRepository {
                         number = "50",
                         title = "HBO Plus HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72125.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72125.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/HBO_Plus_logo_2019.svg/320px-HBO_Plus_logo_2019.svg.png",
                         description = "Conteudo jovem, comedia, acao e musica da franquia HBO.",
                         quality = "FHD"
@@ -577,7 +577,7 @@ object ChannelRepository {
                         number = "51",
                         title = "HBO Family HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72114.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72114.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/HBO_Family_2014.svg/320px-HBO_Family_2014.svg.png",
                         description = "Programacao voltada para criancas e jovens com animacoes e filmes familiares.",
                         quality = "FHD"
@@ -587,7 +587,7 @@ object ChannelRepository {
                         number = "52",
                         title = "HBO Signature HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72134.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72134.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/HBO_Signature_logo_2014.svg/320px-HBO_Signature_logo_2014.svg.png",
                         description = "O acervo mais exclusivo e refinado das producoes originais e documentarios HBO.",
                         quality = "FHD"
@@ -597,7 +597,7 @@ object ChannelRepository {
                         number = "53",
                         title = "HBO Mundi HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72121.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72121.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Filmes internacionais e producoes independentes aclamadas pela critica.",
                         quality = "FHD"
@@ -607,7 +607,7 @@ object ChannelRepository {
                         number = "54",
                         title = "HBO Pop HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72129.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72129.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Filmes leves, comedias romanticas e grandes sucessos da cultura pop.",
                         quality = "FHD"
@@ -617,7 +617,7 @@ object ChannelRepository {
                         number = "55",
                         title = "HBO Xtreme HD",
                         category = "Rede HBO",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72138.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72138.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Acao frenetica, suspense e terror para quem gosta de fortes emocoes.",
                         quality = "FHD"
@@ -634,7 +634,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Canal Sony HD (Sony Channel)",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71824.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71824.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sony_Channel_logo_2019.svg/320px-Sony_Channel_logo_2019.svg.png",
                         description = "O lendario Canal Sony: Grey's Anatomy, The Good Doctor e as series medicas e policiais mais amadas.",
                         quality = "FHD"
@@ -654,7 +654,7 @@ object ChannelRepository {
                         number = "58",
                         title = "Warner Channel HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72431.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72431.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Warner_Channel_2019_logo.svg/320px-Warner_Channel_2019_logo.svg.png",
                         description = "Universo DC, The Big Bang Theory, Friends e os maiores sucessos da Warner Bros.",
                         quality = "FHD"
@@ -664,7 +664,7 @@ object ChannelRepository {
                         number = "59",
                         title = "Megapix HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72166.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72166.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Megapix_logo_2020.svg/320px-Megapix_logo_2020.svg.png",
                         description = "O canal dos grandes campeoes de bilheteria dublados com sessao pipoca todo dia.",
                         quality = "FHD"
@@ -674,7 +674,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Universal TV HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72419.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72419.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Universal_TV_logo_2018.svg/320px-Universal_TV_logo_2018.svg.png",
                         description = "Franquia Chicago (Fire, P.D., Med), Law & Order e grandes investigacoes.",
                         quality = "FHD"
@@ -684,7 +684,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Studio Universal HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72334.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72334.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Studio_Universal_logo.svg/320px-Studio_Universal_logo.svg.png",
                         description = "Cinema hollywoodiano e classicos dos estúdios Universal Pictures.",
                         quality = "FHD"
@@ -694,7 +694,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Paramount Network HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72217.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72217.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Paramount_Network_2018.svg/320px-Paramount_Network_2018.svg.png",
                         description = "Yellowstone, Tulsa King e superproducoes consagradas da Paramount Pictures.",
                         quality = "FHD"
@@ -704,7 +704,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Cinemax HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71833.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71833.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cinemax_logo_2011.svg/320px-Cinemax_logo_2011.svg.png",
                         description = "Filmes de sucesso, acao e suspense com a chancela do grupo HBO.",
                         quality = "FHD"
@@ -714,7 +714,7 @@ object ChannelRepository {
                         number = "64",
                         title = "TNT HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72375.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72375.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/TNT_Logo_2016.svg/320px-TNT_Logo_2016.svg.png",
                         description = "Grandes premiacoes como o Oscar, superproducoes cinematograficas e esportes.",
                         quality = "FHD"
@@ -724,7 +724,7 @@ object ChannelRepository {
                         number = "65",
                         title = "Space HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72317.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72317.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Space_logo_2017.svg/320px-Space_logo_2017.svg.png",
                         description = "Especializado em acao, ficcao cientifica, suspense e filmes de luta.",
                         quality = "FHD"
@@ -734,7 +734,7 @@ object ChannelRepository {
                         number = "66",
                         title = "AXN HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71781.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71781.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/AXN_logo_2015.svg/320px-AXN_logo_2015.svg.png",
                         description = "As maiores series policiais e de investigacao forense do mundo: NCIS e Criminal Minds.",
                         quality = "FHD"
@@ -744,7 +744,7 @@ object ChannelRepository {
                         number = "67",
                         title = "TNT Novelas HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72342.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72342.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tnt-novelas.png",
                         description = "O canal dedicado aos grandes sucessos mundiais das telenovelas e melodramas.",
                         quality = "FHD"
@@ -804,7 +804,7 @@ object ChannelRepository {
                         number = "73",
                         title = "RunTime - Terror",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138065.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138065.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-terror.png",
                         description = "O melhor do horror psicologico, sobrenatural e suspense horripilante.",
                         quality = "HD"
@@ -814,7 +814,7 @@ object ChannelRepository {
                         number = "74",
                         title = "RunTime - Acao",
                         category = "Filmes & Séries",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/135445.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/135445.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-acao.png",
                         description = "Tiros, explosoes e perseguicoes para os apaixonados por adrenalina.",
                         quality = "HD"
@@ -968,7 +968,7 @@ object ChannelRepository {
                         number = "88",
                         title = "Multishow HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131193.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131193.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Multishow_logo_2017.svg/320px-Multishow_logo_2017.svg.png",
                         description = "Shows ao vivo, humor com Vai Que Cola, festivais Rock in Rio e Lollapalooza.",
                         quality = "FHD"
@@ -978,7 +978,7 @@ object ChannelRepository {
                         number = "89",
                         title = "GNT HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72102.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72102.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/GNT_logo_2020.svg/320px-GNT_logo_2020.svg.png",
                         description = "Gastronomia, moda, decoracao, Papo de Segunda e Saia Justa.",
                         quality = "FHD"
@@ -1018,7 +1018,7 @@ object ChannelRepository {
                         number = "93",
                         title = "Modo Viagem HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72162.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72162.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Modo_Viagem_logo.png/320px-Modo_Viagem_logo.png",
                         description = "Turismo pelo mundo, hoteis deslumbrantes e experiencias de viagem inesqueciveis.",
                         quality = "FHD"
@@ -1078,7 +1078,7 @@ object ChannelRepository {
                         number = "99",
                         title = "Rede TV",
                         category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/rede-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72297.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-tv.png",
                         description = "Entretenimento, talk shows, fofocas e debates ao vivo.",
                         quality = "HD"
@@ -1105,7 +1105,7 @@ object ChannelRepository {
                         number = "101",
                         title = "SporTV 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131188.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131188.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "Transmissao oficial em resolucao 4K Ultra HD (3840x2160) com maximo detalhe esportivo.",
                         quality = "4K"
@@ -1115,7 +1115,7 @@ object ChannelRepository {
                         number = "102",
                         title = "Premiere 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/103481.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/103481.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "O melhor do futebol brasileiro com qualidade de cinema 4K UHD e som imersivo.",
                         quality = "4K"
@@ -1125,7 +1125,7 @@ object ChannelRepository {
                         number = "103",
                         title = "Telecine Premium 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/90237.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/90237.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Grandes lancamentos do cinema mundial na resolucao maxima 4K Ultra HD.",
                         quality = "4K"
@@ -1135,7 +1135,7 @@ object ChannelRepository {
                         number = "104",
                         title = "HBO 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/90247.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/90247.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series premiadas e filmes HBO gravados em resolucao nativa 4K UHD.",
                         quality = "4K"
@@ -1182,7 +1182,7 @@ object ChannelRepository {
                         number = "108",
                         title = "Globo SP H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72598.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Transmissao em codec H.265 de alta eficiencia: imagem ultra nitida consumindo metade da banda.",
                         quality = "H265"
@@ -1192,7 +1192,7 @@ object ChannelRepository {
                         number = "109",
                         title = "SporTV H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72330.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72330.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "O canal lider de esportes otimizado em compressao H.265 sem travamentos.",
                         quality = "H265"
@@ -1202,7 +1202,7 @@ object ChannelRepository {
                         number = "110",
                         title = "Telecine H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72363.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72363.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Filmes em alta taxa de bits codificados em H.265 para TV Boxes modernas.",
                         quality = "H265"
@@ -1212,7 +1212,7 @@ object ChannelRepository {
                         number = "111",
                         title = "HBO H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72119.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72119.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series e sucessos de Hollywood em transmissao eficiente H.265.",
                         quality = "H265"
@@ -1222,7 +1222,7 @@ object ChannelRepository {
                         number = "112",
                         title = "ESPN H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71912.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71912.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-hd.png",
                         description = "Esportes internacionais com codificacao avancada H.265 a 60fps.",
                         quality = "H265"
@@ -1232,7 +1232,7 @@ object ChannelRepository {
                         number = "113",
                         title = "Premiere H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72238.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72238.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "Futebol brasileiro com transmissao rapida e estavel pelo codec H.265.",
                         quality = "H265"
@@ -1269,7 +1269,7 @@ object ChannelRepository {
                         number = "116",
                         title = "Globo SP - Globo Sao Paulo",
                         category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72598.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo: Jornalismo, novelas, futebol e programacao completa em alta definicao.",
                         quality = "HD"
@@ -1279,7 +1279,7 @@ object ChannelRepository {
                         number = "117",
                         title = "Globo RJ - TV Globo Rio",
                         category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131163.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rj-tv-globo-rio.png",
                         description = "TV Globo Rio de Janeiro: Cobertura jornalistica carioca, novelas e transmissao ao vivo.",
                         quality = "HD"
@@ -1289,7 +1289,7 @@ object ChannelRepository {
                         number = "118",
                         title = "Globo MG - TV Globo Minas",
                         category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-minas-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131159.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-mg-tv-globo-minas.png",
                         description = "Sinal oficial da TV Globo Minas com informacao e o melhor do entretenimento.",
                         quality = "HD"
@@ -1299,7 +1299,7 @@ object ChannelRepository {
                         number = "119",
                         title = "Globo BA - TV Bahia",
                         category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-bahia-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/306782.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-ba-tv-bahia.jpg",
                         description = "A TV Bahia e a emissora afiliada a Rede Globo com a maior cobertura do estado baiano.",
                         quality = "HD"
@@ -1309,7 +1309,7 @@ object ChannelRepository {
                         number = "120",
                         title = "Globo DF - TV Globo Brasilia",
                         category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-brasilia-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131164.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-df-tv-globo-brasilia.png",
                         description = "Cobertura politica da capital federal, jornalismo nacional e entretenimento.",
                         quality = "HD"
@@ -1319,7 +1319,7 @@ object ChannelRepository {
                         number = "121",
                         title = "Globo RBS - Globo Porto Alegre",
                         category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rbs-porto-alegre/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72017.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rbs-globo-porto-alegre.png",
                         description = "RBS TV Porto Alegre levando o sinal da Globo e tradicoes gauchas para o Rio Grande do Sul.",
                         quality = "HD"
@@ -1329,7 +1329,7 @@ object ChannelRepository {
                         number = "122",
                         title = "Globo PR - RPC TV Curitiba",
                         category = "Globo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rpc-curitiba-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131174.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-pr-rpc-tv-curitiba.png",
                         description = "RPC TV Curitiba: jornalismo lider de audiencia no estado do Parana.",
                         quality = "HD"
@@ -1346,7 +1346,7 @@ object ChannelRepository {
                         number = "123",
                         title = "SBT SP - SBT Sao Paulo",
                         category = "SBT",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/sbt-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/77963.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sbt-sp-sbt-sao-paulo.png",
                         description = "SBT Sao Paulo: A TV que tem torcida com Silvio Santos, jornalismo popular e novelas infantis.",
                         quality = "HD"
@@ -1356,7 +1356,7 @@ object ChannelRepository {
                         number = "124",
                         title = "SBT RJ - SBT Rio",
                         category = "SBT",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/sbt-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/108681.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/sbt-rj-sbt-rio.png",
                         description = "SBT Rio: Isabele Benito trazendo as principais noticias e prestacao de servico no RJ.",
                         quality = "HD"
@@ -1373,7 +1373,7 @@ object ChannelRepository {
                         number = "125",
                         title = "RedeRecord SP - RecordTV SP",
                         category = "Record",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/77654.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rederecord-sp-recordtv-sp.png",
                         description = "RecordTV Sao Paulo: Cidade Alerta, Jornal da Record, novelas biblicas e reality shows.",
                         quality = "HD"
@@ -1383,7 +1383,7 @@ object ChannelRepository {
                         number = "126",
                         title = "RedeRecord RJ - RecordTV Rio",
                         category = "Record",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72594.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rederecord-rj-recordtv-rio.png",
                         description = "RecordTV Rio com jornalismo policial de ponta e transmissao ao vivo.",
                         quality = "HD"
@@ -1400,7 +1400,7 @@ object ChannelRepository {
                         number = "127",
                         title = "Band SP - Band SP",
                         category = "Band",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/79311.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-sp-band-sp.png",
                         description = "Band Sao Paulo: O canal do esporte, Formula 1, Jogo Aberto, Os Donos da Bola e MasterChef.",
                         quality = "HD"
@@ -1410,7 +1410,7 @@ object ChannelRepository {
                         number = "128",
                         title = "Band RJ - Band Rio",
                         category = "Band",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72597.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-rj-band-rio.png",
                         description = "Band Rio trazendo debates do futebol carioca e noticias da regiao metropolitana.",
                         quality = "HD"
@@ -1427,7 +1427,7 @@ object ChannelRepository {
                         number = "129",
                         title = "CNN Brasil",
                         category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/cnn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71837.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cnn-brasil.png",
                         description = "A maior marca de noticias do mundo no Brasil com analise politica e economica 24h.",
                         quality = "HD"
@@ -1437,7 +1437,7 @@ object ChannelRepository {
                         number = "130",
                         title = "Jovem Pan News",
                         category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/jovem-pam-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/134023.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/jovem-pan-news.png",
                         description = "Opiniao forte, debates acalorados, Pingos nos Is e transmissao em tempo real.",
                         quality = "HD"
@@ -1447,7 +1447,7 @@ object ChannelRepository {
                         number = "131",
                         title = "Band News",
                         category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71789.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-news.png",
                         description = "Em 20 minutos tudo pode mudar: informacao rapida e atualizada no Brasil e no mundo.",
                         quality = "HD"
@@ -1457,7 +1457,7 @@ object ChannelRepository {
                         number = "132",
                         title = "Record News",
                         category = "Notícias",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/record-news-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72271.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/record-news.png",
                         description = "O principal canal de jornalismo da televisao aberta no Brasil.",
                         quality = "HD"
@@ -1484,7 +1484,7 @@ object ChannelRepository {
                         number = "134",
                         title = "Band HD - Formula 1 GP Ao Vivo",
                         category = "Fórmula 1 & Velocidade",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/79311.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/320px-F1.svg.png",
                         description = "A casa oficial da Formula 1 no Brasil: narracao consagrada e reportagens direto do paddock.",
                         quality = "FHD"
@@ -1521,7 +1521,7 @@ object ChannelRepository {
                         number = "137",
                         title = "Cartoon Network HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71828.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71828.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/320px-Cartoon_Network_2010_logo.svg.png",
                         description = "O canal dos desenhos animados: Ben 10, Teen Titans Go, Hora de Aventura e Incrivel Mundo de Gumball.",
                         quality = "FHD"
@@ -1531,7 +1531,7 @@ object ChannelRepository {
                         number = "138",
                         title = "Rakuten TV Kids",
                         category = "Infantil & Kids",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138011.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138011.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rakuten-tv-kids.png",
                         description = "Animacoes divertidas e educativas com programacao segura para criancas.",
                         quality = "HD"
@@ -1585,7 +1585,7 @@ object ChannelRepository {
                         number = "142",
                         title = "OnlyFans & Privacy Stars 24H",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/149548.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/149548.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OnlyFans_logo.svg/320px-OnlyFans_logo.svg.png",
                         description = "Transmissao continua com as principais criadoras e ensaios do OnlyFans e Privacy (+18).",
                         quality = "FHD"
@@ -1595,7 +1595,7 @@ object ChannelRepository {
                         number = "143",
                         title = "OnlyFans VIP & Amador 24H",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/149544.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/149544.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OnlyFans_logo.svg/320px-OnlyFans_logo.svg.png",
                         description = "Conteudo exclusivo de criadores independentes e bastidores sem censura (+18).",
                         quality = "FHD"
@@ -1605,7 +1605,7 @@ object ChannelRepository {
                         number = "144",
                         title = "Playboy TV FHD",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72221.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72221.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Playboy_Enterprises_logo.svg/320px-Playboy_Enterprises_logo.svg.png",
                         description = "O canal pioneiro do entretenimento erotico refinado mundial (+18).",
                         quality = "FHD"
@@ -1615,7 +1615,7 @@ object ChannelRepository {
                         number = "145",
                         title = "Sexy Hot FHD",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/180153.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/180153.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sexy_Hot_logo_2018.svg/320px-Sexy_Hot_logo_2018.svg.png",
                         description = "As maiores producoes nacionais e estrelas consagradas do cinema adulto (+18).",
                         quality = "FHD"
@@ -1625,7 +1625,7 @@ object ChannelRepository {
                         number = "146",
                         title = "A Casa das Brasileirinhas 24H",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140487.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140487.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sexy_Hot_logo_2018.svg/320px-Sexy_Hot_logo_2018.svg.png",
                         description = "O reality show mais quente do Brasil com exibicao continua 24 horas por dia (+18).",
                         quality = "FHD"
@@ -1635,7 +1635,7 @@ object ChannelRepository {
                         number = "147",
                         title = "Venus HD",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140536.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140536.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Venus_logo.svg/320px-Venus_logo.svg.png",
                         description = "Sensualidade e producoes eroticas latinas e internacionais (+18).",
                         quality = "FHD"
@@ -1645,7 +1645,7 @@ object ChannelRepository {
                         number = "148",
                         title = "Sex Privé HD",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140537.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/140537.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Sex_Prive_logo_2018.png/320px-Sex_Prive_logo_2018.png",
                         description = "Conteudo explicito e producoes exclusivas com as maiores estrelas do Brasil (+18).",
                         quality = "FHD"
@@ -1655,7 +1655,7 @@ object ChannelRepository {
                         number = "149",
                         title = "Brazzers TV HD",
                         category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/166035.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/166035.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Brazzers_logo.svg/320px-Brazzers_logo.svg.png",
                         description = "A produtora mais famosa do mundo com as atrizes mais requisitadas (+18).",
                         quality = "FHD"
@@ -1679,7 +1679,7 @@ object ChannelRepository {
                 number = "15",
                 title = "[15:00] Ah-Ali x Al-Khaleej",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317686.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317686.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Partida ao vivo de hoje: [15:00] Ah-Ali x Al-Khaleej",
                 quality = "FHD"
@@ -1689,7 +1689,7 @@ object ChannelRepository {
                 number = "16",
                 title = "[21:30] Flamengo x Estudiantes",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317687.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317687.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Partida ao vivo de hoje: [21:30] Flamengo x Estudiantes",
                 quality = "FHD"
@@ -1699,7 +1699,7 @@ object ChannelRepository {
                 number = "17",
                 title = "Jogos Ao Vivo (Canal 03)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317688.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317688.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1709,7 +1709,7 @@ object ChannelRepository {
                 number = "18",
                 title = "Jogos Ao Vivo (Canal 04)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317689.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317689.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1719,7 +1719,7 @@ object ChannelRepository {
                 number = "19",
                 title = "Jogos Ao Vivo (Canal 05)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317690.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317690.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1729,7 +1729,7 @@ object ChannelRepository {
                 number = "20",
                 title = "Jogos Ao Vivo (Canal 06)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317691.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317691.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1739,7 +1739,7 @@ object ChannelRepository {
                 number = "21",
                 title = "Jogos Ao Vivo (Canal 07)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317692.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317692.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1749,7 +1749,7 @@ object ChannelRepository {
                 number = "22",
                 title = "Jogos Ao Vivo (Canal 08)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317693.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317693.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1759,7 +1759,7 @@ object ChannelRepository {
                 number = "23",
                 title = "Jogos Ao Vivo (Canal 09)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317694.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317694.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1769,7 +1769,7 @@ object ChannelRepository {
                 number = "24",
                 title = "Jogos Ao Vivo (Canal 10)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317695.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317695.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1779,7 +1779,7 @@ object ChannelRepository {
                 number = "25",
                 title = "Jogos Ao Vivo (Canal 11)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317696.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/317696.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1789,7 +1789,7 @@ object ChannelRepository {
                 number = "26",
                 title = "Jogos Ao Vivo (Canal 12)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318080.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318080.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1799,7 +1799,7 @@ object ChannelRepository {
                 number = "27",
                 title = "Jogos Ao Vivo (Canal 13)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318081.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318081.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1809,7 +1809,7 @@ object ChannelRepository {
                 number = "28",
                 title = "Jogos Ao Vivo (Canal 14)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318082.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318082.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1819,7 +1819,7 @@ object ChannelRepository {
                 number = "29",
                 title = "Jogos Ao Vivo (Canal 15)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318083.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318083.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1829,7 +1829,7 @@ object ChannelRepository {
                 number = "30",
                 title = "Jogos Ao Vivo (Canal 16)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318084.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318084.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1839,7 +1839,7 @@ object ChannelRepository {
                 number = "31",
                 title = "Jogos Ao Vivo (Canal 17)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318085.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318085.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1849,7 +1849,7 @@ object ChannelRepository {
                 number = "32",
                 title = "Jogos Ao Vivo (Canal 18)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318086.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318086.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1859,7 +1859,7 @@ object ChannelRepository {
                 number = "33",
                 title = "Jogos Ao Vivo (Canal 19)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318606.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318606.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1869,7 +1869,7 @@ object ChannelRepository {
                 number = "34",
                 title = "Jogos Ao Vivo (Canal 20)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318607.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318607.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1879,7 +1879,7 @@ object ChannelRepository {
                 number = "35",
                 title = "Jogos Ao Vivo (Canal 21)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318608.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318608.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1889,7 +1889,7 @@ object ChannelRepository {
                 number = "36",
                 title = "Jogos Ao Vivo (Canal 22)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318609.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318609.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1899,7 +1899,7 @@ object ChannelRepository {
                 number = "37",
                 title = "Jogos Ao Vivo (Canal 23)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318610.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318610.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1909,7 +1909,7 @@ object ChannelRepository {
                 number = "38",
                 title = "Jogos Ao Vivo (Canal 24)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318611.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318611.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1919,7 +1919,7 @@ object ChannelRepository {
                 number = "39",
                 title = "Jogos Ao Vivo (Canal 25)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318612.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318612.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1929,7 +1929,7 @@ object ChannelRepository {
                 number = "40",
                 title = "Jogos Ao Vivo (Canal 26)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318613.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/318613.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1939,7 +1939,7 @@ object ChannelRepository {
                 number = "41",
                 title = "Jogos Ao Vivo (Canal 27)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361372.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361372.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1949,7 +1949,7 @@ object ChannelRepository {
                 number = "42",
                 title = "Jogos Ao Vivo (Canal 28)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361373.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361373.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1959,7 +1959,7 @@ object ChannelRepository {
                 number = "43",
                 title = "Jogos Ao Vivo (Canal 29)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361374.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/361374.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1969,7 +1969,7 @@ object ChannelRepository {
                 number = "44",
                 title = "Jogos Ao Vivo (Canal 30)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362685.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362685.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1979,7 +1979,7 @@ object ChannelRepository {
                 number = "45",
                 title = "Jogos Ao Vivo (Canal 31)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362686.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362686.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1989,7 +1989,7 @@ object ChannelRepository {
                 number = "46",
                 title = "Jogos Ao Vivo (Canal 32)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362687.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362687.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1999,7 +1999,7 @@ object ChannelRepository {
                 number = "47",
                 title = "Jogos Ao Vivo (Canal 33)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362688.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362688.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2009,7 +2009,7 @@ object ChannelRepository {
                 number = "48",
                 title = "Jogos Ao Vivo (Canal 34)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362826.m3u8",
+                streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/362826.ts",
                 logoUrl = "http://vivlar.me/static/logos/canais/jogos.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2037,7 +2037,7 @@ object ChannelRepository {
                 }
 
                 if (sid.isNotEmpty()) {
-                    val streamUrl = "$SERVER_BASE/live/$USERNAME/$PASSWORD/$sid.m3u8"
+                    val streamUrl = "$SERVER_BASE/live/$USERNAME/$PASSWORD/$sid.ts"
                     val isRealMatch = rawName.isNotEmpty() && !rawName.contains("Breve", ignoreCase = true)
                     val displayName = if (isRealMatch) rawName else "Jogos Ao Vivo (Canal ${String.format("%02d", i + 1)})"
 

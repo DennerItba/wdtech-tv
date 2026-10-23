@@ -175,8 +175,12 @@ class MainActivity : AppCompatActivity() {
                                 channels = safeChannels
                             )
                             allCategories = listOf(masterCategory) + repoCategories
-                            if (!rvCategorySidebar.isComputingLayout) {
-                                categoryAdapter.updateCategories(allCategories)
+                            rvCategorySidebar.post {
+                                try {
+                                    if (!rvCategorySidebar.isComputingLayout) {
+                                        categoryAdapter.updateCategories(allCategories)
+                                    }
+                                } catch (_: Throwable) {}
                             }
 
                             if (selectedCategory?.id == "cat_jogos_dia") {
@@ -184,8 +188,14 @@ class MainActivity : AppCompatActivity() {
                                 if (curCat != null) {
                                     displayCategoryChannels(curCat)
                                 }
-                            } else if (selectedCategory?.id == "cat_all" && !rvChannelList.isComputingLayout) {
-                                channelAdapter.updateChannels(safeChannels)
+                            } else if (selectedCategory?.id == "cat_all") {
+                                rvChannelList.post {
+                                    try {
+                                        if (!rvChannelList.isComputingLayout) {
+                                            channelAdapter.updateChannels(safeChannels)
+                                        }
+                                    } catch (_: Throwable) {}
+                                }
                             }
                         }
                     }
@@ -276,13 +286,7 @@ class MainActivity : AppCompatActivity() {
             vh?.itemView?.requestFocus()
         }
 
-        // 3. Sincronização Dinâmica em Segundo Plano via UNITV_BASE_URL
-        lifecycleScope.launch {
-            val updated = UniTvCatalogManager.syncCatalog(this@MainActivity)
-            if (updated != null && updated.isNotEmpty()) {
-                applyUpdatedCatalog(updated)
-            }
-        }
+        // 3. Grade nativa estável e protegida (CanalRepository é a fonte da verdade oficial 24/7)
     }
 
     private fun applyUpdatedCatalog(newCategories: List<ChannelCategory>) {
@@ -616,8 +620,12 @@ class MainActivity : AppCompatActivity() {
                     txtEpgNext.text = "▶ A Seguir (${liveNext.startTime}): ${liveNext.title}"
                 }
                 val selPos = channelAdapter.getSelectedPosition()
-                if (selPos in 0 until channelAdapter.itemCount && !rvChannelList.isComputingLayout) {
-                    channelAdapter.notifyItemChanged(selPos)
+                rvChannelList.post {
+                    try {
+                        if (!rvChannelList.isComputingLayout && selPos in 0 until channelAdapter.itemCount) {
+                            channelAdapter.notifyItemChanged(selPos)
+                        }
+                    } catch (_: Throwable) {}
                 }
             }
         }
@@ -722,8 +730,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun openFullScreenPlayer(channel: Channel) {
         exoPlayer?.pause()
+        val currentCategoryChannels = selectedCategory?.channels ?: allCategories.firstOrNull()?.channels ?: listOf(channel)
+        val currentIndex = currentCategoryChannels.indexOfFirst { it.id == channel.id }.coerceAtLeast(0)
         val intent = Intent(this, PlayerActivity::class.java).apply {
             putExtra(PlayerActivity.EXTRA_CHANNEL, channel)
+            putExtra(PlayerActivity.EXTRA_CHANNEL_LIST, ArrayList(currentCategoryChannels))
+            putExtra(PlayerActivity.EXTRA_CHANNEL_INDEX, currentIndex)
         }
         startActivity(intent)
     }
@@ -750,9 +762,11 @@ class MainActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.dialog_exit)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialog.findViewById<Button>(R.id.btn_cancel_exit).setOnClickListener {
+        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel_exit)
+        btnCancel.setOnClickListener {
             dialog.dismiss()
         }
+        btnCancel.requestFocus()
 
         dialog.findViewById<Button>(R.id.btn_confirm_exit).setOnClickListener {
             dialog.dismiss()
