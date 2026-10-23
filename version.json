@@ -1,6 +1,6 @@
 {
-  "versionCode": 24,
-  "versionName": "2.4.8",
-  "releaseNotes": "• Correcao Definitiva do Congelamento de Imagem: auto-recuperacao continua no ExoPlayer contra encerramento inesperado de socket (STATE_ENDED)\n• Eliminacao de Conexoes Fantasmas em Segundo Plano: liberacao imediata de sockets no fechamento e na transicao de telas, respeitando o limite do servidor\n• Migracao dos canais Discovery e Globo SP para Multi-CDN HLS nativo com redundancia automatica de contingencia (Failover dinamico)\n• Ativacao de Fallback de Hardware Decoders no ExoPlayer para maxima estabilidade contra travamentos de SoCs em TV Boxes\n• Reajuste da Navegacao do Controle Remoto: eliminada a piscadeira/tela preta ao folhear canais e implementada moldura neon com foco nitido\n• Zapping Fluido em Tela Cheia: botoes Cima / Baixo e Channel +/- trocam de canal diretamente com banner de informacoes instantaneo",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.8/wdtechtv.apk"
+  "versionCode": 25,
+  "versionName": "2.4.9",
+  "releaseNotes": "• Solucao Definitiva para o Discovery Channel: migrado para a CDN oficial de alta performance da UniTV (HLS sem limite de conexoes)\n• Fim dos Avisos Invasivos na Tela: o app agora recupera o stream em segundo plano em 600ms sem bloquear o video nem abrir popups\n• Failover Dinamico Instantaneo na Tentativa 1: chaveamento imediato para a fonte de contingencia Vivlar HD se houver qualquer oscilacao\n• Todos os canais Documentarios (Discovery, Turbo, H&H, Kids, ID, World, Animal Planet, History) otimizados em HD de alta estabilidade\n• Maxima fluidez e protecao de decodificacao de hardware para todas as TV Boxes Android",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.9/wdtechtv.apk"
 }
