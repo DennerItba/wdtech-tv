@@ -1,6 +1,6 @@
 {
-  "versionCode": 25,
-  "versionName": "2.4.9",
-  "releaseNotes": "• Solucao Definitiva para o Discovery Channel: migrado para a CDN oficial de alta performance da UniTV (HLS sem limite de conexoes)\n• Fim dos Avisos Invasivos na Tela: o app agora recupera o stream em segundo plano em 600ms sem bloquear o video nem abrir popups\n• Failover Dinamico Instantaneo na Tentativa 1: chaveamento imediato para a fonte de contingencia Vivlar HD se houver qualquer oscilacao\n• Todos os canais Documentarios (Discovery, Turbo, H&H, Kids, ID, World, Animal Planet, History) otimizados em HD de alta estabilidade\n• Maxima fluidez e protecao de decodificacao de hardware para todas as TV Boxes Android",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.9/wdtechtv.apk"
+  "versionCode": 26,
+  "versionName": "2.5.0",
+  "releaseNotes": "Novo Menu Exclusivo Rede Discovery: todos os canais do universo Discovery reunidos em uma categoria propria (Discovery Channel HD, Kids HD, Home & Health HD, Turbo HD, ID HD, World HD, Science HD, Theater HD, Animal Planet HD, TLC HD e HGTV HD)\nExpansao da Categoria Infantil & Kids: inclusao de Cartoonito HD (oficial), Nickelodeon HD, Nicktoons HD, Tooncast HD, Gloob HD, Gloobinho HD e TV Ra-Tim-Bum HD\nCategoria Documentarios Otimizada: History Channel HD, History 2 (H2) HD, Nat Geo HD, Nat Geo Wild HD, Curta! HD e Arte 1 HD\nSistema de Failover Duplo Silencioso: comutacao instantanea de CDN em 600ms sem travar a tela nem exibir popups intrusivos\nMaxima fluidez e protecao de decodificacao de hardware para todas as TV Boxes Android",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.0/wdtechtv.apk"
 }
