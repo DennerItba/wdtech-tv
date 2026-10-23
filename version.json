@@ -1,6 +1,6 @@
 {
-  "versionCode": 26,
-  "versionName": "2.5.0",
-  "releaseNotes": "Novo Menu Exclusivo Rede Discovery: todos os canais do universo Discovery reunidos em uma categoria propria (Discovery Channel HD, Kids HD, Home & Health HD, Turbo HD, ID HD, World HD, Science HD, Theater HD, Animal Planet HD, TLC HD e HGTV HD)\nExpansao da Categoria Infantil & Kids: inclusao de Cartoonito HD (oficial), Nickelodeon HD, Nicktoons HD, Tooncast HD, Gloob HD, Gloobinho HD e TV Ra-Tim-Bum HD\nCategoria Documentarios Otimizada: History Channel HD, History 2 (H2) HD, Nat Geo HD, Nat Geo Wild HD, Curta! HD e Arte 1 HD\nSistema de Failover Duplo Silencioso: comutacao instantanea de CDN em 600ms sem travar a tela nem exibir popups intrusivos\nMaxima fluidez e protecao de decodificacao de hardware para todas as TV Boxes Android",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.0/wdtechtv.apk"
+  "versionCode": 27,
+  "versionName": "2.5.1",
+  "releaseNotes": "Correcao Definitiva do Canal Formula 1: eliminado sinal indevido da TV Universal e removidos canais redundantes\nMenu Formula 1 (F1) Exclusivo e Direto: apenas o canal oficial da Formula 1 HD, com transmissao de treinos, classificacao, sprint e GPs\nCDN Oficial de Alta Performance: sinal HLS ultrarrapido sem travas via CDN UniTV + contingencia silenciosa Vivlar FHD\nRenumeracao sequencial da grade e otimizacao total para TV Box",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.1/wdtechtv.apk"
 }
