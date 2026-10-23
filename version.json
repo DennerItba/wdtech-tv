@@ -1,6 +1,6 @@
 {
-  "versionCode": 21,
-  "versionName": "2.4.5",
-  "releaseNotes": "\u2022 Correcao definitiva do travamento a cada 1 minuto no Discovery Channel e familia Discovery\n\u2022 Transmissao direta MPEG-TS continua (video/mp2t) via TsExtractor no ExoPlayer, eliminando 403 de tokens HLS\n\u2022 Discovery Channel FHD, Kids, H&H, Turbo, ID, World, Science, Theater, Animal Planet e History 100% fluidos 24/7\n\u2022 Normalizacao transparente de URLs de stream e fallback inteligente FHD -> HD\n\u2022 Otimizacao de buffer e estabilidade continua para TV Box e Android TV",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.5/wdtechtv.apk"
+  "versionCode": 22,
+  "versionName": "2.4.6",
+  "releaseNotes": "• Revisao Geral de Estabilidade e Desempenho do Aplicativo de ponta a ponta (v2.4.6)\n• Correcao definitiva de fechamento involuntario: protecao em chamadas de layout e corrotinas do RecyclerView\n• Todos os canais abertos e noticias (Globo, SBT, Record, Band, RedeTV, CNN, JP News) migrados para Vivlar FHD direto (.ts)\n• Novo recurso de Troca de Canais em Tela Cheia (Zapping direto via D-Pad Cima / Baixo e Channel Up / Down)\n• Novo seletor de Formato de Tela no Player (Original 16:9, Zoom sem bordas e Esticar)\n• Sincronizacao e decodificacao do Guia EPG 100% precisa para streams MPEG-TS (.ts)\n• Otimizacao de foco e navegacao fluida pelo controle remoto da TV Box",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.6/wdtechtv.apk"
 }
