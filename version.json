@@ -1,6 +1,6 @@
 {
-  "versionCode": 22,
-  "versionName": "2.4.6",
-  "releaseNotes": "• Revisao Geral de Estabilidade e Desempenho do Aplicativo de ponta a ponta (v2.4.6)\n• Correcao definitiva de fechamento involuntario: protecao em chamadas de layout e corrotinas do RecyclerView\n• Todos os canais abertos e noticias (Globo, SBT, Record, Band, RedeTV, CNN, JP News) migrados para Vivlar FHD direto (.ts)\n• Novo recurso de Troca de Canais em Tela Cheia (Zapping direto via D-Pad Cima / Baixo e Channel Up / Down)\n• Novo seletor de Formato de Tela no Player (Original 16:9, Zoom sem bordas e Esticar)\n• Sincronizacao e decodificacao do Guia EPG 100% precisa para streams MPEG-TS (.ts)\n• Otimizacao de foco e navegacao fluida pelo controle remoto da TV Box",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.6/wdtechtv.apk"
+  "versionCode": 23,
+  "versionName": "2.4.7",
+  "releaseNotes": "• Correcao definitiva da Globo SP: stream e Guia EPG 100% alinhados com o sinal oficial da TV Globo Sao Paulo FHD (removido sinal do SBT)\n• Reajuste completo da navegacao do controle remoto: foco ultra solido e nitido em cada canal e botao, sem sumir ou escapar\n• Fim do efeito de piscar ao navegar: atualizacao direta sem recriar elementos nem causar flickering na tela\n• Navegacao intuitiva no Player em Tela Cheia: foco claro entre Voltar, Formato de Tela e Controles via D-Pad\n• D-Pad Direita navega para o painel do Player e D-Pad Esquerda retorna suavemente para a lista e categorias\n• Borda de foco com brilho ciano neon de alto contraste para excelente visibilidade em qualquer TV Box",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.4.7/wdtechtv.apk"
 }
