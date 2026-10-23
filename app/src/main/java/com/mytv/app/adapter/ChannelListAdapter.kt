@@ -48,9 +48,9 @@ class ChannelListAdapter(
 
         val epg = channel.currentProgram
         if (epg != null) {
-            holder.txtEpg.text = "• ${epg.title} (${epg.startTime})"
+            holder.txtEpg.text = "▶ ${epg.title} (${epg.startTime})"
         } else {
-            holder.txtEpg.text = "• Transmissão Ao Vivo (${channel.quality})"
+            holder.txtEpg.text = "▶ Transmissão Ao Vivo (${channel.quality})"
         }
 
         if (!channel.logoUrl.isNullOrEmpty()) {
@@ -70,30 +70,43 @@ class ChannelListAdapter(
         if (holder.itemView.isFocused) {
             holder.txtTitle.setTextColor(Color.parseColor("#00E5FF"))
             holder.txtNumber.setTextColor(Color.WHITE)
+            holder.itemView.scaleX = 1.02f
+            holder.itemView.scaleY = 1.02f
         } else {
-            holder.txtTitle.setTextColor(Color.parseColor("#E6EDF8"))
-            holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))
+            holder.itemView.scaleX = 1.0f
+            holder.itemView.scaleY = 1.0f
+            if (isCurrentSelected) {
+                holder.txtTitle.setTextColor(Color.WHITE)
+                holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))
+            } else {
+                holder.txtTitle.setTextColor(Color.parseColor("#E6EDF8"))
+                holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))
+            }
         }
 
         // Foco e seleção ultra nítida e segura com o controle remoto
-        holder.itemView.setOnFocusChangeListener { _, hasFocus ->
+        holder.itemView.setOnFocusChangeListener { view, hasFocus ->
             val pos = holder.bindingAdapterPosition
             if (hasFocus) {
                 holder.txtTitle.setTextColor(Color.parseColor("#00E5FF"))
                 holder.txtNumber.setTextColor(Color.WHITE)
                 holder.itemView.isSelected = true
+                view.scaleX = 1.02f
+                view.scaleY = 1.02f
                 if (pos != RecyclerView.NO_POSITION && pos < channels.size) {
                     selectedIndex = pos
                     onChannelSelected(channels[pos])
                 }
             } else {
+                view.scaleX = 1.0f
+                view.scaleY = 1.0f
                 holder.itemView.isSelected = false
                 holder.txtTitle.setTextColor(Color.parseColor("#E6EDF8"))
                 holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))
             }
         }
 
-        // Navegação D-Pad precisa: impede escapar para o 'Sair', volta suave para categorias
+        // Navegação D-Pad precisa: transições fluidas e estáveis
         holder.itemView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 val pos = holder.bindingAdapterPosition
@@ -104,7 +117,7 @@ class ChannelListAdapter(
                             onNavigateToCategories()
                             return@setOnKeyListener true
                         }
-                        // Seta para Direita: vai para o Player / Tela Cheia
+                        // Seta para Direita: move foco para a área do Player / Tela Cheia
                         KeyEvent.KEYCODE_DPAD_RIGHT -> {
                             onNavigateToPlayer()
                             return@setOnKeyListener true

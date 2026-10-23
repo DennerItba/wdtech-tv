@@ -249,6 +249,7 @@ class MainActivity : AppCompatActivity() {
         // 2. Configura a Lista de Canais do Centro
         rvChannelList.setHasFixedSize(true)
         rvChannelList.setItemViewCacheSize(20)
+        rvChannelList.itemAnimator = null // Desativa animação de cross-fade que pisca a tela
         rvChannelList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         channelAdapter = ChannelListAdapter(
             channels = safeChannels,
@@ -262,7 +263,7 @@ class MainActivity : AppCompatActivity() {
                 focusCurrentCategory()
             },
             onNavigateToPlayer = {
-                currentChannel?.let { openFullScreenPlayer(it) }
+                btnFullscreen.requestFocus()
             },
             onNavigateUpToTabs = {
                 focusActiveTab()
@@ -408,6 +409,23 @@ class MainActivity : AppCompatActivity() {
                             ?: rvChannelList.layoutManager?.findViewByPosition(0)?.requestFocus()
                     }, 50)
                 }
+            }
+        }
+    }
+
+    private fun focusCurrentChannel() {
+        val pos = channelAdapter.getSelectedPosition().coerceAtLeast(0)
+        rvChannelList.scrollToPosition(pos)
+        rvChannelList.post {
+            val vh = rvChannelList.findViewHolderForAdapterPosition(pos)
+            if (vh != null) {
+                vh.itemView.requestFocus()
+            } else {
+                rvChannelList.postDelayed({
+                    val retryVh = rvChannelList.findViewHolderForAdapterPosition(pos)
+                    retryVh?.itemView?.requestFocus()
+                        ?: rvChannelList.layoutManager?.findViewByPosition(pos)?.requestFocus()
+                }, 50)
             }
         }
     }
@@ -622,9 +640,8 @@ class MainActivity : AppCompatActivity() {
                 val selPos = channelAdapter.getSelectedPosition()
                 rvChannelList.post {
                     try {
-                        if (!rvChannelList.isComputingLayout && selPos in 0 until channelAdapter.itemCount) {
-                            channelAdapter.notifyItemChanged(selPos)
-                        }
+                        val vh = rvChannelList.findViewHolderForAdapterPosition(selPos) as? ChannelListAdapter.ChannelViewHolder
+                        vh?.txtEpg?.text = "▶ ${liveNow.title} (${liveNow.startTime})"
                     } catch (_: Throwable) {}
                 }
             }
@@ -665,8 +682,22 @@ class MainActivity : AppCompatActivity() {
         btnFullscreen.setOnClickListener {
             currentChannel?.let { openFullScreenPlayer(it) }
         }
+        btnFullscreen.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                focusCurrentChannel()
+                return@setOnKeyListener true
+            }
+            false
+        }
         findViewById<View>(R.id.player_preview_container).setOnClickListener {
             currentChannel?.let { openFullScreenPlayer(it) }
+        }
+        findViewById<View>(R.id.player_preview_container).setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                focusCurrentChannel()
+                return@setOnKeyListener true
+            }
+            false
         }
     }
 
@@ -747,7 +778,9 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (rvChannelList.hasFocus()) {
+                if (btnFullscreen.hasFocus() || findViewById<View>(R.id.player_preview_container).hasFocus()) {
+                    focusCurrentChannel()
+                } else if (rvChannelList.hasFocus()) {
                     focusCurrentCategory()
                 } else {
                     showExitDialog()
@@ -825,6 +858,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupVodList() {
         rvVodList.setHasFixedSize(true)
         rvVodList.setItemViewCacheSize(20)
+        rvVodList.itemAnimator = null
         rvVodList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         vodAdapter = VodListAdapter(
             items = emptyList(),

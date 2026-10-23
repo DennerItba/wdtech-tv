@@ -159,7 +159,7 @@ object ChannelRepository {
                         number = "14",
                         title = "Reality BBB 24H HD",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72598.ts",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/306831.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Big_Brother_Brasil_logo.svg/320px-Big_Brother_Brasil_logo.svg.png",
                         description = "A casa mais vigiada do Brasil ao vivo 24 horas por dia com cobertura completa.",
                         quality = "FHD"
@@ -1182,7 +1182,7 @@ object ChannelRepository {
                         number = "108",
                         title = "Globo SP H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72598.ts",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131215.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Transmissao em codec H.265 de alta eficiencia: imagem ultra nitida consumindo metade da banda.",
                         quality = "H265"
@@ -1269,7 +1269,7 @@ object ChannelRepository {
                         number = "116",
                         title = "Globo SP - Globo Sao Paulo",
                         category = "Globo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72598.ts",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72040.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo: Jornalismo, novelas, futebol e programacao completa em alta definicao.",
                         quality = "HD"
@@ -1279,7 +1279,7 @@ object ChannelRepository {
                         number = "117",
                         title = "Globo RJ - TV Globo Rio",
                         category = "Globo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131163.ts",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72025.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-rj-tv-globo-rio.png",
                         description = "TV Globo Rio de Janeiro: Cobertura jornalistica carioca, novelas e transmissao ao vivo.",
                         quality = "HD"
@@ -1289,7 +1289,7 @@ object ChannelRepository {
                         number = "118",
                         title = "Globo MG - TV Globo Minas",
                         category = "Globo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131159.ts",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131200.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-mg-tv-globo-minas.png",
                         description = "Sinal oficial da TV Globo Minas com informacao e o melhor do entretenimento.",
                         quality = "HD"
@@ -1309,7 +1309,7 @@ object ChannelRepository {
                         number = "120",
                         title = "Globo DF - TV Globo Brasilia",
                         category = "Globo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131164.ts",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131151.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-df-tv-globo-brasilia.png",
                         description = "Cobertura politica da capital federal, jornalismo nacional e entretenimento.",
                         quality = "HD"
@@ -1329,7 +1329,7 @@ object ChannelRepository {
                         number = "122",
                         title = "Globo PR - RPC TV Curitiba",
                         category = "Globo",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131174.ts",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/131199.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-pr-rpc-tv-curitiba.png",
                         description = "RPC TV Curitiba: jornalismo lider de audiencia no estado do Parana.",
                         quality = "HD"

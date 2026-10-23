@@ -613,31 +613,53 @@ class PlayerActivity : AppCompatActivity() {
     private fun showOverlayTemporarily() {
         overlayView.alpha = 1f
         overlayView.visibility = View.VISIBLE
-        btnBack.requestFocus()
+        if (!btnBack.isFocused && !btnAspectRatio.isFocused &&
+            !btnRewind.isFocused && !btnForward.isFocused &&
+            !btnRestart.isFocused && !btnLive.isFocused && !btnHistory.isFocused) {
+            btnBack.requestFocus()
+        }
 
         hideHandler.removeCallbacks(hideRunnable)
-        hideHandler.postDelayed(hideRunnable, 5000)
+        hideHandler.postDelayed(hideRunnable, 6000)
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN) {
+            if (overlayView.visibility == View.VISIBLE) {
+                hideHandler.removeCallbacks(hideRunnable)
+                hideHandler.postDelayed(hideRunnable, 6000)
+            }
             when (event.keyCode) {
                 KeyEvent.KEYCODE_BACK -> {
                     finish()
                     return true
                 }
-                KeyEvent.KEYCODE_DPAD_UP,
                 KeyEvent.KEYCODE_CHANNEL_UP -> {
                     if (channelList.isNotEmpty()) {
                         zapChannel(-1)
                         return true
                     }
                 }
-                KeyEvent.KEYCODE_DPAD_DOWN,
                 KeyEvent.KEYCODE_CHANNEL_DOWN -> {
                     if (channelList.isNotEmpty()) {
                         zapChannel(1)
                         return true
+                    }
+                }
+                KeyEvent.KEYCODE_DPAD_UP -> {
+                    if (overlayView.visibility != View.VISIBLE) {
+                        if (channelList.isNotEmpty()) {
+                            zapChannel(-1)
+                            return true
+                        }
+                    }
+                }
+                KeyEvent.KEYCODE_DPAD_DOWN -> {
+                    if (overlayView.visibility != View.VISIBLE) {
+                        if (channelList.isNotEmpty()) {
+                            zapChannel(1)
+                            return true
+                        }
                     }
                 }
                 KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE,
