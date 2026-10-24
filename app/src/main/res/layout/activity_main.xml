@@ -503,10 +503,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
                             android:ellipsize="end"
-                            android:maxLines="1"
+                            android:maxLines="3"
                             android:text="Sinopse do programa atual..."
-                            android:textColor="#8EA2C6"
-                            android:textSize="10sp" />
+                            android:textColor="#A0B8D8"
+                            android:textSize="11sp"
+                            android:lineSpacingExtra="2dp" />
 
                         <!-- PrÃ³ximo Programa (A Seguir) -->
                         <TextView

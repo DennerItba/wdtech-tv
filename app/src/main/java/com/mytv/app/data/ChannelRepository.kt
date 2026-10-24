@@ -674,7 +674,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Discovery ID (Investigacao) HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8932.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Investigation_Discovery_logo_%282020%29.svg/320px-Investigation_Discovery_logo_%282020%29.svg.png",
                         description = "Crimes reais, investigacoes policiais forenses e os misterios mais intrigantes.",
                         quality = "FHD"
@@ -684,7 +684,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Discovery World HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8758.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Discovery_World_logo.svg/320px-Discovery_World_logo.svg.png",
                         description = "Documentarios deslumbrantes sobre culturas globais, paisagens e a historia da Terra.",
                         quality = "FHD"
@@ -694,7 +694,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Discovery Science HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8745.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Discovery_Science_logo.svg/320px-Discovery_Science_logo.svg.png",
                         description = "Tecnologia de ponta, astrofisica, experimentos ousados e inovacoes do futuro.",
                         quality = "HD"
@@ -704,7 +704,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Discovery Theater HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8748.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Discovery_Theater_logo.png/320px-Discovery_Theater_logo.png",
                         description = "Imagens cinematograficas em alta definicao da natureza e animais selvagens.",
                         quality = "HD"
@@ -714,7 +714,7 @@ object ChannelRepository {
                         number = "64",
                         title = "Animal Planet HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304491.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Animal_Planet_logo_2018.svg/320px-Animal_Planet_logo_2018.svg.png",
                         description = "O reino animal de perto: resgate de fauna, predadores selvagens e vida dos pets.",
                         quality = "FHD"
@@ -724,8 +724,8 @@ object ChannelRepository {
                         number = "65",
                         title = "TLC HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngtlc.png",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/tlc-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tlc-hd.png",
                         description = "Historias reais e inspiradoras: Muquiranas, Quilos Mortais, 90 Dias para Casar e Cake Boss.",
                         quality = "FHD"
                     ),
@@ -734,7 +734,7 @@ object ChannelRepository {
                         number = "66",
                         title = "HGTV HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304506.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/hgtv.png",
                         description = "O canal mundial de reformas de casas, decoracao de interiores e compra e venda de imoveis.",
                         quality = "FHD"
@@ -751,7 +751,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Canal Sony HD (Sony Channel)",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9098.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sony_Channel_logo_2019.svg/320px-Sony_Channel_logo_2019.svg.png",
                         description = "O lendario Canal Sony: Grey's Anatomy, The Good Doctor e as series medicas e policiais mais amadas.",
                         quality = "FHD"
@@ -771,7 +771,7 @@ object ChannelRepository {
                         number = "58",
                         title = "Warner Channel HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9219.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Warner_Channel_2019_logo.svg/320px-Warner_Channel_2019_logo.svg.png",
                         description = "Universo DC, The Big Bang Theory, Friends e os maiores sucessos da Warner Bros.",
                         quality = "FHD"
@@ -791,7 +791,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Universal TV HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/21682.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Universal_TV_logo_2018.svg/320px-Universal_TV_logo_2018.svg.png",
                         description = "Franquia Chicago (Fire, P.D., Med), Law & Order e grandes investigacoes.",
                         quality = "FHD"
@@ -801,7 +801,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Studio Universal HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9115.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Studio_Universal_logo.svg/320px-Studio_Universal_logo.svg.png",
                         description = "Cinema hollywoodiano e classicos dos estúdios Universal Pictures.",
                         quality = "FHD"
@@ -811,7 +811,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Paramount Network HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/240737.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Paramount_Network_2018.svg/320px-Paramount_Network_2018.svg.png",
                         description = "Yellowstone, Tulsa King e superproducoes consagradas da Paramount Pictures.",
                         quality = "FHD"
@@ -831,7 +831,7 @@ object ChannelRepository {
                         number = "64",
                         title = "TNT HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/TNT_Logo_2016.svg/320px-TNT_Logo_2016.svg.png",
                         description = "Grandes premiacoes como o Oscar, superproducoes cinematograficas e esportes.",
                         quality = "FHD"
@@ -841,7 +841,7 @@ object ChannelRepository {
                         number = "65",
                         title = "Space HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/space-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Space_logo_2017.svg/320px-Space_logo_2017.svg.png",
                         description = "Especializado em acao, ficcao cientifica, suspense e filmes de luta.",
                         quality = "FHD"
@@ -851,7 +851,7 @@ object ChannelRepository {
                         number = "66",
                         title = "AXN HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81600.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/AXN_logo_2015.svg/320px-AXN_logo_2015.svg.png",
                         description = "As maiores series policiais e de investigacao forense do mundo: NCIS e Criminal Minds.",
                         quality = "FHD"
@@ -861,7 +861,7 @@ object ChannelRepository {
                         number = "67",
                         title = "TNT Novelas HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-novelas-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tnt-novelas.png",
                         description = "O canal dedicado aos grandes sucessos mundiais das telenovelas e melodramas.",
                         quality = "FHD"
@@ -921,7 +921,7 @@ object ChannelRepository {
                         number = "73",
                         title = "RunTime - Terror",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=4865",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-terror.png",
                         description = "O melhor do horror psicologico, sobrenatural e suspense horripilante.",
                         quality = "HD"
@@ -931,7 +931,7 @@ object ChannelRepository {
                         number = "74",
                         title = "RunTime - Acao",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "https://stream.ads.ottera.tv/playlist.m3u8?network_id=2552",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-acao.png",
                         description = "Tiros, explosoes e perseguicoes para os apaixonados por adrenalina.",
                         quality = "HD"
@@ -948,7 +948,7 @@ object ChannelRepository {
                         number = "75",
                         title = "History Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304494.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
                         description = "Trato Feito, Alienigenas do Passado, Forjado no Fogo e grandes acontecimentos historicos.",
                         quality = "FHD"
@@ -958,7 +958,7 @@ object ChannelRepository {
                         number = "76",
                         title = "History 2 (H2) HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304498.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/History2_logo.svg/320px-History2_logo.svg.png",
                         description = "Aprofundamento historico, grandes guerras, arqueologia e conspiracoes mundiais.",
                         quality = "FHD"
@@ -988,7 +988,7 @@ object ChannelRepository {
                         number = "79",
                         title = "Curta! HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/12948.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/curta.png",
                         description = "Cinema brasileiro, artes plasticas, musica, filosofia e literatura.",
                         quality = "FHD"
@@ -998,7 +998,7 @@ object ChannelRepository {
                         number = "80",
                         title = "Arte 1 HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/67512.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/arte-1.png",
                         description = "Danca, musica classica, teatro, fotografia e arquitetura.",
                         quality = "FHD"
@@ -1015,7 +1015,7 @@ object ChannelRepository {
                         number = "88",
                         title = "Multishow HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8975.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Multishow_logo_2017.svg/320px-Multishow_logo_2017.svg.png",
                         description = "Shows ao vivo, humor com Vai Que Cola, festivais Rock in Rio e Lollapalooza.",
                         quality = "FHD"
@@ -1025,7 +1025,7 @@ object ChannelRepository {
                         number = "89",
                         title = "GNT HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8891.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/GNT_logo_2020.svg/320px-GNT_logo_2020.svg.png",
                         description = "Gastronomia, moda, decoracao, Papo de Segunda e Saia Justa.",
                         quality = "FHD"
@@ -1055,7 +1055,7 @@ object ChannelRepository {
                         number = "92",
                         title = "BIS HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/59471019/60849037/518551.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8680.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Canal_Bis_logo.svg/320px-Canal_Bis_logo.svg.png",
                         description = "Grandes shows internacionais, documentarios musicais e turnes historicas.",
                         quality = "FHD"
@@ -1125,7 +1125,7 @@ object ChannelRepository {
                         number = "99",
                         title = "Rede TV",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/rede-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-tv.png",
                         description = "Entretenimento, talk shows, fofocas e debates ao vivo.",
                         quality = "HD"
@@ -1152,7 +1152,7 @@ object ChannelRepository {
                         number = "101",
                         title = "SporTV 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81591.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "Transmissao oficial em resolucao 4K Ultra HD (3840x2160) com maximo detalhe esportivo.",
                         quality = "4K"

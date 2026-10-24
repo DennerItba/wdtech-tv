@@ -297,10 +297,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:maxLines="3"
                     android:text="Sinopse do programa..."
-                    android:textColor="#8EA2C6"
-                    android:textSize="11sp" />
+                    android:textColor="#A8C0E0"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="2dp" />
 
                 <TextView
                     android:id="@+id/txt_player_epg_next"

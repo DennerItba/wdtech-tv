@@ -74,104 +74,130 @@ object EpgRepository {
      * Atualiza o canal imediatamente com os nomes reais de programas e sinopses.
      */
         // Mapeamento preciso de IDs de canais para o servidor de EPG ao vivo da Vivlar
-    val VIVLAR_EPG_MAP: Map<String, String> = mapOf(
-        "sportv_1" to "72332",
-        "sportv_2" to "131176",
-        "sportv_3" to "131113",
-        "sportv_4" to "72332",
-        "ch_4k_sportv" to "72332",
-        "ch_h265_sportv" to "72332",
-        "prem_clubes" to "72265",
-        "prem_2" to "72239",
-        "prem_3" to "72243",
-        "prem_4" to "72247",
-        "prem_5" to "72251",
-        "prem_6" to "72255",
-        "prem_7" to "72259",
-        "prem_8" to "72265",
-        "ch_4k_prem" to "72265",
-        "ch_h265_prem" to "72239",
-        "espn_fhd" to "71922",
-        "espn_2" to "71922",
-        "espn_3" to "71909",
-        "espn_4" to "71960",
-        "espn_5" to "71955",
-        "espn_6" to "71955",
-        "ch_h265_espn" to "71922",
-        "bandsports_fhd" to "71803",
-        "bandsports_campeonatos" to "71803",
-        "combate_fhd" to "71845",
-        "combate_campeonatos" to "71845",
-        "tc_premium" to "72362",
-        "tc_action" to "72346",
-        "tc_touch" to "72366",
-        "tc_pipoca" to "72358",
-        "tc_fun" to "72354",
-        "tc_cult" to "72350",
-        "ch_4k_tc" to "90237",
-        "ch_h265_tc" to "72363",
-        "hbo_main" to "72118",
-        "hbo_2" to "72110",
-        "hbo_plus" to "72125",
-        "hbo_family" to "72114",
-        "hbo_sig" to "72134",
-        "hbo_signature" to "72134",
-        "hbo_mundi" to "72121",
-        "hbo_pop" to "72129",
-        "hbo_xtreme" to "72138",
-        "ch_4k_hbo" to "90247",
-        "ch_h265_hbo" to "72119",
-        "warner_ch" to "72431",
-        "warner_channel" to "72431",
-        "megapix_ch" to "72166",
-        "megapix" to "72166",
-        "ch_universal_tv" to "72419",
-        "ch_universal" to "72419",
-        "ch_studio_universal" to "72334",
-        "ch_studio" to "72334",
-        "ch_sony_channel" to "71824",
-        "ch_sony_movies" to "71824",
-        "ch_space" to "72317",
-        "ch_tnt" to "72375",
-        "ch_tnt_novelas" to "72342",
-        "ch_axn" to "71781",
-        "ch_paramount" to "72217",
-        "ch_cinemax" to "71833",
-        "ch_299" to "71862",
-        "ch_discovery_kids" to "71871",
-        "ch_296" to "71867",
-        "ch_297" to "71883",
-        "disc_id" to "72150",
-        "disc_science" to "71875",
-        "disc_theater" to "71879",
-        "disc_world" to "71887",
-        "disc_animal" to "71772",
-        "ch_history" to "72146",
-        "ch_history_2" to "72106",
-        "ch_4k_disc" to "103510",
-        "ch_cartoon" to "71828",
-        "var_multishow" to "131193",
-        "var_gnt" to "72102",
-        "var_viagem" to "72162",
-        "ch_158" to "72040",
-        "ch_160" to "72025",
-        "ch_163" to "131200",
-        "ch_166" to "306782",
-        "ch_165" to "131151",
-        "ch_167" to "131199",
-        "ch_324" to "72017",
-        "ch_h265_globo" to "131215",
-        "ch_bbb_24h" to "306831",
-        "ch_168" to "77963",
-        "ch_169" to "108681",
-        "ch_178" to "72272",
-        "ch_177" to "72272",
-        "ch_176" to "71791",
-        "ch_175" to "71791",
-        "ch_214" to "71791",
-        "ch_222" to "72272"
+        /**
+     * Mapeamento de canais para o servidor de EPG ao vivo da Corruptx.
+     * Cobre emissoras hospedadas em outras CDNs (UniTV, etc.) garantindo EPG oficial e sinopse real.
+     */
+    val CORRUPTX_EPG_MAP: Map<String, String> = mapOf(
+        // Rede Discovery
+        "ch_discovery" to "8736",
+        "ch_discovery_kids" to "8742",
+        "ch_discovery_hh" to "8740",
+        "ch_discovery_turbo" to "8756",
+        "disc_id" to "8932",
+        "disc_world" to "8758",
+        "disc_science" to "8745",
+        "disc_theater" to "8748",
+        "disc_animal" to "304491",
+        "disc_tlc" to "8754",
+        "disc_hgtv" to "304506",
+        "ch_4k_disc" to "8736",
+
+        // Telecine
+        "tc_premium" to "9133",
+        "tc_action" to "9126",
+        "tc_touch" to "9135",
+        "tc_pipoca" to "9131",
+        "tc_fun" to "9130",
+        "tc_cult" to "24534",
+        "ch_4k_tc" to "9133",
+        "ch_h265_tc" to "9133",
+
+        // HBO
+        "hbo_main" to "8902",
+        "hbo_2" to "8898",
+        "hbo_plus" to "24592",
+        "hbo_family" to "8901",
+        "hbo_sig" to "8912",
+        "hbo_signature" to "8912",
+        "hbo_pop" to "24593",
+        "hbo_mundi" to "8898",
+        "hbo_xtreme" to "24592",
+        "ch_4k_hbo" to "8902",
+        "ch_h265_hbo" to "8902",
+
+        // Filmes & Séries
+        "warner_ch" to "9219",
+        "warner_channel" to "9219",
+        "megapix_ch" to "8961",
+        "megapix" to "8961",
+        "ch_universal_tv" to "21682",
+        "ch_universal" to "21682",
+        "ch_studio_universal" to "9115",
+        "ch_studio" to "9115",
+        "ch_sony_channel" to "9098",
+        "ch_sony_movies" to "9098",
+        "ch_cinemax" to "8708",
+        "ch_space" to "9101",
+        "ch_tnt" to "594020",
+        "ch_284" to "275103",
+        "ch_tnt_novelas" to "275103",
+        "ch_axn" to "81600",
+        "ch_paramount" to "240737",
+        "ch_332" to "8708",
+        "ch_273" to "9101",
+        "ch_canal_brasil" to "8691",
+        "ch_ae" to "23156",
+        "ch_amc" to "23687",
+        "ch_tcm" to "9124",
+        "ch_tnt_series" to "9144",
+
+        // Documentários & Cultura
+        "ch_history" to "304494",
+        "ch_history_2" to "304498",
+        "doc_curta" to "12948",
+        "doc_arte1" to "67512",
+        "ch_natgeo" to "8736",
+
+        // Variedades & Estilo
+        "var_multishow" to "8975",
+        "var_gnt" to "8891",
+        "var_bis" to "8680",
+        "var_viagem" to "8883",
+        "ch_322" to "8883",
+
+        // Esportes
+        "sportv_1" to "9111",
+        "sportv_2" to "30123",
+        "sportv_3" to "30124",
+        "sportv_4" to "9111",
+        "ch_4k_sportv" to "81591",
+        "ch_h265_sportv" to "9111",
+        "prem_clubes" to "9037",
+        "prem_2" to "9022",
+        "prem_3" to "13577",
+        "prem_4" to "108295",
+        "prem_5" to "9037",
+        "prem_6" to "9037",
+        "prem_7" to "9037",
+        "prem_8" to "9037",
+        "ch_4k_prem" to "9037",
+        "ch_h265_prem" to "9022",
+        "espn_fhd" to "8782",
+        "espn_2" to "8780",
+        "espn_3" to "8784",
+        "espn_4" to "8786",
+        "espn_5" to "8788",
+        "espn_6" to "8789",
+        "bandsports_fhd" to "8661",
+        "bandsports_campeonatos" to "8661",
+        "combate_fhd" to "8714",
+        "combate_campeonatos" to "8714",
+
+        // Infantil & Kids
+        "ch_cartoon" to "8698",
+        "ch_cartoonito" to "8688",
+        "ch_gloob" to "8888",
+        "ch_gloobinho" to "69037"
     )
 
+    // Alias retrocompatível
+    val VIVLAR_EPG_MAP: Map<String, String> = CORRUPTX_EPG_MAP
+
+    /**
+     * Busca o Guia de Programação (EPG) AO VIVO diretamente da API do servidor de streaming.
+     * Atualiza o canal imediatamente com os nomes reais de filmes, programas e sinopses completas.
+     */
     suspend fun fetchLiveEpg(channel: Channel): Pair<EpgProgram, EpgProgram?>? = withContext(Dispatchers.IO) {
         val now = System.currentTimeMillis()
         val cached = liveEpgCache[channel.id]
@@ -191,20 +217,22 @@ object EpgRepository {
             return@withContext pair
         }
 
-        val vivlarId = VIVLAR_EPG_MAP[channel.id]
+        // Resolve o ID do stream para consulta de EPG ao vivo
+        val streamId = CORRUPTX_EPG_MAP[channel.id]
+            ?: if (channel.streamUrl.contains("corruptx.org")) extractStreamIdFromUrl(channel.streamUrl) else null
             ?: channel.playbackStreamId
-            ?: if (channel.streamUrl.contains("vivlar.me")) extractStreamIdFromUrl(channel.streamUrl) else null
+            ?: extractStreamIdFromUrl(channel.streamUrl)
 
-        if (vivlarId == null) return@withContext null
+        if (streamId == null) return@withContext null
 
-        val serverUrl = "http://vivlar.me:80/player_api.php?username=497238&password=KK8Kdy&action=get_short_epg&stream_id=$vivlarId&limit=8"
+        val serverUrl = "http://corruptx.org:80/player_api.php?username=hfp5ejnrey&password=zq0u3kzads&action=get_short_epg&stream_id=$streamId&limit=6"
 
         try {
             val url = URL(serverUrl)
             val conn = (url.openConnection() as HttpURLConnection).apply {
-                connectTimeout = 4000
-                readTimeout = 4000
-                setRequestProperty("User-Agent", "IPTVSmartersPro")
+                connectTimeout = 3500
+                readTimeout = 3500
+                setRequestProperty("User-Agent", "VLC/3.0.18 LibVLC/3.0.18")
             }
 
             if (conn.responseCode == HttpURLConnection.HTTP_OK) {
@@ -230,19 +258,22 @@ object EpgRepository {
                         val startStr = item.optString("start", "")
                         val stopStr = item.optString("stop", "").ifEmpty { item.optString("end", "") }
 
-                        val startTs = item.optLong("start_timestamp").let {
-                            if (it > 0) it * 1000L else sdf.parse(startStr)?.time ?: 0L
-                        }
-                        val stopTs = item.optLong("stop_timestamp").let {
-                            if (it > 0) it * 1000L else sdf.parse(stopStr)?.time ?: 0L
-                        }
+                        val startTs = try {
+                            val rawTs = item.optString("start_timestamp", "")
+                            if (rawTs.isNotEmpty()) rawTs.toLong() * 1000L else sdf.parse(startStr)?.time ?: 0L
+                        } catch (_: Exception) { 0L }
+
+                        val stopTs = try {
+                            val rawTs = item.optString("stop_timestamp", "")
+                            if (rawTs.isNotEmpty()) rawTs.toLong() * 1000L else sdf.parse(stopStr)?.time ?: 0L
+                        } catch (_: Exception) { 0L }
 
                         val startH = if (startStr.length >= 16) startStr.substring(11, 16)
                                      else if (startTs > 0) sdfHour.format(java.util.Date(startTs)) else "00:00"
                         val stopH = if (stopStr.length >= 16) stopStr.substring(11, 16)
                                     else if (stopTs > 0) sdfHour.format(java.util.Date(stopTs)) else "00:00"
 
-                        if (title.isNotEmpty() && title != "VT") {
+                        if (title.isNotEmpty() && title != "VT" && title != "Programação") {
                             parsedPrograms.add(
                                 EpgProgram(
                                     title = title,
@@ -279,7 +310,7 @@ object EpgRepository {
                 }
             }
         } catch (_: Exception) {
-            // Usa fallback offline em caso de falha de conexão
+            // Usa fallback offline em caso de timeout
         }
 
         return@withContext null
@@ -295,8 +326,9 @@ object EpgRepository {
     }
 
     private fun extractStreamIdFromUrl(streamUrl: String): String? {
-        val match = Regex("""/(\\d+)\\.(?:m3u8|ts)""").find(streamUrl)
-        return match?.groupValues?.getOrNull(1)
+        val clean = streamUrl.substringBefore("?").substringBefore("#")
+        val idStr = clean.substringAfterLast("/").substringBefore(".")
+        return if (idStr.isNotEmpty() && idStr.all { it.isDigit() }) idStr else null
     }
 
     fun getProgramsForChannel(channel: Channel): Pair<EpgProgram, EpgProgram?> {
@@ -579,22 +611,22 @@ private fun formatTime(minutes: Int): String {
             return bandsportsGrid[slotIdx % bandsportsGrid.size]
         }
 
-        // 8. Cine Sky (01 a 06)
+                // 8. Cine Sky (01 a 06) - Catálogo de Filmes Reais com Sinopses Detalhadas
         if (titleLower.contains("cinesky") || titleLower.contains("cine sky") || idLower.contains("cinesky")) {
             val cineskyGrid = listOf(
-                Pair("Cine Sky Madrugada: Suspense no Ar", "Filmes envolventes de suspense psicológico sem comerciais na calada da noite."),
-                Pair("Cine Sky Clássicos: Obras Inesquecíveis", "Superproduções premiadas que marcaram a era de ouro de Hollywood."),
-                Pair("Cine Sky Ação: Tiroteios & Emoção", "Ação ininterrupta com perseguições e os maiores heróis do cinema."),
-                Pair("Cine Sky Pipoca: Sessão Família", "Comédias leves e animações encantadoras para reunir toda a família."),
-                Pair("Cine Sky Hollywood: Astros em Cena", "Grandes atores e atrizes em produções aclamadas e sucessos de bilheteria."),
-                Pair("Cine Sky Aventura: Mundos Fantásticos", "Ficção científica, viagens intergalácticas e grandes universos mágicos."),
-                Pair("Cine Sky Cineclube: Grandes Diretores", "Filmes consagrados pela crítica especializada e vencedores de festivais."),
-                Pair("Cine Sky Tarde: Sessão Adrenalina", "Tramas de espionagem internacional, agentes secretos e alta velocidade."),
-                Pair("Cine Sky Comédia: Risos Garantidos", "Grandes comédias de sucesso para descontrair no fim da tarde."),
-                Pair("Cine Sky Superestreia da Noite (FHD)", "O maior lançamento cinematográfico do mês direto na sua televisão."),
-                Pair("Cine Sky Blockbuster: Sucesso de Bilheteria", "Superproduções multimilionárias com efeitos visuais e som de cinema."),
-                Pair("Cine Sky Especial: Tensão & Mistério", "Tramas policiais intrincadas com desfechos surpreendentes."),
-                Pair("Cine Sky Corujão: O Melhor do Terror", "Obras de terror e suspense sobrenatural para quem não tem medo do escuro.")
+                Pair("Oppenheimer", "Durante a Segunda Guerra Mundial, o físico J. Robert Oppenheimer lidera o Projeto Manhattan para desenvolver a primeira bomba atômica da história."),
+                Pair("Top Gun: Maverick", "Após trinta anos de serviço como um dos maiores pilotos da Marinha, Pete Maverick Mitchell é convocado para treinar jovens graduados para uma missão especializada."),
+                Pair("John Wick 4: Baba Yaga", "Com o preço por sua cabeça cada vez maior, o lendário assassino John Wick descobre um caminho para derrotar a Alta Cúpula em combates épicos."),
+                Pair("Interestelar", "Uma equipe de exploradores viaja através de um buraco de minhoca no espaço, na tentativa desesperada de garantir a sobrevivência da humanidade."),
+                Pair("Gladiador II", "Anos após a morte do lendário Maximus, Lucius é forçado a lutar no Coliseu para restaurar a honra e a glória de Roma."),
+                Pair("Duna: Parte 2", "Paul Atreides se une a Chani e aos Fremen em busca de vingança contra os conspiradores que destruíram sua família no planeta desértico."),
+                Pair("Avatar: O Caminho da Água", "Jake Sully e Neytiri exploram as regiões oceânicas de Pandora para proteger sua família quando uma antiga ameaça retorna."),
+                Pair("The Batman", "Nos dois anos em que atuou como Batman, Bruce Wayne investiga uma trilha de pistas enigmáticas deixadas pelo Charada na elite corrupta de Gotham."),
+                Pair("Missão: Impossível - Acerto de Contas", "Ethan Hunt e sua equipe do FMI embarcam na missão mais perigosa de suas vidas para rastrear uma arma que ameaça toda a humanidade."),
+                Pair("Coringa: Delírio a Dois", "Arthur Fleck aguarda julgamento em Arkham enquanto encontra o amor e descobre sua música interior ao lado de Harley Quinn."),
+                Pair("Homem-Aranha: Sem Volta para Casa", "Com sua identidade secreta revelada ao mundo, Peter Parker recorre ao Doutor Estranho e abre os portais do multiverso."),
+                Pair("O Lobo de Wall Street", "Jordan Belfort é um ambicioso corretor da bolsa de Nova York que cria um verdadeiro império de riqueza, excessos e adrenalina."),
+                Pair("Mad Max: Estrada da Fúria", "Em um mundo pós-apocalíptico, Max se junta a Furiosa e fugitivas em uma fuga em altíssima velocidade pelo deserto implacável.")
             )
             return cineskyGrid[slotIdx % cineskyGrid.size]
         }
