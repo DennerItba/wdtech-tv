@@ -297,11 +297,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun startStream(channel: Channel, customUrl: String? = null) {
         val rawUrl = customUrl ?: channel.streamUrl
-        val targetUrl = if (rawUrl.contains("vivlar.me") && rawUrl.endsWith(".m3u8")) {
-            rawUrl.replace(".m3u8", ".ts")
-        } else {
-            rawUrl
-        }
+        val targetUrl = rawUrl
         this.currentStreamUrl = targetUrl
 
         // Limpa estado de erro anterior
@@ -608,42 +604,48 @@ class PlayerActivity : AppCompatActivity() {
         if (retryCount < maxAutoRetries) {
             retryCount++
             bufferingProgress.visibility = View.VISIBLE
+            // Chaveia instantaneamente para o servidor de contingência
             val fallbackUrl = currentStreamUrl?.let { getFallbackUrl(it) }
-            val nextUrl = if (fallbackUrl != null && retryCount > 1) fallbackUrl else currentStreamUrl
+            val nextUrl = fallbackUrl ?: currentStreamUrl ?: channel.streamUrl
             retryHandler.postDelayed({
                 if (!isFinishing && !isDestroyed) {
                     startStream(channel, nextUrl)
                 }
-            }, 800)
+            }, 500)
         } else {
             handlePlaybackError(
-                PlaybackException("Fim de transmissão ao vivo inesperado (EOF)", null, PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_CLOSED),
+                PlaybackException("Fim de transmissão ao vivo inesperado (EOF)", null, PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_FAILED),
                 channel
             )
         }
     }
 
     private fun handlePlaybackError(error: PlaybackException, channel: Channel) {
-        bufferingProgress.visibility = View.GONE
-        errorLayout.visibility = View.VISIBLE
-        txtErrorTitle.text = "Sinal Instável: ${channel.title}"
+        if (isFinishing || isDestroyed) return
 
         if (retryCount < maxAutoRetries) {
             retryCount++
-            txtErrorMessage.text = "Detectada oscilação na fonte de transmissão (${error.errorCodeName}). Reconectando stream automaticamente..."
-            txtErrorCountdown.text = "Tentativa $retryCount de $maxAutoRetries em 3 segundos..."
-            txtErrorCountdown.visibility = View.VISIBLE
+            // NUNCA exibe popup bloqueante nas primeiras tentativas: recupera em silêncio!
+            errorLayout.visibility = View.GONE
+            bufferingProgress.visibility = View.VISIBLE
 
+            // Imediatamente busca a melhor URL alternativa (fallback) já na tentativa 1
             val fallbackUrl = currentStreamUrl?.let { getFallbackUrl(it) }
-            val streamToUse = if (fallbackUrl != null && retryCount > 1) fallbackUrl else currentStreamUrl
+            val streamToUse = fallbackUrl ?: currentStreamUrl ?: channel.streamUrl
+
             val runnable = Runnable {
                 if (!isFinishing && !isDestroyed) {
                     startStream(channel, streamToUse)
                 }
             }
             retryRunnable = runnable
-            retryHandler.postDelayed(runnable, 3000)
+            // Reconexão ultrarrápida (600ms) sem travar a tela do usuário
+            retryHandler.postDelayed(runnable, 600)
         } else {
+            // Apenas se TODAS as 6 tentativas em todas as fontes falharem
+            bufferingProgress.visibility = View.GONE
+            errorLayout.visibility = View.VISIBLE
+            txtErrorTitle.text = "Sinal Instável: ${channel.title}"
             txtErrorMessage.text = if (isPlaybackMode) {
                 "A gravação deste horário não pôde ser carregada. Você pode tentar novamente ou retornar à transmissão Ao Vivo."
             } else {
@@ -824,79 +826,109 @@ class PlayerActivity : AppCompatActivity() {
         const val EXTRA_CHANNEL_LIST = "extra_channel_list"
         const val EXTRA_CHANNEL_INDEX = "extra_channel_index"
         private val STREAM_FALLBACKS = mapOf(
-            "71862" to "71865", // Discovery Channel FHD -> HD
-            "71871" to "71873", // Discovery Kids FHD -> HD
-            "71867" to "71869", // Discovery H&H FHD -> HD
-            "71883" to "71885", // Discovery Turbo FHD -> HD
-            "72150" to "72152", // ID FHD -> HD
-            "71875" to "71877", // Discovery Science FHD -> HD
-            "71879" to "71881", // Discovery Theater FHD -> HD
-            "71887" to "71889", // Discovery World FHD -> HD
-            "71772" to "71775", // Animal Planet FHD -> HD
-            "72146" to "72148", // History FHD -> HD
-            "72106" to "72108", // H2 FHD -> HD
-            "72362" to "72364", // Telecine Premium FHD -> HD
-            "72346" to "72348", // Telecine Action FHD -> HD
-            "72366" to "72368", // Telecine Touch FHD -> HD
-            "72358" to "72360", // Telecine Pipoca FHD -> HD
-            "72354" to "72356", // Telecine Fun FHD -> HD
-            "72350" to "72352", // Telecine Cult FHD -> HD
-            "72118" to "72120", // HBO FHD -> HD
-            "72110" to "72112", // HBO 2 FHD -> HD
-            "72125" to "72127", // HBO Plus FHD -> HD
-            "72114" to "72116", // HBO Family FHD -> HD
-            "72134" to "72136", // HBO Signature FHD -> HD
-            "72121" to "72123", // HBO Mundi FHD -> HD
-            "72129" to "72131", // HBO Pop FHD -> HD
-            "72138" to "72140"  // HBO Xtreme FHD -> HD
+            // Corruptx FHD <-> HD Pairs
+            "8735" to "8736",   // Discovery Channel FHD -> HD
+            "8755" to "8756",   // Discovery Turbo FHD -> HD
+            "8739" to "8740",   // Discovery H&H FHD -> HD
+            "8745" to "8746",   // Discovery Science FHD -> HD
+            "8748" to "8751",   // Discovery Theater FHD -> HD
+            "8758" to "8759",   // Discovery World FHD -> HD
+            "8932" to "8933",   // ID Investigacao FHD -> HD
+            "8698" to "8699",   // Cartoon Network FHD -> HD
+            "8687" to "8688",   // Cartoonito FHD -> HD
+            "8742" to "8743",   // Discovery Kids FHD -> HD
+            "8887" to "8888",   // Gloob FHD -> HD
+            "9126" to "9127",   // Telecine Action FHD -> HD
+            "9135" to "9136",   // Telecine Touch FHD -> HD
+            "9131" to "9132",   // Telecine Pipoca FHD -> HD
+            "9130" to "30138",  // Telecine Fun FHD -> HD
+            "24534" to "9128",  // Telecine Cult FHD -> HD
+            "8902" to "8903",   // HBO FHD -> HD
+            "8897" to "8898",   // HBO 2 FHD -> HD
+            "24592" to "11771", // HBO Plus FHD -> HD
+            "8901" to "8900",   // HBO Family FHD -> HD
+            "8912" to "8914",   // HBO Signature FHD -> HD
+            "8904" to "8905",   // HBO Mundi FHD -> HD
+            "24593" to "8911",  // HBO Pop FHD -> HD
+            "13535" to "8916",  // HBO Xtreme FHD -> HD
+            "9107" to "9111",   // SporTV FHD -> HD
+            "9103" to "30123",  // SporTV 2 FHD -> HD
+            "30124" to "9104",  // SporTV 3 HD -> FHD
+            "9037" to "94194",  // Premiere Clubes FHD -> HD
+            "9022" to "69028",  // Premiere 2 FHD -> HD
+            "13577" to "69031", // Premiere 3 FHD -> HD
+            "108295" to "108296", // Premiere 4 FHD -> HD
+            "108303" to "108304", // Premiere 5 HD -> HD
+            "108307" to "108309", // Premiere 6 FHD -> HD
+            "108313" to "108315", // Premiere 7 FHD -> HD
+            "13582" to "9036",  // Premiere 8 FHD -> HD
+            "8661" to "8662",   // BandSports FHD -> HD
+            "8714" to "8716",   // Combate FHD -> HD
+            "304494" to "304496", // History FHD -> HD
+            "304498" to "304500", // History 2 FHD -> HD
+            "304491" to "304492", // Animal Planet FHD -> HD
+            "9219" to "9220",   // Warner FHD -> HD
+            "21682" to "9212",  // Universal TV FHD -> HD
+            "8961" to "8962",   // Megapix FHD -> HD
+            "9098" to "9099",   // Sony FHD -> HD
+            "9115" to "9117",   // Studio Universal FHD -> HD
+            "8708" to "8709"    // Cinemax FHD -> HD
         )
 
         private val CROSS_CDN_FALLBACKS = mapOf(
-            // Corruptx -> Vivlar
-            "8736.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71865.ts",
-            "8743.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71873.ts",
-            "8740.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71869.ts",
-            "8756.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71885.ts",
-            "8933.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72152.ts",
-            "8759.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71889.ts",
-            "8746.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71877.ts",
-            "8751.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71881.ts",
-            "304492.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/71775.ts",
-            "304496.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72148.ts",
-            "304500.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72108.ts",
-            "1168918.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72040.ts",
-            "1168916.m3u8" to "http://vivlar.me:80/live/497238/KK8Kdy/72037.ts",
-            // Vivlar -> Corruptx
-            "71862.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8736.m3u8",
-            "71865.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8736.m3u8",
-            "71871.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8743.m3u8",
-            "71867.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8740.m3u8",
-            "71883.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8756.m3u8",
-            "72150.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8933.m3u8",
-            "71887.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8759.m3u8",
-            "71875.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8746.m3u8",
-            "71879.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8751.m3u8",
-            "71772.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304492.m3u8",
-            "72146.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304496.m3u8",
-            "72106.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304500.m3u8",
-            "72040.ts" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1168918.m3u8"
+            // Formula 1 (UniTV CDN Band SP HD <-> Corruptx BandSports)
+            "band-sp-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8661.m3u8",
+            "8661.m3u8" to "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+
+            // UniTV Discovery <-> Corruptx Discovery
+            "discovery-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8736.m3u8",
+            "8736.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+            "discovery-turbo-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8756.m3u8",
+            "8756.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-turbo-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+            "discovery-hh" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8740.m3u8",
+            "8740.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-hh/index.m3u8?token=2d3232fe89d2b637a2093703",
+            "tlc-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8754.m3u8",
+            "8754.m3u8" to "https://cdn1.uniredes.com.br/hls/tlc-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+
+            // UniTV ESPN <-> Corruptx ESPN
+            "espn-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/598914.m3u8",
+            "598914.m3u8" to "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+
+            // UniTV Globo SP <-> Corruptx Globo SP
+            "globo-sp-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1168918.m3u8",
+            "1168918.m3u8" to "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+
+            // Kids
+            "x1colegal.com" to "https://stmv2.srvif.com/nicktoons/nicktoons/playlist.m3u8"
         )
 
         fun getFallbackUrl(url: String): String? {
             for ((key, target) in CROSS_CDN_FALLBACKS) {
-                if (url.endsWith(key) || url.contains("/$key")) {
+                if (url.contains(key)) {
                     return target
                 }
+            }
+            // Domain mirror failover: Corruptx <-> Acaidopt
+            if (url.contains("corruptx.org")) {
+                return url.replace("corruptx.org", "acaidopt.org")
+            }
+            if (url.contains("acaidopt.org")) {
+                return url.replace("acaidopt.org", "corruptx.org")
             }
             for ((fhdId, hdId) in STREAM_FALLBACKS) {
                 if (url.contains("/$fhdId.m3u8")) {
                     return url.replace("/$fhdId.m3u8", "/$hdId.m3u8")
                 }
+                if (url.contains("/$hdId.m3u8")) {
+                    return url.replace("/$hdId.m3u8", "/$fhdId.m3u8")
+                }
                 if (url.contains("/$fhdId.ts")) {
                     return url.replace("/$fhdId.ts", "/$hdId.ts")
                 }
+                if (url.contains("/$hdId.ts")) {
+                    return url.replace("/$hdId.ts", "/$fhdId.ts")
+                }
             }
             return null
-        }
-    }
+        }}
 }
