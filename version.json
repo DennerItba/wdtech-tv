@@ -1,6 +1,6 @@
 {
-  "versionCode": 28,
-  "versionName": "2.5.2",
-  "releaseNotes": "Restauracao Completa de Todos os Canais da Grade: Telecine, HBO, SporTV, Premiere, ESPN, Canais Abertos (Globo, SBT, Record, Band), Discovery e Infantil 100% online\nMigracao Total para Infraestrutura de Alta Performance (CDN UniTV + Rede Corruptx/Acaidopt)\nEliminacao de servidores com instabilidade/timeout e ativacao de redundancia automatica entre CDNs\nJogos do Dia e Campeonatos ao vivo com deteccao e transmissao dinamica continua\nEstabilidade maxima e reproducao sem travas para TV Box",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.2/wdtechtv.apk"
+  "versionCode": 29,
+  "versionName": "2.5.3",
+  "releaseNotes": "Correcao de Canais: Canais Discovery, Filmes e Series restaurados para suas transmissoes originais dedicadas (resolvido sinal incorreto do Premiere)\nEPG Dinamico ao Vivo Ativado: Titulos autenticos de filmes e programacao completa em tempo real para Telecine, HBO, Warner, Universal, Megapix e Discovery\nSinopses Detalhadas de Filmes: Visualizacao de sinopse expandida para 3 linhas na interface e no player para leitura facil na TV Box\nCatalogo Enriquecido de Filmes para canais Cine Sky e cinema sem interrupcoes\nEstabilidade e desempenho otimizado para reproducao sem travamentos",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.3/wdtechtv.apk"
 }
