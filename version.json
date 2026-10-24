@@ -1,6 +1,6 @@
 {
-  "versionCode": 27,
-  "versionName": "2.5.1",
-  "releaseNotes": "Correcao Definitiva do Canal Formula 1: eliminado sinal indevido da TV Universal e removidos canais redundantes\nMenu Formula 1 (F1) Exclusivo e Direto: apenas o canal oficial da Formula 1 HD, com transmissao de treinos, classificacao, sprint e GPs\nCDN Oficial de Alta Performance: sinal HLS ultrarrapido sem travas via CDN UniTV + contingencia silenciosa Vivlar FHD\nRenumeracao sequencial da grade e otimizacao total para TV Box",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.1/wdtechtv.apk"
+  "versionCode": 28,
+  "versionName": "2.5.2",
+  "releaseNotes": "Restauracao Completa de Todos os Canais da Grade: Telecine, HBO, SporTV, Premiere, ESPN, Canais Abertos (Globo, SBT, Record, Band), Discovery e Infantil 100% online\nMigracao Total para Infraestrutura de Alta Performance (CDN UniTV + Rede Corruptx/Acaidopt)\nEliminacao de servidores com instabilidade/timeout e ativacao de redundancia automatica entre CDNs\nJogos do Dia e Campeonatos ao vivo com deteccao e transmissao dinamica continua\nEstabilidade maxima e reproducao sem travas para TV Box",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.2/wdtechtv.apk"
 }
