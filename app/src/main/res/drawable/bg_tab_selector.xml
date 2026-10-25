@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Focado pelo controle remoto -->
+    <!-- Focado pelo controle remoto - Fundo Azul Escuro Elegante com Borda Ciano -->
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="#00E5FF" />
-            <stroke android:width="2dp" android:color="#FFFFFF" />
+            <solid android:color="#1A3B6B" />
+            <stroke android:width="2.5dp" android:color="#00E5FF" />
         </shape>
     </item>
 
@@ -13,7 +13,7 @@
     <item android:state_selected="true">
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="#3300E5FF" />
+            <solid android:color="#2E466E" />
             <stroke android:width="2dp" android:color="#00E5FF" />
         </shape>
     </item>
@@ -22,7 +22,8 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="#00E5FF" />
+            <solid android:color="#244F8E" />
+            <stroke android:width="2.5dp" android:color="#00E5FF" />
         </shape>
     </item>
 

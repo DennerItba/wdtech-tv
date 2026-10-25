@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Sinal Temporariamente Instável"
-            android:textColor="@color/text_white"
+            android:textColor="@color/btn_text_selector"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -85,7 +85,7 @@
                 android:layout_height="42dp"
                 android:background="@drawable/bg_button_selector"
                 android:text="🔄 Tentar Novamente"
-                android:textColor="@color/text_white"
+                android:textColor="@color/btn_text_selector"
                 android:textSize="13sp"
                 android:textAllCaps="false"
                 android:paddingStart="18dp"
@@ -99,7 +99,7 @@
                 android:layout_marginStart="14dp"
                 android:background="@drawable/bg_button_selector"
                 android:text="Voltar à Grade"
-                android:textColor="@color/text_white"
+                android:textColor="@color/btn_text_selector"
                 android:textSize="13sp"
                 android:textAllCaps="false"
                 android:paddingStart="18dp"
@@ -146,7 +146,7 @@
                 android:paddingEnd="16dp"
                 android:text="Voltar à Grade"
                 android:textAllCaps="false"
-                android:textColor="@color/text_white"
+                android:textColor="@color/btn_text_selector"
                 android:textSize="14sp" />
 
             <!-- Botão Formato de Tela (Aspect Ratio) -->
@@ -163,7 +163,7 @@
                 android:paddingEnd="16dp"
                 android:text="📐 Formato: Ajustar"
                 android:textAllCaps="false"
-                android:textColor="@color/text_white"
+                android:textColor="@color/btn_text_selector"
                 android:textSize="13sp" />
 
             <!-- Nome do Canal Atual -->
@@ -179,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nome do Canal"
-                    android:textColor="@color/text_white"
+                    android:textColor="@color/btn_text_selector"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:format24Hour="HH:mm"
                 android:format12Hour="hh:mm a"
-                android:textColor="@color/text_white"
+                android:textColor="@color/btn_text_selector"
                 android:textSize="18sp" />
         </LinearLayout>
 

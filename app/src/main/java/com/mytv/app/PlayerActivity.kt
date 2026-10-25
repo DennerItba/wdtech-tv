@@ -311,8 +311,8 @@ class PlayerActivity : AppCompatActivity() {
         val httpFactory = androidx.media3.datasource.DefaultHttpDataSource.Factory()
             .setUserAgent("IPTVSmartersPro")
             .setAllowCrossProtocolRedirects(true)
-            .setConnectTimeoutMs(15000)
-            .setReadTimeoutMs(15000)
+            .setConnectTimeoutMs(20000)
+            .setReadTimeoutMs(20000)
             .setDefaultRequestProperties(mapOf(
                 "Accept" to "*/*",
                 "Connection" to "keep-alive"
@@ -320,16 +320,27 @@ class PlayerActivity : AppCompatActivity() {
 
         val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
 
+        // Controle avançado de buffer para eliminar travadinhas e oscilações de Wi-Fi na TV Box
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                15_000,
-                30_000,
-                1_500,
-                2_500
+                25_000, // minBufferMs: 25s de reserva contínua
+                50_000, // maxBufferMs: 50s de capacidade máxima de buffer em RAM
+                3_000,  // bufferForPlaybackMs: 3.0s garante que ao menos 1 chunk completo esteja decodificado antes do início
+                5_000   // bufferForPlaybackAfterRebufferMs: 5.0s previne re-travamento consecutivo
             )
             .setPrioritizeTimeOverSizeThresholds(true)
-            .setBackBuffer(10_000, false)
+            .setBackBuffer(15_000, false)
             .build()
+
+        // Seleção de trilhas com transição suave, evitando micro-travas na troca de bitrate HLS
+        val trackSelector = androidx.media3.exoplayer.trackselection.DefaultTrackSelector(this).apply {
+            setParameters(
+                buildUponParameters()
+                    .setAllowVideoMixedMimeTypeAdaptiveness(true)
+                    .setAllowVideoNonSeamlessAdaptiveness(false)
+                    .setExceedRendererCapabilitiesIfNecessary(true)
+            )
+        }
 
         val renderersFactory = DefaultRenderersFactory(this).apply {
             setEnableDecoderFallback(true)
@@ -338,6 +349,7 @@ class PlayerActivity : AppCompatActivity() {
 
         val exo = ExoPlayer.Builder(this, renderersFactory)
             .setLoadControl(loadControl)
+            .setTrackSelector(trackSelector)
             .build().apply {
             playWhenReady = true
             addListener(object : Player.Listener {

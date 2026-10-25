@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Atualização de Sistema WDTECH TV"
-        android:textColor="@color/text_white"
+        android:textColor="@color/btn_text_selector"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Novidades e Correções:"
-            android:textColor="@color/text_white"
+            android:textColor="@color/btn_text_selector"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
             android:paddingEnd="18dp"
             android:text="Mais Tarde"
             android:textAllCaps="false"
-            android:textColor="@color/text_white"
+            android:textColor="@color/btn_text_selector"
             android:textSize="13sp" />
 
         <Button
@@ -118,7 +118,7 @@
             android:paddingEnd="22dp"
             android:text="📥 Atualizar Agora"
             android:textAllCaps="false"
-            android:textColor="@color/text_white"
+            android:textColor="@color/btn_text_selector"
             android:textSize="13sp"
             android:textStyle="bold" />
     </LinearLayout>

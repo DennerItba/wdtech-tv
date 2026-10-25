@@ -20,4 +20,11 @@
     
     <color name="tab_active_bg">#253550</color>
     <color name="tab_active_stroke">#00E5FF</color>
+    <!-- Cores de Botões de Alto Contraste (Legibilidade Máxima na TV Box) -->
+    <color name="btn_focused_bg">#1A3B6B</color>
+    <color name="btn_focused_stroke">#00E5FF</color>
+    <color name="btn_normal_bg">#182234</color>
+    <color name="btn_normal_stroke">#2C3C56</color>
+    <color name="btn_text_focused">#FFFFFF</color>
+    <color name="btn_text_normal">#D0DFFA</color>
 </resources>

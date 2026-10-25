@@ -646,15 +646,32 @@ class MainActivity : AppCompatActivity() {
     private fun setupPlayer() {
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                10_000,
-                20_000,
-                1_000,
-                2_000
+                20_000, // 20s min buffer
+                45_000, // 45s max buffer
+                2_500,  // 2.5s para início sem travadinhas
+                4_000   // 4.0s após rebuffer
             )
             .setPrioritizeTimeOverSizeThresholds(true)
+            .setBackBuffer(10_000, false)
             .build()
-        val player = ExoPlayer.Builder(this)
+
+        val trackSelector = androidx.media3.exoplayer.trackselection.DefaultTrackSelector(this).apply {
+            setParameters(
+                buildUponParameters()
+                    .setAllowVideoMixedMimeTypeAdaptiveness(true)
+                    .setAllowVideoNonSeamlessAdaptiveness(false)
+                    .setExceedRendererCapabilitiesIfNecessary(true)
+            )
+        }
+
+        val renderersFactory = androidx.media3.exoplayer.DefaultRenderersFactory(this).apply {
+            setEnableDecoderFallback(true)
+            setExtensionRendererMode(androidx.media3.exoplayer.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+        }
+
+        val player = ExoPlayer.Builder(this, renderersFactory)
             .setLoadControl(loadControl)
+            .setTrackSelector(trackSelector)
             .build()
         player.playWhenReady = true
         player.addListener(object : Player.Listener {
@@ -716,8 +733,8 @@ class MainActivity : AppCompatActivity() {
             val httpFactory = DefaultHttpDataSource.Factory()
                 .setUserAgent("IPTVSmartersPro")
                 .setAllowCrossProtocolRedirects(true)
-                .setConnectTimeoutMs(10000)
-                .setReadTimeoutMs(10000)
+                .setConnectTimeoutMs(18000)
+                .setReadTimeoutMs(18000)
                 .setDefaultRequestProperties(mapOf(
                     "Accept" to "*/*",
                     "Connection" to "keep-alive"
@@ -733,6 +750,10 @@ class MainActivity : AppCompatActivity() {
 
             val extractorsFactory = DefaultExtractorsFactory().apply {
                 setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
+                setTsExtractorFlags(
+                    androidx.media3.extractor.ts.DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES or
+                    androidx.media3.extractor.ts.DefaultTsPayloadReaderFactory.FLAG_DETECT_ACCESS_UNITS
+                )
                 setConstantBitrateSeekingEnabled(true)
             }
 
