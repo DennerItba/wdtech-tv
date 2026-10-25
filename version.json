@@ -1,6 +1,6 @@
 {
-  "versionCode": 29,
-  "versionName": "2.5.3",
-  "releaseNotes": "Correcao de Canais: Canais Discovery, Filmes e Series restaurados para suas transmissoes originais dedicadas (resolvido sinal incorreto do Premiere)\nEPG Dinamico ao Vivo Ativado: Titulos autenticos de filmes e programacao completa em tempo real para Telecine, HBO, Warner, Universal, Megapix e Discovery\nSinopses Detalhadas de Filmes: Visualizacao de sinopse expandida para 3 linhas na interface e no player para leitura facil na TV Box\nCatalogo Enriquecido de Filmes para canais Cine Sky e cinema sem interrupcoes\nEstabilidade e desempenho otimizado para reproducao sem travamentos",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.3/wdtechtv.apk"
+  "versionCode": 30,
+  "versionName": "2.5.4",
+  "releaseNotes": "Novo Visual dos Botoes: Alto contraste refinado com fundo azul-marinho profundo e borda neon ciano, tornando os textos 100% legiveis sem ofuscamento na TV Box\nEliminacao de Travadinhas: Buffer inteligente ampliado para 25-50 segundos e inicio suave apos 3 segundos, absorvendo oscilacoes de Wi-Fi e rede\nTransicoes HLS Suaves: Desativada troca brusca de resolucao intermediaria que causava micro-paradas\nDecoder Fallback Ativado: Decodificadores de hardware e software otimizados para total fluidez\nEstabilidade e desempenho continuo em todos os canais ao vivo e sob demanda",
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.4/wdtechtv.apk"
 }
