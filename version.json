@@ -1,6 +1,6 @@
 {
-  "versionCode": 31,
-  "versionName": "2.5.5",
+  "versionCode": 32,
+  "versionName": "2.5.6",
   "releaseNotes": "Novo Visual dos Botoes: Alto contraste refinado com fundo azul-marinho profundo e borda neon ciano, tornando os textos 100% legiveis sem ofuscamento na TV Box\nEliminacao de Travadinhas: Buffer inteligente ampliado para 25-50 segundos e inicio suave apos 3 segundos, absorvendo oscilacoes de Wi-Fi e rede\nTransicoes HLS Suaves: Desativada troca brusca de resolucao intermediaria que causava micro-paradas\nDecoder Fallback Ativado: Decodificadores de hardware e software otimizados para total fluidez\nEstabilidade e desempenho continuo em todos os canais ao vivo e sob demanda",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.5/wdtechtv.apk"
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.5.6/wdtechtv.apk"
 }
