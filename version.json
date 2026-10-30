@@ -1,6 +1,6 @@
 {
-  "versionCode": 36,
-  "versionName": "2.6.0",
+  "versionCode": 37,
+  "versionName": "2.6.1",
   "releaseNotes": "Novo Front-End Futurista e Limpo: Cabecalho minimalista sem botoes poluidos, com logo WDTECH TV, breadcrumb neon e relogio digital\nNova Central de Ajustes no Menu Lateral: Categoria Ajustes com 8 opcoes completas (Atualizacoes, Teste de Ping CDN, Buffer, Aspect Ratio, Controle Parental, Limpeza de Cache, Informacoes e Sair)\nNavegacao Rapida pelo Controle Remoto (D-Pad): Acesso agil a TV Ao Vivo, Playback 7 Dias, Filmes, Series e Ajustes em painel lateral vertical\nBuffer Inteligente Anti-Travamento: Modos Rapido (4s), Equilibrado (12s) e Anti-Travamento (25s) configuraveis em tempo real\nAjuste de Formato de Tela: Original (16:9), Zoom e Preenchimento sem barras pretas\nDesempenho Otimizado: Limpeza de memoria RAM e cache direto pela central de Ajustes",
-  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.6.0/wdtechtv.apk"
+  "apkUrl": "https://github.com/denneritba/wdtech-tv/releases/download/v2.6.1/wdtechtv.apk"
 }
