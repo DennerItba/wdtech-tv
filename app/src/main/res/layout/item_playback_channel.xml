@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/bg_channel_item_selector"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
+
+    <!-- Número do Canal -->
+    <TextView
+        android:id="@+id/txt_playback_ch_number"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:text="088"
+        android:textColor="@color/neon_cyan"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Mini Logo do Canal -->
+    <ImageView
+        android:id="@+id/img_playback_ch_logo"
+        android:layout_width="26dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo"
+        android:contentDescription="Logo" />
+
+    <!-- Nome do Canal -->
+    <TextView
+        android:id="@+id/txt_playback_ch_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="GLOBO SP HD"
+        android:textColor="@color/text_high"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Ícone de Relógio Playback (Igual à foto do usuário) -->
+    <TextView
+        android:id="@+id/txt_playback_ch_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="🕒"
+        android:textColor="@color/neon_cyan"
+        android:textSize="13sp"
+        android:visibility="invisible" />
+</LinearLayout>

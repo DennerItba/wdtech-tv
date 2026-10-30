@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/bg_channel_item_selector"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+    <!-- Ícone de Ondas Sonoras / No Ar (igual à foto do usuário) -->
+    <TextView
+        android:id="@+id/txt_prog_status_icon"
+        android:layout_width="18dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ılı"
+        android:textColor="@color/neon_cyan"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <!-- Horário de Início e Término -->
+    <TextView
+        android:id="@+id/txt_prog_time"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="20:30 - 21:30"
+        android:textColor="@color/neon_cyan"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Título do Programa -->
+    <TextView
+        android:id="@+id/txt_prog_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Jornal Nacional"
+        android:textColor="@color/text_high"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <!-- Botão de Ação: [Reprodução], [Reproduzindo], [Lembrete] (Fiel à foto do usuário) -->
+    <TextView
+        android:id="@+id/txt_prog_action_btn"
+        android:layout_width="95dp"
+        android:layout_height="28dp"
+        android:background="@drawable/bg_action_reproducao"
+        android:gravity="center"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:text="Reprodução"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+</LinearLayout>

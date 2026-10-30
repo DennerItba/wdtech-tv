@@ -220,7 +220,13 @@ class PlayerActivity : AppCompatActivity() {
             btnForward.setOnClickListener { forward(60) }
             btnRestart.setOnClickListener { restartProgram() }
             btnLive.setOnClickListener { playLiveStream() }
-            btnHistory.setOnClickListener { showPlaybackHistoryDialog(enriched) }
+            btnHistory.setOnClickListener {
+                val pIntent = android.content.Intent(this, PlaybackActivity::class.java).apply {
+                    putExtra(PlaybackActivity.EXTRA_SELECTED_CHANNEL, enriched)
+                    putExtra(PlaybackActivity.EXTRA_CHANNEL_LIST, ArrayList(channelList))
+                }
+                startActivity(pIntent)
+            }
         } else {
             txtPlaybackBadge.visibility = View.GONE
             layoutPlaybackControls.visibility = View.GONE
@@ -230,7 +236,13 @@ class PlayerActivity : AppCompatActivity() {
             finish()
         }
 
-        startStream(enriched, null)
+        val playbackOffset = intent.getLongExtra(EXTRA_PLAYBACK_OFFSET, 0L)
+        val playbackTitle = intent.getStringExtra(EXTRA_PLAYBACK_TITLE)
+        if (playbackOffset > 0L) {
+            playTimeshift(playbackOffset, playbackTitle)
+        } else {
+            startStream(enriched, null)
+        }
         showOverlayTemporarily()
     }
 
@@ -311,8 +323,9 @@ class PlayerActivity : AppCompatActivity() {
         val httpFactory = androidx.media3.datasource.DefaultHttpDataSource.Factory()
             .setUserAgent("IPTVSmartersPro")
             .setAllowCrossProtocolRedirects(true)
-            .setConnectTimeoutMs(20000)
-            .setReadTimeoutMs(20000)
+            .setConnectTimeoutMs(15000)
+            .setReadTimeoutMs(15000)
+            .setKeepPostFor302Redirects(true)
             .setDefaultRequestProperties(mapOf(
                 "Accept" to "*/*",
                 "Connection" to "keep-alive"
@@ -321,15 +334,21 @@ class PlayerActivity : AppCompatActivity() {
         val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
 
         // Controle avançado de buffer para eliminar travadinhas e oscilações de Wi-Fi na TV Box
+        val bufferMode = com.mytv.app.utils.AppSettings.getBufferMode(this)
+        val (minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs) = when (bufferMode) {
+            com.mytv.app.utils.AppSettings.BUFFER_FAST -> listOf(12_000, 30_000, 2_000, 3_000)
+            com.mytv.app.utils.AppSettings.BUFFER_STABLE -> listOf(35_000, 75_000, 4_000, 6_000)
+            else -> listOf(25_000, 50_000, 3_000, 5_000)
+        }
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                25_000, // minBufferMs: 25s de reserva contínua
-                50_000, // maxBufferMs: 50s de capacidade máxima de buffer em RAM
-                3_000,  // bufferForPlaybackMs: 3.0s garante que ao menos 1 chunk completo esteja decodificado antes do início
-                5_000   // bufferForPlaybackAfterRebufferMs: 5.0s previne re-travamento consecutivo
+                minBufferMs,
+                maxBufferMs,
+                bufferForPlaybackMs,
+                afterRebufferMs
             )
             .setPrioritizeTimeOverSizeThresholds(true)
-            .setBackBuffer(15_000, false)
+            .setBackBuffer(0, false) // 0s backBuffer: não retém vídeo passado em RAM, eliminando engasgos
             .build()
 
         // Seleção de trilhas com transição suave, evitando micro-travas na troca de bitrate HLS
@@ -337,13 +356,15 @@ class PlayerActivity : AppCompatActivity() {
             setParameters(
                 buildUponParameters()
                     .setAllowVideoMixedMimeTypeAdaptiveness(true)
-                    .setAllowVideoNonSeamlessAdaptiveness(false)
+                    .setAllowVideoNonSeamlessAdaptiveness(true)
                     .setExceedRendererCapabilitiesIfNecessary(true)
+                    .setTunnelingEnabled(false) // Desativa tunneling que congela vídeo em chipsets Amlogic/Rockchip
             )
         }
 
         val renderersFactory = DefaultRenderersFactory(this).apply {
             setEnableDecoderFallback(true)
+            setAllowedVideoJoiningTimeMs(5000)
             setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
         }
 
@@ -400,11 +421,20 @@ class PlayerActivity : AppCompatActivity() {
                     setMimeType(MimeTypes.VIDEO_MP2T)
                 }
             }
+            .setLiveConfiguration(
+                MediaItem.LiveConfiguration.Builder()
+                    .setTargetOffsetMs(15_000) // Folga de segurança de 15s atrás do topo ao vivo
+                    .setMinOffsetMs(6_000)
+                    .setMaxOffsetMs(35_000)
+                    .setMinPlaybackSpeed(1.0f) // Ajuste suave de velocidade (±3%) sem buffering
+                    .setMaxPlaybackSpeed(1.0f)
+                    .build()
+            )
             .build()
 
         val mediaSource = if (targetUrl.contains(".m3u8")) {
             HlsMediaSource.Factory(dataSourceFactory)
-                .setAllowChunklessPreparation(true)
+                .setAllowChunklessPreparation(false) // Garante decodificação e sincronismo precisos de áudio e vídeo
                 .createMediaSource(mediaItem)
         } else {
             DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
@@ -837,6 +867,8 @@ class PlayerActivity : AppCompatActivity() {
         const val EXTRA_CHANNEL = "extra_channel"
         const val EXTRA_CHANNEL_LIST = "extra_channel_list"
         const val EXTRA_CHANNEL_INDEX = "extra_channel_index"
+        const val EXTRA_PLAYBACK_OFFSET = "extra_playback_offset"
+        const val EXTRA_PLAYBACK_TITLE = "extra_playback_title"
         private val STREAM_FALLBACKS = mapOf(
             // Corruptx FHD <-> HD Pairs
             "8735" to "8736",   // Discovery Channel FHD -> HD
@@ -889,25 +921,25 @@ class PlayerActivity : AppCompatActivity() {
 
         private val CROSS_CDN_FALLBACKS = mapOf(
             // Formula 1 (UniTV CDN Band SP HD <-> Corruptx BandSports)
-            "band-sp-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8661.m3u8",
+            "band-sp-hd" to "http://64.31.23.207:80/live/59471019/60849037/3460153.m3u8",
             "8661.m3u8" to "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
             // UniTV Discovery <-> Corruptx Discovery
-            "discovery-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8736.m3u8",
+            "discovery-hd" to "http://64.31.23.207:80/live/59471019/60849037/297936.m3u8",
             "8736.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-            "discovery-turbo-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8756.m3u8",
+            "discovery-turbo-hd" to "http://64.31.23.207:80/live/59471019/60849037/297943.m3u8",
             "8756.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-turbo-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-            "discovery-hh" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8740.m3u8",
+            "discovery-hh" to "http://64.31.23.207:80/live/59471019/60849037/297940.m3u8",
             "8740.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-hh/index.m3u8?token=2d3232fe89d2b637a2093703",
-            "tlc-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8754.m3u8",
+            "tlc-hd" to "http://64.31.23.207:80/live/59471019/60849037/5378655.m3u8",
             "8754.m3u8" to "https://cdn1.uniredes.com.br/hls/tlc-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
             // UniTV ESPN <-> Corruptx ESPN
-            "espn-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/598914.m3u8",
+            "espn-hd" to "http://64.31.23.207:80/live/59471019/60849037/3460183.m3u8",
             "598914.m3u8" to "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
             // UniTV Globo SP <-> Corruptx Globo SP
-            "globo-sp-hd" to "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1168918.m3u8",
+            "globo-sp-hd" to "http://64.31.23.207:80/live/59471019/60849037/5676596.m3u8",
             "1168918.m3u8" to "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
             // Kids
@@ -915,18 +947,7 @@ class PlayerActivity : AppCompatActivity() {
         )
 
         fun getFallbackUrl(url: String): String? {
-            for ((key, target) in CROSS_CDN_FALLBACKS) {
-                if (url.contains(key)) {
-                    return target
-                }
-            }
-            // Domain mirror failover: Corruptx <-> Acaidopt
-            if (url.contains("corruptx.org")) {
-                return url.replace("corruptx.org", "acaidopt.org")
-            }
-            if (url.contains("acaidopt.org")) {
-                return url.replace("acaidopt.org", "corruptx.org")
-            }
+            // 1. Tenta transição para versão HD/FHD alternativa do mesmo canal (reduz bitrate e alivia TV Box)
             for ((fhdId, hdId) in STREAM_FALLBACKS) {
                 if (url.contains("/$fhdId.m3u8")) {
                     return url.replace("/$fhdId.m3u8", "/$hdId.m3u8")
@@ -940,6 +961,18 @@ class PlayerActivity : AppCompatActivity() {
                 if (url.contains("/$hdId.ts")) {
                     return url.replace("/$hdId.ts", "/$fhdId.ts")
                 }
+            }
+            // 2. Alternância entre CDNs cruzadas (UniTV <-> Corruptx)
+            for ((key, target) in CROSS_CDN_FALLBACKS) {
+                if (url.contains(key)) {
+                    return target
+                }
+            }
+            // 3. Fallback inteligente de extensao m3u8 <-> ts
+            if (url.endsWith(".m3u8")) {
+                return url.replace(".m3u8", ".ts")
+            } else if (url.endsWith(".ts")) {
+                return url.replace(".ts", ".m3u8")
             }
             return null
         }}

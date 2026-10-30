@@ -160,6 +160,8 @@ class ChannelListAdapter(
 
     fun getSelectedPosition(): Int = selectedIndex
 
+    fun getChannels(): List<Channel> = channels
+
     fun updateChannels(newChannels: List<Channel>) {
         this.channels = newChannels
         this.selectedIndex = 0

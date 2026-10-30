@@ -219,13 +219,13 @@ object EpgRepository {
 
         // Resolve o ID do stream para consulta de EPG ao vivo
         val streamId = CORRUPTX_EPG_MAP[channel.id]
-            ?: if (channel.streamUrl.contains("corruptx.org")) extractStreamIdFromUrl(channel.streamUrl) else null
+            ?: extractStreamIdFromUrl(channel.streamUrl)
             ?: channel.playbackStreamId
             ?: extractStreamIdFromUrl(channel.streamUrl)
 
         if (streamId == null) return@withContext null
 
-        val serverUrl = "http://corruptx.org:80/player_api.php?username=hfp5ejnrey&password=zq0u3kzads&action=get_short_epg&stream_id=$streamId&limit=6"
+        val serverUrl = "http://64.31.23.207:80/player_api.php?username=59471019&password=60849037&action=get_short_epg&stream_id=$streamId&limit=6"
 
         try {
             val url = URL(serverUrl)

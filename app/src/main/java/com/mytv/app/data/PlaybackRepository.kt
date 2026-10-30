@@ -167,7 +167,7 @@ object PlaybackRepository {
     /**
      * Retorna a lista de programas passados dos últimos dias para este canal
      */
-    fun getProgramHistory(channel: Channel, daysAgo: Int = 0): List<EpgProgram> {
+        fun getProgramHistory(channel: Channel, daysAgo: Int = 0): List<EpgProgram> {
         val cal = Calendar.getInstance(timeZone)
         cal.add(Calendar.DAY_OF_YEAR, -daysAgo)
         val dayFormat = SimpleDateFormat("dd/MM", Locale.getDefault()).apply { timeZone = PlaybackRepository.timeZone }
@@ -183,7 +183,6 @@ object PlaybackRepository {
         cal.set(Calendar.MILLISECOND, 0)
         val dayStartMillis = cal.timeInMillis
 
-        val now = System.currentTimeMillis()
         val list = mutableListOf<EpgProgram>()
 
         for (slotIdx in EpgRepository.timeSlots.indices) {
@@ -191,29 +190,26 @@ object PlaybackRepository {
             val startMillis = dayStartMillis + (slot.first * 60 * 1000L)
             val endMillis = dayStartMillis + (slot.second * 60 * 1000L)
 
-            // Só lista programas que já foram exibidos ou que estão em andamento
-            if (startMillis < now) {
-                val startH = String.format("%02d:%02d", slot.first / 60, slot.first % 60)
-                val endH = String.format("%02d:%02d", (slot.second / 60) % 24, slot.second % 60)
-                val meta = EpgRepository.getProgramMeta(channel, slotIdx)
+            val startH = String.format("%02d:%02d", slot.first / 60, slot.first % 60)
+            val endH = String.format("%02d:%02d", (slot.second / 60) % 24, slot.second % 60)
+            val meta = EpgRepository.getProgramMeta(channel, slotIdx)
 
-                list.add(
-                    EpgProgram(
-                        title = "${meta.first} ($dayLabel)",
-                        category = channel.category,
-                        startTime = startH,
-                        endTime = endH,
-                        startTimestamp = startMillis,
-                        endTimestamp = endMillis,
-                        synopsis = meta.second.ifEmpty {
-                            "Programa gravado na íntegra transmitido em $dayLabel no canal ${channel.title}. Disponível para assistir do início pelo Playback 7 Dias."
-                        }
-                    )
+            list.add(
+                EpgProgram(
+                    title = meta.first,
+                    category = channel.category,
+                    startTime = startH,
+                    endTime = endH,
+                    startTimestamp = startMillis,
+                    endTimestamp = endMillis,
+                    synopsis = meta.second.ifEmpty {
+                        "Transmissão gravada na íntegra no canal ${channel.title}. Disponível para assistir do início pelo Playback 7 Dias na nuvem."
+                    }
                 )
-            }
+            )
         }
 
-        // Mais recentes primeiro
-        return list.reversed()
+        // Retorna em ordem cronológica (manhã -> noite) conforme foto de referência
+        return list
     }
 }

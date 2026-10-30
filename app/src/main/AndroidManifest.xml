@@ -52,6 +52,14 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MyTvApp.Player" />
 
+        <!-- Guia Playback 7 Dias Profissional (3 Colunas Estilo BTV / UniTV) -->
+        <activity
+            android:name=".PlaybackActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.MyTvApp" />
+
         <!-- Provedor de Arquivos Seguro para Instalação de Atualizações OTA -->
         <provider
             android:name="androidx.core.content.FileProvider"

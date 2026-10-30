@@ -22,7 +22,7 @@ object ChannelRepository {
                         number = "01",
                         title = "Cine SKY 01 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13071.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882617.m3u8",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Cine Sky Oficial: Grandes lancamentos do cinema mundial 24h sem intervalos comerciais.",
                         quality = "FHD"
@@ -32,7 +32,7 @@ object ChannelRepository {
                         number = "02",
                         title = "Cine SKY 02 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13072.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882618.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Os melhores sucessos de bilheteria e estreias exclusivas do cinema direto na sua TV.",
                         quality = "FHD"
@@ -42,7 +42,7 @@ object ChannelRepository {
                         number = "03",
                         title = "Cine SKY 03 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13073.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882619.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Filmes consagrados, acao, suspense e producoes premiadas de Hollywood.",
                         quality = "FHD"
@@ -52,7 +52,7 @@ object ChannelRepository {
                         number = "04",
                         title = "Cine SKY 05 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13075.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882621.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Cinema em alta definicao com lancamentos imperdiveis e classicos mundiais.",
                         quality = "FHD"
@@ -62,7 +62,7 @@ object ChannelRepository {
                         number = "05",
                         title = "Cine SKY Acao HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13071.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378580.m3u8",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Tiros, explosoes e adrenalina pura com os maiores astros da acao.",
                         quality = "FHD"
@@ -72,7 +72,7 @@ object ChannelRepository {
                         number = "06",
                         title = "Cine SKY Familia HD",
                         category = "Cine Sky",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13072.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378586.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Comedias, animacoes e os melhores filmes para toda a familia reunir.",
                         quality = "FHD"
@@ -89,7 +89,7 @@ object ChannelRepository {
                         number = "07",
                         title = "A Fazenda 24H - Camera 1 (Sede Principal)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470061.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288160.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Camera principal ao vivo 24 horas por dia dentro da sede de A Fazenda com todos os peoes.",
                         quality = "FHD"
@@ -99,7 +99,7 @@ object ChannelRepository {
                         number = "08",
                         title = "A Fazenda 24H - Camera 2 (Baia & Animais)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470062.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378544.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Camera exclusiva na baia dos animais, rotina rural e conversas reservadas.",
                         quality = "HD"
@@ -109,7 +109,7 @@ object ChannelRepository {
                         number = "09",
                         title = "A Fazenda 24H - Camera 3 (Oficina & Varanda)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470063.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288162.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Acompanhe as estrategias e reunioes secretas na area da varanda e oficina.",
                         quality = "HD"
@@ -119,7 +119,7 @@ object ChannelRepository {
                         number = "10",
                         title = "A Fazenda 24H - Camera 4 (Cozinha & Sala)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470064.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288163.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Toda a movimentacao das refeicoes, discussoes na cozinha e momentos na sala de estar.",
                         quality = "HD"
@@ -129,7 +129,7 @@ object ChannelRepository {
                         number = "11",
                         title = "A Fazenda 24H - Camera 5 (Piscina & Academia)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470065.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288164.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Area externa, treinos na academia, banho de sol na piscina e conversas quentes.",
                         quality = "HD"
@@ -139,7 +139,7 @@ object ChannelRepository {
                         number = "12",
                         title = "A Fazenda 24H - Camera 6 (Quartos & Espelho)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470066.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288165.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Transmissao ao vivo dos quartos, pre-festas, fofocas e descanso dos peoes.",
                         quality = "HD"
@@ -149,21 +149,12 @@ object ChannelRepository {
                         number = "13",
                         title = "A Fazenda 24H - Camera 7 (Mosaico Multicameras)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378603.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Logo_A_Fazenda_-_Atual.png",
                         description = "Visao panoramica mosaico transmitindo todos os cantos da fazenda simultaneamente.",
                         quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_bbb_24h",
-                        number = "14",
-                        title = "Reality BBB 24H HD",
-                        category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Big_Brother_Brasil_logo.svg/320px-Big_Brother_Brasil_logo.svg.png",
-                        description = "A casa mais vigiada do Brasil ao vivo 24 horas por dia com cobertura completa.",
-                        quality = "FHD"
                     )
+
                 )
             ),
                         ChannelCategory(
@@ -182,7 +173,7 @@ object ChannelRepository {
                         number = "49",
                         title = "Premiere Clubes FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "O melhor do futebol brasileiro 24 horas por dia com jogos ao vivo e programas exclusivos.",
                         quality = "FHD"
@@ -192,7 +183,7 @@ object ChannelRepository {
                         number = "50",
                         title = "Premiere 2 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9022.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460214.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Transmissões ao vivo das Séries A e B do Brasileirão e campeonatos regionais.",
                         quality = "FHD"
@@ -202,7 +193,7 @@ object ChannelRepository {
                         number = "51",
                         title = "Premiere 3 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13577.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460214.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Partidas simultâneas ao vivo e transmissão completa dos principais clubes do Brasil.",
                         quality = "FHD"
@@ -212,7 +203,7 @@ object ChannelRepository {
                         number = "52",
                         title = "Premiere 4 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108295.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460220.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Futebol ao vivo em alta definição direto dos estádios de todo o Brasil.",
                         quality = "FHD"
@@ -222,7 +213,7 @@ object ChannelRepository {
                         number = "53",
                         title = "Premiere 5 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108303.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460221.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Canal de transmissão direta de partidas simultâneas dos campeonatos nacionais.",
                         quality = "FHD"
@@ -232,7 +223,7 @@ object ChannelRepository {
                         number = "54",
                         title = "Premiere 6 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108307.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460221.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Cobertura completa dos jogos da Série B e confrontos regionais.",
                         quality = "FHD"
@@ -242,7 +233,7 @@ object ChannelRepository {
                         number = "55",
                         title = "Premiere 7 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/108313.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460227.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Canal pay-per-view exclusivo para transmissões de mata-mata e decisões.",
                         quality = "FHD"
@@ -252,7 +243,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Premiere 8 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13582.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460230.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Transmissão em tempo real de partidas complementares da rodada de futebol.",
                         quality = "FHD"
@@ -269,7 +260,7 @@ object ChannelRepository {
                         number = "57",
                         title = "SportyNet 1 FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/275100.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460158.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Transmissões ao vivo dos Campeonatos Estaduais, divisões de acesso e copas regionais.",
                         quality = "FHD"
@@ -279,7 +270,7 @@ object ChannelRepository {
                         number = "58",
                         title = "SportyNet 2 FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/289540.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460158.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Canal complementar com múltiplos jogos ao vivo simultâneos dos campeonatos estaduais.",
                         quality = "FHD"
@@ -299,7 +290,7 @@ object ChannelRepository {
                         number = "60",
                         title = "FCF TV 1 FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2403505.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297545.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Transmissão oficial das federações estaduais com jogos ao vivo e copas do Nordeste.",
                         quality = "FHD"
@@ -309,7 +300,7 @@ object ChannelRepository {
                         number = "61",
                         title = "X Sports FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2403506.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297545.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/320px-Soccerball.svg.png",
                         description = "Esportes alternativos, campeonatos internacionais e partidas ao vivo.",
                         quality = "FHD"
@@ -319,7 +310,7 @@ object ChannelRepository {
                         number = "62",
                         title = "BandSports FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8661.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460152.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngbandsports.png",
                         description = "Futebol internacional, campeonatos de base, tênis, automobilismo e esportes olímpicos.",
                         quality = "FHD"
@@ -329,7 +320,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Combate FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8714.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297542.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngcombate.png",
                         description = "O canal oficial das lutas: UFC, Boxe, Jiu-Jitsu e grandes torneios de artes marciais.",
                         quality = "FHD"
@@ -346,7 +337,7 @@ object ChannelRepository {
                         number = "64",
                         title = "SporTV FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9111.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngsportv.png",
                         description = "O canal campeão: cobertura ao vivo dos maiores campeonatos esportivos do Brasil e do mundo.",
                         quality = "FHD"
@@ -356,7 +347,7 @@ object ChannelRepository {
                         number = "65",
                         title = "SporTV 2 FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/30123.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460203.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngsportv2.png",
                         description = "Vôlei, basquete, tênis, automobilismo e futebol ao vivo todos os dias.",
                         quality = "FHD"
@@ -366,7 +357,7 @@ object ChannelRepository {
                         number = "66",
                         title = "SporTV 3 FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/30124.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460206.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngsportv3.png",
                         description = "Esportes olímpicos, atletismo, natação e transmissão simultânea de grandes torneios.",
                         quality = "FHD"
@@ -386,7 +377,7 @@ object ChannelRepository {
                         number = "68",
                         title = "BandSports FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8661.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460152.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngbandsports.png",
                         description = "Futebol internacional, treinos de Fórmula 1, lutas e esportes radicais ao vivo.",
                         quality = "FHD"
@@ -396,7 +387,7 @@ object ChannelRepository {
                         number = "69",
                         title = "Combate FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8714.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297542.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngcombate.png",
                         description = "O canal oficial das artes marciais: UFC, Boxe, Jiu-Jitsu, Kickboxing e Jungle Fight 24H.",
                         quality = "FHD"
@@ -443,7 +434,7 @@ object ChannelRepository {
                         number = "73",
                         title = "ESPN 4 FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460182.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngfoxsports1.png",
                         description = "A casa da Copa Libertadores da América, Copa Sul-Americana e futebol sul-americano.",
                         quality = "FHD"
@@ -480,7 +471,7 @@ object ChannelRepository {
                         number = "42",
                         title = "Telecine Premium HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9133.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378595.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Grandes sucessos de bilheteria e estreias exclusivas do cinema mundial em primeira mao.",
                         quality = "FHD"
@@ -490,7 +481,7 @@ object ChannelRepository {
                         number = "43",
                         title = "Telecine Action HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9126.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378581.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Telecine_Action_logo_2019.svg/320px-Telecine_Action_logo_2019.svg.png",
                         description = "Muita adrenalina, velocidade, acao e perseguicoes sem limite.",
                         quality = "FHD"
@@ -500,7 +491,7 @@ object ChannelRepository {
                         number = "44",
                         title = "Telecine Touch HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9135.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378597.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Telecine_Touch_logo_2019.svg/320px-Telecine_Touch_logo_2019.svg.png",
                         description = "Emocao e historias marcantes: os maiores dramas e romances de todos os tempos.",
                         quality = "FHD"
@@ -510,7 +501,7 @@ object ChannelRepository {
                         number = "45",
                         title = "Telecine Pipoca HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9131.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378591.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Telecine_Pipoca_logo_2019.svg/320px-Telecine_Pipoca_logo_2019.svg.png",
                         description = "Os filmes mais divertidos do cinema nacional e internacional 100% dublados.",
                         quality = "FHD"
@@ -520,7 +511,7 @@ object ChannelRepository {
                         number = "46",
                         title = "Telecine Fun HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9130.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378587.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Telecine_Fun_logo_2019.svg/320px-Telecine_Fun_logo_2019.svg.png",
                         description = "Comedias e animacoes para garantir boas risadas com a familia reunida.",
                         quality = "FHD"
@@ -530,7 +521,7 @@ object ChannelRepository {
                         number = "47",
                         title = "Telecine Cult HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/24534.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378583.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Telecine_Cult_logo_2019.svg/320px-Telecine_Cult_logo_2019.svg.png",
                         description = "Obras-primas da historia da setima arte, cinema de autor e producoes premiadas.",
                         quality = "FHD"
@@ -547,7 +538,7 @@ object ChannelRepository {
                         number = "48",
                         title = "HBO HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8902.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514108.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series consagradas, grandes documentarios e as maiores producoes mundiais.",
                         quality = "FHD"
@@ -557,7 +548,7 @@ object ChannelRepository {
                         number = "49",
                         title = "HBO 2 HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8898.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514111.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/HBO2_logo_2014.svg/320px-HBO2_logo_2014.svg.png",
                         description = "Reprises dos melhores filmes e series em horarios alternativos dublados e legendados.",
                         quality = "FHD"
@@ -567,7 +558,7 @@ object ChannelRepository {
                         number = "50",
                         title = "HBO Plus HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/24592.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514119.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/HBO_Plus_logo_2019.svg/320px-HBO_Plus_logo_2019.svg.png",
                         description = "Conteudo jovem, comedia, acao e musica da franquia HBO.",
                         quality = "FHD"
@@ -577,7 +568,7 @@ object ChannelRepository {
                         number = "51",
                         title = "HBO Family HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8901.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514113.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/HBO_Family_2014.svg/320px-HBO_Family_2014.svg.png",
                         description = "Programacao voltada para criancas e jovens com animacoes e filmes familiares.",
                         quality = "FHD"
@@ -587,7 +578,7 @@ object ChannelRepository {
                         number = "52",
                         title = "HBO Signature HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8912.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514125.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/HBO_Signature_logo_2014.svg/320px-HBO_Signature_logo_2014.svg.png",
                         description = "O acervo mais exclusivo e refinado das producoes originais e documentarios HBO.",
                         quality = "FHD"
@@ -597,7 +588,7 @@ object ChannelRepository {
                         number = "53",
                         title = "HBO Mundi HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8904.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514123.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Filmes internacionais e producoes independentes aclamadas pela critica.",
                         quality = "FHD"
@@ -607,7 +598,7 @@ object ChannelRepository {
                         number = "54",
                         title = "HBO Pop HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/24593.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514117.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Filmes leves, comedias romanticas e grandes sucessos da cultura pop.",
                         quality = "FHD"
@@ -617,7 +608,7 @@ object ChannelRepository {
                         number = "55",
                         title = "HBO Xtreme HD",
                         category = "Rede HBO",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/13535.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514129.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Acao frenetica, suspense e terror para quem gosta de fortes emocoes.",
                         quality = "FHD"
@@ -644,7 +635,7 @@ object ChannelRepository {
                         number = "57",
                         title = "Discovery Kids HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8742.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297945.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD"
@@ -674,7 +665,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Discovery ID (Investigacao) HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8932.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Investigation_Discovery_logo_%282020%29.svg/320px-Investigation_Discovery_logo_%282020%29.svg.png",
                         description = "Crimes reais, investigacoes policiais forenses e os misterios mais intrigantes.",
                         quality = "FHD"
@@ -684,7 +675,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Discovery World HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8758.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Discovery_World_logo.svg/320px-Discovery_World_logo.svg.png",
                         description = "Documentarios deslumbrantes sobre culturas globais, paisagens e a historia da Terra.",
                         quality = "FHD"
@@ -694,7 +685,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Discovery Science HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8745.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Discovery_Science_logo.svg/320px-Discovery_Science_logo.svg.png",
                         description = "Tecnologia de ponta, astrofisica, experimentos ousados e inovacoes do futuro.",
                         quality = "HD"
@@ -704,7 +695,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Discovery Theater HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8748.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Discovery_Theater_logo.png/320px-Discovery_Theater_logo.png",
                         description = "Imagens cinematograficas em alta definicao da natureza e animais selvagens.",
                         quality = "HD"
@@ -714,7 +705,7 @@ object ChannelRepository {
                         number = "64",
                         title = "Animal Planet HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304491.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/296619.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Animal_Planet_logo_2018.svg/320px-Animal_Planet_logo_2018.svg.png",
                         description = "O reino animal de perto: resgate de fauna, predadores selvagens e vida dos pets.",
                         quality = "FHD"
@@ -734,7 +725,7 @@ object ChannelRepository {
                         number = "66",
                         title = "HGTV HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304506.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297940.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/hgtv.png",
                         description = "O canal mundial de reformas de casas, decoracao de interiores e compra e venda de imoveis.",
                         quality = "FHD"
@@ -751,7 +742,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Canal Sony HD (Sony Channel)",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9098.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378640.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sony_Channel_logo_2019.svg/320px-Sony_Channel_logo_2019.svg.png",
                         description = "O lendario Canal Sony: Grey's Anatomy, The Good Doctor e as series medicas e policiais mais amadas.",
                         quality = "FHD"
@@ -771,7 +762,7 @@ object ChannelRepository {
                         number = "58",
                         title = "Warner Channel HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9219.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378671.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Warner_Channel_2019_logo.svg/320px-Warner_Channel_2019_logo.svg.png",
                         description = "Universo DC, The Big Bang Theory, Friends e os maiores sucessos da Warner Bros.",
                         quality = "FHD"
@@ -781,7 +772,7 @@ object ChannelRepository {
                         number = "59",
                         title = "Megapix HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8961.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378624.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Megapix_logo_2020.svg/320px-Megapix_logo_2020.svg.png",
                         description = "O canal dos grandes campeoes de bilheteria dublados com sessao pipoca todo dia.",
                         quality = "FHD"
@@ -791,7 +782,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Universal TV HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/21682.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378668.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Universal_TV_logo_2018.svg/320px-Universal_TV_logo_2018.svg.png",
                         description = "Franquia Chicago (Fire, P.D., Med), Law & Order e grandes investigacoes.",
                         quality = "FHD"
@@ -801,7 +792,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Studio Universal HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9115.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378648.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Studio_Universal_logo.svg/320px-Studio_Universal_logo.svg.png",
                         description = "Cinema hollywoodiano e classicos dos estúdios Universal Pictures.",
                         quality = "FHD"
@@ -811,7 +802,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Paramount Network HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/240737.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378649.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Paramount_Network_2018.svg/320px-Paramount_Network_2018.svg.png",
                         description = "Yellowstone, Tulsa King e superproducoes consagradas da Paramount Pictures.",
                         quality = "FHD"
@@ -821,7 +812,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Cinemax HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8708.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378618.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cinemax_logo_2011.svg/320px-Cinemax_logo_2011.svg.png",
                         description = "Filmes de sucesso, acao e suspense com a chancela do grupo HBO.",
                         quality = "FHD"
@@ -851,7 +842,7 @@ object ChannelRepository {
                         number = "66",
                         title = "AXN HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81600.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378611.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/AXN_logo_2015.svg/320px-AXN_logo_2015.svg.png",
                         description = "As maiores series policiais e de investigacao forense do mundo: NCIS e Criminal Minds.",
                         quality = "FHD"
@@ -891,7 +882,7 @@ object ChannelRepository {
                         number = "70",
                         title = "Top Mix Filmes",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1169216.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378594.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/top-mix-filmes.png",
                         description = "Uma selecao diversificada com filmes de varios generos 24 horas por dia.",
                         quality = "HD"
@@ -901,7 +892,7 @@ object ChannelRepository {
                         number = "71",
                         title = "Hallo! Series",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1169218.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/hallo-series.png",
                         description = "Maratonas das melhores series de comedia e drama da televisao.",
                         quality = "HD"
@@ -911,7 +902,7 @@ object ChannelRepository {
                         number = "72",
                         title = "RunTime - Cinema",
                         category = "Filmes & Séries",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1169244.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378617.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-cinema.png",
                         description = "Filmes aclamados com exibicao continua e alta definicao.",
                         quality = "HD"
@@ -948,7 +939,7 @@ object ChannelRepository {
                         number = "75",
                         title = "History Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304494.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297936.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
                         description = "Trato Feito, Alienigenas do Passado, Forjado no Fogo e grandes acontecimentos historicos.",
                         quality = "FHD"
@@ -958,7 +949,7 @@ object ChannelRepository {
                         number = "76",
                         title = "History 2 (H2) HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/304498.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72147.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/History2_logo.svg/320px-History2_logo.svg.png",
                         description = "Aprofundamento historico, grandes guerras, arqueologia e conspiracoes mundiais.",
                         quality = "FHD"
@@ -988,7 +979,7 @@ object ChannelRepository {
                         number = "79",
                         title = "Curta! HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/12948.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378614.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/curta.png",
                         description = "Cinema brasileiro, artes plasticas, musica, filosofia e literatura.",
                         quality = "FHD"
@@ -998,7 +989,7 @@ object ChannelRepository {
                         number = "80",
                         title = "Arte 1 HD",
                         category = "Documentários",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/67512.m3u8",
+                        streamUrl = "http://45.162.64.114/ARTE1/index.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/arte-1.png",
                         description = "Danca, musica classica, teatro, fotografia e arquitetura.",
                         quality = "FHD"
@@ -1015,7 +1006,7 @@ object ChannelRepository {
                         number = "88",
                         title = "Multishow HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8975.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518581.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Multishow_logo_2017.svg/320px-Multishow_logo_2017.svg.png",
                         description = "Shows ao vivo, humor com Vai Que Cola, festivais Rock in Rio e Lollapalooza.",
                         quality = "FHD"
@@ -1025,7 +1016,7 @@ object ChannelRepository {
                         number = "89",
                         title = "GNT HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8891.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676597.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/GNT_logo_2020.svg/320px-GNT_logo_2020.svg.png",
                         description = "Gastronomia, moda, decoracao, Papo de Segunda e Saia Justa.",
                         quality = "FHD"
@@ -1045,7 +1036,7 @@ object ChannelRepository {
                         number = "91",
                         title = "Canal Brasil HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://vaiagora.vip:80/live/5q8VUj/5BeUd8/103518.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378614.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Canal_Brasil_logo_2019.svg/320px-Canal_Brasil_logo_2019.svg.png",
                         description = "O melhor da cultura nacional, cinema brasileiro, MPB e festivais artisticos.",
                         quality = "FHD"
@@ -1055,7 +1046,7 @@ object ChannelRepository {
                         number = "92",
                         title = "BIS HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8680.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518550.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Canal_Bis_logo.svg/320px-Canal_Bis_logo.svg.png",
                         description = "Grandes shows internacionais, documentarios musicais e turnes historicas.",
                         quality = "FHD"
@@ -1065,7 +1056,7 @@ object ChannelRepository {
                         number = "93",
                         title = "Modo Viagem HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8883.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518574.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Modo_Viagem_logo.png/320px-Modo_Viagem_logo.png",
                         description = "Turismo pelo mundo, hoteis deslumbrantes e experiencias de viagem inesqueciveis.",
                         quality = "FHD"
@@ -1125,7 +1116,7 @@ object ChannelRepository {
                         number = "99",
                         title = "Rede TV",
                         category = "Variedades & Estilo",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/rede-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5298055.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-tv.png",
                         description = "Entretenimento, talk shows, fofocas e debates ao vivo.",
                         quality = "HD"
@@ -1152,7 +1143,7 @@ object ChannelRepository {
                         number = "101",
                         title = "SporTV 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81591.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676601.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "Transmissao oficial em resolucao 4K Ultra HD (3840x2160) com maximo detalhe esportivo.",
                         quality = "4K"
@@ -1162,7 +1153,7 @@ object ChannelRepository {
                         number = "102",
                         title = "Premiere 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81582.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "O melhor do futebol brasileiro com qualidade de cinema 4K UHD e som imersivo.",
                         quality = "4K"
@@ -1172,7 +1163,7 @@ object ChannelRepository {
                         number = "103",
                         title = "Telecine Premium 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/94375.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676603.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Grandes lancamentos do cinema mundial na resolucao maxima 4K Ultra HD.",
                         quality = "4K"
@@ -1182,7 +1173,7 @@ object ChannelRepository {
                         number = "104",
                         title = "HBO 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/94381.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514107.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series premiadas e filmes HBO gravados em resolucao nativa 4K UHD.",
                         quality = "4K"
@@ -1192,7 +1183,7 @@ object ChannelRepository {
                         number = "105",
                         title = "Discovery 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/91396.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676591.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
                         description = "Documentarios deslumbrantes da natureza, ciencia e vida selvagem em 4K.",
                         quality = "4K"
@@ -1229,7 +1220,7 @@ object ChannelRepository {
                         number = "108",
                         title = "Globo SP H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/1168916.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378580.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Transmissao em codec H.265 de alta eficiencia: imagem ultra nitida consumindo metade da banda.",
                         quality = "H265"
@@ -1239,7 +1230,7 @@ object ChannelRepository {
                         number = "109",
                         title = "SporTV H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81591.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676601.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "O canal lider de esportes otimizado em compressao H.265 sem travamentos.",
                         quality = "H265"
@@ -1249,7 +1240,7 @@ object ChannelRepository {
                         number = "110",
                         title = "Telecine H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/94375.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676603.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Filmes em alta taxa de bits codificados em H.265 para TV Boxes modernas.",
                         quality = "H265"
@@ -1259,7 +1250,7 @@ object ChannelRepository {
                         number = "111",
                         title = "HBO H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/94381.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514107.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/320px-HBO_logo.svg.png",
                         description = "Series e sucessos de Hollywood em transmissao eficiente H.265.",
                         quality = "H265"
@@ -1269,7 +1260,7 @@ object ChannelRepository {
                         number = "112",
                         title = "ESPN H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/598912.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/espn-hd.png",
                         description = "Esportes internacionais com codificacao avancada H.265 a 60fps.",
                         quality = "H265"
@@ -1279,7 +1270,7 @@ object ChannelRepository {
                         number = "113",
                         title = "Premiere H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/81582.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "Futebol brasileiro com transmissao rapida e estavel pelo codec H.265.",
                         quality = "H265"
@@ -1447,7 +1438,7 @@ object ChannelRepository {
                         number = "127",
                         title = "Band SP - Band SP",
                         category = "Band",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676586.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-sp-band-sp.png",
                         description = "Band Sao Paulo: O canal do esporte, Formula 1, Jogo Aberto, Os Donos da Bola e MasterChef.",
                         quality = "HD"
@@ -1519,11 +1510,11 @@ object ChannelRepository {
                     Channel(
                         id = "ch_f1",
                         number = "133",
-                        title = "Fórmula 1 HD",
+                        title = "BandSports - Fórmula 1 HD",
                         category = "Fórmula 1 (F1)",
-                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460152.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/500px-F1.svg.png",
-                        description = "Transmissao oficial ao vivo da Formula 1: treinos livres, classificacao, sprint e Grandes Premios.",
+                        description = "Acompanhe a Formula 1 ao vivo pelo BandSports: treinos, classificacao, sprint e Grandes Premios. Canal 81585 Corruptx.",
                         quality = "FHD"
                     )
                 )
@@ -1538,7 +1529,7 @@ object ChannelRepository {
                         number = "134",
                         title = "Cartoon Network HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8698.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882631.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/320px-Cartoon_Network_2010_logo.svg.png",
                         description = "O canal dos desenhos animados: Ben 10, Teen Titans Go, Hora de Aventura e Incrivel Mundo de Gumball.",
                         quality = "FHD"
@@ -1548,7 +1539,7 @@ object ChannelRepository {
                         number = "135",
                         title = "Cartoonito HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8688.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71832.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cartoonito.png",
                         description = "O canal infantil pre-escolar oficial (sucessor do Boomerang): Batwheels, Lucas a Aranha e Thomas.",
                         quality = "FHD"
@@ -1578,7 +1569,7 @@ object ChannelRepository {
                         number = "138",
                         title = "Tooncast HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9150.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882638.ts",
                         logoUrl = "http://acstatic.co/logos/canais/tooncast.png",
                         description = "Os classicos inesqueciveis: Coragem o Cao Covarde, O Laboratorio de Dexter e Os Flintstones.",
                         quality = "HD"
@@ -1588,7 +1579,7 @@ object ChannelRepository {
                         number = "139",
                         title = "Discovery Kids HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8742.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297947.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD"
@@ -1598,7 +1589,7 @@ object ChannelRepository {
                         number = "140",
                         title = "Gloob HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/8888.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882626.ts",
                         logoUrl = "https://acstatic.co/logos/canais/gloob.png",
                         description = "Detetives do Predio Azul (DPA), Miraculous: As Aventuras de Ladybug e Bugados.",
                         quality = "FHD"
@@ -1608,7 +1599,7 @@ object ChannelRepository {
                         number = "141",
                         title = "Gloobinho HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/69037.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882629.ts",
                         logoUrl = "http://acstatic.co/logos/canais/gloobinho.png",
                         description = "Historias encantadoras, musica e brincadeiras para a primeira infancia.",
                         quality = "HD"
@@ -1618,7 +1609,7 @@ object ChannelRepository {
                         number = "142",
                         title = "TV Rá-Tim-Bum HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9230.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882634.ts",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-ra-tim-bum.png",
                         description = "O canal infantil brasileiro da Fundacao Padre Anchieta / TV Cultura: Cocorico e Ilha Ra-Tim-Bum.",
                         quality = "HD"
@@ -1628,7 +1619,7 @@ object ChannelRepository {
                         number = "143",
                         title = "Rakuten TV Kids",
                         category = "Infantil & Kids",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/125443.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/514107.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rakuten-tv-kids.png",
                         description = "Animacoes divertidas e educativas com programacao segura para criancas.",
                         quality = "HD"
@@ -1671,99 +1662,13 @@ object ChannelRepository {
                         quality = "HD"
                     )
                 )
-            ),
-            ChannelCategory(
-                id = "cat_adultos",
-                name = "Adultos (+18) & OnlyFans",
-                isLocked = true,
-                channels = listOf(
-                    Channel(
-                        id = "ch_onlyfans",
-                        number = "142",
-                        title = "OnlyFans & Privacy Stars 24H",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OnlyFans_logo.svg/320px-OnlyFans_logo.svg.png",
-                        description = "Transmissao continua com as principais criadoras e ensaios do OnlyFans e Privacy (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_onlyfans_vip",
-                        number = "143",
-                        title = "OnlyFans VIP & Amador 24H",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OnlyFans_logo.svg/320px-OnlyFans_logo.svg.png",
-                        description = "Conteudo exclusivo de criadores independentes e bastidores sem censura (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_playboy",
-                        number = "144",
-                        title = "Playboy TV FHD",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Playboy_Enterprises_logo.svg/320px-Playboy_Enterprises_logo.svg.png",
-                        description = "O canal pioneiro do entretenimento erotico refinado mundial (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_sexy_hot",
-                        number = "145",
-                        title = "Sexy Hot FHD",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sexy_Hot_logo_2018.svg/320px-Sexy_Hot_logo_2018.svg.png",
-                        description = "As maiores producoes nacionais e estrelas consagradas do cinema adulto (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_brasileirinhas",
-                        number = "146",
-                        title = "A Casa das Brasileirinhas 24H",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sexy_Hot_logo_2018.svg/320px-Sexy_Hot_logo_2018.svg.png",
-                        description = "O reality show mais quente do Brasil com exibicao continua 24 horas por dia (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_venus",
-                        number = "147",
-                        title = "Venus HD",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Venus_logo.svg/320px-Venus_logo.svg.png",
-                        description = "Sensualidade e producoes eroticas latinas e internacionais (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_sex_prive",
-                        number = "148",
-                        title = "Sex Privé HD",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Sex_Prive_logo_2018.png/320px-Sex_Prive_logo_2018.png",
-                        description = "Conteudo explicito e producoes exclusivas com as maiores estrelas do Brasil (+18).",
-                        quality = "FHD"
-                    ),
-                    Channel(
-                        id = "ch_brazzers",
-                        number = "149",
-                        title = "Brazzers TV HD",
-                        category = "Adultos (+18) & OnlyFans",
-                        streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/2470067.m3u8",
-                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Brazzers_logo.svg/320px-Brazzers_logo.svg.png",
-                        description = "A produtora mais famosa do mundo com as atrizes mais requisitadas (+18).",
-                        quality = "FHD"
-                    )
-                )
             )
+
         )
     }
-    private const val SERVER_BASE = "http://corruptx.org:80"
-    private const val USERNAME = "hfp5ejnrey"
-    private const val PASSWORD = "zq0u3kzads"
+    private const val SERVER_BASE = "http://64.31.23.207:80"
+    private const val USERNAME = "59471019"
+    private const val PASSWORD = "60849037"
 
     @Volatile
     private var dynamicJogosDoDia: List<Channel>? = null
@@ -1776,7 +1681,7 @@ object ChannelRepository {
                 number = "15",
                 title = "[15:00] Ah-Ali x Al-Khaleej",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Partida ao vivo de hoje: [15:00] Ah-Ali x Al-Khaleej",
                 quality = "FHD"
@@ -1786,7 +1691,7 @@ object ChannelRepository {
                 number = "16",
                 title = "[21:30] Flamengo x Estudiantes",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Partida ao vivo de hoje: [21:30] Flamengo x Estudiantes",
                 quality = "FHD"
@@ -1796,7 +1701,7 @@ object ChannelRepository {
                 number = "17",
                 title = "Jogos Ao Vivo (Canal 03)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1806,7 +1711,7 @@ object ChannelRepository {
                 number = "18",
                 title = "Jogos Ao Vivo (Canal 04)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1816,7 +1721,7 @@ object ChannelRepository {
                 number = "19",
                 title = "Jogos Ao Vivo (Canal 05)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1826,7 +1731,7 @@ object ChannelRepository {
                 number = "20",
                 title = "Jogos Ao Vivo (Canal 06)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1836,7 +1741,7 @@ object ChannelRepository {
                 number = "21",
                 title = "Jogos Ao Vivo (Canal 07)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1846,7 +1751,7 @@ object ChannelRepository {
                 number = "22",
                 title = "Jogos Ao Vivo (Canal 08)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1856,7 +1761,7 @@ object ChannelRepository {
                 number = "23",
                 title = "Jogos Ao Vivo (Canal 09)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1866,7 +1771,7 @@ object ChannelRepository {
                 number = "24",
                 title = "Jogos Ao Vivo (Canal 10)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1876,7 +1781,7 @@ object ChannelRepository {
                 number = "25",
                 title = "Jogos Ao Vivo (Canal 11)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1886,7 +1791,7 @@ object ChannelRepository {
                 number = "26",
                 title = "Jogos Ao Vivo (Canal 12)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1896,7 +1801,7 @@ object ChannelRepository {
                 number = "27",
                 title = "Jogos Ao Vivo (Canal 13)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1906,7 +1811,7 @@ object ChannelRepository {
                 number = "28",
                 title = "Jogos Ao Vivo (Canal 14)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1916,7 +1821,7 @@ object ChannelRepository {
                 number = "29",
                 title = "Jogos Ao Vivo (Canal 15)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1926,7 +1831,7 @@ object ChannelRepository {
                 number = "30",
                 title = "Jogos Ao Vivo (Canal 16)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1936,7 +1841,7 @@ object ChannelRepository {
                 number = "31",
                 title = "Jogos Ao Vivo (Canal 17)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1946,7 +1851,7 @@ object ChannelRepository {
                 number = "32",
                 title = "Jogos Ao Vivo (Canal 18)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1956,7 +1861,7 @@ object ChannelRepository {
                 number = "33",
                 title = "Jogos Ao Vivo (Canal 19)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1966,7 +1871,7 @@ object ChannelRepository {
                 number = "34",
                 title = "Jogos Ao Vivo (Canal 20)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1976,7 +1881,7 @@ object ChannelRepository {
                 number = "35",
                 title = "Jogos Ao Vivo (Canal 21)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1986,7 +1891,7 @@ object ChannelRepository {
                 number = "36",
                 title = "Jogos Ao Vivo (Canal 22)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1996,7 +1901,7 @@ object ChannelRepository {
                 number = "37",
                 title = "Jogos Ao Vivo (Canal 23)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2006,7 +1911,7 @@ object ChannelRepository {
                 number = "38",
                 title = "Jogos Ao Vivo (Canal 24)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2016,7 +1921,7 @@ object ChannelRepository {
                 number = "39",
                 title = "Jogos Ao Vivo (Canal 25)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2026,7 +1931,7 @@ object ChannelRepository {
                 number = "40",
                 title = "Jogos Ao Vivo (Canal 26)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2036,7 +1941,7 @@ object ChannelRepository {
                 number = "41",
                 title = "Jogos Ao Vivo (Canal 27)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2046,7 +1951,7 @@ object ChannelRepository {
                 number = "42",
                 title = "Jogos Ao Vivo (Canal 28)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2056,7 +1961,7 @@ object ChannelRepository {
                 number = "43",
                 title = "Jogos Ao Vivo (Canal 29)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2066,7 +1971,7 @@ object ChannelRepository {
                 number = "44",
                 title = "Jogos Ao Vivo (Canal 30)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2076,7 +1981,7 @@ object ChannelRepository {
                 number = "45",
                 title = "Jogos Ao Vivo (Canal 31)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2086,7 +1991,7 @@ object ChannelRepository {
                 number = "46",
                 title = "Jogos Ao Vivo (Canal 32)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2096,7 +2001,7 @@ object ChannelRepository {
                 number = "47",
                 title = "Jogos Ao Vivo (Canal 33)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2106,7 +2011,7 @@ object ChannelRepository {
                 number = "48",
                 title = "Jogos Ao Vivo (Canal 34)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://corruptx.org:80/live/hfp5ejnrey/zq0u3kzads/9037.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"

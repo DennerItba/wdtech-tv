@@ -35,8 +35,23 @@ class CategorySidebarAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val cat = categories[position]
         holder.txtName.text = if (cat.isLocked) "🔒 " + cat.name.uppercase() else cat.name.uppercase()
-        holder.txtCount.text = cat.channels.size.toString()
         holder.imgIcon.setImageResource(if (cat.iconRes != 0) cat.iconRes else R.drawable.outline_live_tv_24)
+
+        if (cat.id == "cat_settings") {
+            holder.txtCount.visibility = View.VISIBLE
+            holder.txtCount.text = "CONFIG"
+            holder.txtCount.setTextColor(Color.parseColor("#FFD700"))
+            holder.imgIcon.setColorFilter(Color.parseColor("#00E5FF"))
+        } else if (cat.channels.isEmpty() && (cat.id.startsWith("cat_playback") || cat.id.startsWith("cat_movies") || cat.id.startsWith("cat_series") || cat.id.startsWith("cat_back_live"))) {
+            holder.txtCount.visibility = View.GONE
+            holder.txtCount.setTextColor(Color.parseColor("#00E5FF"))
+            holder.imgIcon.clearColorFilter()
+        } else {
+            holder.txtCount.visibility = View.VISIBLE
+            holder.txtCount.text = cat.channels.size.toString()
+            holder.txtCount.setTextColor(Color.parseColor("#00E5FF"))
+            holder.imgIcon.clearColorFilter()
+        }
 
         val isCurrentSelected = (position == selectedIndex)
         holder.itemView.isSelected = isCurrentSelected
@@ -47,7 +62,8 @@ class CategorySidebarAdapter(
             holder.txtName.setTextColor(Color.parseColor("#E6EDF8"))
         }
 
-        // Foco suave e seguro pelo controle remoto (sem chamar notifyItemChanged durante layout)
+        // Foco visual suave: ao mover o cursor pelo menu principal, apenas destaca visualmente
+        // NÃO abre o submenu nem troca de tela até que o usuário pressione OK / ENTER!
         holder.itemView.setOnFocusChangeListener { _, hasFocus ->
             val pos = holder.bindingAdapterPosition
             if (hasFocus) {
@@ -63,33 +79,20 @@ class CategorySidebarAdapter(
             }
         }
 
-        // Navegação precisa pelo D-Pad do controle
+        // Navegação precisa pelo D-Pad do controle: o submenu só abre no CLIQUE (ENTER / DPAD_RIGHT)
         holder.itemView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 val pos = holder.bindingAdapterPosition
                 if (pos != RecyclerView.NO_POSITION && pos < categories.size) {
                     when (keyCode) {
-                        // Clicar OK ou D-Pad Direita: abre a categoria e joga o foco diretamente no canal 1
-                        KeyEvent.KEYCODE_DPAD_RIGHT,
+                        // Clicar OK / ENTER ou Seta Direita: confirma e abre a categoria / submenu
                         KeyEvent.KEYCODE_DPAD_CENTER,
                         KeyEvent.KEYCODE_ENTER,
-                        KeyEvent.KEYCODE_NUMPAD_ENTER -> {
+                        KeyEvent.KEYCODE_NUMPAD_ENTER,
+                        KeyEvent.KEYCODE_DPAD_RIGHT -> {
                             selectedIndex = pos
                             onCategoryClicked(categories[pos])
                             return@setOnKeyListener true
-                        }
-                        // D-Pad Cima no primeiro item: sobe para as abas superiores
-                        KeyEvent.KEYCODE_DPAD_UP -> {
-                            if (pos == 0) {
-                                onNavigateUpToTabs?.invoke()
-                                return@setOnKeyListener true
-                            }
-                        }
-                        // D-Pad Baixo no último item: não escapa
-                        KeyEvent.KEYCODE_DPAD_DOWN -> {
-                            if (pos == categories.size - 1) {
-                                return@setOnKeyListener true
-                            }
                         }
                     }
                 }

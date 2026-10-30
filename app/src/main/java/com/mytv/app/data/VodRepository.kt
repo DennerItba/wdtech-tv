@@ -14,11 +14,11 @@ import java.util.concurrent.ConcurrentHashMap
 
 object VodRepository {
 
-    private const val SERVER_BASE = "http://vivlar.me:80"
-    private const val USERNAME = "497238"
-    private const val PASSWORD = "KK8Kdy"
+    private const val SERVER_BASE = "http://64.31.23.207:80"
+    private const val USERNAME = "59471019"
+    private const val PASSWORD = "60849037"
 
-    // Caches em memória para navegação instantânea no controle remoto
+    // Caches em memória para navegação ágil no controle remoto
     private val movieCategoriesCache = mutableListOf<VodCategory>()
     private val seriesCategoriesCache = mutableListOf<VodCategory>()
     private val categoryMoviesCache = ConcurrentHashMap<String, List<VodItem>>()
@@ -41,28 +41,8 @@ object VodRepository {
                 val id = obj.optString("category_id", "")
                 var name = obj.optString("category_name", "").trim()
                 if (id.isNotEmpty() && name.isNotEmpty()) {
-                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true) || name.contains("Bella", ignoreCase = true)
-                    if (id == "4030") {
-                        name = "Bella da Semana & Ensaios (+18)"
-                    } else if (id == "40") {
-                        name = "Filmes Adultos (+18)"
-                    }
+                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
                     list.add(VodCategory(id = id, name = name, isAdult = isAdult, isSeries = false))
-                }
-            }
-
-            // Ordena priorizando Lançamentos, 4K, Ação, etc.
-            list.sortBy { cat ->
-                when {
-                    cat.name.contains("Lancamento", ignoreCase = true) -> 0
-                    cat.name.contains("4K", ignoreCase = true) -> 1
-                    cat.name.contains("Cinema", ignoreCase = true) -> 2
-                    cat.name.contains("Acao", ignoreCase = true) -> 3
-                    cat.name.contains("Comedia", ignoreCase = true) -> 4
-                    cat.name.contains("Animacao", ignoreCase = true) -> 5
-                    cat.name.contains("Terror", ignoreCase = true) -> 6
-                    cat.isAdult -> 99
-                    else -> 10
                 }
             }
 
@@ -100,14 +80,15 @@ object VodRepository {
                             id = streamId,
                             name = name,
                             posterUrl = poster,
+                            streamUrl = streamUrl,
                             rating = rating,
                             ratingScore = ratingScore,
                             categoryId = categoryId,
                             categoryName = categoryName,
-                            containerExtension = ext,
                             plot = plot,
-                            isSeries = false,
-                            streamUrl = streamUrl
+                            genre = categoryName,
+                            year = null,
+                            isSeries = false
                         )
                     )
                 }
@@ -134,29 +115,10 @@ object VodRepository {
             for (i in 0 until array.length()) {
                 val obj = array.getJSONObject(i)
                 val id = obj.optString("category_id", "")
-                var name = obj.optString("category_name", "").trim()
+                val name = obj.optString("category_name", "").trim()
                 if (id.isNotEmpty() && name.isNotEmpty()) {
-                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true) || name.contains("OnlyFans", ignoreCase = true)
-                    if (id == "71") {
-                        name = "OnlyFans & Séries Adultas (+18)"
-                    }
+                    val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
                     list.add(VodCategory(id = id, name = name, isAdult = isAdult, isSeries = true))
-                }
-            }
-
-            // Ordena priorizando Netflix, Amazon Prime, Max, Disney+, etc.
-            list.sortBy { cat ->
-                when {
-                    cat.name.contains("Netflix", ignoreCase = true) -> 0
-                    cat.name.contains("Prime", ignoreCase = true) -> 1
-                    cat.name.contains("Max", ignoreCase = true) -> 2
-                    cat.name.contains("Disney", ignoreCase = true) -> 3
-                    cat.name.contains("Globoplay", ignoreCase = true) -> 4
-                    cat.name.contains("Apple", ignoreCase = true) -> 5
-                    cat.name.contains("Dorama", ignoreCase = true) -> 6
-                    cat.name.contains("Crunchyroll", ignoreCase = true) -> 7
-                    cat.isAdult -> 99
-                    else -> 10
                 }
             }
 
@@ -202,7 +164,7 @@ object VodRepository {
                             genre = genre,
                             year = releaseDate.take(4).ifEmpty { null },
                             isSeries = true,
-                            streamUrl = "" // Stream URL é por episódio
+                            streamUrl = ""
                         )
                     )
                 }
