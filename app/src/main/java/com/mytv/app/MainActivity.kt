@@ -243,20 +243,6 @@ class MainActivity : AppCompatActivity() {
                 channels = emptyList()
             ),
             ChannelCategory(
-                id = "cat_movies",
-                name = "🎬 Filmes VOD",
-                iconRes = R.drawable.ic_movie_vod,
-                isLocked = false,
-                channels = emptyList()
-            ),
-            ChannelCategory(
-                id = "cat_series",
-                name = "🍿 Séries VOD",
-                iconRes = R.drawable.ic_series_vod,
-                isLocked = false,
-                channels = emptyList()
-            ),
-            ChannelCategory(
                 id = "cat_settings",
                 name = "⚙️ Ajustes",
                 iconRes = R.drawable.ic_settings,
@@ -292,8 +278,12 @@ class MainActivity : AppCompatActivity() {
             },
             onCategoryClicked = { category ->
                 handleCategorySelection(category, autoFocusChannels = true)
-                if ((!category.isLocked || isAdultUnlocked) && !isSpecialCategory(category.id)) {
-                    collapseSidebar(targetFocusChannel = true)
+            },
+            onNavigateRightToContent = {
+                if (currentAppMode == AppMode.SETTINGS) {
+                    focusCurrentSetting()
+                } else {
+                    focusCurrentChannel()
                 }
             },
             onNavigateUpToTabs = {
@@ -345,7 +335,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isSpecialCategory(catId: String): Boolean {
-        return catId == "cat_playback" || catId == "cat_movies" || catId == "cat_series" || catId == "cat_settings" || catId == "cat_back_live"
+        return catId == "cat_playback" || catId == "cat_settings"
     }
 
     private fun handleCategorySelection(category: ChannelCategory, autoFocusChannels: Boolean) {
@@ -361,14 +351,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 return
             }
-            "cat_movies" -> {
-                switchAppMode(AppMode.MOVIES)
-                return
-            }
-            "cat_series" -> {
-                switchAppMode(AppMode.SERIES)
-                return
-            }
             "cat_settings" -> {
                 switchAppMode(AppMode.SETTINGS)
                 if (autoFocusChannels) {
@@ -376,10 +358,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 return
             }
-            "cat_back_live" -> {
-                switchAppMode(AppMode.LIVE_TV)
-                return
-            }
+        }
+
+        if (currentAppMode != AppMode.LIVE_TV) {
+            switchAppMode(AppMode.LIVE_TV)
         }
 
         if (category.isLocked && !isAdultUnlocked) {
@@ -461,31 +443,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun collapseSidebar(targetFocusChannel: Boolean = true) {
-        if (isSidebarCollapsed) return
-        isSidebarCollapsed = true
-        panelSidebar.visibility = View.GONE
-        txtBtnBackCategories.visibility = View.VISIBLE
-        txtChannelFooterHint.text = "◄ ou Voltar: Abrir Categorias  •  OK: Tela Cheia  •  ►: Player"
         if (targetFocusChannel) {
             if (currentAppMode == AppMode.LIVE_TV) {
                 focusFirstChannel()
             } else if (currentAppMode == AppMode.SETTINGS) {
                 focusFirstSetting()
-            } else {
-                focusFirstVodItem()
             }
         }
     }
 
     private fun expandSidebar() {
-        if (!isSidebarCollapsed) {
-            focusCurrentCategory()
-            return
-        }
-        isSidebarCollapsed = false
-        panelSidebar.visibility = View.VISIBLE
-        txtBtnBackCategories.visibility = View.GONE
-        txtChannelFooterHint.text = "◄ Categorias  •  OK Selecionar  •  ► Detalhes"
         focusCurrentCategory()
     }
 
@@ -585,7 +552,7 @@ class MainActivity : AppCompatActivity() {
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "V2.6.2",
+                badgeText = "V2.6.3",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
             ),

@@ -22,7 +22,7 @@ object ChannelRepository {
                         number = "01",
                         title = "Cine SKY 01 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882617.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882617.ts",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Cine Sky Oficial: Grandes lancamentos do cinema mundial 24h sem intervalos comerciais.",
                         quality = "FHD"
@@ -158,6 +158,103 @@ object ChannelRepository {
                 )
             ),
                         ChannelCategory(
+                id = "cat_24h",
+                name = "Canais 24 Horas",
+                isLocked = false,
+                channels = listOf(
+                    Channel(
+                        id = "ch_24h_chaves",
+                        number = "2401",
+                        title = "24H Chaves",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/137139.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Logo_Chaves.png/320px-Logo_Chaves.png",
+                        description = "Transmissao oficial 24h sem intervalos com todos os episodios classicos da vila do Chaves.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_chapolin",
+                        number = "2402",
+                        title = "24H Chapolin Colorado",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138000.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Chapolin_Colorado_logo.png/320px-Chapolin_Colorado_logo.png",
+                        description = "Nao contavam com a minha astucia! O heroi mais amado da TV 24 horas no ar.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_simpsons",
+                        number = "2403",
+                        title = "24H Os Simpsons",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/135601.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/The_Simpsons_Logo.svg/320px-The_Simpsons_Logo.svg.png",
+                        description = "Todas as temporadas de Homer, Marge, Bart, Lisa e Maggie em Springfield 24h por dia.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_chris",
+                        number = "2404",
+                        title = "24H Todo Mundo Odeia o Chris",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/135469.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Everybody_Hates_Chris_title.png/320px-Everybody_Hates_Chris_title.png",
+                        description = "Julius, Rochelle, Tonya, Drew e Greg nas aventuras mais engracadas de Nova York.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_friends",
+                        number = "2405",
+                        title = "24H Friends",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138814.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Friends_logo.svg/320px-Friends_logo.svg.png",
+                        description = "Rachel, Monica, Phoebe, Joey, Chandler e Ross no Central Perk 24 horas por dia.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_dois_homens",
+                        number = "2406",
+                        title = "24H Dois Homens e Meio",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/137623.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Two_and_a_Half_Men_logo.svg/320px-Two_and_a_Half_Men_logo.svg.png",
+                        description = "Charlie Harper, Alan e Jake na comedia de maior sucesso da TV 24h sem parar.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_bob_esponja",
+                        number = "2407",
+                        title = "24H Bob Esponja",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138065.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/SpongeBob_SquarePants_logo.svg/320px-SpongeBob_SquarePants_logo.svg.png",
+                        description = "Na Fenda do Biquini com Bob Esponja, Patrick Estrela, Lula Molusco e Sr. Sirigueijo 24h.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_pica_pau",
+                        number = "2408",
+                        title = "24H Pica Pau",
+                        category = "Canais 24 Horas",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/136821.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Woody_Woodpecker_logo.png/320px-Woody_Woodpecker_logo.png",
+                        description = "O passaro mais biruta dos desenhos animados em suas classicas trapalhadas 24 horas.",
+                        quality = "HD"
+                    ),
+                    Channel(
+                        id = "ch_24h_dragon_ball",
+                        number = "2409",
+                        title = "24H Dragon Ball Z",
+                        category = "Canais 24 Horas",
+                        streamUrl = "https://fallback1.nexustvplay.bbroot.com/nxs/stream/24h_dragonball/24h_dragonball.m3u8",
+                        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Dragon_Ball_Z_logo.svg/320px-Dragon_Ball_Z_logo.svg.png",
+                        description = "Goku, Vegeta, Gohan e os Guerreiros Z nas batalhas mais epicas do anime 24h por dia.",
+                        quality = "HD"
+                    )
+                )
+            ),
+            ChannelCategory(
                 id = "cat_jogos_dia",
                 name = "⚽ Jogos do Dia (Ao Vivo)",
                 isLocked = false,
@@ -685,7 +782,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Discovery Science HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71875.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Discovery_Science_logo.svg/320px-Discovery_Science_logo.svg.png",
                         description = "Tecnologia de ponta, astrofisica, experimentos ousados e inovacoes do futuro.",
                         quality = "HD"
@@ -695,7 +792,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Discovery Theater HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
+                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71879.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Discovery_Theater_logo.png/320px-Discovery_Theater_logo.png",
                         description = "Imagens cinematograficas em alta definicao da natureza e animais selvagens.",
                         quality = "HD"
@@ -1046,7 +1143,7 @@ object ChannelRepository {
                         number = "92",
                         title = "BIS HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518550.m3u8",
+                        streamUrl = "http://64.31.23.207:80/59471019/60849037/518551.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Canal_Bis_logo.svg/320px-Canal_Bis_logo.svg.png",
                         description = "Grandes shows internacionais, documentarios musicais e turnes historicas.",
                         quality = "FHD"
@@ -1569,7 +1666,7 @@ object ChannelRepository {
                         number = "138",
                         title = "Tooncast HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882638.ts",
+                        streamUrl = "http://170.83.16.50:80/TOONCAST/index.m3u8",
                         logoUrl = "http://acstatic.co/logos/canais/tooncast.png",
                         description = "Os classicos inesqueciveis: Coragem o Cao Covarde, O Laboratorio de Dexter e Os Flintstones.",
                         quality = "HD"
@@ -1579,7 +1676,7 @@ object ChannelRepository {
                         number = "139",
                         title = "Discovery Kids HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297947.m3u8",
+                        streamUrl = "http://64.31.23.207:80/59471019/60849037/297946.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD"

@@ -11,8 +11,8 @@ android {
         applicationId = "com.mytv.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 37
-        versionName = "2.6.1"
+        versionCode = 39
+        versionName = "2.6.3"
         setProperty("archivesBaseName", "wdtechtv")
 
         vectorDrawables {
@@ -23,6 +23,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -15,6 +15,7 @@ class CategorySidebarAdapter(
     private var categories: List<ChannelCategory>,
     private val onCategoryFocused: (ChannelCategory) -> Unit,
     private val onCategoryClicked: (ChannelCategory) -> Unit,
+    private val onNavigateRightToContent: (() -> Unit)? = null,
     private val onNavigateUpToTabs: (() -> Unit)? = null
 ) : RecyclerView.Adapter<CategorySidebarAdapter.CategoryViewHolder>() {
 
@@ -79,19 +80,23 @@ class CategorySidebarAdapter(
             }
         }
 
-        // Navegação precisa pelo D-Pad do controle: o submenu só abre no CLIQUE (ENTER / DPAD_RIGHT)
+        // Navegação precisa pelo D-Pad do controle:
+        // O submenu SÓ abre quando for feito o CLIQUE (ENTER / DPAD_CENTER)!
+        // Seta para Direita apenas move o cursor para o conteúdo ao lado.
         holder.itemView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 val pos = holder.bindingAdapterPosition
                 if (pos != RecyclerView.NO_POSITION && pos < categories.size) {
                     when (keyCode) {
-                        // Clicar OK / ENTER ou Seta Direita: confirma e abre a categoria / submenu
                         KeyEvent.KEYCODE_DPAD_CENTER,
                         KeyEvent.KEYCODE_ENTER,
-                        KeyEvent.KEYCODE_NUMPAD_ENTER,
-                        KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                        KeyEvent.KEYCODE_NUMPAD_ENTER -> {
                             selectedIndex = pos
                             onCategoryClicked(categories[pos])
+                            return@setOnKeyListener true
+                        }
+                        KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                            onNavigateRightToContent?.invoke()
                             return@setOnKeyListener true
                         }
                     }
