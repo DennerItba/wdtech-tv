@@ -217,11 +217,11 @@ object EpgRepository {
             return@withContext pair
         }
 
-        // Resolve o ID do stream para consulta de EPG ao vivo
-        val streamId = CORRUPTX_EPG_MAP[channel.id]
+        // Resolve o ID do stream ativo com prioridade máxima para o servidor oficial 64.31.23.207
+        val streamId = PlaybackRepository.PLAYBACK_STREAM_MAP[channel.id]
             ?: extractStreamIdFromUrl(channel.streamUrl)
             ?: channel.playbackStreamId
-            ?: extractStreamIdFromUrl(channel.streamUrl)
+            ?: CORRUPTX_EPG_MAP[channel.id]
 
         if (streamId == null) return@withContext null
 

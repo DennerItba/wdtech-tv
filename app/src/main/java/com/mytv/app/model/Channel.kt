@@ -16,7 +16,8 @@ data class Channel(
     var nextProgram: EpgProgram? = null,
     var hasPlayback: Boolean = false,
     var playbackDays: Int = 0,
-    var playbackStreamId: String? = null
+    var playbackStreamId: String? = null,
+    val backupUrls: List<String> = emptyList()
 ) : Serializable
 
 data class ChannelCategory(

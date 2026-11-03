@@ -38,6 +38,13 @@ import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mytv.app.adapter.PlaybackHistoryAdapter
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.util.TypedValue
+import androidx.appcompat.app.AlertDialog
+import androidx.media3.common.C
+import androidx.media3.ui.CaptionStyleCompat
+
 import com.mytv.app.data.PlaybackRepository
 import com.mytv.app.model.Channel
 import com.mytv.app.model.EpgProgram
@@ -54,6 +61,21 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var bufferingProgress: ProgressBar
     private lateinit var btnBack: Button
     private lateinit var btnAspectRatio: Button
+
+    private val bufferingHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private val showBufferingRunnable = Runnable {
+        bufferingProgress.visibility = android.view.View.VISIBLE
+    }
+
+    private fun showBufferingWithDebounce(delayMs: Long = 700L) {
+        bufferingHandler.removeCallbacks(showBufferingRunnable)
+        bufferingHandler.postDelayed(showBufferingRunnable, delayMs)
+    }
+
+    private fun hideBuffering() {
+        bufferingHandler.removeCallbacks(showBufferingRunnable)
+        bufferingProgress.visibility = android.view.View.GONE
+    }
 
     // Navegacao por Canais (Zapping)
     private var channelList: ArrayList<Channel> = arrayListOf()
@@ -110,6 +132,10 @@ class PlayerActivity : AppCompatActivity() {
         btnAspectRatio = findViewById(R.id.btn_player_aspect_ratio)
         btnAspectRatio.setOnClickListener {
             toggleAspectRatio()
+        }
+        val btnPlayerSettings = findViewById<Button>(R.id.btn_player_settings)
+        btnPlayerSettings?.setOnClickListener {
+            showPlaybackSettingsDialog()
         }
 
         // Controles de Playback
@@ -336,9 +362,9 @@ class PlayerActivity : AppCompatActivity() {
         // Controle avançado de buffer para eliminar travadinhas e oscilações de Wi-Fi na TV Box
         val bufferMode = com.mytv.app.utils.AppSettings.getBufferMode(this)
         val (minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs) = when (bufferMode) {
-            com.mytv.app.utils.AppSettings.BUFFER_FAST -> listOf(12_000, 30_000, 2_000, 3_000)
-            com.mytv.app.utils.AppSettings.BUFFER_STABLE -> listOf(35_000, 75_000, 4_000, 6_000)
-            else -> listOf(25_000, 50_000, 3_000, 5_000)
+            com.mytv.app.utils.AppSettings.BUFFER_FAST -> listOf(10_000, 30_000, 1_000, 2_000)
+            com.mytv.app.utils.AppSettings.BUFFER_STABLE -> listOf(25_000, 60_000, 2_500, 4_000)
+            else -> listOf(15_000, 45_000, 1_500, 2_500) // BALANCED (15s minBuffer evita buffer starvation em HLS ao vivo)
         }
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
@@ -347,7 +373,7 @@ class PlayerActivity : AppCompatActivity() {
                 bufferForPlaybackMs,
                 afterRebufferMs
             )
-            .setPrioritizeTimeOverSizeThresholds(true)
+            .setPrioritizeTimeOverSizeThresholds(false) // Permite reprodução imediata sem exigir buffer irreal
             .setBackBuffer(0, false) // 0s backBuffer: não retém vídeo passado em RAM, eliminando engasgos
             .build()
 
@@ -377,15 +403,15 @@ class PlayerActivity : AppCompatActivity() {
                 override fun onPlaybackStateChanged(state: Int) {
                     when (state) {
                         Player.STATE_BUFFERING -> {
-                            bufferingProgress.visibility = View.VISIBLE
+                            showBufferingWithDebounce(700L)
                         }
                         Player.STATE_READY -> {
-                            bufferingProgress.visibility = View.GONE
+                            hideBuffering()
                             errorLayout.visibility = View.GONE
                             retryCount = 0
                         }
                         Player.STATE_ENDED -> {
-                            bufferingProgress.visibility = View.GONE
+                            hideBuffering()
                             if (!isPlaybackMode) {
                                 // Em transmissões ao vivo, STATE_ENDED indica queda de conexão / EOF no stream.
                                 // Reconecta automaticamente sem congelar a imagem na tela!
@@ -393,7 +419,7 @@ class PlayerActivity : AppCompatActivity() {
                             }
                         }
                         Player.STATE_IDLE -> {
-                            bufferingProgress.visibility = View.GONE
+                            hideBuffering()
                         }
                     }
                 }
@@ -423,11 +449,11 @@ class PlayerActivity : AppCompatActivity() {
             }
             .setLiveConfiguration(
                 MediaItem.LiveConfiguration.Builder()
-                    .setTargetOffsetMs(15_000) // Folga de segurança de 15s atrás do topo ao vivo
-                    .setMinOffsetMs(6_000)
-                    .setMaxOffsetMs(35_000)
-                    .setMinPlaybackSpeed(1.0f) // Ajuste suave de velocidade (±3%) sem buffering
-                    .setMaxPlaybackSpeed(1.0f)
+                    .setTargetOffsetMs(22_000) // Folga de segurança de 22s (2 chunks HLS) evita buffer starvation
+                    .setMinOffsetMs(10_000)
+                    .setMaxOffsetMs(50_000)
+                    .setMinPlaybackSpeed(0.97f) // Ajuste suave de velocidade (±3%) absorve oscilações sem pausar o vídeo
+                    .setMaxPlaybackSpeed(1.03f)
                     .build()
             )
             .build()
@@ -671,8 +697,9 @@ class PlayerActivity : AppCompatActivity() {
             errorLayout.visibility = View.GONE
             bufferingProgress.visibility = View.VISIBLE
 
-            // Imediatamente busca a melhor URL alternativa (fallback) já na tentativa 1
-            val fallbackUrl = currentStreamUrl?.let { getFallbackUrl(it) }
+            // Imediatamente busca a melhor URL alternativa (backup oficial ou fallback cruzado)
+            val backupFromChannel = channel.backupUrls.getOrNull(retryCount - 1)
+            val fallbackUrl = backupFromChannel ?: (currentStreamUrl?.let { getFallbackUrl(it) })
             val streamToUse = fallbackUrl ?: currentStreamUrl ?: channel.streamUrl
 
             val runnable = Runnable {
@@ -714,6 +741,11 @@ class PlayerActivity : AppCompatActivity() {
                 hideHandler.postDelayed(hideRunnable, 6000)
             }
             when (event.keyCode) {
+                KeyEvent.KEYCODE_MENU,
+                KeyEvent.KEYCODE_SETTINGS -> {
+                    showPlaybackSettingsDialog()
+                    return true
+                }
                 KeyEvent.KEYCODE_BACK -> {
                     if (overlayView.visibility == View.VISIBLE) {
                         hideHandler.removeCallbacks(hideRunnable)
@@ -861,6 +893,157 @@ class PlayerActivity : AppCompatActivity() {
         retryHandler.removeCallbacksAndMessages(null)
         player?.release()
         player = null
+    }
+
+    private var playerSettingsDialog: AlertDialog? = null
+    private var subtitleDelayOffsetSeconds: Float = 0.0f
+
+    fun showPlaybackSettingsDialog() {
+        if (isFinishing || isDestroyed) return
+        playerSettingsDialog?.dismiss()
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_player_settings, null)
+        val dialog = AlertDialog.Builder(this, R.style.Theme_MyTvApp_Dialog)
+            .setView(dialogView)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val rbAudioPt = dialogView.findViewById<RadioButton>(R.id.rb_audio_pt)
+        val rbAudioEn = dialogView.findViewById<RadioButton>(R.id.rb_audio_en)
+
+        val rbSubOff = dialogView.findViewById<RadioButton>(R.id.rb_sub_off)
+        val rbSubPt = dialogView.findViewById<RadioButton>(R.id.rb_sub_pt)
+        val rbSubEn = dialogView.findViewById<RadioButton>(R.id.rb_sub_en)
+
+        val btnDelayMinus = dialogView.findViewById<Button>(R.id.btn_sub_delay_minus)
+        val btnDelayPlus = dialogView.findViewById<Button>(R.id.btn_sub_delay_plus)
+        val txtDelayVal = dialogView.findViewById<TextView>(R.id.txt_sub_delay_value)
+
+        val rbSizeNormal = dialogView.findViewById<RadioButton>(R.id.rb_size_normal)
+        val rbSizeLarge = dialogView.findViewById<RadioButton>(R.id.rb_size_large)
+        val rbSizeSmall = dialogView.findViewById<RadioButton>(R.id.rb_size_small)
+
+        val rbStyleWhite = dialogView.findViewById<RadioButton>(R.id.rb_style_white)
+        val rbStyleYellow = dialogView.findViewById<RadioButton>(R.id.rb_style_yellow)
+        val rbStyleBox = dialogView.findViewById<RadioButton>(R.id.rb_style_box)
+
+        val btnExit = dialogView.findViewById<Button>(R.id.btn_settings_exit)
+
+        txtDelayVal?.text = String.format(Locale.US, "%.1f s", subtitleDelayOffsetSeconds)
+
+        // Seleção de Áudio
+        rbAudioPt?.setOnClickListener {
+            player?.trackSelectionParameters = player?.trackSelectionParameters
+                ?.buildUpon()
+                ?.setPreferredAudioLanguage("por")
+                ?.build() ?: return@setOnClickListener
+            Toast.makeText(this, "Áudio: Português", Toast.LENGTH_SHORT).show()
+        }
+        rbAudioEn?.setOnClickListener {
+            player?.trackSelectionParameters = player?.trackSelectionParameters
+                ?.buildUpon()
+                ?.setPreferredAudioLanguage("eng")
+                ?.build() ?: return@setOnClickListener
+            Toast.makeText(this, "Áudio: Inglês", Toast.LENGTH_SHORT).show()
+        }
+
+        // Seleção de Legenda
+        rbSubOff?.setOnClickListener {
+            player?.trackSelectionParameters = player?.trackSelectionParameters
+                ?.buildUpon()
+                ?.setIgnoredTextSelectionFlags(C.SELECTION_FLAG_DEFAULT)
+                ?.setPreferredTextLanguage(null)
+                ?.setTrackTypeDisabled(C.TRACK_TYPE_TEXT, true)
+                ?.build() ?: return@setOnClickListener
+            playerView.subtitleView?.visibility = View.GONE
+            Toast.makeText(this, "Legendas desativadas", Toast.LENGTH_SHORT).show()
+        }
+        rbSubPt?.setOnClickListener {
+            playerView.subtitleView?.visibility = View.VISIBLE
+            player?.trackSelectionParameters = player?.trackSelectionParameters
+                ?.buildUpon()
+                ?.setTrackTypeDisabled(C.TRACK_TYPE_TEXT, false)
+                ?.setPreferredTextLanguage("por")
+                ?.build() ?: return@setOnClickListener
+            Toast.makeText(this, "Legenda: Português", Toast.LENGTH_SHORT).show()
+        }
+        rbSubEn?.setOnClickListener {
+            playerView.subtitleView?.visibility = View.VISIBLE
+            player?.trackSelectionParameters = player?.trackSelectionParameters
+                ?.buildUpon()
+                ?.setTrackTypeDisabled(C.TRACK_TYPE_TEXT, false)
+                ?.setPreferredTextLanguage("eng")
+                ?.build() ?: return@setOnClickListener
+            Toast.makeText(this, "Legenda: Inglês", Toast.LENGTH_SHORT).show()
+        }
+
+        // Sincronia de Legendas (Delay)
+        btnDelayMinus?.setOnClickListener {
+            subtitleDelayOffsetSeconds = (subtitleDelayOffsetSeconds - 0.5f).coerceAtLeast(-10.0f)
+            txtDelayVal?.text = String.format(Locale.US, "%.1f s", subtitleDelayOffsetSeconds)
+        }
+        btnDelayPlus?.setOnClickListener {
+            subtitleDelayOffsetSeconds = (subtitleDelayOffsetSeconds + 0.5f).coerceAtMost(10.0f)
+            txtDelayVal?.text = String.format(Locale.US, "%.1f s", subtitleDelayOffsetSeconds)
+        }
+
+        // Tamanho da legenda
+        rbSizeNormal?.setOnClickListener {
+            playerView.subtitleView?.setFixedTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+        }
+        rbSizeLarge?.setOnClickListener {
+            playerView.subtitleView?.setFixedTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
+        }
+        rbSizeSmall?.setOnClickListener {
+            playerView.subtitleView?.setFixedTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+        }
+
+        // Estilo de cores da legenda
+        rbStyleWhite?.setOnClickListener {
+            playerView.subtitleView?.setStyle(
+                CaptionStyleCompat(
+                    Color.WHITE,
+                    Color.TRANSPARENT,
+                    Color.TRANSPARENT,
+                    CaptionStyleCompat.EDGE_TYPE_OUTLINE,
+                    Color.BLACK,
+                    null
+                )
+            )
+        }
+        rbStyleYellow?.setOnClickListener {
+            playerView.subtitleView?.setStyle(
+                CaptionStyleCompat(
+                    Color.YELLOW,
+                    Color.TRANSPARENT,
+                    Color.TRANSPARENT,
+                    CaptionStyleCompat.EDGE_TYPE_OUTLINE,
+                    Color.BLACK,
+                    null
+                )
+            )
+        }
+        rbStyleBox?.setOnClickListener {
+            playerView.subtitleView?.setStyle(
+                CaptionStyleCompat(
+                    Color.WHITE,
+                    Color.parseColor("#CC000000"),
+                    Color.TRANSPARENT,
+                    CaptionStyleCompat.EDGE_TYPE_NONE,
+                    Color.BLACK,
+                    null
+                )
+            )
+        }
+
+        btnExit?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        btnExit?.requestFocus()
+        playerSettingsDialog = dialog
     }
 
     companion object {

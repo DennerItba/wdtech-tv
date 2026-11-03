@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import com.mytv.app.data.ChannelRepository
 import com.mytv.app.data.EpgRepository
 import com.mytv.app.data.PlaybackRepository
 import com.mytv.app.model.Channel
+import com.mytv.app.model.ChannelCategory
 import com.mytv.app.model.EpgProgram
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -44,9 +46,13 @@ class PlaybackActivity : AppCompatActivity() {
     private lateinit var txtMonth: TextView
     private lateinit var txtChannelCount: TextView
     private lateinit var btnClose: Button
+    private lateinit var btnReload: Button
+    private lateinit var layoutCategoryHeader: LinearLayout
 
     private var currentChannel: Channel? = null
     private var allPlaybackChannels: List<Channel> = emptyList()
+    private var categories: List<ChannelCategory> = emptyList()
+    private var currentCategoryIndex: Int = 0
     private var currentDayOffset: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,8 +72,17 @@ class PlaybackActivity : AppCompatActivity() {
         txtMonth = findViewById(R.id.txt_playback_month)
         txtChannelCount = findViewById(R.id.txt_playback_channel_count)
         btnClose = findViewById(R.id.btn_playback_close)
+        btnReload = findViewById(R.id.btn_playback_reload)
+        layoutCategoryHeader = findViewById(R.id.layout_playback_category_header)
 
         btnClose.setOnClickListener { finish() }
+        btnReload.setOnClickListener {
+            loadProgramsForCurrentDay()
+            Toast.makeText(this, "🔄 Guia de programação atualizado!", Toast.LENGTH_SHORT).show()
+        }
+        layoutCategoryHeader.setOnClickListener {
+            cycleNextCategory()
+        }
 
         // Mês atual em maiúsculas (ex: OUT ou NOV)
         val cal = Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo"))
@@ -76,7 +91,7 @@ class PlaybackActivity : AppCompatActivity() {
         }
         txtMonth.text = monthFormat.format(cal.time).replace(".", "").uppercase(Locale("pt", "BR"))
 
-        // Carrega a lista de canais disponíveis para Playback
+        // Carrega a lista de categorias e canais disponíveis para Playback
         loadPlaybackChannels()
         setupDaysColumn()
         setupProgramsColumn()
@@ -110,10 +125,20 @@ class PlaybackActivity : AppCompatActivity() {
             intent.getSerializableExtra(EXTRA_CHANNEL_LIST) as? ArrayList<Channel>
         }
 
+        // Categorias completas para alternar facilmente com o controle remoto
+        val repoCats = ChannelRepository.getCategories().filter { !it.isLocked }
+        val allCat = ChannelCategory(
+            id = "cat_all",
+            name = "Todos os Canais",
+            isLocked = false,
+            channels = repoCats.flatMap { it.channels }
+        )
+        this.categories = listOf(allCat) + repoCats
+
         val baseChannels = if (!extraList.isNullOrEmpty()) {
             extraList
         } else {
-            ChannelRepository.getCategories().flatMap { it.channels }
+            repoCats.flatMap { it.channels }
         }
 
         // Enriquece canais com EPG e Playback
@@ -122,9 +147,44 @@ class PlaybackActivity : AppCompatActivity() {
         this.allPlaybackChannels = enrichedList
         this.currentChannel = extraChannel?.let { EpgRepository.enrichChannel(it) } ?: allPlaybackChannels.firstOrNull()
 
+        // Sincroniza categoria inicial
+        currentCategoryIndex = categories.indexOfFirst { cat ->
+            cat.channels.any { it.id == currentChannel?.id }
+        }.coerceAtLeast(0)
+
+        val catName = categories.getOrNull(currentCategoryIndex)?.name ?: currentChannel?.category?.ifEmpty { "CANAIS ABERTOS" } ?: "CANAIS ABERTOS"
+        txtCategoryTitle.text = catName.uppercase()
+
         val initialIdx = allPlaybackChannels.indexOfFirst { it.id == currentChannel?.id }.coerceAtLeast(0)
         txtChannelCount.text = "${initialIdx + 1}/${allPlaybackChannels.size}"
-        txtCategoryTitle.text = currentChannel?.category?.ifEmpty { "CANAIS ABERTOS" }?.uppercase() ?: "CANAIS ABERTOS"
+    }
+
+    private fun cycleNextCategory() {
+        if (categories.isEmpty()) return
+        val nextIdx = (currentCategoryIndex + 1) % categories.size
+        switchCategory(nextIdx)
+    }
+
+    private fun cyclePrevCategory() {
+        if (categories.isEmpty()) return
+        val prevIdx = if (currentCategoryIndex - 1 < 0) categories.size - 1 else currentCategoryIndex - 1
+        switchCategory(prevIdx)
+    }
+
+    private fun switchCategory(categoryIdx: Int) {
+        currentCategoryIndex = categoryIdx.coerceIn(0, categories.size - 1)
+        val selectedCat = categories[currentCategoryIndex]
+        txtCategoryTitle.text = selectedCat.name.uppercase()
+
+        val enriched = selectedCat.channels.map { EpgRepository.enrichChannel(it) }
+        this.allPlaybackChannels = enriched
+
+        val targetCh = enriched.firstOrNull()
+        channelAdapter.updateChannels(enriched, targetCh?.id)
+        if (targetCh != null) {
+            selectChannel(targetCh)
+        }
+        rvChannels.scrollToPosition(0)
     }
 
     private fun setupChannelsColumn() {
@@ -137,8 +197,11 @@ class PlaybackActivity : AppCompatActivity() {
             onNavigateToDays = {
                 focusDays()
             },
+            onNavigateLeftToCategory = {
+                cyclePrevCategory()
+            },
             onNavigateUpToClose = {
-                btnClose.requestFocus()
+                layoutCategoryHeader.requestFocus()
             }
         )
         channelAdapter.updateChannels(allPlaybackChannels, currentChannel?.id)
@@ -186,8 +249,8 @@ class PlaybackActivity : AppCompatActivity() {
 
     private fun selectChannel(channel: Channel) {
         this.currentChannel = channel
-        val catName = channel.category.ifEmpty { "CANAIS ABERTOS" }.uppercase()
-        txtCategoryTitle.text = catName
+        val catName = categories.getOrNull(currentCategoryIndex)?.name ?: channel.category.ifEmpty { "CANAIS ABERTOS" }
+        txtCategoryTitle.text = catName.uppercase()
 
         val currentIdx = allPlaybackChannels.indexOfFirst { it.id == channel.id }
         val displayIdx = if (currentIdx >= 0) currentIdx + 1 else 1
@@ -255,9 +318,11 @@ class PlaybackActivity : AppCompatActivity() {
             return
         }
 
-        val offsetSeconds = ((now - program.startTimestamp) / 1000).coerceAtLeast(60)
+        val isLive = (program.startTimestamp <= now && now < program.endTimestamp)
+        val offsetSeconds = if (isLive) 0L else ((now - program.startTimestamp) / 1000).coerceAtLeast(60)
 
-        Toast.makeText(this, "▶ Reproduzindo: ${program.title}", Toast.LENGTH_SHORT).show()
+        val msg = if (isLive) "🔴 Assistindo ao vivo: ${program.title}" else "▶ Reproduzindo: ${program.title}"
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
         val intent = Intent(this, PlayerActivity::class.java).apply {
             putExtra(PlayerActivity.EXTRA_CHANNEL, channel)

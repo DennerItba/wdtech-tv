@@ -608,10 +608,14 @@ object ChannelRepository {
                         number = "46",
                         title = "Telecine Fun HD",
                         category = "Rede Telecine",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378587.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378586.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Telecine_Fun_logo_2019.svg/320px-Telecine_Fun_logo_2019.svg.png",
                         description = "Comedias e animacoes para garantir boas risadas com a familia reunida.",
-                        quality = "FHD"
+                        quality = "FHD",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5676605.m3u8",
+                            "http://64.31.23.207:80/live/59471019/60849037/5378587.m3u8"
+                        )
                     ),
                     Channel(
                         id = "tc_cult",
@@ -1123,10 +1127,14 @@ object ChannelRepository {
                         number = "90",
                         title = "Viva HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "https://9ada494d.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfVXBseW5rLU5ld2NvX0hMUw/playlist.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518595.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Canal_Viva_logo_2019.svg/320px-Canal_Viva_logo_2019.svg.png",
-                        description = "As maiores novelas da teledramaturgia brasileira e programas que marcaram epoca.",
-                        quality = "FHD"
+                        description = "As maiores novelas da teledramaturgia brasileira e programas que marcaram epoca no canal Viva.",
+                        quality = "FHD",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5676610.m3u8",
+                            "http://64.31.23.207:80/live/59471019/60849037/518596.m3u8"
+                        )
                     ),
                     Channel(
                         id = "var_canalbrasil",
@@ -1288,12 +1296,15 @@ object ChannelRepository {
                     Channel(
                         id = "ch_4k_nasa",
                         number = "106",
-                        title = "NASA TV 4K UHD",
+                        title = "Cosmos & NASA Space HD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",
+                        streamUrl = "https://video.hostingcaaguazu.com:19360/cosmostv/cosmostv.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/320px-NASA_logo.svg.png",
-                        description = "Transmissao oficial ao vivo do espaco sideral da Estacao Espacial Internacional em 4K.",
-                        quality = "4K"
+                        description = "Transmissao oficial ao vivo do espaco sideral, astronomia, lancamentos espaciais e exploracao do cosmos.",
+                        quality = "HD",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5378645.m3u8"
+                        )
                     ),
                     Channel(
                         id = "ch_4k_nature",
@@ -1317,10 +1328,14 @@ object ChannelRepository {
                         number = "108",
                         title = "Globo SP H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378580.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676596.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Transmissao em codec H.265 de alta eficiencia: imagem ultra nitida consumindo metade da banda.",
-                        quality = "H265"
+                        quality = "H265",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8",
+                            "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703"
+                        )
                     ),
                     Channel(
                         id = "ch_h265_sportv",
@@ -1337,7 +1352,7 @@ object ChannelRepository {
                         number = "110",
                         title = "Telecine H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676603.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676607.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Filmes em alta taxa de bits codificados em H.265 para TV Boxes modernas.",
                         quality = "H265"
@@ -1400,14 +1415,67 @@ object ChannelRepository {
                 isLocked = false,
                 channels = listOf(
                     Channel(
-                        id = "ch_158",
+                        id = "globo_sp_fhd",
+                        number = "115",
+                        title = "Globo SP FHD (Principal)",
+                        category = "Globo",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
+                        description = "TV Globo Sao Paulo FHD Oficial: Sinal direto de alta definicao com programacao completa e EPG ativo.",
+                        quality = "FHD",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5298258.m3u8",
+                            "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703"
+                        )
+                    ),
+                    Channel(
+                        id = "globo_sp_backup",
                         number = "116",
-                        title = "Globo SP - Globo Sao Paulo",
+                        title = "Globo SP (Backup Alternativo)",
+                        category = "Globo",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5298258.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
+                        description = "Sinal de contingencia da TV Globo Sao Paulo para garantir transmissao sem interrupcoes.",
+                        quality = "FHD",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8"
+                        )
+                    ),
+                    Channel(
+                        id = "globo_sp_4k",
+                        number = "117",
+                        title = "Globo SP 4K UHD",
+                        category = "Globo",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676596.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
+                        description = "TV Globo Sao Paulo em resolucao maxima 4K Ultra HD com codec HEVC de alta definicao.",
+                        quality = "4K",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8"
+                        )
+                    ),
+                    Channel(
+                        id = "globo_nac_fhd",
+                        number = "118",
+                        title = "Globo Nacional FHD",
+                        category = "Globo",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5299056.m3u8",
+                        logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
+                        description = "Sinal nacional da Rede Globo de Televisao para todo o Brasil em Full HD.",
+                        quality = "FHD"
+                    ),
+                    Channel(
+                        id = "ch_158",
+                        number = "119",
+                        title = "Globo SP (Rede CDN)",
                         category = "Globo",
                         streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo: Jornalismo, novelas, futebol e programacao completa em alta definicao.",
-                        quality = "HD"
+                        quality = "HD",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8"
+                        )
                     ),
                     Channel(
                         id = "ch_160",
@@ -1607,12 +1675,16 @@ object ChannelRepository {
                     Channel(
                         id = "ch_f1",
                         number = "133",
-                        title = "BandSports - Fórmula 1 HD",
+                        title = "Fórmula 1 - Transmissão Oficial HD",
                         category = "Fórmula 1 (F1)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460152.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/500px-F1.svg.png",
-                        description = "Acompanhe a Formula 1 ao vivo pelo BandSports: treinos, classificacao, sprint e Grandes Premios. Canal 81585 Corruptx.",
-                        quality = "FHD"
+                        description = "Transmissao oficial ao vivo dos treinos livres, classificacao, corridas sprint e Grandes Premios da Formula 1 no SporTV e Globo.",
+                        quality = "FHD",
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/5676601.m3u8",
+                            "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8"
+                        )
                     )
                 )
             ),

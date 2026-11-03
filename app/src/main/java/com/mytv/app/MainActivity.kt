@@ -17,6 +17,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -121,6 +124,7 @@ class MainActivity : AppCompatActivity() {
 
     private var exoPlayer: ExoPlayer? = null
     private var allCategories: List<ChannelCategory> = emptyList()
+    private var cyberCategories: List<ChannelCategory> = emptyList()
     private var currentChannel: Channel? = null
     private var selectedCategory: ChannelCategory? = null
 
@@ -256,14 +260,41 @@ class MainActivity : AppCompatActivity() {
         val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
         val safeChannels = repoCategories.filter { !it.isLocked }.flatMap { it.channels }
 
-        val masterCategory = ChannelCategory(
-            id = "cat_all",
-            name = "Todos os Canais",
-            isLocked = false,
-            channels = safeChannels
-        )
+        val abertosChannels = repoCategories.filter {
+            it.id in listOf("cat_globo", "cat_sbt", "cat_record", "cat_band", "cat_noticias")
+        }.flatMap { it.channels }
 
-        allCategories = listOf(masterCategory) + repoCategories + createSpecialCategories()
+        val fechadosChannels = repoCategories.filter {
+            it.id in listOf("cat_telecine", "cat_hbo", "cat_filmes", "cat_discovery", "cat_docs", "cat_variedades", "cat_cinesky", "cat_4k", "cat_h265")
+        }.flatMap { it.channels }
+
+        val futebolChannels = repoCategories.filter {
+            it.id in listOf("cat_premiere", "cat_jogos_dia", "cat_campeonatos")
+        }.flatMap { it.channels }
+
+        val esportesChannels = repoCategories.filter {
+            it.id in listOf("cat_esportes", "cat_espn", "cat_f1")
+        }.flatMap { it.channels }
+
+        val infantilChannels = repoCategories.filter {
+            it.id in listOf("cat_kids")
+        }.flatMap { it.channels }
+
+        cyberCategories = listOf(
+            ChannelCategory(id = "cat_home", name = "Início", iconRes = R.drawable.ic_home_tv, channels = emptyList()),
+            ChannelCategory(id = "cat_live", name = "TV ao vivo", iconRes = R.drawable.outline_live_tv_24, channels = safeChannels),
+            ChannelCategory(id = "cat_aberta", name = "TV aberta", iconRes = R.drawable.ic_tv_aberta, channels = abertosChannels),
+            ChannelCategory(id = "cat_fechada", name = "TV fechada", iconRes = R.drawable.ic_tv_fechada, channels = fechadosChannels),
+            ChannelCategory(id = "cat_filmes", name = "Filmes", iconRes = R.drawable.ic_movie_vod, channels = emptyList()),
+            ChannelCategory(id = "cat_series", name = "Séries", iconRes = R.drawable.ic_series_vod, channels = emptyList()),
+            ChannelCategory(id = "cat_kids", name = "Infantil", iconRes = R.drawable.ic_star_kids, channels = infantilChannels),
+            ChannelCategory(id = "cat_futebol", name = "Futebol", iconRes = R.drawable.ic_soccer_ball, channels = futebolChannels),
+            ChannelCategory(id = "cat_esportes", name = "Esportes", iconRes = R.drawable.ic_sports_tv, channels = esportesChannels),
+            ChannelCategory(id = "cat_favoritos", name = "Favoritos", iconRes = R.drawable.ic_heart_fav, channels = emptyList()),
+            ChannelCategory(id = "cat_buscar", name = "Buscar", iconRes = R.drawable.ic_search_tv, channels = emptyList()),
+            ChannelCategory(id = "cat_settings", name = "Ajustes", iconRes = R.drawable.ic_settings, channels = emptyList())
+        )
+        allCategories = cyberCategories
 
         // 1. Configura a Barra Lateral de Categorias
         // CRUCIAL: Ao navegar (foco), APENAS atualiza o breadcrumb!
@@ -283,7 +314,13 @@ class MainActivity : AppCompatActivity() {
                 if (currentAppMode == AppMode.SETTINGS) {
                     focusCurrentSetting()
                 } else {
-                    focusCurrentChannel()
+                    if (channelAdapter.getChannels().isEmpty()) {
+                        selectedCategory?.let { cat ->
+                            handleCategorySelection(cat, autoFocusChannels = true)
+                        }
+                    } else {
+                        focusCurrentChannel()
+                    }
                 }
             },
             onNavigateUpToTabs = {
@@ -317,21 +354,65 @@ class MainActivity : AppCompatActivity() {
         )
         rvChannelList.adapter = channelAdapter
 
-        // Inicia na categoria "Todos os Canais"
-        displayCategoryChannels(masterCategory)
-
-        // Inicializa o primeiro canal
-        safeChannels.firstOrNull()?.let { first ->
-            currentChannel = first
-            updateChannelInfo(first)
-            playChannelPreview(first)
-        }
+        // Início limpo: abre apenas o menu lateral de categorias.
+        // O centro permanece limpo e o vídeo desligado até o usuário escolher e pressionar OK em uma categoria.
+        channelAdapter.updateChannels(emptyList())
+        txtSelectedCategoryTitle.text = "Menu Principal"
+        txtCategoryBadge.text = "INÍCIO"
+        txtHeaderBreadcrumb.text = "WDTECH TV • BEM-VINDO"
+        txtPreviewTitle.text = "WDTECH TV"
+        txtPreviewInfo.text = "Selecione uma categoria ao lado e pressione OK para abrir os canais"
+        txtPreviewPlayback.visibility = View.GONE
+        txtChannelFooterHint.text = "◄ Menu Principal  •  OK: Abrir Categoria"
+        currentChannel = null
 
         // Foco inicial garantido na primeira categoria ao abrir o aplicativo
         rvCategorySidebar.post {
             val vh = rvCategorySidebar.findViewHolderForAdapterPosition(0)
             vh?.itemView?.requestFocus()
         }
+    }
+
+    private fun showSearchDialog() {
+        val input = EditText(this).apply {
+            hint = "Digite o nome do canal ou filme..."
+            setTextColor(Color.WHITE)
+            setHintTextColor(Color.parseColor("#8EA9C7"))
+            textSize = 15f
+            setPadding(24, 24, 24, 24)
+        }
+        AlertDialog.Builder(this, R.style.Theme_MyTvApp_Dialog)
+            .setTitle("🔍 Buscar Conteúdo")
+            .setView(input)
+            .setPositiveButton("Buscar") { _, _ ->
+                val query = input.text.toString().trim()
+                if (query.isNotEmpty()) {
+                    filterChannelsByQuery(query)
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun filterChannelsByQuery(query: String) {
+        val allChs = ChannelRepository.getCategories().flatMap { it.channels }
+        val matches = allChs.filter { it.title.contains(query, ignoreCase = true) || it.category.contains(query, ignoreCase = true) }
+        switchAppMode(AppMode.LIVE_TV)
+        txtSelectedCategoryTitle.text = "Busca: \"$query\""
+        txtCategoryBadge.text = "${matches.size} ENCONTRADOS"
+        channelAdapter.updateChannels(matches)
+        if (matches.isNotEmpty()) {
+            focusFirstChannel()
+        } else {
+            Toast.makeText(this, "Nenhum canal encontrado para \"$query\"", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getFavoriteChannels(allChannels: List<Channel>): List<Channel> {
+        val prefs = getSharedPreferences("wdstream_favs", MODE_PRIVATE)
+        val favIds = prefs.getStringSet("fav_channel_ids", emptySet()) ?: emptySet()
+        val found = allChannels.filter { favIds.contains(it.id) }
+        return if (found.isNotEmpty()) found else allChannels.take(15)
     }
 
     private fun isSpecialCategory(catId: String): Boolean {
@@ -341,8 +422,45 @@ class MainActivity : AppCompatActivity() {
     private fun handleCategorySelection(category: ChannelCategory, autoFocusChannels: Boolean) {
         selectedCategory = category
 
-        // Intercepta categorias especiais de navegação direta (CLIQUE CONFIRMADO)
         when (category.id) {
+            "cat_home" -> {
+                switchAppMode(AppMode.LIVE_TV)
+                channelAdapter.updateChannels(emptyList())
+                txtSelectedCategoryTitle.text = "Início"
+                txtCategoryBadge.text = "BEM-VINDO"
+                txtHeaderBreadcrumb.text = "WD STREAM • CYBER TV 2.0"
+                txtPreviewTitle.text = "WD STREAM / CYBER TV 2.0"
+                txtPreviewInfo.text = "Navegue pelo menu lateral e selecione o conteúdo desejado para assistir."
+                currentChannel = null
+                exoPlayer?.stop()
+                exoPlayer?.clearMediaItems()
+                return
+            }
+            "cat_filmes" -> {
+                switchAppMode(AppMode.MOVIES)
+                if (autoFocusChannels) focusFirstVodItem()
+                return
+            }
+            "cat_series" -> {
+                switchAppMode(AppMode.SERIES)
+                if (autoFocusChannels) focusFirstVodItem()
+                return
+            }
+            "cat_favoritos" -> {
+                switchAppMode(AppMode.LIVE_TV)
+                val safe = cyberCategories.find { it.id == "cat_live" }?.channels ?: emptyList()
+                val favs = getFavoriteChannels(safe)
+                txtSelectedCategoryTitle.text = "Favoritos"
+                txtCategoryBadge.text = "${favs.size} CANAIS"
+                txtHeaderBreadcrumb.text = "WD STREAM • FAVORITOS"
+                channelAdapter.updateChannels(favs)
+                if (autoFocusChannels && favs.isNotEmpty()) focusFirstChannel()
+                return
+            }
+            "cat_buscar" -> {
+                showSearchDialog()
+                return
+            }
             "cat_playback" -> {
                 val intent = Intent(this, PlaybackActivity::class.java).apply {
                     putExtra(PlaybackActivity.EXTRA_SELECTED_CHANNEL, currentChannel)
@@ -351,7 +469,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 return
             }
-            "cat_settings" -> {
+            "cat_settings", "cat_ajustes" -> {
                 switchAppMode(AppMode.SETTINGS)
                 if (autoFocusChannels) {
                     focusFirstSetting()
@@ -552,7 +670,7 @@ class MainActivity : AppCompatActivity() {
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "V2.6.3",
+                badgeText = "V2.6.4",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
             ),
@@ -602,12 +720,21 @@ class MainActivity : AppCompatActivity() {
                 actionButtonText = "Limpar Cache Agora (OK)"
             ),
             SettingItem(
+                id = "setting_playback",
+                title = "⏱ Playback 7 Dias na Nuvem",
+                subtitle = "Assistir gravações dos últimos 7 dias",
+                iconRes = R.drawable.ic_playback,
+                badgeText = "GRAVAÇÕES",
+                description = "Acesse o arquivo completo de gravações dos últimos 7 dias da Globo, SporTV, Telecine, Premiere e mais na nuvem.",
+                actionButtonText = "Abrir Playback 7 Dias (OK)"
+            ),
+            SettingItem(
                 id = "setting_info",
-                title = "Sobre o WDTECH TV",
-                subtitle = "Versão 2.6.2 • Build 38",
+                title = "Sobre o WD STREAM",
+                subtitle = "Versão 2.6.5 • Build 41",
                 iconRes = R.drawable.ic_info,
-                badgeText = "INFO",
-                description = "WDTECH TV - Aplicativo Oficial de Entretenimento.\nVersão do Aplicativo: 2.6.2 (Build 38)\n\n" + AppSettings.getSystemInfo(),
+                badgeText = "V2.6.5",
+                description = "WD STREAM / CYBER TV 2.0 • Neon Engine Ativo.\nVersão do Aplicativo: 2.6.5 (Build 41)\n\n" + AppSettings.getSystemInfo(),
                 actionButtonText = "Ver Detalhes do Sistema (OK)"
             ),
             SettingItem(
@@ -632,6 +759,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun executeSettingAction(item: SettingItem) {
         when (item.id) {
+            "setting_playback" -> {
+                val intent = Intent(this, PlaybackActivity::class.java).apply {
+                    putExtra(PlaybackActivity.EXTRA_SELECTED_CHANNEL, currentChannel)
+                    putExtra(PlaybackActivity.EXTRA_CHANNEL_LIST, ArrayList(channelAdapter.getChannels()))
+                }
+                startActivity(intent)
+            }
             "setting_update" -> {
                 Toast.makeText(this, "Verificando atualizações no servidor...", Toast.LENGTH_SHORT).show()
                 AppUpdateManager.checkForUpdates(this, isManualCheck = true)
@@ -969,9 +1103,9 @@ class MainActivity : AppCompatActivity() {
         val bufferMode = AppSettings.getBufferMode(this)
         // Buffer generoso de 25-50 segundos para absorver totalmente chunks HLS de 16 segundos sem travadinhas
         val (minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs) = when (bufferMode) {
-            AppSettings.BUFFER_FAST -> listOf(12_000, 30_000, 2_000, 3_000)
-            AppSettings.BUFFER_STABLE -> listOf(35_000, 75_000, 4_000, 6_000)
-            else -> listOf(25_000, 50_000, 3_000, 5_000) // BALANCED
+            AppSettings.BUFFER_FAST -> listOf(10_000, 30_000, 1_000, 2_000)
+            AppSettings.BUFFER_STABLE -> listOf(25_000, 60_000, 2_500, 4_000)
+            else -> listOf(15_000, 45_000, 1_500, 2_500) // BALANCED (15s minBuffer evita travamento em HLS ao vivo)
         }
 
         val loadControl = DefaultLoadControl.Builder()
@@ -981,7 +1115,7 @@ class MainActivity : AppCompatActivity() {
                 bufferForPlaybackMs,
                 afterRebufferMs
             )
-            .setPrioritizeTimeOverSizeThresholds(true)
+            .setPrioritizeTimeOverSizeThresholds(false)
             .setBackBuffer(0, false)
             .build()
 
@@ -1104,11 +1238,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 .setLiveConfiguration(
                     MediaItem.LiveConfiguration.Builder()
-                        .setTargetOffsetMs(18_000)
-                        .setMinOffsetMs(8_000)
-                        .setMaxOffsetMs(40_000)
-                        .setMinPlaybackSpeed(1.0f) // Velocidade fixa 1.0x elimina micro-travas de áudio/vídeo
-                        .setMaxPlaybackSpeed(1.0f)
+                        .setTargetOffsetMs(22_000)
+                        .setMinOffsetMs(10_000)
+                        .setMaxOffsetMs(50_000)
+                        .setMinPlaybackSpeed(0.97f) // Variação dinâmica suave de ±3% elimina congelamento
+                        .setMaxPlaybackSpeed(1.03f)
                         .build()
                 )
                 .build()
@@ -1263,10 +1397,12 @@ class MainActivity : AppCompatActivity() {
                 rvVodList.visibility = View.GONE
                 layoutVodPreview.visibility = View.GONE
                 playerView.visibility = View.VISIBLE
-                txtHeaderBreadcrumb.text = "WDTECH TV • AO VIVO"
+                txtHeaderBreadcrumb.text = "WD STREAM • CYBER TV 2.0"
 
-                categoryAdapter.updateCategories(allCategories)
-                val cat = selectedCategory ?: allCategories.firstOrNull()
+                if (cyberCategories.isNotEmpty()) {
+                    categoryAdapter.updateCategories(cyberCategories)
+                }
+                val cat = selectedCategory ?: cyberCategories.firstOrNull()
                 cat?.let { displayCategoryChannels(it) }
                 currentChannel?.let { playChannelPreview(it) }
             }
@@ -1279,36 +1415,19 @@ class MainActivity : AppCompatActivity() {
                 rvVodList.visibility = View.VISIBLE
                 layoutVodPreview.visibility = View.VISIBLE
                 playerView.visibility = View.GONE
-                txtHeaderBreadcrumb.text = "WDTECH TV • CATÁLOGO DE FILMES"
-                txtSelectedCategoryTitle.text = "Carregando Filmes..."
-                txtCategoryBadge.text = "..."
+                txtHeaderBreadcrumb.text = "WD STREAM • CATÁLOGO DE FILMES"
+                txtSelectedCategoryTitle.text = "Filmes em Destaque"
+                txtCategoryBadge.text = "VOD"
 
                 lifecycleScope.launch {
-                    val vodCats = VodRepository.getMovieCategories()
-                    val catList = mutableListOf<ChannelCategory>()
-                    catList.add(ChannelCategory(
-                        id = "cat_back_live",
-                        name = "📺 Voltar para TV Ao Vivo",
-                        iconRes = R.drawable.outline_live_tv_24,
-                        channels = emptyList()
-                    ))
-                    catList.addAll(vodCats.map { vc ->
-                        ChannelCategory(
-                            id = vc.id,
-                            name = vc.name,
-                            isLocked = vc.isAdult,
-                            channels = emptyList()
-                        )
-                    })
-                    catList.add(ChannelCategory(
-                        id = "cat_settings",
-                        name = "⚙️ Ajustes",
-                        iconRes = R.drawable.ic_settings,
-                        channels = emptyList()
-                    ))
-                    categoryAdapter.updateCategories(catList)
-                    if (catList.size > 1) {
-                        handleCategorySelection(catList[1], autoFocusChannels = false)
+                    val cats = VodRepository.getMovieCategories()
+                    val firstCat = cats.firstOrNull()
+                    val movies = if (firstCat != null) VodRepository.getMoviesByCategory(firstCat.id, firstCat.name) else emptyList()
+                    vodAdapter.updateItems(movies)
+                    txtCategoryBadge.text = "${movies.size} TÍTULOS"
+                    if (movies.isNotEmpty()) {
+                        currentVodItem = movies.first()
+                        updateVodPreview(movies.first())
                     }
                 }
             }
@@ -1321,36 +1440,19 @@ class MainActivity : AppCompatActivity() {
                 rvVodList.visibility = View.VISIBLE
                 layoutVodPreview.visibility = View.VISIBLE
                 playerView.visibility = View.GONE
-                txtHeaderBreadcrumb.text = "WDTECH TV • CATÁLOGO DE SÉRIES"
-                txtSelectedCategoryTitle.text = "Carregando Séries..."
-                txtCategoryBadge.text = "..."
+                txtHeaderBreadcrumb.text = "WD STREAM • CATÁLOGO DE SÉRIES"
+                txtSelectedCategoryTitle.text = "Séries em Destaque"
+                txtCategoryBadge.text = "VOD"
 
                 lifecycleScope.launch {
-                    val seriesCats = VodRepository.getSeriesCategories()
-                    val catList = mutableListOf<ChannelCategory>()
-                    catList.add(ChannelCategory(
-                        id = "cat_back_live",
-                        name = "📺 Voltar para TV Ao Vivo",
-                        iconRes = R.drawable.outline_live_tv_24,
-                        channels = emptyList()
-                    ))
-                    catList.addAll(seriesCats.map { sc ->
-                        ChannelCategory(
-                            id = sc.id,
-                            name = sc.name,
-                            isLocked = sc.isAdult,
-                            channels = emptyList()
-                        )
-                    })
-                    catList.add(ChannelCategory(
-                        id = "cat_settings",
-                        name = "⚙️ Ajustes",
-                        iconRes = R.drawable.ic_settings,
-                        channels = emptyList()
-                    ))
-                    categoryAdapter.updateCategories(catList)
-                    if (catList.size > 1) {
-                        handleCategorySelection(catList[1], autoFocusChannels = false)
+                    val cats = VodRepository.getSeriesCategories()
+                    val firstCat = cats.firstOrNull()
+                    val series = if (firstCat != null) VodRepository.getSeriesByCategory(firstCat.id, firstCat.name) else emptyList()
+                    vodAdapter.updateItems(series)
+                    txtCategoryBadge.text = "${series.size} TÍTULOS"
+                    if (series.isNotEmpty()) {
+                        currentVodItem = series.first()
+                        updateVodPreview(series.first())
                     }
                 }
             }

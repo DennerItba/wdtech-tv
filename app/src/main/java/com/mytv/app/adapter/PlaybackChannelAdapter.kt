@@ -16,6 +16,7 @@ class PlaybackChannelAdapter(
     private var channels: List<Channel>,
     private val onChannelSelected: (Channel) -> Unit,
     private val onNavigateToDays: () -> Unit,
+    private val onNavigateLeftToCategory: (() -> Unit)? = null,
     private val onNavigateUpToClose: (() -> Unit)? = null
 ) : RecyclerView.Adapter<PlaybackChannelAdapter.ViewHolder>() {
 
@@ -94,6 +95,10 @@ class PlaybackChannelAdapter(
             if (event.action == KeyEvent.ACTION_DOWN) {
                 val pos = holder.bindingAdapterPosition
                 when (keyCode) {
+                    KeyEvent.KEYCODE_DPAD_LEFT -> {
+                        onNavigateLeftToCategory?.invoke()
+                        return@setOnKeyListener true
+                    }
                     KeyEvent.KEYCODE_DPAD_RIGHT,
                     KeyEvent.KEYCODE_DPAD_CENTER,
                     KeyEvent.KEYCODE_ENTER,
