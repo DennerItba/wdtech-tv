@@ -95,32 +95,29 @@ object AppUpdateManager {
         dialog.setContentView(com.mytv.app.R.layout.dialog_update_available)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val txtBadge = dialog.findViewById<TextView>(com.mytv.app.R.id.txt_update_version_badge)
         val txtTitle = dialog.findViewById<TextView>(com.mytv.app.R.id.txt_update_title)
-        val txtSubtitle = dialog.findViewById<TextView>(com.mytv.app.R.id.txt_update_subtitle)
-        val txtChangelog = dialog.findViewById<TextView>(com.mytv.app.R.id.txt_update_changelog)
         val btnConfirm = dialog.findViewById<Button>(com.mytv.app.R.id.btn_update_confirm)
         val btnDismiss = dialog.findViewById<Button>(com.mytv.app.R.id.btn_update_dismiss)
 
-        txtBadge.text = "NOVA VERSÃO v${info.versionName} DISPONÍVEL"
-        txtTitle.text = "Atualização WDTECH TV"
-        txtSubtitle.text = "Versão Atual: v$currentVersionName ➔ Nova Versão: v${info.versionName}"
-        txtChangelog.text = info.releaseNotes
+        txtTitle?.text = "Existe uma nova atualização"
 
-        btnDismiss.visibility = View.VISIBLE
-        btnDismiss.text = "Mais Tarde"
-        btnDismiss.setOnClickListener {
-            dialog.dismiss()
+        btnConfirm?.apply {
+            text = "SIM"
+            setOnClickListener {
+                dialog.dismiss()
+                startDownloadAndInstall(activity, info)
+            }
         }
 
-        btnConfirm.text = "📥 Atualizar Agora"
-        btnConfirm.setOnClickListener {
-            dialog.dismiss()
-            startDownloadAndInstall(activity, info)
+        btnDismiss?.apply {
+            text = "NÃO"
+            setOnClickListener {
+                dialog.dismiss()
+            }
         }
 
         dialog.show()
-        btnConfirm.requestFocus()
+        btnConfirm?.requestFocus()
     }
 
     private fun startDownloadAndInstall(activity: Activity, info: UpdateInfo) {
