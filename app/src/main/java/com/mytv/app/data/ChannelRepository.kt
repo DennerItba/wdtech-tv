@@ -22,10 +22,11 @@ object ChannelRepository {
                         number = "01",
                         title = "Cine SKY 01 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882617.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1832882.m3u8",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Cine Sky Oficial: Grandes lancamentos do cinema mundial 24h sem intervalos comerciais.",
-                        quality = "FHD"
+                        quality = "FHD",
+                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/1832882.ts")
                     ),
                     Channel(
                         id = "cinesky_02",
@@ -52,7 +53,7 @@ object ChannelRepository {
                         number = "04",
                         title = "Cine SKY 05 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882621.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378594.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Cinema em alta definicao com lancamentos imperdiveis e classicos mundiais.",
                         quality = "FHD"
@@ -89,7 +90,7 @@ object ChannelRepository {
                         number = "07",
                         title = "A Fazenda 24H - Camera 1 (Sede Principal)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288160.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726032.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Camera principal ao vivo 24 horas por dia dentro da sede de A Fazenda com todos os peoes.",
                         quality = "FHD"
@@ -99,7 +100,7 @@ object ChannelRepository {
                         number = "08",
                         title = "A Fazenda 24H - Camera 2 (Baia & Animais)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378544.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726033.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Camera exclusiva na baia dos animais, rotina rural e conversas reservadas.",
                         quality = "HD"
@@ -109,7 +110,7 @@ object ChannelRepository {
                         number = "09",
                         title = "A Fazenda 24H - Camera 3 (Oficina & Varanda)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288162.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726034.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Acompanhe as estrategias e reunioes secretas na area da varanda e oficina.",
                         quality = "HD"
@@ -119,7 +120,7 @@ object ChannelRepository {
                         number = "10",
                         title = "A Fazenda 24H - Camera 4 (Cozinha & Sala)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288163.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726035.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Toda a movimentacao das refeicoes, discussoes na cozinha e momentos na sala de estar.",
                         quality = "HD"
@@ -129,7 +130,7 @@ object ChannelRepository {
                         number = "11",
                         title = "A Fazenda 24H - Camera 5 (Piscina & Academia)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288164.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726036.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Area externa, treinos na academia, banho de sol na piscina e conversas quentes.",
                         quality = "HD"
@@ -139,7 +140,7 @@ object ChannelRepository {
                         number = "12",
                         title = "A Fazenda 24H - Camera 6 (Quartos & Espelho)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5288165.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726037.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d7/Logotipo_de_A_Fazenda.png/320px-Logotipo_de_A_Fazenda.png",
                         description = "Transmissao ao vivo dos quartos, pre-festas, fofocas e descanso dos peoes.",
                         quality = "HD"
@@ -149,7 +150,7 @@ object ChannelRepository {
                         number = "13",
                         title = "A Fazenda 24H - Camera 7 (Mosaico Multicameras)",
                         category = "A Fazenda 24H (7 Câmeras)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378603.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726038.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Logo_A_Fazenda_-_Atual.png",
                         description = "Visao panoramica mosaico transmitindo todos os cantos da fazenda simultaneamente.",
                         quality = "FHD"
@@ -167,7 +168,7 @@ object ChannelRepository {
                         number = "2401",
                         title = "24H Chaves",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/137139.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727538.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Logo_Chaves.png/320px-Logo_Chaves.png",
                         description = "Transmissao oficial 24h sem intervalos com todos os episodios classicos da vila do Chaves.",
                         quality = "HD"
@@ -177,7 +178,7 @@ object ChannelRepository {
                         number = "2402",
                         title = "24H Chapolin Colorado",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138000.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727539.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Chapolin_Colorado_logo.png/320px-Chapolin_Colorado_logo.png",
                         description = "Nao contavam com a minha astucia! O heroi mais amado da TV 24 horas no ar.",
                         quality = "HD"
@@ -187,7 +188,7 @@ object ChannelRepository {
                         number = "2403",
                         title = "24H Os Simpsons",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/135601.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727547.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/The_Simpsons_Logo.svg/320px-The_Simpsons_Logo.svg.png",
                         description = "Todas as temporadas de Homer, Marge, Bart, Lisa e Maggie em Springfield 24h por dia.",
                         quality = "HD"
@@ -197,7 +198,7 @@ object ChannelRepository {
                         number = "2404",
                         title = "24H Todo Mundo Odeia o Chris",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/135469.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727565.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Everybody_Hates_Chris_title.png/320px-Everybody_Hates_Chris_title.png",
                         description = "Julius, Rochelle, Tonya, Drew e Greg nas aventuras mais engracadas de Nova York.",
                         quality = "HD"
@@ -207,7 +208,7 @@ object ChannelRepository {
                         number = "2405",
                         title = "24H Friends",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138814.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727545.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Friends_logo.svg/320px-Friends_logo.svg.png",
                         description = "Rachel, Monica, Phoebe, Joey, Chandler e Ross no Central Perk 24 horas por dia.",
                         quality = "HD"
@@ -217,7 +218,7 @@ object ChannelRepository {
                         number = "2406",
                         title = "24H Dois Homens e Meio",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/137623.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727542.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Two_and_a_Half_Men_logo.svg/320px-Two_and_a_Half_Men_logo.svg.png",
                         description = "Charlie Harper, Alan e Jake na comedia de maior sucesso da TV 24h sem parar.",
                         quality = "HD"
@@ -227,7 +228,7 @@ object ChannelRepository {
                         number = "2407",
                         title = "24H Bob Esponja",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/138065.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727199.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/SpongeBob_SquarePants_logo.svg/320px-SpongeBob_SquarePants_logo.svg.png",
                         description = "Na Fenda do Biquini com Bob Esponja, Patrick Estrela, Lula Molusco e Sr. Sirigueijo 24h.",
                         quality = "HD"
@@ -237,7 +238,7 @@ object ChannelRepository {
                         number = "2408",
                         title = "24H Pica Pau",
                         category = "Canais 24 Horas",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/136821.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727301.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Woody_Woodpecker_logo.png/320px-Woody_Woodpecker_logo.png",
                         description = "O passaro mais biruta dos desenhos animados em suas classicas trapalhadas 24 horas.",
                         quality = "HD"
@@ -247,7 +248,7 @@ object ChannelRepository {
                         number = "2409",
                         title = "24H Dragon Ball Z",
                         category = "Canais 24 Horas",
-                        streamUrl = "https://fallback1.nexustvplay.bbroot.com/nxs/stream/24h_dragonball/24h_dragonball.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727318.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Dragon_Ball_Z_logo.svg/320px-Dragon_Ball_Z_logo.svg.png",
                         description = "Goku, Vegeta, Gohan e os Guerreiros Z nas batalhas mais epicas do anime 24h por dia.",
                         quality = "HD"
@@ -300,7 +301,7 @@ object ChannelRepository {
                         number = "52",
                         title = "Premiere 4 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460220.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460218.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Futebol ao vivo em alta definição direto dos estádios de todo o Brasil.",
                         quality = "FHD"
@@ -310,7 +311,7 @@ object ChannelRepository {
                         number = "53",
                         title = "Premiere 5 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460221.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460221.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Canal de transmissão direta de partidas simultâneas dos campeonatos nacionais.",
                         quality = "FHD"
@@ -320,7 +321,7 @@ object ChannelRepository {
                         number = "54",
                         title = "Premiere 6 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460221.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460224.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Cobertura completa dos jogos da Série B e confrontos regionais.",
                         quality = "FHD"
@@ -330,7 +331,7 @@ object ChannelRepository {
                         number = "55",
                         title = "Premiere 7 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460227.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460227.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Canal pay-per-view exclusivo para transmissões de mata-mata e decisões.",
                         quality = "FHD"
@@ -766,7 +767,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Discovery ID (Investigacao) HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297948.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Investigation_Discovery_logo_%282020%29.svg/320px-Investigation_Discovery_logo_%282020%29.svg.png",
                         description = "Crimes reais, investigacoes policiais forenses e os misterios mais intrigantes.",
                         quality = "FHD"
@@ -776,7 +777,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Discovery World HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297957.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Discovery_World_logo.svg/320px-Discovery_World_logo.svg.png",
                         description = "Documentarios deslumbrantes sobre culturas globais, paisagens e a historia da Terra.",
                         quality = "FHD"
@@ -786,7 +787,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Discovery Science HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71875.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297951.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Discovery_Science_logo.svg/320px-Discovery_Science_logo.svg.png",
                         description = "Tecnologia de ponta, astrofisica, experimentos ousados e inovacoes do futuro.",
                         quality = "HD"
@@ -796,7 +797,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Discovery Theater HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71879.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/297954.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Discovery_Theater_logo.png/320px-Discovery_Theater_logo.png",
                         description = "Imagens cinematograficas em alta definicao da natureza e animais selvagens.",
                         quality = "HD"
@@ -843,7 +844,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Canal Sony HD (Sony Channel)",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378640.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726976.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sony_Channel_logo_2019.svg/320px-Sony_Channel_logo_2019.svg.png",
                         description = "O lendario Canal Sony: Grey's Anatomy, The Good Doctor e as series medicas e policiais mais amadas.",
                         quality = "FHD"
@@ -853,7 +854,7 @@ object ChannelRepository {
                         number = "57",
                         title = "Sony Movies HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726997.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Sony_Movies_logo_2022.svg/320px-Sony_Movies_logo_2022.svg.png",
                         description = "O acervo completo dos lendarios estudios da Columbia Pictures e Sony Pictures.",
                         quality = "FHD"
@@ -863,7 +864,7 @@ object ChannelRepository {
                         number = "58",
                         title = "Warner Channel HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378671.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726994.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Warner_Channel_2019_logo.svg/320px-Warner_Channel_2019_logo.svg.png",
                         description = "Universo DC, The Big Bang Theory, Friends e os maiores sucessos da Warner Bros.",
                         quality = "FHD"
@@ -873,7 +874,7 @@ object ChannelRepository {
                         number = "59",
                         title = "Megapix HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378624.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726975.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Megapix_logo_2020.svg/320px-Megapix_logo_2020.svg.png",
                         description = "O canal dos grandes campeoes de bilheteria dublados com sessao pipoca todo dia.",
                         quality = "FHD"
@@ -883,7 +884,7 @@ object ChannelRepository {
                         number = "60",
                         title = "Universal TV HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378668.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726990.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Universal_TV_logo_2018.svg/320px-Universal_TV_logo_2018.svg.png",
                         description = "Franquia Chicago (Fire, P.D., Med), Law & Order e grandes investigacoes.",
                         quality = "FHD"
@@ -893,7 +894,7 @@ object ChannelRepository {
                         number = "61",
                         title = "Studio Universal HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378648.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726980.ts",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Studio_Universal_logo.svg/320px-Studio_Universal_logo.svg.png",
                         description = "Cinema hollywoodiano e classicos dos estúdios Universal Pictures.",
                         quality = "FHD"
@@ -903,7 +904,7 @@ object ChannelRepository {
                         number = "62",
                         title = "Paramount Network HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378649.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460171.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Paramount_Network_2018.svg/320px-Paramount_Network_2018.svg.png",
                         description = "Yellowstone, Tulsa King e superproducoes consagradas da Paramount Pictures.",
                         quality = "FHD"
@@ -913,7 +914,7 @@ object ChannelRepository {
                         number = "63",
                         title = "Cinemax HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378618.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726973.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cinemax_logo_2011.svg/320px-Cinemax_logo_2011.svg.png",
                         description = "Filmes de sucesso, acao e suspense com a chancela do grupo HBO.",
                         quality = "FHD"
@@ -943,7 +944,7 @@ object ChannelRepository {
                         number = "66",
                         title = "AXN HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378611.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726968.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/AXN_logo_2015.svg/320px-AXN_logo_2015.svg.png",
                         description = "As maiores series policiais e de investigacao forense do mundo: NCIS e Criminal Minds.",
                         quality = "FHD"
@@ -1107,7 +1108,7 @@ object ChannelRepository {
                         number = "88",
                         title = "Multishow HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518581.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726243.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Multishow_logo_2017.svg/320px-Multishow_logo_2017.svg.png",
                         description = "Shows ao vivo, humor com Vai Que Cola, festivais Rock in Rio e Lollapalooza.",
                         quality = "FHD"
@@ -1117,7 +1118,7 @@ object ChannelRepository {
                         number = "89",
                         title = "GNT HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676597.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726128.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/GNT_logo_2020.svg/320px-GNT_logo_2020.svg.png",
                         description = "Gastronomia, moda, decoracao, Papo de Segunda e Saia Justa.",
                         quality = "FHD"
@@ -1127,7 +1128,7 @@ object ChannelRepository {
                         number = "90",
                         title = "Viva HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518595.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726253.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Canal_Viva_logo_2019.svg/320px-Canal_Viva_logo_2019.svg.png",
                         description = "As maiores novelas da teledramaturgia brasileira e programas que marcaram epoca no canal Viva.",
                         quality = "FHD",
@@ -1141,7 +1142,7 @@ object ChannelRepository {
                         number = "91",
                         title = "Canal Brasil HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378614.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726970.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Canal_Brasil_logo_2019.svg/320px-Canal_Brasil_logo_2019.svg.png",
                         description = "O melhor da cultura nacional, cinema brasileiro, MPB e festivais artisticos.",
                         quality = "FHD"
@@ -1151,7 +1152,7 @@ object ChannelRepository {
                         number = "92",
                         title = "BIS HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/59471019/60849037/518551.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726214.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Canal_Bis_logo.svg/320px-Canal_Bis_logo.svg.png",
                         description = "Grandes shows internacionais, documentarios musicais e turnes historicas.",
                         quality = "FHD"
@@ -1161,7 +1162,7 @@ object ChannelRepository {
                         number = "93",
                         title = "Modo Viagem HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/518574.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726237.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Modo_Viagem_logo.png/320px-Modo_Viagem_logo.png",
                         description = "Turismo pelo mundo, hoteis deslumbrantes e experiencias de viagem inesqueciveis.",
                         quality = "FHD"
@@ -1419,7 +1420,7 @@ object ChannelRepository {
                         number = "115",
                         title = "Globo SP FHD (Principal)",
                         category = "Globo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726127.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo FHD Oficial: Sinal direto de alta definicao com programacao completa e EPG ativo.",
                         quality = "FHD",
@@ -1433,7 +1434,7 @@ object ChannelRepository {
                         number = "116",
                         title = "Globo SP (Backup Alternativo)",
                         category = "Globo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5298258.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727129.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Sinal de contingencia da TV Globo Sao Paulo para garantir transmissao sem interrupcoes.",
                         quality = "FHD",
@@ -1446,7 +1447,7 @@ object ChannelRepository {
                         number = "117",
                         title = "Globo SP 4K UHD",
                         category = "Globo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676596.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726127.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo em resolucao maxima 4K Ultra HD com codec HEVC de alta definicao.",
                         quality = "4K",
@@ -1459,7 +1460,7 @@ object ChannelRepository {
                         number = "118",
                         title = "Globo Nacional FHD",
                         category = "Globo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5299056.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5727129.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Sinal nacional da Rede Globo de Televisao para todo o Brasil em Full HD.",
                         quality = "FHD"
@@ -1603,7 +1604,7 @@ object ChannelRepository {
                         number = "127",
                         title = "Band SP - Band SP",
                         category = "Band",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676586.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5721427.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-sp-band-sp.png",
                         description = "Band Sao Paulo: O canal do esporte, Formula 1, Jogo Aberto, Os Donos da Bola e MasterChef.",
                         quality = "HD"
@@ -1698,7 +1699,7 @@ object ChannelRepository {
                         number = "134",
                         title = "Cartoon Network HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882631.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726197.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/320px-Cartoon_Network_2010_logo.svg.png",
                         description = "O canal dos desenhos animados: Ben 10, Teen Titans Go, Hora de Aventura e Incrivel Mundo de Gumball.",
                         quality = "FHD"
@@ -1708,7 +1709,7 @@ object ChannelRepository {
                         number = "135",
                         title = "Cartoonito HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/71832.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726119.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/cartoonito.png",
                         description = "O canal infantil pre-escolar oficial (sucessor do Boomerang): Batwheels, Lucas a Aranha e Thomas.",
                         quality = "FHD"
@@ -1748,7 +1749,7 @@ object ChannelRepository {
                         number = "139",
                         title = "Discovery Kids HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/59471019/60849037/297946.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726201.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD"
@@ -1758,7 +1759,7 @@ object ChannelRepository {
                         number = "140",
                         title = "Gloob HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882626.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726203.m3u8",
                         logoUrl = "https://acstatic.co/logos/canais/gloob.png",
                         description = "Detetives do Predio Azul (DPA), Miraculous: As Aventuras de Ladybug e Bugados.",
                         quality = "FHD"
@@ -1768,7 +1769,7 @@ object ChannelRepository {
                         number = "141",
                         title = "Gloobinho HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882629.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726205.m3u8",
                         logoUrl = "http://acstatic.co/logos/canais/gloobinho.png",
                         description = "Historias encantadoras, musica e brincadeiras para a primeira infancia.",
                         quality = "HD"
