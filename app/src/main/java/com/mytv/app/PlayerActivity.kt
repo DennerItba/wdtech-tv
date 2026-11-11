@@ -159,7 +159,9 @@ class PlayerActivity : AppCompatActivity() {
 
         btnErrorRetry.setOnClickListener {
             retryCount = 0
-            currentChannel?.let { startStream(it, currentStreamUrl) }
+            val ch = currentChannel ?: return@setOnClickListener
+            val nextUrl = ch.backupUrls.firstOrNull() ?: ch.streamUrl
+            startStream(ch, nextUrl)
         }
 
         btnErrorBack.setOnClickListener {
@@ -709,9 +711,18 @@ class PlayerActivity : AppCompatActivity() {
             bufferingProgress.visibility = View.VISIBLE
 
             // Imediatamente busca a melhor URL alternativa (backup oficial ou fallback cruzado)
-            val backupFromChannel = channel.backupUrls.getOrNull(retryCount - 1)
-            val fallbackUrl = backupFromChannel ?: (currentStreamUrl?.let { getFallbackUrl(it) })
-            val streamToUse = fallbackUrl ?: currentStreamUrl ?: channel.streamUrl
+            val backups = channel.backupUrls
+            val backupCandidate = backups.getOrNull(retryCount - 1)
+            val fallbackCandidate = currentStreamUrl?.let { getFallbackUrl(it) }
+            val streamToUse = if (backupCandidate != null && backupCandidate != currentStreamUrl) {
+                backupCandidate
+            } else if (fallbackCandidate != null && fallbackCandidate != currentStreamUrl) {
+                fallbackCandidate
+            } else if (backups.isNotEmpty() && backups.first() != currentStreamUrl) {
+                backups.first()
+            } else {
+                channel.streamUrl
+            }
 
             val runnable = Runnable {
                 if (!isFinishing && !isDestroyed) {
@@ -1110,6 +1121,16 @@ class PlayerActivity : AppCompatActivity() {
         const val EXTRA_PLAYBACK_OFFSET = "extra_playback_offset"
         const val EXTRA_PLAYBACK_TITLE = "extra_playback_title"
         private val STREAM_FALLBACKS = mapOf(
+            // Cine SKY & Lançamentos Fallbacks
+            "1832882" to "5378594", // Cine SKY 01 -> Telecine Premium FHD
+            "1882620" to "5726972", // Cine SKY 04 -> Cinemax FHD
+            "1882621" to "5726974", // Cine SKY 05 -> Megapix FHD
+            "5676601" to "5726132", // SporTV 4K
+            "5676611" to "5726142", // Premiere 4K
+            "5676603" to "5726138", // Telecine 4K
+            "5676591" to "5726122", // Discovery 4K
+            "5676596" to "5726127", // Globo 4K
+            "5298055" to "5726100", // RedeTV
             // Corruptx FHD <-> HD Pairs
             "8735" to "8736",   // Discovery Channel FHD -> HD
             "8755" to "8756",   // Discovery Turbo FHD -> HD

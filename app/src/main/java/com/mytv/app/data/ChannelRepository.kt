@@ -22,11 +22,15 @@ object ChannelRepository {
                         number = "01",
                         title = "Cine SKY 01 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1832882.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378594.m3u8",
                         logoUrl = "http://www.fontedecanais.dev/logos/canais/cinesky.png",
                         description = "Cine Sky Oficial: Grandes lancamentos do cinema mundial 24h sem intervalos comerciais.",
                         quality = "FHD",
-                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/1832882.ts")
+                        backupUrls = listOf(
+                            "http://64.31.23.207:80/live/59471019/60849037/1882618.m3u8",
+                            "http://64.31.23.207:80/live/59471019/60849037/5726138.m3u8",
+                            "http://64.31.23.207:80/live/59471019/60849037/514107.m3u8"
+                        )
                     ),
                     Channel(
                         id = "cinesky_02",
@@ -53,10 +57,11 @@ object ChannelRepository {
                         number = "04",
                         title = "Cine SKY 05 HD",
                         category = "Cine Sky",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378594.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726974.m3u8",
                         logoUrl = "http://www.fontedecanais.org/logos/canais/cinesky.png",
                         description = "Cinema em alta definicao com lancamentos imperdiveis e classicos mundiais.",
-                        quality = "FHD"
+                        quality = "FHD",
+                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5726972.m3u8")
                     ),
                     Channel(
                         id = "cinesky_acao",
@@ -321,7 +326,7 @@ object ChannelRepository {
                         number = "54",
                         title = "Premiere 6 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460224.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Cobertura completa dos jogos da Série B e confrontos regionais.",
                         quality = "FHD"
@@ -341,7 +346,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Premiere 8 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460230.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Transmissão em tempo real de partidas complementares da rodada de futebol.",
                         quality = "FHD"
@@ -1004,7 +1009,7 @@ object ChannelRepository {
                         number = "72",
                         title = "RunTime - Cinema",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378617.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726998.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/runtime-cinema.png",
                         description = "Filmes aclamados com exibicao continua e alta definicao.",
                         quality = "HD"
@@ -1051,7 +1056,7 @@ object ChannelRepository {
                         number = "76",
                         title = "History 2 (H2) HD",
                         category = "Documentários",
-                        streamUrl = "http://vivlar.me:80/live/497238/KK8Kdy/72147.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/296616.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/History2_logo.svg/320px-History2_logo.svg.png",
                         description = "Aprofundamento historico, grandes guerras, arqueologia e conspiracoes mundiais.",
                         quality = "FHD"
@@ -1081,7 +1086,7 @@ object ChannelRepository {
                         number = "79",
                         title = "Curta! HD",
                         category = "Documentários",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5378614.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726097.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/curta.png",
                         description = "Cinema brasileiro, artes plasticas, musica, filosofia e literatura.",
                         quality = "FHD"
@@ -1222,7 +1227,7 @@ object ChannelRepository {
                         number = "99",
                         title = "Rede TV",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5298055.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726100.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-tv.png",
                         description = "Entretenimento, talk shows, fofocas e debates ao vivo.",
                         quality = "HD"
@@ -1249,7 +1254,7 @@ object ChannelRepository {
                         number = "101",
                         title = "SporTV 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676601.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726132.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "Transmissao oficial em resolucao 4K Ultra HD (3840x2160) com maximo detalhe esportivo.",
                         quality = "4K"
@@ -1259,7 +1264,7 @@ object ChannelRepository {
                         number = "102",
                         title = "Premiere 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726142.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "O melhor do futebol brasileiro com qualidade de cinema 4K UHD e som imersivo.",
                         quality = "4K"
@@ -1269,7 +1274,7 @@ object ChannelRepository {
                         number = "103",
                         title = "Telecine Premium 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676603.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726138.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Grandes lancamentos do cinema mundial na resolucao maxima 4K Ultra HD.",
                         quality = "4K"
@@ -1289,7 +1294,7 @@ object ChannelRepository {
                         number = "105",
                         title = "Discovery 4K UHD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676591.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726122.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
                         description = "Documentarios deslumbrantes da natureza, ciencia e vida selvagem em 4K.",
                         quality = "4K"
@@ -1329,7 +1334,7 @@ object ChannelRepository {
                         number = "108",
                         title = "Globo SP H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676596.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726127.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Transmissao em codec H.265 de alta eficiencia: imagem ultra nitida consumindo metade da banda.",
                         quality = "H265",
@@ -1343,7 +1348,7 @@ object ChannelRepository {
                         number = "109",
                         title = "SporTV H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676601.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726132.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/SporTV_logo_2021.svg/320px-SporTV_logo_2021.svg.png",
                         description = "O canal lider de esportes otimizado em compressao H.265 sem travamentos.",
                         quality = "H265"
@@ -1353,7 +1358,7 @@ object ChannelRepository {
                         number = "110",
                         title = "Telecine H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676607.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726138.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telecine_Premium_logo_2019.svg/320px-Telecine_Premium_logo_2019.svg.png",
                         description = "Filmes em alta taxa de bits codificados em H.265 para TV Boxes modernas.",
                         quality = "H265"
@@ -1383,7 +1388,7 @@ object ChannelRepository {
                         number = "113",
                         title = "Premiere H.265 (HEVC)",
                         category = "Canais H.265 (HEVC)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726142.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo_2021.svg/320px-Premiere_logo_2021.svg.png",
                         description = "Futebol brasileiro com transmissao rapida e estavel pelo codec H.265.",
                         quality = "H265"
@@ -1683,7 +1688,7 @@ object ChannelRepository {
                         description = "Transmissao oficial ao vivo dos treinos livres, classificacao, corridas sprint e Grandes Premios da Formula 1 no SporTV e Globo.",
                         quality = "FHD",
                         backupUrls = listOf(
-                            "http://64.31.23.207:80/live/59471019/60849037/5676601.m3u8",
+                            "http://64.31.23.207:80/live/59471019/60849037/5726132.m3u8",
                             "http://64.31.23.207:80/live/59471019/60849037/5298295.m3u8"
                         )
                     )
@@ -1779,7 +1784,7 @@ object ChannelRepository {
                         number = "142",
                         title = "TV Rá-Tim-Bum HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/1882634.ts",
+                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726198.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-ra-tim-bum.png",
                         description = "O canal infantil brasileiro da Fundacao Padre Anchieta / TV Cultura: Cocorico e Ilha Ra-Tim-Bum.",
                         quality = "HD"
@@ -1851,7 +1856,7 @@ object ChannelRepository {
                 number = "15",
                 title = "[15:00] Ah-Ali x Al-Khaleej",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Partida ao vivo de hoje: [15:00] Ah-Ali x Al-Khaleej",
                 quality = "FHD"
@@ -1861,7 +1866,7 @@ object ChannelRepository {
                 number = "16",
                 title = "[21:30] Flamengo x Estudiantes",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Partida ao vivo de hoje: [21:30] Flamengo x Estudiantes",
                 quality = "FHD"
@@ -1871,7 +1876,7 @@ object ChannelRepository {
                 number = "17",
                 title = "Jogos Ao Vivo (Canal 03)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460203.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1881,7 +1886,7 @@ object ChannelRepository {
                 number = "18",
                 title = "Jogos Ao Vivo (Canal 04)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1891,7 +1896,7 @@ object ChannelRepository {
                 number = "19",
                 title = "Jogos Ao Vivo (Canal 05)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1901,7 +1906,7 @@ object ChannelRepository {
                 number = "20",
                 title = "Jogos Ao Vivo (Canal 06)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1911,7 +1916,7 @@ object ChannelRepository {
                 number = "21",
                 title = "Jogos Ao Vivo (Canal 07)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1921,7 +1926,7 @@ object ChannelRepository {
                 number = "22",
                 title = "Jogos Ao Vivo (Canal 08)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726118.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1931,7 +1936,7 @@ object ChannelRepository {
                 number = "23",
                 title = "Jogos Ao Vivo (Canal 09)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1941,7 +1946,7 @@ object ChannelRepository {
                 number = "24",
                 title = "Jogos Ao Vivo (Canal 10)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1951,7 +1956,7 @@ object ChannelRepository {
                 number = "25",
                 title = "Jogos Ao Vivo (Canal 11)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460203.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1961,7 +1966,7 @@ object ChannelRepository {
                 number = "26",
                 title = "Jogos Ao Vivo (Canal 12)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1971,7 +1976,7 @@ object ChannelRepository {
                 number = "27",
                 title = "Jogos Ao Vivo (Canal 13)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1981,7 +1986,7 @@ object ChannelRepository {
                 number = "28",
                 title = "Jogos Ao Vivo (Canal 14)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -1991,7 +1996,7 @@ object ChannelRepository {
                 number = "29",
                 title = "Jogos Ao Vivo (Canal 15)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2001,7 +2006,7 @@ object ChannelRepository {
                 number = "30",
                 title = "Jogos Ao Vivo (Canal 16)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726118.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2011,7 +2016,7 @@ object ChannelRepository {
                 number = "31",
                 title = "Jogos Ao Vivo (Canal 17)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2021,7 +2026,7 @@ object ChannelRepository {
                 number = "32",
                 title = "Jogos Ao Vivo (Canal 18)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2031,7 +2036,7 @@ object ChannelRepository {
                 number = "33",
                 title = "Jogos Ao Vivo (Canal 19)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460203.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2041,7 +2046,7 @@ object ChannelRepository {
                 number = "34",
                 title = "Jogos Ao Vivo (Canal 20)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2051,7 +2056,7 @@ object ChannelRepository {
                 number = "35",
                 title = "Jogos Ao Vivo (Canal 21)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2061,7 +2066,7 @@ object ChannelRepository {
                 number = "36",
                 title = "Jogos Ao Vivo (Canal 22)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2071,7 +2076,7 @@ object ChannelRepository {
                 number = "37",
                 title = "Jogos Ao Vivo (Canal 23)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2081,7 +2086,7 @@ object ChannelRepository {
                 number = "38",
                 title = "Jogos Ao Vivo (Canal 24)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726118.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2091,7 +2096,7 @@ object ChannelRepository {
                 number = "39",
                 title = "Jogos Ao Vivo (Canal 25)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2101,7 +2106,7 @@ object ChannelRepository {
                 number = "40",
                 title = "Jogos Ao Vivo (Canal 26)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2111,7 +2116,7 @@ object ChannelRepository {
                 number = "41",
                 title = "Jogos Ao Vivo (Canal 27)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460203.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2121,7 +2126,7 @@ object ChannelRepository {
                 number = "42",
                 title = "Jogos Ao Vivo (Canal 28)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2131,7 +2136,7 @@ object ChannelRepository {
                 number = "43",
                 title = "Jogos Ao Vivo (Canal 29)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2141,7 +2146,7 @@ object ChannelRepository {
                 number = "44",
                 title = "Jogos Ao Vivo (Canal 30)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2151,7 +2156,7 @@ object ChannelRepository {
                 number = "45",
                 title = "Jogos Ao Vivo (Canal 31)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2161,7 +2166,7 @@ object ChannelRepository {
                 number = "46",
                 title = "Jogos Ao Vivo (Canal 32)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726118.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2171,7 +2176,7 @@ object ChannelRepository {
                 number = "47",
                 title = "Jogos Ao Vivo (Canal 33)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
@@ -2181,7 +2186,7 @@ object ChannelRepository {
                 number = "48",
                 title = "Jogos Ao Vivo (Canal 34)",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5676611.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Canal reservado para transmissões dos jogos do dia.",
                 quality = "FHD"
