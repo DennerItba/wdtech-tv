@@ -30,6 +30,7 @@ class ChannelListAdapter(
         val txtEpg: TextView = view.findViewById(R.id.txt_row_epg)
         val txtBadge: TextView = view.findViewById(R.id.txt_row_badge)
         val txtPlayback: TextView = view.findViewById(R.id.txt_row_playback)
+        val pbProgress: android.widget.ProgressBar = view.findViewById(R.id.pb_row_progress)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChannelViewHolder {
@@ -47,6 +48,14 @@ class ChannelListAdapter(
         holder.txtTitle.text = channel.title
         holder.txtBadge.text = channel.quality
         holder.txtPlayback.visibility = if (channel.hasPlayback) View.VISIBLE else View.GONE
+
+        // Barra de progresso para Continue Assistindo
+        if (channel.progressPercent > 0) {
+            holder.pbProgress.visibility = View.VISIBLE
+            holder.pbProgress.progress = channel.progressPercent
+        } else {
+            holder.pbProgress.visibility = View.GONE
+        }
 
         val epg = channel.currentProgram
         if (epg != null) {

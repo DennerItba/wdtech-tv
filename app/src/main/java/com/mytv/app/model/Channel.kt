@@ -17,7 +17,9 @@ data class Channel(
     var hasPlayback: Boolean = false,
     var playbackDays: Int = 0,
     var playbackStreamId: String? = null,
-    val backupUrls: List<String> = emptyList()
+    val backupUrls: List<String> = emptyList(),
+    var progressPercent: Int = 0,
+    var resumePositionMs: Long = 0L
 ) : Serializable
 
 data class ChannelCategory(

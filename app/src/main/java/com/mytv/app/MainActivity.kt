@@ -48,6 +48,7 @@ import coil.transform.RoundedCornersTransformation
 import com.mytv.app.adapter.CategorySidebarAdapter
 import com.mytv.app.adapter.ChannelListAdapter
 import com.mytv.app.adapter.EpisodeAdapter
+import com.mytv.app.data.WatchProgressRepository
 import com.mytv.app.adapter.SeasonAdapter
 import com.mytv.app.adapter.SettingListAdapter
 import com.mytv.app.adapter.VodListAdapter
@@ -280,8 +281,51 @@ class MainActivity : AppCompatActivity() {
             it.id in listOf("cat_kids")
         }.flatMap { it.channels }
 
+        // Inicializa itens no Continue Assistindo para demonstração imediata caso esteja vazio
+        if (WatchProgressRepository.getContinueWatchingList(this).isEmpty()) {
+            val sampleStream = safeChannels.firstOrNull()?.streamUrl ?: ""
+            WatchProgressRepository.saveProgress(
+                context = this,
+                mediaId = "cont_1",
+                title = "Interestelar",
+                category = "Filmes • Ficção Científica",
+                progressPercent = 65,
+                positionMs = 65 * 60 * 1000L,
+                durationMs = 100 * 60 * 1000L,
+                coverImage = "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+                streamUrl = sampleStream
+            )
+            WatchProgressRepository.saveProgress(
+                context = this,
+                mediaId = "cont_2",
+                title = "Ruptura (Severance)",
+                category = "Séries • Suspense",
+                progressPercent = 35,
+                positionMs = 18 * 60 * 1000L,
+                durationMs = 50 * 60 * 1000L,
+                coverImage = "https://image.tmdb.org/t/p/w500/A31Z7yU42cE1yTq8m5Q18V8x.jpg",
+                streamUrl = sampleStream,
+                isSeries = true
+            )
+            WatchProgressRepository.saveProgress(
+                context = this,
+                mediaId = "cont_3",
+                title = "O Urso (The Bear)",
+                category = "Séries • Drama",
+                progressPercent = 80,
+                positionMs = 24 * 60 * 1000L,
+                durationMs = 30 * 60 * 1000L,
+                coverImage = "https://image.tmdb.org/t/p/w500/e94T1mEsmc7M2X0v5uV.jpg",
+                streamUrl = sampleStream,
+                isSeries = true
+            )
+        }
+
+        val continueWatchingChannels = WatchProgressRepository.getContinueWatchingList(this).map { it.toChannel() }
+
         cyberCategories = listOf(
             ChannelCategory(id = "cat_home", name = "Início", iconRes = R.drawable.ic_home_tv, channels = emptyList()),
+            ChannelCategory(id = "cat_continue_watching", name = "Continue Assistindo", iconRes = R.drawable.ic_playback, channels = continueWatchingChannels),
             ChannelCategory(id = "cat_live", name = "TV ao vivo", iconRes = R.drawable.outline_live_tv_24, channels = safeChannels),
             ChannelCategory(id = "cat_aberta", name = "TV aberta", iconRes = R.drawable.ic_tv_aberta, channels = abertosChannels),
             ChannelCategory(id = "cat_fechada", name = "TV fechada", iconRes = R.drawable.ic_tv_fechada, channels = fechadosChannels),
@@ -434,6 +478,26 @@ class MainActivity : AppCompatActivity() {
                 currentChannel = null
                 exoPlayer?.stop()
                 exoPlayer?.clearMediaItems()
+                return
+            }
+            "cat_continue_watching" -> {
+                switchAppMode(AppMode.LIVE_TV)
+                val list = WatchProgressRepository.getContinueWatchingList(this).map { it.toChannel() }
+                selectedCategory = category.copy(channels = list)
+                txtSelectedCategoryTitle.text = "Continue Assistindo"
+                txtCategoryBadge.text = "${list.size} ITENS"
+                txtHeaderBreadcrumb.text = "WDTECH TV • CONTINUE ASSISTINDO"
+                if (list.isEmpty()) {
+                    txtPreviewTitle.text = "Nenhum histórico recente"
+                    txtPreviewInfo.text = "Os conteúdos assistidos aparecerão aqui com a barra de progresso para você retomar."
+                    channelAdapter.updateChannels(emptyList())
+                } else {
+                    channelAdapter.updateChannels(list)
+                    list.firstOrNull()?.let { updateChannelInfo(it) }
+                    if (autoFocusChannels) {
+                        focusFirstChannel()
+                    }
+                }
                 return
             }
             "cat_filmes" -> {
@@ -1068,6 +1132,14 @@ class MainActivity : AppCompatActivity() {
             txtEpgSynopsis.text = "Acompanhe a programação oficial em tempo real."
         }
 
+        if (channel.progressPercent > 0) {
+            txtPreviewInfo.text = "${channel.category} • ${channel.progressPercent}% assistido"
+            txtEpgNowTitle.text = channel.title
+            txtEpgNowTime.text = "Retomar de onde parou (${channel.progressPercent}%)"
+            pbEpgProgress.progress = channel.progressPercent
+            txtEpgSynopsis.text = "Progresso salvo: ${channel.progressPercent}% assistido. Pressione OK no controle para continuar assistindo."
+        }
+
         val nextEpg = enriched.nextProgram
         if (nextEpg != null) {
             txtEpgNext.text = "▶ A Seguir (${nextEpg.startTime}): ${nextEpg.title}"
@@ -1320,10 +1392,30 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        refreshContinueWatching()
         if (currentAppMode == AppMode.LIVE_TV && currentChannel != null && exoPlayer?.currentMediaItem == null) {
             currentChannel?.let { playChannelPreview(it) }
         } else if (currentAppMode == AppMode.LIVE_TV) {
             exoPlayer?.play()
+        }
+    }
+
+    private fun refreshContinueWatching() {
+        val list = WatchProgressRepository.getContinueWatchingList(this).map { it.toChannel() }
+        val updatedCategories = cyberCategories.map { cat ->
+            if (cat.id == "cat_continue_watching") {
+                cat.copy(channels = list)
+            } else {
+                cat
+            }
+        }
+        cyberCategories = updatedCategories
+        allCategories = updatedCategories
+
+        if (selectedCategory?.id == "cat_continue_watching") {
+            selectedCategory = selectedCategory?.copy(channels = list)
+            channelAdapter.updateChannels(list)
+            txtCategoryBadge.text = "${list.size} ITENS"
         }
     }
 

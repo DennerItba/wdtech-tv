@@ -409,9 +409,20 @@ class PlayerActivity : AppCompatActivity() {
                             hideBuffering()
                             errorLayout.visibility = View.GONE
                             retryCount = 0
+                            if (channel.resumePositionMs > 0L) {
+                                val targetPos = channel.resumePositionMs
+                                channel.resumePositionMs = 0L
+                                this@apply.seekTo(targetPos)
+                                Toast.makeText(this@PlayerActivity, "Continuando de onde parou", Toast.LENGTH_SHORT).show()
+                            }
+                            startProgressTracking()
                         }
                         Player.STATE_ENDED -> {
                             hideBuffering()
+                            val dur = this@apply.duration
+                            if (dur > 0) {
+                                com.mytv.app.data.WatchProgressRepository.removeProgress(this@PlayerActivity, channel.id)
+                            }
                             if (!isPlaybackMode) {
                                 // Em transmissões ao vivo, STATE_ENDED indica queda de conexão / EOF no stream.
                                 // Reconecta automaticamente sem congelar a imagem na tela!
@@ -874,14 +885,59 @@ class PlayerActivity : AppCompatActivity() {
         return super.dispatchKeyEvent(event)
     }
 
+    // --- Rastreamento do Progresso de Visualização (Continue Assistindo) ---
+    private val progressHandler = Handler(Looper.getMainLooper())
+    private val progressRunnable = object : Runnable {
+        override fun run() {
+            saveCurrentWatchProgress()
+            progressHandler.postDelayed(this, 5000L)
+        }
+    }
+
+    private fun startProgressTracking() {
+        progressHandler.removeCallbacks(progressRunnable)
+        progressHandler.postDelayed(progressRunnable, 5000L)
+    }
+
+    private fun saveCurrentWatchProgress() {
+        val ch = currentChannel ?: return
+        val p = player ?: return
+        val dur = p.duration
+        val pos = p.currentPosition
+        if (dur > 0 && pos > 0) {
+            val pct = ((pos * 100) / dur).toInt().coerceIn(0, 100)
+            com.mytv.app.data.WatchProgressRepository.saveProgress(
+                context = this,
+                mediaId = ch.id,
+                title = ch.title,
+                category = ch.category,
+                progressPercent = pct,
+                positionMs = pos,
+                durationMs = dur,
+                coverImage = ch.logoUrl,
+                streamUrl = currentStreamUrl ?: ch.streamUrl,
+                isSeries = ch.category.contains("Série", ignoreCase = true)
+            )
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        progressHandler.removeCallbacks(progressRunnable)
+        saveCurrentWatchProgress()
+    }
+
     override fun onStop() {
         super.onStop()
+        progressHandler.removeCallbacks(progressRunnable)
+        saveCurrentWatchProgress()
         player?.stop()
         player?.clearMediaItems()
     }
 
     override fun onResume() {
         super.onResume()
+        startProgressTracking()
         if (player != null && player?.currentMediaItem == null && currentChannel != null) {
             currentChannel?.let { startStream(it, currentStreamUrl) }
         }
@@ -889,6 +945,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        progressHandler.removeCallbacks(progressRunnable)
         hideHandler.removeCallbacks(hideRunnable)
         retryHandler.removeCallbacksAndMessages(null)
         player?.release()

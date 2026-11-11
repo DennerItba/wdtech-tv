@@ -68,6 +68,18 @@
             android:text="No Ar: Carregando programação..."
             android:textColor="#8EA2C6"
             android:textSize="11sp" />
+
+        <!-- Barra de Progresso do Continue Assistindo -->
+        <ProgressBar
+            android:id="@+id/pb_row_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="3dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_epg"
+            android:visibility="gone" />
     </LinearLayout>
 
     <!-- Tag HD / FHD / 4K -->
