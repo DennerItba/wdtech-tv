@@ -147,7 +147,7 @@ object UniTvCatalogManager {
             val updatedCategories = baseCategories.map { cat ->
                 val remoteChs = remoteChannelsByCat[cat.id]
                 if (remoteChs != null && remoteChs.isNotEmpty()) {
-                    // Mantém canais especiais locais (como CazéTV, F1, Cine Sky, SporTV, ESPN, PPV, 4K, H265, Sony, etc.)
+                    // Mantém canais especiais locais (como CazéTV, F1, SporTV, ESPN, PPV, 4K, H265, Sony, etc.)
                     val preservedSpecial = cat.channels.filter { localCh ->
                         localCh.streamUrl.contains("64.31.23.207") ||
                         localCh.id.contains("caze", ignoreCase = true) ||
@@ -160,7 +160,6 @@ object UniTvCatalogManager {
                         localCh.id.startsWith("ch_fazenda") ||
                         localCh.id.startsWith("ch_bbb") ||
                         localCh.id.startsWith("ch_history") ||
-                        localCh.id.startsWith("cinesky_") ||
                         localCh.id.startsWith("sportv_") ||
                         localCh.id.startsWith("espn_") ||
                         localCh.id.startsWith("ch_4k_") ||

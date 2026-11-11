@@ -1121,10 +1121,6 @@ class PlayerActivity : AppCompatActivity() {
         const val EXTRA_PLAYBACK_OFFSET = "extra_playback_offset"
         const val EXTRA_PLAYBACK_TITLE = "extra_playback_title"
         private val STREAM_FALLBACKS = mapOf(
-            // Cine SKY & Lançamentos Fallbacks
-            "1832882" to "5378594", // Cine SKY 01 -> Telecine Premium FHD
-            "1882620" to "5726972", // Cine SKY 04 -> Cinemax FHD
-            "1882621" to "5726974", // Cine SKY 05 -> Megapix FHD
             "5676601" to "5726132", // SporTV 4K
             "5676611" to "5726142", // Premiere 4K
             "5676603" to "5726138", // Telecine 4K

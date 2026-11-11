@@ -611,26 +611,6 @@ private fun formatTime(minutes: Int): String {
             return bandsportsGrid[slotIdx % bandsportsGrid.size]
         }
 
-                // 8. Cine Sky (01 a 06) - Catálogo de Filmes Reais com Sinopses Detalhadas
-        if (titleLower.contains("cinesky") || titleLower.contains("cine sky") || idLower.contains("cinesky")) {
-            val cineskyGrid = listOf(
-                Pair("Oppenheimer", "Durante a Segunda Guerra Mundial, o físico J. Robert Oppenheimer lidera o Projeto Manhattan para desenvolver a primeira bomba atômica da história."),
-                Pair("Top Gun: Maverick", "Após trinta anos de serviço como um dos maiores pilotos da Marinha, Pete Maverick Mitchell é convocado para treinar jovens graduados para uma missão especializada."),
-                Pair("John Wick 4: Baba Yaga", "Com o preço por sua cabeça cada vez maior, o lendário assassino John Wick descobre um caminho para derrotar a Alta Cúpula em combates épicos."),
-                Pair("Interestelar", "Uma equipe de exploradores viaja através de um buraco de minhoca no espaço, na tentativa desesperada de garantir a sobrevivência da humanidade."),
-                Pair("Gladiador II", "Anos após a morte do lendário Maximus, Lucius é forçado a lutar no Coliseu para restaurar a honra e a glória de Roma."),
-                Pair("Duna: Parte 2", "Paul Atreides se une a Chani e aos Fremen em busca de vingança contra os conspiradores que destruíram sua família no planeta desértico."),
-                Pair("Avatar: O Caminho da Água", "Jake Sully e Neytiri exploram as regiões oceânicas de Pandora para proteger sua família quando uma antiga ameaça retorna."),
-                Pair("The Batman", "Nos dois anos em que atuou como Batman, Bruce Wayne investiga uma trilha de pistas enigmáticas deixadas pelo Charada na elite corrupta de Gotham."),
-                Pair("Missão: Impossível - Acerto de Contas", "Ethan Hunt e sua equipe do FMI embarcam na missão mais perigosa de suas vidas para rastrear uma arma que ameaça toda a humanidade."),
-                Pair("Coringa: Delírio a Dois", "Arthur Fleck aguarda julgamento em Arkham enquanto encontra o amor e descobre sua música interior ao lado de Harley Quinn."),
-                Pair("Homem-Aranha: Sem Volta para Casa", "Com sua identidade secreta revelada ao mundo, Peter Parker recorre ao Doutor Estranho e abre os portais do multiverso."),
-                Pair("O Lobo de Wall Street", "Jordan Belfort é um ambicioso corretor da bolsa de Nova York que cria um verdadeiro império de riqueza, excessos e adrenalina."),
-                Pair("Mad Max: Estrada da Fúria", "Em um mundo pós-apocalíptico, Max se junta a Furiosa e fugitivas em uma fuga em altíssima velocidade pelo deserto implacável.")
-            )
-            return cineskyGrid[slotIdx % cineskyGrid.size]
-        }
-
         // 9. Telecine (Premium, Action, Touch, Pipoca, Fun, Cult, 4K, H265)
         if (titleLower.contains("telecine") || catLower.contains("telecine") || idLower.startsWith("tc_") || idLower.contains("_tc")) {
             val tcGrid = when {

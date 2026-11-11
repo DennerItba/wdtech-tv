@@ -266,7 +266,7 @@ class MainActivity : AppCompatActivity() {
         }.flatMap { it.channels }
 
         val fechadosChannels = repoCategories.filter {
-            it.id in listOf("cat_telecine", "cat_hbo", "cat_filmes", "cat_discovery", "cat_docs", "cat_variedades", "cat_cinesky", "cat_4k", "cat_h265")
+            it.id in listOf("cat_telecine", "cat_hbo", "cat_filmes", "cat_discovery", "cat_docs", "cat_variedades", "cat_4k", "cat_h265")
         }.flatMap { it.channels }
 
         val futebolChannels = repoCategories.filter {
