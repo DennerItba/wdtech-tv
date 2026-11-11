@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fundo da barra -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="4dp" />
+            <solid android:color="#1A2A3E" />
+        </shape>
+    </item>
+    <!-- Progresso com gradiente Neon Ciano -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="4dp" />
+                <gradient
+                    android:startColor="#0077FE"
+                    android:endColor="#00E5FF"
+                    android:angle="0" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

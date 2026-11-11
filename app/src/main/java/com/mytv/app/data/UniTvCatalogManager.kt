@@ -126,6 +126,12 @@ object UniTvCatalogManager {
                         continue
                     }
 
+                    // Blacklist Definitiva: Expurgar canais instáveis ou descontinuados
+                    val nameLower = name.lowercase()
+                    if (nameLower.contains("cinesky") || nameLower.contains("cine sky")) {
+                        continue
+                    }
+
                     if (streamUrl.isNotEmpty()) {
                         chList.add(
                             Channel(

@@ -11,8 +11,8 @@ android {
         applicationId = "com.mytv.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 47
-        versionName = "2.7.1"
+        versionCode = 48
+        versionName = "2.7.2"
         setProperty("archivesBaseName", "wdtechtv")
 
         vectorDrawables {
