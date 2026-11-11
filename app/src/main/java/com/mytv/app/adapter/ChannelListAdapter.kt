@@ -41,7 +41,9 @@ class ChannelListAdapter(
     override fun onBindViewHolder(holder: ChannelViewHolder, position: Int) {
         val channel = channels[position]
 
-        holder.txtNumber.text = channel.number
+        // Numeração padronizada em 3 dígitos (ex: 001, 002, 015)
+        val num = channel.number.toIntOrNull() ?: (position + 1)
+        holder.txtNumber.text = String.format("%03d", num)
         holder.txtTitle.text = channel.title
         holder.txtBadge.text = channel.quality
         holder.txtPlayback.visibility = if (channel.hasPlayback) View.VISIBLE else View.GONE
@@ -70,11 +72,13 @@ class ChannelListAdapter(
         if (holder.itemView.isFocused) {
             holder.txtTitle.setTextColor(Color.parseColor("#00E5FF"))
             holder.txtNumber.setTextColor(Color.WHITE)
-            holder.itemView.scaleX = 1.02f
-            holder.itemView.scaleY = 1.02f
+            holder.itemView.scaleX = 1.05f
+            holder.itemView.scaleY = 1.05f
+            holder.itemView.elevation = 8f
         } else {
             holder.itemView.scaleX = 1.0f
             holder.itemView.scaleY = 1.0f
+            holder.itemView.elevation = 0f
             if (isCurrentSelected) {
                 holder.txtTitle.setTextColor(Color.WHITE)
                 holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))
@@ -84,22 +88,22 @@ class ChannelListAdapter(
             }
         }
 
-        // Foco e seleção ultra nítida e segura com o controle remoto
+        // Foco e seleção ultra nítida e segura com o controle remoto (Escala suave 1.05x)
         holder.itemView.setOnFocusChangeListener { view, hasFocus ->
             val pos = holder.bindingAdapterPosition
             if (hasFocus) {
                 holder.txtTitle.setTextColor(Color.parseColor("#00E5FF"))
                 holder.txtNumber.setTextColor(Color.WHITE)
                 holder.itemView.isSelected = true
-                view.scaleX = 1.02f
-                view.scaleY = 1.02f
+                view.animate().scaleX(1.05f).scaleY(1.05f).setDuration(120).start()
+                view.elevation = 8f
                 if (pos != RecyclerView.NO_POSITION && pos < channels.size) {
                     selectedIndex = pos
                     onChannelSelected(channels[pos])
                 }
             } else {
-                view.scaleX = 1.0f
-                view.scaleY = 1.0f
+                view.animate().scaleX(1.0f).scaleY(1.0f).setDuration(120).start()
+                view.elevation = 0f
                 holder.itemView.isSelected = false
                 holder.txtTitle.setTextColor(Color.parseColor("#E6EDF8"))
                 holder.txtNumber.setTextColor(Color.parseColor("#00E5FF"))

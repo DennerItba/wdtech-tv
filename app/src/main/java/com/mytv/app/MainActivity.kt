@@ -1105,7 +1105,7 @@ class MainActivity : AppCompatActivity() {
         val (minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs) = when (bufferMode) {
             AppSettings.BUFFER_FAST -> listOf(10_000, 30_000, 1_000, 2_000)
             AppSettings.BUFFER_STABLE -> listOf(25_000, 60_000, 2_500, 4_000)
-            else -> listOf(15_000, 45_000, 1_500, 2_500) // BALANCED (15s minBuffer evita travamento em HLS ao vivo)
+            else -> listOf(15_000, 30_000, 2_500, 5_000) // BALANCED (15s minBuffer evita travamento em HLS ao vivo)
         }
 
         val loadControl = DefaultLoadControl.Builder()
