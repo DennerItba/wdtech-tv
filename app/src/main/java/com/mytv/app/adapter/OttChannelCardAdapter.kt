@@ -42,21 +42,26 @@ class OttChannelCardAdapter(
         holder.txtTitle.text = channel.title
         holder.txtQuality.text = channel.quality.ifEmpty { "FHD" }
 
-        // Descrição ou EPG
+        // Descrição inteligente ou EPG
         val descText = if (!channel.description.isNullOrEmpty()) {
             channel.description
         } else {
             when {
+                channel.title.contains("Fazenda", true) || channel.category.contains("Fazenda", true) -> "Câmera Ao Vivo 24 Horas"
+                channel.title.contains("Premiere", true) || channel.category.contains("Premiere", true) -> "Futebol Ao Vivo • Brasileirão & Estaduais"
+                channel.title.contains("SporTV", true) -> "O Canal Campeão • Transmissão HD"
+                channel.title.contains("ESPN", true) -> "Ligas Internacionais & Champions League"
                 channel.title.contains("Globo", true) -> "Jornalismo, Novelas e Shows"
                 channel.title.contains("SBT", true) -> "Auditório e Entretenimento"
                 channel.title.contains("Record", true) -> "Jornalismo e Variedades"
                 channel.title.contains("Band", true) -> "Esportes e Notícias"
                 channel.title.contains("Telecine", true) -> "Grandes Sucessos do Cinema"
-                channel.title.contains("HBO", true) -> "Séries Originais e Filmes"
-                channel.title.contains("Discovery", true) -> "Documentários e Ciência"
-                channel.title.contains("Premiere", true) -> "Futebol Ao Vivo 24 Horas"
-                channel.title.contains("SporTV", true) -> "O Canal Campeão"
-                channel.title.contains("ESPN", true) -> "Ligas Internacionais de Futebol"
+                channel.title.contains("HBO", true) -> "Séries Originais e Superproduções"
+                channel.title.contains("Discovery", true) -> "Documentários, Ciência e Vida Selvagem"
+                channel.category.contains("Kids", true) || channel.category.contains("Infantil", true) -> "Desenhos e Séries Infantis"
+                channel.category.contains("24h", true) || channel.category.contains("24 Horas", true) -> "Episódios Clássicos 24 Horas"
+                channel.category.contains("4K", true) || channel.category.contains("H.265", true) -> "Transmissão Ultra HD de Máxima Resolução"
+                channel.category.contains("Música", true) -> "Clipes, Shows e Sucessos 24h"
                 else -> channel.category.ifEmpty { "Transmissão Digital Ao Vivo" }
             }
         }
@@ -64,9 +69,14 @@ class OttChannelCardAdapter(
 
         // Gradiente temático por categoria
         val gradRes = when {
+            channel.title.contains("Fazenda", true) || channel.category.contains("Fazenda", true) -> R.drawable.bg_channel_gradient_orange
+            channel.title.contains("Premiere", true) || channel.category.contains("Premiere", true) -> R.drawable.bg_channel_gradient_green
             channel.title.contains("Telecine", true) || channel.category.contains("Telecine", true) -> R.drawable.bg_channel_gradient_red
             channel.title.contains("HBO", true) || channel.category.contains("HBO", true) -> R.drawable.bg_channel_gradient_purple
-            channel.title.contains("Premiere", true) || channel.title.contains("SporTV", true) || channel.category.contains("Esport", true) -> R.drawable.bg_channel_gradient_green
+            channel.title.contains("SporTV", true) || channel.title.contains("ESPN", true) || channel.category.contains("Esport", true) -> R.drawable.bg_channel_gradient_green
+            channel.category.contains("Música", true) -> R.drawable.bg_channel_gradient_purple
+            channel.category.contains("Kids", true) || channel.category.contains("Infantil", true) -> R.drawable.bg_channel_gradient_orange
+            channel.category.contains("4K", true) || channel.category.contains("H.265", true) -> R.drawable.bg_channel_gradient_dark
             channel.title.contains("Discovery", true) || channel.category.contains("Discovery", true) -> R.drawable.bg_channel_gradient_blue
             channel.title.contains("SBT", true) || channel.title.contains("Record", true) -> R.drawable.bg_channel_gradient_orange
             else -> defaultGradientRes

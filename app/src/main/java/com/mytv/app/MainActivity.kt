@@ -1,16 +1,11 @@
 package com.mytv.app
 
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
-import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -37,13 +32,11 @@ import com.mytv.app.adapter.SettingListAdapter
 import com.mytv.app.data.ChannelRepository
 import com.mytv.app.data.EpgRepository
 import com.mytv.app.data.VodRepository
-import com.mytv.app.data.WatchProgress
 import com.mytv.app.data.WatchProgressRepository
 import com.mytv.app.model.Channel
 import com.mytv.app.model.ChannelCategory
 import com.mytv.app.model.SettingItem
 import com.mytv.app.model.VodItem
-import com.mytv.app.utils.AppSettings
 import com.mytv.app.utils.AppUpdateManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -111,15 +104,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rvSettingsGrid: RecyclerView
     private lateinit var settingsAdapter: SettingListAdapter
 
-    // --- Dados do Aplicativo ---
+    // --- Dados Completos do Aplicativo (Grade 100% Mapeada) ---
     private var allChannels: List<Channel> = emptyList()
+    private var fazendaChannels: List<Channel> = emptyList()
+    private var premiereChannels: List<Channel> = emptyList()
+    private var futebolChannels: List<Channel> = emptyList()
+    private var sportsChannels: List<Channel> = emptyList()
     private var abertosChannels: List<Channel> = emptyList()
     private var telecineChannels: List<Channel> = emptyList()
     private var hboChannels: List<Channel> = emptyList()
     private var discoveryChannels: List<Channel> = emptyList()
-    private var sportsChannels: List<Channel> = emptyList()
+    private var filmesChannels: List<Channel> = emptyList()
+    private var kidsChannels: List<Channel> = emptyList()
+    private var series24hChannels: List<Channel> = emptyList()
+    private var ultra4kChannels: List<Channel> = emptyList()
+    private var musicaChannels: List<Channel> = emptyList()
+    private var docsChannels: List<Channel> = emptyList()
     private var favoritosChannels: List<Channel> = emptyList()
     private var featuredChannels: List<Channel> = emptyList()
+
     private var matchesList: List<OttMatchItem> = emptyList()
     private var moviesList: List<VodItem> = emptyList()
     private var seriesList: List<VodItem> = emptyList()
@@ -243,23 +246,60 @@ class MainActivity : AppCompatActivity() {
         val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
         allChannels = repoCategories.flatMap { it.channels }
 
+        // 1. A Fazenda 24H (7 Câmeras)
+        fazendaChannels = repoCategories.filter { it.id == "cat_fazenda" }.flatMap { it.channels }
+
+        // 2. Premiere FC (Todos os 8 canais separados)
+        premiereChannels = repoCategories.filter { it.id == "cat_premiere" }.flatMap { it.channels }
+
+        // 3. Futebol & Campeonatos
+        futebolChannels = repoCategories.filter { it.id in listOf("cat_jogos_dia", "cat_campeonatos") }.flatMap { it.channels }
+
+        // 4. SporTV & Esportes Gerais
+        sportsChannels = repoCategories.filter {
+            it.id in listOf("cat_esportes", "cat_espn", "cat_f1")
+        }.flatMap { it.channels }
+
+        // 5. Canais Abertos
         abertosChannels = repoCategories.filter {
             it.id in listOf("cat_globo", "cat_sbt", "cat_record", "cat_band", "cat_noticias")
         }.flatMap { it.channels }
 
+        // 6. Rede Telecine
         telecineChannels = repoCategories.filter { it.id == "cat_telecine" }.flatMap { it.channels }
+
+        // 7. Canais HBO
         hboChannels = repoCategories.filter { it.id == "cat_hbo" }.flatMap { it.channels }
-        discoveryChannels = repoCategories.filter { it.id in listOf("cat_discovery", "cat_docs") }.flatMap { it.channels }
 
-        sportsChannels = repoCategories.filter {
-            it.id in listOf("cat_premiere", "cat_esportes", "cat_espn", "cat_f1")
-        }.flatMap { it.channels }
+        // 8. Universo Discovery
+        discoveryChannels = repoCategories.filter { it.id == "cat_discovery" }.flatMap { it.channels }
 
-        favoritosChannels = abertosChannels.take(6) + sportsChannels.take(4) + telecineChannels.take(4)
-        featuredChannels = (sportsChannels.take(3) + telecineChannels.take(3) + abertosChannels.take(3))
+        // 9. Filmes & Séries
+        filmesChannels = repoCategories.filter { it.id == "cat_filmes" }.flatMap { it.channels }
+
+        // 10. Infantil & Kids
+        kidsChannels = repoCategories.filter { it.id == "cat_kids" }.flatMap { it.channels }
+
+        // 11. Canais 24 Horas
+        series24hChannels = repoCategories.filter { it.id == "cat_24h" }.flatMap { it.channels }
+
+        // 12. 4K Ultra HD & H.265
+        ultra4kChannels = repoCategories.filter { it.id in listOf("cat_4k", "cat_h265") }.flatMap { it.channels }
+
+        // 13. Músicas & Shows
+        musicaChannels = repoCategories.filter { it.id == "cat_musica" }.flatMap { it.channels }
+
+        // 14. Documentários & Variedades
+        docsChannels = repoCategories.filter { it.id in listOf("cat_docs", "cat_variedades") }.flatMap { it.channels }
+
+        // Favoritos Inteligentes
+        favoritosChannels = abertosChannels.take(4) + premiereChannels.take(2) + fazendaChannels.take(2) + telecineChannels.take(3)
+
+        // Canais em Destaque no Início (Mix rico com Fazenda, Premiere, Esportes, Filmes e Globo)
+        featuredChannels = fazendaChannels.take(2) + premiereChannels.take(3) + sportsChannels.take(2) + telecineChannels.take(2) + abertosChannels.take(2)
 
         // Destaque Hero: primeiro canal de filme ou esporte com streaming ativo
-        featuredHeroChannel = telecineChannels.firstOrNull() ?: allChannels.firstOrNull()
+        featuredHeroChannel = telecineChannels.firstOrNull() ?: premiereChannels.firstOrNull() ?: allChannels.firstOrNull()
 
         // Lista de Jogos do Dia Simulados & Reais
         matchesList = listOf(
@@ -269,7 +309,7 @@ class MainActivity : AppCompatActivity() {
                 teamB = "Palmeiras",
                 time = "AO VIVO",
                 champ = "Brasileirão Série A",
-                channel = sportsChannels.firstOrNull { it.title.contains("Premiere", true) }
+                channel = premiereChannels.firstOrNull() ?: sportsChannels.firstOrNull()
             ),
             OttMatchItem(
                 id = "m2",
@@ -420,13 +460,21 @@ class MainActivity : AppCompatActivity() {
         val sidebarItems = listOf(
             ChannelCategory(id = "cat_buscar", name = "Buscar", iconRes = R.drawable.ic_search_tv, isLocked = false, channels = emptyList()),
             ChannelCategory(id = "cat_home", name = "Início", iconRes = R.drawable.ic_home_tv, isLocked = false, channels = emptyList()),
+            ChannelCategory(id = "cat_fazenda", name = "A Fazenda 24H", iconRes = R.drawable.ic_fazenda, isLocked = false, channels = fazendaChannels),
+            ChannelCategory(id = "cat_premiere", name = "Premiere FC", iconRes = R.drawable.ic_premiere, isLocked = false, channels = premiereChannels),
+            ChannelCategory(id = "cat_futebol", name = "Futebol & Jogos", iconRes = R.drawable.ic_soccer_ball, isLocked = false, channels = futebolChannels),
+            ChannelCategory(id = "cat_esportes", name = "SporTV & Esportes", iconRes = R.drawable.ic_sports_tv, isLocked = false, channels = sportsChannels),
             ChannelCategory(id = "cat_abertos", name = "Canais Abertos", iconRes = R.drawable.ic_tv_aberta, isLocked = false, channels = abertosChannels),
-            ChannelCategory(id = "cat_filmes", name = "Filmes", iconRes = R.drawable.ic_movie_vod, isLocked = false, channels = emptyList()),
-            ChannelCategory(id = "cat_series", name = "Séries", iconRes = R.drawable.ic_series_vod, isLocked = false, channels = emptyList()),
-            ChannelCategory(id = "cat_futebol", name = "Futebol", iconRes = R.drawable.ic_soccer_ball, isLocked = false, channels = sportsChannels),
             ChannelCategory(id = "cat_telecine", name = "Rede Telecine", iconRes = R.drawable.ic_star_kids, isLocked = false, channels = telecineChannels),
             ChannelCategory(id = "cat_hbo", name = "Canais HBO", iconRes = R.drawable.outline_live_tv_24, isLocked = false, channels = hboChannels),
+            ChannelCategory(id = "cat_filmes", name = "Filmes & Séries", iconRes = R.drawable.ic_movie_vod, isLocked = false, channels = filmesChannels),
+            ChannelCategory(id = "cat_kids", name = "Infantil & Kids", iconRes = R.drawable.ic_star_kids, isLocked = false, channels = kidsChannels),
             ChannelCategory(id = "cat_discovery", name = "Universo Discovery", iconRes = R.drawable.ic_tv_fechada, isLocked = false, channels = discoveryChannels),
+            ChannelCategory(id = "cat_24h", name = "Canais 24 Horas", iconRes = R.drawable.ic_playback, isLocked = false, channels = series24hChannels),
+            ChannelCategory(id = "cat_4k", name = "4K Ultra HD & HEVC", iconRes = R.drawable.ic_4k, isLocked = false, channels = ultra4kChannels),
+            ChannelCategory(id = "cat_musica", name = "Músicas & Shows", iconRes = R.drawable.ic_music, isLocked = false, channels = musicaChannels),
+            ChannelCategory(id = "cat_docs", name = "Variedades & Docs", iconRes = R.drawable.ic_tv_fechada, isLocked = false, channels = docsChannels),
+            ChannelCategory(id = "cat_all", name = "Todos os Canais", iconRes = R.drawable.ic_all_channels, isLocked = false, channels = allChannels),
             ChannelCategory(id = "cat_favoritos", name = "Favoritos", iconRes = R.drawable.ic_heart_fav, isLocked = false, channels = favoritosChannels)
         )
 
@@ -472,7 +520,7 @@ class MainActivity : AppCompatActivity() {
             featuredHeroChannel?.let { ch ->
                 openFullScreenPlayer(ch, allChannels)
             } ?: run {
-                Toast.makeText(this, "Iniciando superprodução...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Iniciando transmissão...", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -622,9 +670,9 @@ class MainActivity : AppCompatActivity() {
             SettingItem(
                 id = "set_update",
                 title = "Verificar Atualização",
-                subtitle = "WDTECH TV v2.7.2",
+                subtitle = "WDTECH TV v2.8.1",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "V2.7.2",
+                badgeText = "V2.8.1",
                 description = "Consulta a versão mais recente diretamente no GitHub.",
                 actionButtonText = "Verificar"
             ),
@@ -676,18 +724,48 @@ class MainActivity : AppCompatActivity() {
             "cat_home" -> {
                 viewHome.visibility = View.VISIBLE
                 txtHeaderBreadcrumb.text = "INÍCIO • DESTAQUES & CONTINUAR ASSISTINDO"
-                // Atualiza histórico do Continuar Assistindo dinamicamente
                 val updated = WatchProgressRepository.getContinueWatchingList(this)
                 continueAdapter.updateItems(updated)
             }
+            "cat_fazenda" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "A Fazenda 24H"
+                txtGridChannelCount.text = "${fazendaChannels.size} CÂMERAS AO VIVO"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_fazenda)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(fazendaChannels)
+                txtHeaderBreadcrumb.text = "A FAZENDA 24H • CÂMERAS AO VIVO EM TEMPO REAL"
+            }
+            "cat_premiere" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Premiere FC"
+                txtGridChannelCount.text = "${premiereChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_premiere)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(premiereChannels)
+                txtHeaderBreadcrumb.text = "PREMIERE FC • TODOS OS JOGOS AO VIVO"
+            }
+            "cat_futebol" -> {
+                viewFutebol.visibility = View.VISIBLE
+                txtHeaderBreadcrumb.text = "FUTEBOL & CAMPEONATOS • JOGOS DE HOJE"
+            }
+            "cat_esportes" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "SporTV & Esportes Gerais"
+                txtGridChannelCount.text = "${sportsChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_sports_tv)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(sportsChannels)
+                txtHeaderBreadcrumb.text = "SPORTV & ESPORTES • TRANSMISSÃO AO VIVO"
+            }
             "cat_abertos" -> {
                 viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Canais Abertos"
+                txtGridCategoryTitle.text = "Canais Abertos & Notícias"
                 txtGridChannelCount.text = "${abertosChannels.size} CANAIS"
                 imgGridCategoryIcon.setImageResource(R.drawable.ic_tv_aberta)
                 viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
                 ottChannelGridAdapter.updateChannels(abertosChannels)
-                txtHeaderBreadcrumb.text = "CANAIS ABERTOS • TRANSMISSÃO AO VIVO"
+                txtHeaderBreadcrumb.text = "CANAIS ABERTOS • GLOBO, SBT, RECORD, BAND E NOTÍCIAS"
             }
             "cat_telecine" -> {
                 viewGrid.visibility = View.VISIBLE
@@ -707,6 +785,24 @@ class MainActivity : AppCompatActivity() {
                 ottChannelGridAdapter.updateChannels(hboChannels)
                 txtHeaderBreadcrumb.text = "CANAIS HBO • SÉRIES E PRODUÇÕES EXCLUSIVAS"
             }
+            "cat_filmes" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Filmes & Séries (Ao Vivo)"
+                txtGridChannelCount.text = "${filmesChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_movie_vod)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(filmesChannels)
+                txtHeaderBreadcrumb.text = "FILMES & SÉRIES • MEGAPIX, WARNER, TNT, SONY, AXN"
+            }
+            "cat_kids" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Infantil & Kids"
+                txtGridChannelCount.text = "${kidsChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_star_kids)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(kidsChannels)
+                txtHeaderBreadcrumb.text = "INFANTIL & KIDS • CARTOON, NICK, DISNEY, GLOOB"
+            }
             "cat_discovery" -> {
                 viewGrid.visibility = View.VISIBLE
                 txtGridCategoryTitle.text = "Universo Discovery"
@@ -715,6 +811,51 @@ class MainActivity : AppCompatActivity() {
                 viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
                 ottChannelGridAdapter.updateChannels(discoveryChannels)
                 txtHeaderBreadcrumb.text = "UNIVERSO DISCOVERY • DOCUMENTÁRIOS & CIÊNCIA"
+            }
+            "cat_24h" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Canais 24 Horas"
+                txtGridChannelCount.text = "${series24hChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_playback)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(series24hChannels)
+                txtHeaderBreadcrumb.text = "CANAIS 24H • CHAVES, CHAPOLIN, SIMPSONS, CHRIS, FRIENDS"
+            }
+            "cat_4k" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Canais 4K Ultra HD & H.265"
+                txtGridChannelCount.text = "${ultra4kChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_4k)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(ultra4kChannels)
+                txtHeaderBreadcrumb.text = "4K ULTRA HD & HEVC • MÁXIMA DEFINIÇÃO"
+            }
+            "cat_musica" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Músicas & Shows"
+                txtGridChannelCount.text = "${musicaChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_music)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(musicaChannels)
+                txtHeaderBreadcrumb.text = "MÚSICAS & SHOWS • MULTISHOW, BIS, MTV E RÁDIOS"
+            }
+            "cat_docs" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Variedades & Documentários"
+                txtGridChannelCount.text = "${docsChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_tv_fechada)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(docsChannels)
+                txtHeaderBreadcrumb.text = "VARIEDADES & DOCS • HISTORY, NAT GEO, ANIMAL PLANET"
+            }
+            "cat_all" -> {
+                viewGrid.visibility = View.VISIBLE
+                txtGridCategoryTitle.text = "Todos os Canais"
+                txtGridChannelCount.text = "${allChannels.size} CANAIS"
+                imgGridCategoryIcon.setImageResource(R.drawable.ic_all_channels)
+                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
+                ottChannelGridAdapter.updateChannels(allChannels)
+                txtHeaderBreadcrumb.text = "GRADE COMPLETA • TODOS OS ${allChannels.size} CANAIS"
             }
             "cat_favoritos" -> {
                 viewGrid.visibility = View.VISIBLE
@@ -725,27 +866,9 @@ class MainActivity : AppCompatActivity() {
                 ottChannelGridAdapter.updateChannels(favoritosChannels)
                 txtHeaderBreadcrumb.text = "FAVORITOS • ACESSO RÁPIDO"
             }
-            "cat_futebol" -> {
-                viewFutebol.visibility = View.VISIBLE
-                txtHeaderBreadcrumb.text = "FUTEBOL & CAMPEONATOS • JOGOS DE HOJE"
-            }
-            "cat_filmes" -> {
-                viewPosters.visibility = View.VISIBLE
-                txtPosterCategoryTitle.text = "Filmes • Lançamentos & Ação"
-                imgPosterCategoryIcon.setImageResource(R.drawable.ic_movie_vod)
-                posterAdapter.updateItems(moviesList)
-                txtHeaderBreadcrumb.text = "FILMES • LANÇAMENTOS DO CINEMA"
-            }
-            "cat_series" -> {
-                viewPosters.visibility = View.VISIBLE
-                txtPosterCategoryTitle.text = "Séries • Produções em Alta"
-                imgPosterCategoryIcon.setImageResource(R.drawable.ic_series_vod)
-                posterAdapter.updateItems(seriesList)
-                txtHeaderBreadcrumb.text = "SÉRIES • TEMPORADAS COMPLETAS"
-            }
             "cat_buscar" -> {
                 viewSearch.visibility = View.VISIBLE
-                txtHeaderBreadcrumb.text = "BUSCA • ENCONTRE CANAIS E FILMES"
+                txtHeaderBreadcrumb.text = "BUSCA • ENCONTRE QUALQUER CANAL OU CONTEÚDO"
             }
             "cat_settings" -> {
                 viewSettings.visibility = View.VISIBLE
@@ -757,21 +880,9 @@ class MainActivity : AppCompatActivity() {
     private fun focusCurrentViewport() {
         when (currentActiveTabId) {
             "cat_home" -> btnHeroWatch.requestFocus()
-            "cat_abertos", "cat_telecine", "cat_hbo", "cat_discovery", "cat_favoritos" -> {
-                rvOttChannelGrid.post {
-                    val vh = rvOttChannelGrid.findViewHolderForAdapterPosition(0)
-                    vh?.itemView?.requestFocus()
-                }
-            }
             "cat_futebol" -> {
                 rvFutebolMatches.post {
                     val vh = rvFutebolMatches.findViewHolderForAdapterPosition(0)
-                    vh?.itemView?.requestFocus()
-                }
-            }
-            "cat_filmes", "cat_series" -> {
-                rvOttPosterGrid.post {
-                    val vh = rvOttPosterGrid.findViewHolderForAdapterPosition(0)
                     vh?.itemView?.requestFocus()
                 }
             }
@@ -779,6 +890,12 @@ class MainActivity : AppCompatActivity() {
             "cat_settings" -> {
                 rvSettingsGrid.post {
                     val vh = rvSettingsGrid.findViewHolderForAdapterPosition(0)
+                    vh?.itemView?.requestFocus()
+                }
+            }
+            else -> {
+                rvOttChannelGrid.post {
+                    val vh = rvOttChannelGrid.findViewHolderForAdapterPosition(0)
                     vh?.itemView?.requestFocus()
                 }
             }
