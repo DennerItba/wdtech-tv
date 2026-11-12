@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:clipToPadding="false"
+    android:clipChildren="false">
+
+    <!-- Poster da Mídia -->
+    <ImageView
+        android:id="@+id/img_poster_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/tv_bg"
+        android:contentDescription="Poster" />
+
+    <!-- Camada de Gradiente Escuro -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_poster_scrim" />
+
+    <!-- Tag Superior Esquerda (Ex: Lançamento, Ação, 4K) -->
+    <TextView
+        android:id="@+id/txt_poster_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="12dp"
+        android:background="@drawable/badge_live"
+        android:backgroundTint="#CC2563EB"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="Lançamento"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <!-- Título Inferior -->
+    <TextView
+        android:id="@+id/txt_poster_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="12dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:shadowColor="#CC000000"
+        android:shadowDx="0"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:text="Oppenheimer"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Borda e Destaque de Foco D-Pad -->
+    <View
+        android:id="@+id/view_poster_focus_ring"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_card_tv_focus" />
+
+</FrameLayout>
