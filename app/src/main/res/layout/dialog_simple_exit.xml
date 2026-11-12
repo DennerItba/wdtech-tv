@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="430dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_solid"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingStart="32dp"
+    android:paddingTop="28dp"
+    android:paddingEnd="32dp"
+    android:paddingBottom="28dp">
+
+    <!-- Mensagem de Confirmação Clara e Direta -->
+    <TextView
+        android:id="@+id/txt_dialog_exit_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:letterSpacing="0.02"
+        android:lineSpacingExtra="4dp"
+        android:text="Deseja sair do aplicativo?"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Botões de Ação com Foco D-Pad: SIM ou NÃO -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Botão NÃO (Retorna ao app) -->
+        <Button
+            android:id="@+id/btn_dialog_exit_nao"
+            android:layout_width="140dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_dialog_btn_nao"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="NÃO"
+            android:textAllCaps="true"
+            android:textColor="@color/color_dialog_btn_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Botão SIM (Fecha o app) -->
+        <Button
+            android:id="@+id/btn_dialog_exit_sim"
+            android:layout_width="140dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_dialog_btn_sim"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="SIM"
+            android:textAllCaps="true"
+            android:textColor="@color/color_dialog_btn_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

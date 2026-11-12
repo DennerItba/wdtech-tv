@@ -234,12 +234,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showExitConfirmation() {
-        AlertDialog.Builder(this, R.style.Theme_MyTvApp_Dialog)
-            .setTitle("Sair do WDTECH TV")
-            .setMessage("Deseja realmente fechar o aplicativo?")
-            .setPositiveButton("Sim, Sair") { _, _ -> finish() }
-            .setNegativeButton("Não", null)
-            .show()
+        val dialog = android.app.Dialog(this)
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_simple_exit)
+        dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+        dialog.window?.setDimAmount(0.75f)
+
+        val btnSim = dialog.findViewById<Button>(R.id.btn_dialog_exit_sim)
+        val btnNao = dialog.findViewById<Button>(R.id.btn_dialog_exit_nao)
+
+        btnSim.setOnClickListener {
+            dialog.dismiss()
+            finishAffinity()
+        }
+
+        btnNao.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Foco inicial padrão no NÃO para prevenir encerramento involuntário
+        dialog.setOnShowListener {
+            btnNao.requestFocus()
+        }
+
+        dialog.show()
     }
 
     private fun initData() {
