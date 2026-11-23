@@ -126,22 +126,32 @@ class MainActivity : AppCompatActivity() {
         cancelPreviewWatchdog()
         val runnable = Runnable {
             if (!isFinishing && !isDestroyed && (exoPlayer?.playbackState == Player.STATE_BUFFERING || exoPlayer?.playbackState == Player.STATE_IDLE)) {
-                triggerPreviewFailover(channel, "Stall de buffer no preview (2.0s)")
+                android.util.Log.w("WDTECH_NETFLIX", "Preview stall detectado (8.0s) no canal ${channel.title}. Acionando auto-failover...")
+                triggerPreviewFailover(channel, "Stall de buffer no preview (8.0s)")
             }
         }
         previewWatchdogRunnable = runnable
-        previewWatchdogHandler.postDelayed(runnable, 2000L)
+        previewWatchdogHandler.postDelayed(runnable, 8000L)
     }
 
     private fun buildStreamCandidates(channel: Channel): List<String> {
         val list = mutableListOf<String>()
         val primary = channel.streamUrl
-        if (primary.isNotEmpty()) list.add(primary)
+        if (primary.isNotEmpty()) {
+            list.add(primary)
+            if (primary.contains("64.31.23.207")) {
+                if (primary.endsWith(".m3u8")) list.add(primary.replace(".m3u8", ".ts"))
+                else if (primary.endsWith(".ts")) list.add(primary.replace(".ts", ".m3u8"))
+            }
+        }
 
         for (b in channel.backupUrls) {
             if (b.isNotEmpty() && !list.contains(b)) {
                 list.add(b)
-                break
+                if (b.contains("64.31.23.207")) {
+                    val alt = if (b.endsWith(".m3u8")) b.replace(".m3u8", ".ts") else if (b.endsWith(".ts")) b.replace(".ts", ".m3u8") else null
+                    if (alt != null && !list.contains(alt)) list.add(alt)
+                }
             }
         }
         return list
