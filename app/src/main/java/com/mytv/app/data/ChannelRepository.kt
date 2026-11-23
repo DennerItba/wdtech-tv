@@ -2,6 +2,8 @@ package com.mytv.app.data
 
 import com.mytv.app.model.Channel
 import com.mytv.app.model.ChannelCategory
+import com.mytv.app.model.MainSection
+import com.mytv.app.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -2305,4 +2307,236 @@ object ChannelRepository {
             null
         }
     }
+
+    fun getCategoriesForSection(section: MainSection): List<ChannelCategory> {
+        val allCats = getCategories()
+
+        return when (section) {
+            MainSection.TV -> {
+                val tvCats = mutableListOf<ChannelCategory>()
+                val catIds = listOf("cat_globo", "cat_sbt", "cat_record", "cat_band", "cat_noticias", "cat_docs", "cat_variedades", "cat_musica", "cat_fazenda")
+                val matched = allCats.filter { it.id in catIds }
+
+                val tv4kChannels = allCats.find { it.id == "cat_4k" }?.channels?.filter { it.title.contains("globo", ignoreCase = true) } ?: emptyList()
+                val tvH265Channels = allCats.find { it.id == "cat_h265" }?.channels?.filter { it.title.contains("globo", ignoreCase = true) } ?: emptyList()
+                val tvUhdCat = if (tv4kChannels.isNotEmpty() || tvH265Channels.isNotEmpty()) {
+                    listOf(ChannelCategory(id = "cat_tv_uhd", name = "💎 TV em 4K & HEVC", iconRes = R.drawable.ic_4k, channels = tv4kChannels + tvH265Channels))
+                } else emptyList()
+
+                val allTvChannels = (matched.flatMap { it.channels } + tv4kChannels + tvH265Channels).distinctBy { it.id }
+
+                val catTodosTv = ChannelCategory(
+                    id = "cat_tv_todos",
+                    name = "⭐ Todos da TV",
+                    iconRes = R.drawable.ic_all_channels,
+                    channels = allTvChannels
+                )
+                tvCats.add(catTodosTv)
+                tvCats.addAll(matched)
+                tvCats.addAll(tvUhdCat)
+                tvCats
+            }
+
+            MainSection.FILMES -> {
+                val movieCats = mutableListOf<ChannelCategory>()
+
+                val baseTelecine = allCats.find { it.id == "cat_telecine" }?.channels ?: emptyList()
+                val telecine4k = allCats.find { it.id == "cat_4k" }?.channels?.filter { it.title.contains("telecine", ignoreCase = true) } ?: emptyList()
+                val telecineH265 = allCats.find { it.id == "cat_h265" }?.channels?.filter { it.title.contains("telecine", ignoreCase = true) } ?: emptyList()
+                val telecineChannels = (baseTelecine + telecine4k + telecineH265).distinctBy { it.id }
+                val catTelecine = ChannelCategory(
+                    id = "cat_telecine",
+                    name = "🎬 Rede Telecine",
+                    iconRes = R.drawable.ic_movie_vod,
+                    channels = telecineChannels
+                )
+
+                val hboChannels = allCats.find { it.id == "cat_hbo" }?.channels ?: emptyList()
+                val catHbo = ChannelCategory(
+                    id = "cat_hbo",
+                    name = "🍿 Rede HBO & Max",
+                    iconRes = R.drawable.ic_movie_vod,
+                    channels = hboChannels
+                )
+
+                val cinemaKeywords = listOf("movie", "megapix", "cinemax", "space", "tnt", "studio", "paramount", "cinema", "terror", "acao", "filme")
+                val cinemaChannels = allCats.find { it.id == "cat_filmes" }?.channels?.filter { ch ->
+                    cinemaKeywords.any { ch.title.contains(it, ignoreCase = true) } && !ch.title.contains("novela", ignoreCase = true)
+                } ?: emptyList()
+                val catCinema = ChannelCategory(
+                    id = "cat_cinema",
+                    name = "🎥 Canais de Cinema",
+                    iconRes = R.drawable.ic_movie_vod,
+                    channels = cinemaChannels
+                )
+
+                val allFilmes = (telecineChannels + hboChannels + cinemaChannels).distinctBy { it.id }
+                val catTodosFilmes = ChannelCategory(
+                    id = "cat_filmes_todos",
+                    name = "⭐ Todos os Filmes",
+                    iconRes = R.drawable.ic_all_channels,
+                    channels = allFilmes
+                )
+
+                movieCats.add(catTodosFilmes)
+                movieCats.add(catTelecine)
+                movieCats.add(catHbo)
+                movieCats.add(catCinema)
+                movieCats
+            }
+
+            MainSection.SERIES -> {
+                val seriesCats = mutableListOf<ChannelCategory>()
+
+                val seriesKeywords = listOf("warner", "sony channel", "universal tv", "axn", "novela", "hallo! series")
+                val seriesChannels = allCats.find { it.id == "cat_filmes" }?.channels?.filter { ch ->
+                    seriesKeywords.any { ch.title.contains(it, ignoreCase = true) }
+                } ?: emptyList()
+                val catCanaisSeries = ChannelCategory(
+                    id = "cat_series_canais",
+                    name = "📺 Canais de Séries",
+                    iconRes = R.drawable.ic_series_vod,
+                    channels = seriesChannels
+                )
+
+                val series24Keywords = listOf("chaves", "chapolin", "simpson", "chris", "friend", "homens")
+                val s24Channels = allCats.find { it.id == "cat_24h" }?.channels?.filter { ch ->
+                    series24Keywords.any { ch.title.contains(it, ignoreCase = true) }
+                } ?: emptyList()
+                val catSeries24h = ChannelCategory(
+                    id = "cat_series_24h",
+                    name = "⏱️ Séries 24 Horas",
+                    iconRes = R.drawable.ic_series_vod,
+                    channels = s24Channels
+                )
+
+                val allSeries = (seriesChannels + s24Channels).distinctBy { it.id }
+                val catTodosSeries = ChannelCategory(
+                    id = "cat_series_todos",
+                    name = "⭐ Todas as Séries",
+                    iconRes = R.drawable.ic_all_channels,
+                    channels = allSeries
+                )
+
+                seriesCats.add(catTodosSeries)
+                seriesCats.add(catCanaisSeries)
+                seriesCats.add(catSeries24h)
+                seriesCats
+            }
+
+            MainSection.INFANTIL -> {
+                val kidsCats = mutableListOf<ChannelCategory>()
+
+                val kidsChannels = allCats.find { it.id == "cat_kids" }?.channels ?: emptyList()
+                val catCanaisKids = ChannelCategory(
+                    id = "cat_kids_canais",
+                    name = "👶 Canais Infantis & Kids",
+                    iconRes = R.drawable.ic_star_kids,
+                    channels = kidsChannels
+                )
+
+                val desenhosKeywords = listOf("esponja", "pica pau", "dragon ball", "desenho")
+                val desenhos24Channels = allCats.find { it.id == "cat_24h" }?.channels?.filter { ch ->
+                    desenhosKeywords.any { ch.title.contains(it, ignoreCase = true) }
+                } ?: emptyList()
+                val catDesenhos24h = ChannelCategory(
+                    id = "cat_kids_24h",
+                    name = "🎈 Desenhos 24 Horas",
+                    iconRes = R.drawable.ic_star_kids,
+                    channels = desenhos24Channels
+                )
+
+                val allKids = (kidsChannels + desenhos24Channels).distinctBy { it.id }
+                val catTodosKids = ChannelCategory(
+                    id = "cat_kids_todos",
+                    name = "⭐ Todos os Infantis",
+                    iconRes = R.drawable.ic_all_channels,
+                    channels = allKids
+                )
+
+                kidsCats.add(catTodosKids)
+                kidsCats.add(catCanaisKids)
+                kidsCats.add(catDesenhos24h)
+                kidsCats
+            }
+
+            MainSection.FUTEBOL -> {
+                val futCats = mutableListOf<ChannelCategory>()
+
+                val basePrem = allCats.find { it.id == "cat_premiere" }?.channels ?: emptyList()
+                val prem4k = allCats.find { it.id == "cat_4k" }?.channels?.filter { it.title.contains("premiere", ignoreCase = true) } ?: emptyList()
+                val premH265 = allCats.find { it.id == "cat_h265" }?.channels?.filter { it.title.contains("premiere", ignoreCase = true) } ?: emptyList()
+                val premiereChannels = (basePrem + prem4k + premH265).distinctBy { it.id }
+                val catPremiere = ChannelCategory(
+                    id = "cat_premiere",
+                    name = "⚽ Premiere FC (Todos os Jogos)",
+                    iconRes = R.drawable.ic_premiere,
+                    channels = premiereChannels
+                )
+
+                val jogosDiaChannels = allCats.find { it.id == "cat_jogos_dia" }?.channels ?: emptyList()
+                val catJogosDia = ChannelCategory(
+                    id = "cat_jogos_dia",
+                    name = "🏆 Jogos do Dia (Ao Vivo)",
+                    iconRes = R.drawable.ic_sports_tv,
+                    channels = jogosDiaChannels
+                )
+
+                val baseSportv = allCats.find { it.id == "cat_esportes" }?.channels ?: emptyList()
+                val sportv4k = allCats.find { it.id == "cat_4k" }?.channels?.filter { it.title.contains("sportv", ignoreCase = true) } ?: emptyList()
+                val sportvH265 = allCats.find { it.id == "cat_h265" }?.channels?.filter { it.title.contains("sportv", ignoreCase = true) } ?: emptyList()
+                val sportvChannels = (baseSportv + sportv4k + sportvH265).distinctBy { it.id }
+                val catSportv = ChannelCategory(
+                    id = "cat_esportes",
+                    name = "📺 SporTV & Canais Esportivos",
+                    iconRes = R.drawable.ic_sports_tv,
+                    channels = sportvChannels
+                )
+
+                val baseEspn = allCats.find { it.id == "cat_espn" }?.channels ?: emptyList()
+                val espnH265 = allCats.find { it.id == "cat_h265" }?.channels?.filter { it.title.contains("espn", ignoreCase = true) } ?: emptyList()
+                val espnChannels = (baseEspn + espnH265).distinctBy { it.id }
+                val catEspn = ChannelCategory(
+                    id = "cat_espn",
+                    name = "🌐 Rede ESPN (Champions & Ligas)",
+                    iconRes = R.drawable.ic_sports_tv,
+                    channels = espnChannels
+                )
+
+                val campChannels = allCats.find { it.id == "cat_campeonatos" }?.channels ?: emptyList()
+                val catCamp = ChannelCategory(
+                    id = "cat_campeonatos",
+                    name = "🥇 Campeonatos & Estaduais",
+                    iconRes = R.drawable.ic_sports_tv,
+                    channels = campChannels
+                )
+
+                val f1Channels = allCats.find { it.id == "cat_f1" }?.channels ?: emptyList()
+                val catF1 = ChannelCategory(
+                    id = "cat_f1",
+                    name = "🏁 Fórmula 1 & Outros",
+                    iconRes = R.drawable.ic_sports_tv,
+                    channels = f1Channels
+                )
+
+                val allFutebol = (premiereChannels + jogosDiaChannels + sportvChannels + espnChannels + campChannels + f1Channels).distinctBy { it.id }
+                val catTodosFut = ChannelCategory(
+                    id = "cat_futebol_todos",
+                    name = "⭐ Todos do Futebol",
+                    iconRes = R.drawable.ic_all_channels,
+                    channels = allFutebol
+                )
+
+                futCats.add(catTodosFut)
+                futCats.add(catPremiere)
+                if (jogosDiaChannels.isNotEmpty()) futCats.add(catJogosDia)
+                futCats.add(catSportv)
+                futCats.add(catEspn)
+                futCats.add(catCamp)
+                futCats.add(catF1)
+                futCats
+            }
+        }
+    }
+
 }

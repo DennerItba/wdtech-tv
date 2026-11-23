@@ -361,7 +361,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
         stallWatchdogRunnable = runnable
-        stallWatchdogHandler.postDelayed(runnable, 4500L)
+        stallWatchdogHandler.postDelayed(runnable, 2000L)
     }
 
     private fun buildStreamCandidates(channel: Channel, customUrl: String? = null): List<String> {
@@ -369,28 +369,12 @@ class PlayerActivity : AppCompatActivity() {
         val primary = customUrl ?: channel.streamUrl
         if (primary.isNotEmpty()) list.add(primary)
 
-        // Candidato TS direto (inicia instantaneamente sem espera de manifesto HLS)
-        if (primary.endsWith(".m3u8")) {
-            list.add(primary.replace(".m3u8", ".ts"))
-        } else if (primary.endsWith(".ts")) {
-            list.add(primary.replace(".ts", ".m3u8"))
-        }
-
-        // URLs de contingência pré-configuradas no canal
         for (b in channel.backupUrls) {
-            if (b.isNotEmpty() && !list.contains(b)) list.add(b)
-            if (b.endsWith(".m3u8")) {
-                val tsBackup = b.replace(".m3u8", ".ts")
-                if (!list.contains(tsBackup)) list.add(tsBackup)
+            if (b.isNotEmpty() && !list.contains(b)) {
+                list.add(b)
+                break
             }
         }
-
-        // Domínio espelho CDN
-        if (primary.contains("64.31.23.207:80")) {
-            val altDomain = primary.replace("64.31.23.207:80", "gelosalgados.site:80")
-            if (!list.contains(altDomain)) list.add(altDomain)
-        }
-
         return list
     }
 

@@ -44,6 +44,7 @@ import com.mytv.app.data.ChannelRepository
 import com.mytv.app.data.EpgRepository
 import com.mytv.app.model.Channel
 import com.mytv.app.model.ChannelCategory
+import com.mytv.app.model.MainSection
 import com.mytv.app.model.SettingItem
 import com.mytv.app.utils.AppSettings
 import com.mytv.app.utils.AppUpdateManager
@@ -51,6 +52,18 @@ import kotlinx.coroutines.launch
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
+
+        // --- Barra de Menu Principal (5 Menus Separados) ---
+    private lateinit var layoutMainMenuTabs: LinearLayout
+    private lateinit var btnMenuTv: Button
+    private lateinit var btnMenuFilmes: Button
+    private lateinit var btnMenuSeries: Button
+    private lateinit var btnMenuInfantil: Button
+    private lateinit var btnMenuFutebol: Button
+    private lateinit var btnMenuSettings: ImageButton
+    private lateinit var txtSidebarSectionTitle: TextView
+
+    private var currentSection: MainSection = MainSection.TV
 
     // --- Painel Esquerdo (Categorias) ---
     private lateinit var rvSidebar: RecyclerView
@@ -113,11 +126,11 @@ class MainActivity : AppCompatActivity() {
         cancelPreviewWatchdog()
         val runnable = Runnable {
             if (!isFinishing && !isDestroyed && (exoPlayer?.playbackState == Player.STATE_BUFFERING || exoPlayer?.playbackState == Player.STATE_IDLE)) {
-                triggerPreviewFailover(channel, "Stall de buffer no preview (4.0s)")
+                triggerPreviewFailover(channel, "Stall de buffer no preview (2.0s)")
             }
         }
         previewWatchdogRunnable = runnable
-        previewWatchdogHandler.postDelayed(runnable, 4000L)
+        previewWatchdogHandler.postDelayed(runnable, 2000L)
     }
 
     private fun buildStreamCandidates(channel: Channel): List<String> {
@@ -125,25 +138,12 @@ class MainActivity : AppCompatActivity() {
         val primary = channel.streamUrl
         if (primary.isNotEmpty()) list.add(primary)
 
-        if (primary.endsWith(".m3u8")) {
-            list.add(primary.replace(".m3u8", ".ts"))
-        } else if (primary.endsWith(".ts")) {
-            list.add(primary.replace(".ts", ".m3u8"))
-        }
-
         for (b in channel.backupUrls) {
-            if (b.isNotEmpty() && !list.contains(b)) list.add(b)
-            if (b.endsWith(".m3u8")) {
-                val tsBackup = b.replace(".m3u8", ".ts")
-                if (!list.contains(tsBackup)) list.add(tsBackup)
+            if (b.isNotEmpty() && !list.contains(b)) {
+                list.add(b)
+                break
             }
         }
-
-        if (primary.contains("64.31.23.207:80")) {
-            val altDomain = primary.replace("64.31.23.207:80", "gelosalgados.site:80")
-            if (!list.contains(altDomain)) list.add(altDomain)
-        }
-
         return list
     }
 
@@ -176,6 +176,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+                // Barra de Menu Principal (5 Menus Separados)
+        layoutMainMenuTabs = findViewById(R.id.layout_main_menu_tabs)
+        btnMenuTv = findViewById(R.id.btn_menu_tv)
+        btnMenuFilmes = findViewById(R.id.btn_menu_filmes)
+        btnMenuSeries = findViewById(R.id.btn_menu_series)
+        btnMenuInfantil = findViewById(R.id.btn_menu_infantil)
+        btnMenuFutebol = findViewById(R.id.btn_menu_futebol)
+        btnMenuSettings = findViewById(R.id.btn_menu_settings)
+        txtSidebarSectionTitle = findViewById(R.id.txt_sidebar_section_title)
+
+        setupMainMenuTabs()
+
         // Barra Superior
         txtHeaderBreadcrumb = findViewById(R.id.txt_header_breadcrumb)
 
@@ -231,49 +243,142 @@ class MainActivity : AppCompatActivity() {
         setupSettings()
     }
 
+
+    private fun setupMainMenuTabs() {
+        val tabButtons = listOf(
+            btnMenuTv to MainSection.TV,
+            btnMenuFilmes to MainSection.FILMES,
+            btnMenuSeries to MainSection.SERIES,
+            btnMenuInfantil to MainSection.INFANTIL,
+            btnMenuFutebol to MainSection.FUTEBOL
+        )
+
+        for ((btn, section) in tabButtons) {
+            btn.setOnClickListener {
+                selectMainSection(section, shouldFocusCategory = true)
+            }
+            btn.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus && currentSection != section) {
+                    selectMainSection(section, shouldFocusCategory = false)
+                }
+            }
+            btn.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    focusFirstCategory()
+                    return@setOnKeyListener true
+                }
+                false
+            }
+        }
+
+        btnMenuSettings.setOnClickListener {
+            openSettingsMode()
+        }
+        btnMenuSettings.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                openSettingsMode()
+            }
+        }
+        btnMenuSettings.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                focusFirstCategory()
+                return@setOnKeyListener true
+            }
+            false
+        }
+    }
+
+    private fun selectMainSection(section: MainSection, shouldFocusCategory: Boolean = false) {
+        currentSection = section
+        isSettingsMode = false
+
+        btnMenuTv.isSelected = (section == MainSection.TV)
+        btnMenuFilmes.isSelected = (section == MainSection.FILMES)
+        btnMenuSeries.isSelected = (section == MainSection.SERIES)
+        btnMenuInfantil.isSelected = (section == MainSection.INFANTIL)
+        btnMenuFutebol.isSelected = (section == MainSection.FUTEBOL)
+        btnMenuSettings.isSelected = false
+
+        txtSidebarSectionTitle.text = "CATEGORIAS • ${section.title}"
+
+        val sectionCats = EpgRepository.enrichCategories(
+            ChannelRepository.getCategoriesForSection(section)
+        )
+        allCategories = sectionCats
+
+        val firstCat = sectionCats.firstOrNull() ?: return
+        currentSelectedCategory = firstCat
+
+        sidebarAdapter.updateCategories(sectionCats)
+        sidebarAdapter.setSelectedCategory(firstCat)
+
+        channelAdapter.updateChannels(firstCat.channels)
+        txtHeaderBreadcrumb.text = "WDTECH TV • ${section.title} • ${firstCat.name.uppercase()}"
+        txtSelectedCategoryTitle.text = firstCat.name
+        txtCategoryBadge.text = firstCat.channels.size.toString()
+
+        panelChannels.visibility = View.VISIBLE
+        playerPreviewContainer.visibility = View.VISIBLE
+        layoutSettingsPreview.visibility = View.GONE
+        rvChannelList.visibility = View.VISIBLE
+        rvSettingsList.visibility = View.GONE
+
+        val firstChannel = firstCat.channels.firstOrNull()
+        if (firstChannel != null && firstChannel.id != currentPlayingChannel?.id) {
+            playChannelPreview(firstChannel)
+        }
+
+        if (shouldFocusCategory) {
+            focusFirstCategory()
+        }
+    }
+
+    private fun openSettingsMode() {
+        isSettingsMode = true
+        btnMenuTv.isSelected = false
+        btnMenuFilmes.isSelected = false
+        btnMenuSeries.isSelected = false
+        btnMenuInfantil.isSelected = false
+        btnMenuFutebol.isSelected = false
+        btnMenuSettings.isSelected = true
+
+        txtSidebarSectionTitle.text = "AJUSTES • SISTEMA"
+        panelChannels.visibility = View.VISIBLE
+        rvChannelList.visibility = View.GONE
+        rvSettingsList.visibility = View.VISIBLE
+        playerPreviewContainer.visibility = View.GONE
+        layoutSettingsPreview.visibility = View.VISIBLE
+        txtCategoryBadge.text = "AJUSTES"
+        txtSelectedCategoryTitle.text = "Ajustes do Aplicativo"
+        txtHeaderBreadcrumb.text = "WDTECH TV • AJUSTES DO SISTEMA"
+        updateSettingPreview(getSettingItems().first())
+    }
+
+    private fun focusActiveTab() {
+        when (currentSection) {
+            MainSection.TV -> btnMenuTv.requestFocus()
+            MainSection.FILMES -> btnMenuFilmes.requestFocus()
+            MainSection.SERIES -> btnMenuSeries.requestFocus()
+            MainSection.INFANTIL -> btnMenuInfantil.requestFocus()
+            MainSection.FUTEBOL -> btnMenuFutebol.requestFocus()
+        }
+    }
+
     private fun loadDataAndStartInitialChannel() {
-        val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
-        val allSafeChannels = repoCategories.filter { !it.isLocked }.flatMap { it.channels }
+        val initialSection = MainSection.TV
+        currentSection = initialSection
 
-        // Categoria especial "Todos os Canais" no topo
-        val catTodos = ChannelCategory(
-            id = "cat_todos",
-            name = "⭐ Todos os Canais",
-            iconRes = R.drawable.ic_all_channels,
-            channels = allSafeChannels
+        val sectionCats = EpgRepository.enrichCategories(
+            ChannelRepository.getCategoriesForSection(initialSection)
         )
+        allCategories = sectionCats
 
-        // Categoria de Ajustes ao final
-        val catSettings = ChannelCategory(
-            id = "cat_settings",
-            name = "⚙️ Ajustes",
-            iconRes = R.drawable.ic_settings,
-            channels = emptyList()
-        )
-
-        val fullCategoryList = mutableListOf<ChannelCategory>()
-        fullCategoryList.add(catTodos)
-        fullCategoryList.addAll(repoCategories)
-        fullCategoryList.add(catSettings)
-        allCategories = fullCategoryList
-
-        // Descobre canal inicial (último assistido ou Globo/primeiro canal)
-        val prefs = getSharedPreferences("wdtechtv_prefs", Context.MODE_PRIVATE)
-        val lastChannelId = prefs.getString("last_played_channel_id", null)
-        val initialChannel = allSafeChannels.firstOrNull { it.id == lastChannelId }
-            ?: allSafeChannels.firstOrNull { it.id == "globo_sp" || it.id.contains("globo", ignoreCase = true) }
-            ?: allSafeChannels.firstOrNull()
-            ?: return
-
-        // Identifica qual categoria contém esse canal (preferindo uma categoria específica e não 'cat_todos')
-        val initialCategory = repoCategories.firstOrNull { cat -> cat.channels.any { it.id == initialChannel.id } }
-            ?: catTodos
-
-        currentSelectedCategory = initialCategory
+        val firstCat = sectionCats.firstOrNull() ?: return
+        currentSelectedCategory = firstCat
 
         // 1. Configura Adaptador da Barra Lateral
         sidebarAdapter = CategorySidebarAdapter(
-            categories = allCategories,
+            categories = sectionCats,
             onCategoryFocused = { cat ->
                 onSidebarCategoryFocused(cat)
             },
@@ -286,14 +391,17 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     focusCurrentChannel()
                 }
+            },
+            onNavigateUpToTabs = {
+                focusActiveTab()
             }
         )
-        sidebarAdapter.setSelectedCategory(initialCategory)
+        sidebarAdapter.setSelectedCategory(firstCat)
         rvSidebar.adapter = sidebarAdapter
 
         // 2. Configura Adaptador de Canais
         channelAdapter = ChannelListAdapter(
-            channels = initialCategory.channels,
+            channels = firstCat.channels,
             onChannelSelected = { channel ->
                 onChannelFocused(channel)
             },
@@ -310,20 +418,24 @@ class MainActivity : AppCompatActivity() {
         rvChannelList.adapter = channelAdapter
 
         // Atualiza textos do cabeçalho
-        txtHeaderBreadcrumb.text = "WDTECH TV • ${initialCategory.name.uppercase()}"
-        txtSelectedCategoryTitle.text = initialCategory.name
-        txtCategoryBadge.text = initialCategory.channels.size.toString()
+        btnMenuTv.isSelected = true
+        txtSidebarSectionTitle.text = "CATEGORIAS • TV"
+        txtHeaderBreadcrumb.text = "WDTECH TV • TV • ${firstCat.name.uppercase()}"
+        txtSelectedCategoryTitle.text = firstCat.name
+        txtCategoryBadge.text = firstCat.channels.size.toString()
 
-        // 3. REQUISITO CRÍTICO: Inicia reprodução imediata do canal ao vivo com imagem!
-        playChannelPreview(initialChannel)
+        // 3. REQUISITO CRÍTICO: Inicia reprodução imediata do primeiro canal ao vivo com imagem!
+        val initialChannel = firstCat.channels.firstOrNull()
+        if (initialChannel != null) {
+            playChannelPreview(initialChannel)
+        }
 
-        // 4. Posiciona o foco do controle remoto diretamente no canal em reprodução
-        val initialIndex = initialCategory.channels.indexOfFirst { it.id == initialChannel.id }.coerceAtLeast(0)
+        // 4. Posiciona o foco no canal inicial
         Handler(Looper.getMainLooper()).postDelayed({
             if (!isFinishing && !isDestroyed) {
-                rvChannelList.scrollToPosition(initialIndex)
+                rvChannelList.scrollToPosition(0)
                 rvChannelList.postDelayed({
-                    val vh = rvChannelList.findViewHolderForAdapterPosition(initialIndex)
+                    val vh = rvChannelList.findViewHolderForAdapterPosition(0)
                     vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
                 }, 100)
             }
@@ -557,6 +669,15 @@ class MainActivity : AppCompatActivity() {
             putExtra(PlayerActivity.EXTRA_CHANNEL_INDEX, currentIndex)
         }
         startActivity(intent)
+    }
+
+    private fun focusFirstCategory() {
+        if (!isFinishing && !isDestroyed) {
+            rvSidebar.post {
+                val vh = rvSidebar.findViewHolderForAdapterPosition(0)
+                vh?.itemView?.requestFocus() ?: rvSidebar.requestFocus()
+            }
+        }
     }
 
     private fun focusCurrentCategory() {
