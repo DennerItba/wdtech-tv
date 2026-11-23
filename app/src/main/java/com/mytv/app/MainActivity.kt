@@ -98,6 +98,70 @@ class MainActivity : AppCompatActivity() {
     private val zapHandler = Handler(Looper.getMainLooper())
     private var isSettingsMode = false
 
+    // --- Tecnologia Netflix: Stall Watchdog & Multi-CDN Auto-Failover no Preview ---
+    private val previewWatchdogHandler = Handler(Looper.getMainLooper())
+    private var previewWatchdogRunnable: Runnable? = null
+    private var previewCandidates: List<String> = emptyList()
+    private var previewCandidateIndex: Int = 0
+
+    private fun cancelPreviewWatchdog() {
+        previewWatchdogRunnable?.let { previewWatchdogHandler.removeCallbacks(it) }
+        previewWatchdogRunnable = null
+    }
+
+    private fun startPreviewWatchdog(channel: Channel) {
+        cancelPreviewWatchdog()
+        val runnable = Runnable {
+            if (!isFinishing && !isDestroyed && (exoPlayer?.playbackState == Player.STATE_BUFFERING || exoPlayer?.playbackState == Player.STATE_IDLE)) {
+                triggerPreviewFailover(channel, "Stall de buffer no preview (4.0s)")
+            }
+        }
+        previewWatchdogRunnable = runnable
+        previewWatchdogHandler.postDelayed(runnable, 4000L)
+    }
+
+    private fun buildStreamCandidates(channel: Channel): List<String> {
+        val list = mutableListOf<String>()
+        val primary = channel.streamUrl
+        if (primary.isNotEmpty()) list.add(primary)
+
+        if (primary.endsWith(".m3u8")) {
+            list.add(primary.replace(".m3u8", ".ts"))
+        } else if (primary.endsWith(".ts")) {
+            list.add(primary.replace(".ts", ".m3u8"))
+        }
+
+        for (b in channel.backupUrls) {
+            if (b.isNotEmpty() && !list.contains(b)) list.add(b)
+            if (b.endsWith(".m3u8")) {
+                val tsBackup = b.replace(".m3u8", ".ts")
+                if (!list.contains(tsBackup)) list.add(tsBackup)
+            }
+        }
+
+        if (primary.contains("64.31.23.207:80")) {
+            val altDomain = primary.replace("64.31.23.207:80", "gelosalgados.site:80")
+            if (!list.contains(altDomain)) list.add(altDomain)
+        }
+
+        return list
+    }
+
+    private fun triggerPreviewFailover(channel: Channel, reason: String) {
+        if (isFinishing || isDestroyed) return
+        cancelPreviewWatchdog()
+        previewCandidateIndex++
+
+        if (previewCandidateIndex < previewCandidates.size) {
+            val nextUrl = previewCandidates[previewCandidateIndex]
+            previewLoadingLayout.visibility = View.VISIBLE
+            txtBitrate.text = "RECONECTANDO..."
+            playChannelPreviewInternal(channel, nextUrl)
+        } else {
+            previewLoadingLayout.visibility = View.GONE
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -347,8 +411,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val loadControl = DefaultLoadControl.Builder()
-            .setBufferDurationsMs(minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs)
-            .setPrioritizeTimeOverSizeThresholds(false)
+            .setBufferDurationsMs(minBufferMs, maxBufferMs, 800, 1500)
+            .setPrioritizeTimeOverSizeThresholds(true)
             .setBackBuffer(0, false)
             .build()
 
@@ -371,6 +435,7 @@ class MainActivity : AppCompatActivity() {
                         txtBitrate.text = "SINTONIZANDO..."
                     }
                     Player.STATE_READY -> {
+                        cancelPreviewWatchdog()
                         previewLoadingLayout.visibility = View.GONE
                     }
                     Player.STATE_ENDED -> {
@@ -382,15 +447,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
-                previewLoadingLayout.visibility = View.GONE
-                // Tenta restabelecer silenciosamente se ainda estiver visível
-                currentPlayingChannel?.let { ch ->
-                    zapHandler.postDelayed({
-                        if (!isFinishing && !isDestroyed && currentPlayingChannel?.id == ch.id) {
-                            playChannelPreview(ch)
-                        }
-                    }, 2000)
-                }
+                cancelPreviewWatchdog()
+                currentPlayingChannel?.let { triggerPreviewFailover(it, "Erro no player de preview: ${error.errorCodeName}") }
             }
         })
 
@@ -399,6 +457,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun playChannelPreview(channel: Channel) {
+        cancelPreviewWatchdog()
+        previewCandidates = buildStreamCandidates(channel)
+        previewCandidateIndex = 0
+        val targetUrl = previewCandidates.firstOrNull() ?: channel.streamUrl
+        playChannelPreviewInternal(channel, targetUrl)
+    }
+
+    private fun playChannelPreviewInternal(channel: Channel, targetUrl: String) {
         val player = exoPlayer ?: return
         if (isFinishing || isDestroyed) return
 
@@ -421,12 +487,11 @@ class MainActivity : AppCompatActivity() {
             val httpFactory = DefaultHttpDataSource.Factory()
                 .setUserAgent("IPTVSmartersPro")
                 .setAllowCrossProtocolRedirects(true)
-                .setConnectTimeoutMs(8000)
-                .setReadTimeoutMs(10000)
+                .setConnectTimeoutMs(3500)
+                .setReadTimeoutMs(5000)
                 .setKeepPostFor302Redirects(true)
 
             val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
-            val targetUrl = channel.streamUrl
 
             val extractorsFactory = DefaultExtractorsFactory().apply {
                 setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
@@ -446,9 +511,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 .setLiveConfiguration(
                     MediaItem.LiveConfiguration.Builder()
-                        .setTargetOffsetMs(20_000)
-                        .setMinOffsetMs(10_000)
-                        .setMaxOffsetMs(40_000)
+                        .setTargetOffsetMs(18_000)
+                        .setMinOffsetMs(8_000)
+                        .setMaxOffsetMs(35_000)
                         .setMinPlaybackSpeed(0.97f)
                         .setMaxPlaybackSpeed(1.03f)
                         .build()
@@ -464,10 +529,12 @@ class MainActivity : AppCompatActivity() {
                     .createMediaSource(mediaItem)
             }
 
+            startPreviewWatchdog(channel)
             player.setMediaSource(mediaSource)
             player.prepare()
             player.play()
         } catch (t: Throwable) {
+            cancelPreviewWatchdog()
             previewLoadingLayout.visibility = View.GONE
         }
     }
@@ -757,6 +824,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        cancelPreviewWatchdog()
         zapHandler.removeCallbacksAndMessages(null)
         exoPlayer?.pause()
     }
@@ -769,6 +837,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        cancelPreviewWatchdog()
         zapHandler.removeCallbacksAndMessages(null)
         exoPlayer?.release()
         exoPlayer = null

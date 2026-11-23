@@ -340,9 +340,95 @@ class PlayerActivity : AppCompatActivity() {
         Toast.makeText(this, "CH ${enriched.number} • ${enriched.title}", Toast.LENGTH_SHORT).show()
     }
 
+    
+    // --- Tecnologia Netflix: Stall Watchdog & Multi-CDN Auto-Failover ---
+    private val stallWatchdogHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var stallWatchdogRunnable: Runnable? = null
+    private var streamCandidates: List<String> = emptyList()
+    private var currentCandidateIndex: Int = 0
+
+    private fun cancelStallWatchdog() {
+        stallWatchdogRunnable?.let { stallWatchdogHandler.removeCallbacks(it) }
+        stallWatchdogRunnable = null
+    }
+
+    private fun startStallWatchdog(channel: Channel) {
+        cancelStallWatchdog()
+        val runnable = Runnable {
+            if (!isFinishing && !isDestroyed && (player?.playbackState == Player.STATE_BUFFERING || player?.playbackState == Player.STATE_IDLE)) {
+                android.util.Log.w("WDTECH_NETFLIX", "Stall detectado (4500ms) no canal ${channel.title}. Acionando auto-failover...")
+                triggerAutoFailover(channel, "Stall de buffer detectado (4.5s)")
+            }
+        }
+        stallWatchdogRunnable = runnable
+        stallWatchdogHandler.postDelayed(runnable, 4500L)
+    }
+
+    private fun buildStreamCandidates(channel: Channel, customUrl: String? = null): List<String> {
+        val list = mutableListOf<String>()
+        val primary = customUrl ?: channel.streamUrl
+        if (primary.isNotEmpty()) list.add(primary)
+
+        // Candidato TS direto (inicia instantaneamente sem espera de manifesto HLS)
+        if (primary.endsWith(".m3u8")) {
+            list.add(primary.replace(".m3u8", ".ts"))
+        } else if (primary.endsWith(".ts")) {
+            list.add(primary.replace(".ts", ".m3u8"))
+        }
+
+        // URLs de contingência pré-configuradas no canal
+        for (b in channel.backupUrls) {
+            if (b.isNotEmpty() && !list.contains(b)) list.add(b)
+            if (b.endsWith(".m3u8")) {
+                val tsBackup = b.replace(".m3u8", ".ts")
+                if (!list.contains(tsBackup)) list.add(tsBackup)
+            }
+        }
+
+        // Domínio espelho CDN
+        if (primary.contains("64.31.23.207:80")) {
+            val altDomain = primary.replace("64.31.23.207:80", "gelosalgados.site:80")
+            if (!list.contains(altDomain)) list.add(altDomain)
+        }
+
+        return list
+    }
+
+    private fun triggerAutoFailover(channel: Channel, reason: String) {
+        if (isFinishing || isDestroyed) return
+        cancelStallWatchdog()
+        currentCandidateIndex++
+
+        if (currentCandidateIndex < streamCandidates.size) {
+            val nextUrl = streamCandidates[currentCandidateIndex]
+            android.util.Log.i("WDTECH_NETFLIX", "Failover [Tentativa ${currentCandidateIndex + 1}/${streamCandidates.size}] para: $nextUrl ($reason)")
+            bufferingProgress.visibility = View.VISIBLE
+            errorLayout.visibility = View.GONE
+            startStreamInternal(channel, nextUrl)
+        } else {
+            // Apenas se todas as rotas redundantes falharem
+            bufferingProgress.visibility = View.GONE
+            errorLayout.visibility = View.VISIBLE
+            txtErrorTitle.text = "Sinal Instável: ${channel.title}"
+            txtErrorMessage.text = if (isPlaybackMode) {
+                "A gravação deste horário não pôde ser carregada. Você pode tentar novamente ou retornar à transmissão Ao Vivo."
+            } else {
+                "O sinal deste canal está temporariamente indisponível na operadora de origem. Você pode tentar novamente ou escolher outro canal na grade."
+            }
+            txtErrorCountdown.visibility = View.GONE
+            btnErrorRetry.requestFocus()
+        }
+    }
+
     private fun startStream(channel: Channel, customUrl: String? = null) {
-        val rawUrl = customUrl ?: channel.streamUrl
-        val targetUrl = rawUrl
+        cancelStallWatchdog()
+        streamCandidates = buildStreamCandidates(channel, customUrl)
+        currentCandidateIndex = 0
+        val targetUrl = streamCandidates.firstOrNull() ?: channel.streamUrl
+        startStreamInternal(channel, targetUrl)
+    }
+
+    private fun startStreamInternal(channel: Channel, targetUrl: String) {
         this.currentStreamUrl = targetUrl
 
         // Limpa estado de erro anterior
@@ -353,11 +439,12 @@ class PlayerActivity : AppCompatActivity() {
         player?.release()
         player = null
 
+        // Timeout rápido estilo Netflix (3.5s connect, 5s read)
         val httpFactory = androidx.media3.datasource.DefaultHttpDataSource.Factory()
             .setUserAgent("IPTVSmartersPro")
             .setAllowCrossProtocolRedirects(true)
-            .setConnectTimeoutMs(15000)
-            .setReadTimeoutMs(15000)
+            .setConnectTimeoutMs(3500)
+            .setReadTimeoutMs(5000)
             .setKeepPostFor302Redirects(true)
             .setDefaultRequestProperties(mapOf(
                 "Accept" to "*/*",
@@ -366,22 +453,22 @@ class PlayerActivity : AppCompatActivity() {
 
         val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
 
-        // Controle avançado de buffer para eliminar travadinhas e oscilações de Wi-Fi na TV Box
+        // Algoritmo de Buffer Inteligente Netflix: Partida instantânea com 800ms e buffer profundo de 45s
         val bufferMode = com.mytv.app.utils.AppSettings.getBufferMode(this)
-        val (minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs) = when (bufferMode) {
-            com.mytv.app.utils.AppSettings.BUFFER_FAST -> listOf(10_000, 30_000, 1_000, 2_000)
-            com.mytv.app.utils.AppSettings.BUFFER_STABLE -> listOf(25_000, 60_000, 2_500, 4_000)
-            else -> listOf(15_000, 30_000, 2_500, 5_000) // BALANCED (15s minBuffer evita buffer starvation em HLS ao vivo)
+        val (minBufferMs, maxBufferMs) = when (bufferMode) {
+            com.mytv.app.utils.AppSettings.BUFFER_FAST -> Pair(10_000, 25_000)
+            com.mytv.app.utils.AppSettings.BUFFER_STABLE -> Pair(25_000, 60_000)
+            else -> Pair(15_000, 45_000) // BALANCED
         }
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
                 minBufferMs,
                 maxBufferMs,
-                bufferForPlaybackMs,
-                afterRebufferMs
+                800,  // bufferForPlaybackMs = 800ms (Partida ultra rápida)
+                1500  // afterRebufferMs = 1500ms
             )
-            .setPrioritizeTimeOverSizeThresholds(false) // Permite reprodução imediata sem exigir buffer irreal
-            .setBackBuffer(0, false) // 0s backBuffer: não retém vídeo passado em RAM, eliminando engasgos
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .setBackBuffer(0, false)
             .build()
 
         // Seleção de trilhas com transição suave, evitando micro-travas na troca de bitrate HLS
@@ -396,8 +483,8 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         val renderersFactory = DefaultRenderersFactory(this).apply {
-            setEnableDecoderFallback(true)
-            setAllowedVideoJoiningTimeMs(5000)
+            setEnableDecoderFallback(true) // Fallback automático HW -> SW
+            setAllowedVideoJoiningTimeMs(4000)
             setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
         }
 
@@ -410,9 +497,11 @@ class PlayerActivity : AppCompatActivity() {
                 override fun onPlaybackStateChanged(state: Int) {
                     when (state) {
                         Player.STATE_BUFFERING -> {
-                            showBufferingWithDebounce(700L)
+                            showBufferingWithDebounce(500L)
+                            startStallWatchdog(channel)
                         }
                         Player.STATE_READY -> {
+                            cancelStallWatchdog()
                             hideBuffering()
                             errorLayout.visibility = View.GONE
                             retryCount = 0
@@ -425,15 +514,14 @@ class PlayerActivity : AppCompatActivity() {
                             startProgressTracking()
                         }
                         Player.STATE_ENDED -> {
+                            cancelStallWatchdog()
                             hideBuffering()
                             val dur = this@apply.duration
                             if (dur > 0) {
                                 com.mytv.app.data.WatchProgressRepository.removeProgress(this@PlayerActivity, channel.id)
                             }
                             if (!isPlaybackMode) {
-                                // Em transmissões ao vivo, STATE_ENDED indica queda de conexão / EOF no stream.
-                                // Reconecta automaticamente sem congelar a imagem na tela!
-                                handleLiveStreamEnded(channel)
+                                triggerAutoFailover(channel, "Stream finalizado pelo servidor (EOF)")
                             }
                         }
                         Player.STATE_IDLE -> {
@@ -443,7 +531,8 @@ class PlayerActivity : AppCompatActivity() {
                 }
 
                 override fun onPlayerError(error: PlaybackException) {
-                    handlePlaybackError(error, channel)
+                    cancelStallWatchdog()
+                    triggerAutoFailover(channel, "Erro no player: ${error.errorCodeName}")
                 }
             })
         }
@@ -467,10 +556,10 @@ class PlayerActivity : AppCompatActivity() {
             }
             .setLiveConfiguration(
                 MediaItem.LiveConfiguration.Builder()
-                    .setTargetOffsetMs(22_000) // Folga de segurança de 22s (2 chunks HLS) evita buffer starvation
-                    .setMinOffsetMs(10_000)
-                    .setMaxOffsetMs(50_000)
-                    .setMinPlaybackSpeed(0.97f) // Ajuste suave de velocidade (±3%) absorve oscilações sem pausar o vídeo
+                    .setTargetOffsetMs(18_000)
+                    .setMinOffsetMs(8_000)
+                    .setMaxOffsetMs(40_000)
+                    .setMinPlaybackSpeed(0.97f) // Modulação suave de velocidade (±3%) elimina travamento
                     .setMaxPlaybackSpeed(1.03f)
                     .build()
             )
@@ -478,13 +567,14 @@ class PlayerActivity : AppCompatActivity() {
 
         val mediaSource = if (targetUrl.contains(".m3u8")) {
             HlsMediaSource.Factory(dataSourceFactory)
-                .setAllowChunklessPreparation(false) // Garante decodificação e sincronismo precisos de áudio e vídeo
+                .setAllowChunklessPreparation(true)
                 .createMediaSource(mediaItem)
         } else {
             DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
                 .createMediaSource(mediaItem)
         }
 
+        startStallWatchdog(channel)
         exo.setMediaSource(mediaSource)
         exo.prepare()
 
@@ -938,6 +1028,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        cancelStallWatchdog()
         super.onPause()
         progressHandler.removeCallbacks(progressRunnable)
         saveCurrentWatchProgress()
@@ -960,6 +1051,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        cancelStallWatchdog()
         super.onDestroy()
         progressHandler.removeCallbacks(progressRunnable)
         hideHandler.removeCallbacks(hideRunnable)
