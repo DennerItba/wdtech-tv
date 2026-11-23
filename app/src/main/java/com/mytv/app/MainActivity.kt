@@ -1,231 +1,719 @@
 package com.mytv.app
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
+import android.view.Window
 import android.widget.Button
-import android.widget.EditText
-import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
+import androidx.media3.common.Player
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.DefaultRenderersFactory
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.extractor.DefaultExtractorsFactory
+import androidx.media3.extractor.ts.DefaultTsPayloadReaderFactory
+import androidx.media3.extractor.ts.TsExtractor
+import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.mytv.app.adapter.CategorySidebarAdapter
-import com.mytv.app.adapter.OttChannelCardAdapter
-import com.mytv.app.adapter.OttContinueAdapter
-import com.mytv.app.adapter.OttMatchAdapter
-import com.mytv.app.adapter.OttMatchItem
-import com.mytv.app.adapter.OttPosterAdapter
+import com.mytv.app.adapter.ChannelListAdapter
 import com.mytv.app.adapter.SettingListAdapter
 import com.mytv.app.data.ChannelRepository
 import com.mytv.app.data.EpgRepository
-import com.mytv.app.data.VodRepository
-import com.mytv.app.data.WatchProgressRepository
 import com.mytv.app.model.Channel
 import com.mytv.app.model.ChannelCategory
 import com.mytv.app.model.SettingItem
-import com.mytv.app.model.VodItem
+import com.mytv.app.utils.AppSettings
 import com.mytv.app.utils.AppUpdateManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    // --- Referências de Layout e Navegação ---
+    // --- Painel Esquerdo (Categorias) ---
     private lateinit var rvSidebar: RecyclerView
     private lateinit var sidebarAdapter: CategorySidebarAdapter
     private lateinit var txtHeaderBreadcrumb: TextView
-    private lateinit var btnSidebarSettings: View
 
-    // --- Containers de Viewport Dinâmicos ---
-    private lateinit var viewHome: NestedScrollView
-    private lateinit var viewGrid: LinearLayout
-    private lateinit var viewFutebol: NestedScrollView
-    private lateinit var viewPosters: LinearLayout
-    private lateinit var viewSearch: LinearLayout
-    private lateinit var viewSettings: LinearLayout
+    // --- Painel Central (Lista de Canais / Ajustes) ---
+    private lateinit var panelChannels: LinearLayout
+    private lateinit var txtSelectedCategoryTitle: TextView
+    private lateinit var txtCategoryBadge: TextView
+    private lateinit var rvChannelList: RecyclerView
+    private lateinit var channelAdapter: ChannelListAdapter
+    private lateinit var rvSettingsList: RecyclerView
+    private lateinit var settingAdapter: SettingListAdapter
 
-    // --- Componentes da View: Início (Home & Hero) ---
-    private lateinit var imgHeroBackdrop: ImageView
-    private lateinit var txtHeroTitle: TextView
-    private lateinit var txtHeroMatch: TextView
-    private lateinit var txtHeroYear: TextView
-    private lateinit var txtHeroAge: TextView
-    private lateinit var txtHeroDescription: TextView
-    private lateinit var btnHeroWatch: Button
-    private lateinit var btnHeroDetails: Button
-    private lateinit var rvHomeContinue: RecyclerView
-    private lateinit var continueAdapter: OttContinueAdapter
-    private lateinit var rvHomeFeatured: RecyclerView
-    private lateinit var featuredChannelsAdapter: OttChannelCardAdapter
+    // --- Painel Direito (Player Preview e Detalhes) ---
+    private lateinit var playerPreviewContainer: View
+    private lateinit var playerView: PlayerView
+    private lateinit var previewLoadingLayout: View
+    private lateinit var txtBitrate: TextView
+    private lateinit var txtPreviewTitle: TextView
+    private lateinit var txtPreviewInfo: TextView
+    private lateinit var txtPreviewPlayback: TextView
+    private lateinit var txtEpgNowTitle: TextView
+    private lateinit var txtEpgNowTime: TextView
+    private lateinit var pbEpgProgress: ProgressBar
+    private lateinit var txtEpgSynopsis: TextView
+    private lateinit var txtEpgNext: TextView
+    private lateinit var btnFullscreen: ImageButton
 
-    // --- Componentes da View: Grade de Canais ---
-    private lateinit var viewGridIconBadge: FrameLayout
-    private lateinit var imgGridCategoryIcon: ImageView
-    private lateinit var txtGridCategoryTitle: TextView
-    private lateinit var txtGridChannelCount: TextView
-    private lateinit var rvOttChannelGrid: RecyclerView
-    private lateinit var ottChannelGridAdapter: OttChannelCardAdapter
+    // --- Preview de Ajustes ---
+    private lateinit var layoutSettingsPreview: View
+    private lateinit var imgSettingPreviewIcon: ImageView
+    private lateinit var txtSettingPreviewTitle: TextView
+    private lateinit var txtSettingPreviewBadge: TextView
+    private lateinit var txtSettingPreviewDesc: TextView
+    private lateinit var btnSettingPreviewAction: Button
 
-    // --- Componentes da View: Futebol & Esportes ---
-    private lateinit var rvFutebolMatches: RecyclerView
-    private lateinit var matchAdapter: OttMatchAdapter
-    private lateinit var rvFutebolChannels: RecyclerView
-    private lateinit var sportsChannelsAdapter: OttChannelCardAdapter
-
-    // --- Componentes da View: Pôsteres (Filmes & Séries) ---
-    private lateinit var imgPosterCategoryIcon: ImageView
-    private lateinit var txtPosterCategoryTitle: TextView
-    private lateinit var rvOttPosterGrid: RecyclerView
-    private lateinit var posterAdapter: OttPosterAdapter
-
-    // --- Componentes da View: Busca ---
-    private lateinit var edtSearchQuery: EditText
-    private lateinit var btnSearchSubmit: Button
-    private lateinit var txtSearchResultsCount: TextView
-    private lateinit var rvSearchResults: RecyclerView
-    private lateinit var searchResultsAdapter: OttChannelCardAdapter
-
-    // --- Componentes da View: Ajustes ---
-    private lateinit var rvSettingsGrid: RecyclerView
-    private lateinit var settingsAdapter: SettingListAdapter
-
-    // --- Dados Completos do Aplicativo (Grade 100% Mapeada) ---
-    private var allChannels: List<Channel> = emptyList()
-    private var fazendaChannels: List<Channel> = emptyList()
-    private var premiereChannels: List<Channel> = emptyList()
-    private var futebolChannels: List<Channel> = emptyList()
-    private var sportsChannels: List<Channel> = emptyList()
-    private var abertosChannels: List<Channel> = emptyList()
-    private var telecineChannels: List<Channel> = emptyList()
-    private var hboChannels: List<Channel> = emptyList()
-    private var discoveryChannels: List<Channel> = emptyList()
-    private var filmesChannels: List<Channel> = emptyList()
-    private var kidsChannels: List<Channel> = emptyList()
-    private var series24hChannels: List<Channel> = emptyList()
-    private var ultra4kChannels: List<Channel> = emptyList()
-    private var musicaChannels: List<Channel> = emptyList()
-    private var docsChannels: List<Channel> = emptyList()
-    private var favoritosChannels: List<Channel> = emptyList()
-    private var featuredChannels: List<Channel> = emptyList()
-
-    private var matchesList: List<OttMatchItem> = emptyList()
-    private var moviesList: List<VodItem> = emptyList()
-    private var seriesList: List<VodItem> = emptyList()
-    private var currentActiveTabId: String = "cat_home"
-
-    // Conteúdo em Destaque no Hero Section
-    private var featuredHeroChannel: Channel? = null
+    // --- Estado do Player & Navegação ---
+    private var exoPlayer: ExoPlayer? = null
+    private var currentPlayingChannel: Channel? = null
+    private var currentSelectedCategory: ChannelCategory? = null
+    private var currentSettingItem: SettingItem? = null
+    private var allCategories: List<ChannelCategory> = emptyList()
+    private val zapHandler = Handler(Looper.getMainLooper())
+    private var isSettingsMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Proteção contra crashes inesperados em TV Boxes
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            android.util.Log.e("WDTECH_TV", "Exceção em [${thread.name}]: ${throwable.message}", throwable)
-        }
-
         setContentView(R.layout.activity_main)
 
-        bindViews()
+        initViews()
+        setupPlayer()
+        loadDataAndStartInitialChannel()
         setupBackPressed()
-        initData()
-        setupSidebar()
-        setupHomeHero()
-        setupGrids()
-        setupSearch()
-        setupSettings()
 
-        // Abre na aba Início por padrão
-        switchToTab("cat_home")
+        // Verificação silenciosa de atualização
+        AppUpdateManager.checkForUpdates(this, isManualCheck = false)
+    }
 
-        // Foco inicial garantido na Sidebar
-        rvSidebar.post {
-            val vh = rvSidebar.findViewHolderForAdapterPosition(1) // Posição 1 = Início
-            vh?.itemView?.requestFocus()
+    private fun initViews() {
+        // Barra Superior
+        txtHeaderBreadcrumb = findViewById(R.id.txt_header_breadcrumb)
+
+        // Painel Lateral Esquerdo
+        rvSidebar = findViewById(R.id.rv_category_sidebar)
+        rvSidebar.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        // Painel Central
+        panelChannels = findViewById(R.id.panel_channels)
+        txtSelectedCategoryTitle = findViewById(R.id.txt_selected_category_title)
+        txtCategoryBadge = findViewById(R.id.txt_category_badge)
+        rvChannelList = findViewById(R.id.rv_channel_list)
+        rvChannelList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvSettingsList = findViewById(R.id.rv_settings_list)
+        rvSettingsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        // Painel Direito (Player)
+        playerPreviewContainer = findViewById(R.id.player_preview_container)
+        playerView = findViewById(R.id.player_preview_view)
+        previewLoadingLayout = findViewById(R.id.preview_loading_layout)
+        txtBitrate = findViewById(R.id.txt_bitrate)
+        txtPreviewTitle = findViewById(R.id.txt_preview_title)
+        txtPreviewInfo = findViewById(R.id.txt_preview_info)
+        txtPreviewPlayback = findViewById(R.id.txt_preview_playback)
+        txtEpgNowTitle = findViewById(R.id.txt_epg_now_title)
+        txtEpgNowTime = findViewById(R.id.txt_epg_now_time)
+        pbEpgProgress = findViewById(R.id.pb_epg_progress)
+        txtEpgSynopsis = findViewById(R.id.txt_epg_synopsis)
+        txtEpgNext = findViewById(R.id.txt_epg_next)
+        btnFullscreen = findViewById(R.id.btn_fullscreen)
+
+        // Preview Ajustes
+        layoutSettingsPreview = findViewById(R.id.layout_settings_preview)
+        imgSettingPreviewIcon = findViewById(R.id.img_setting_preview_icon)
+        txtSettingPreviewTitle = findViewById(R.id.txt_setting_preview_title)
+        txtSettingPreviewBadge = findViewById(R.id.txt_setting_preview_badge)
+        txtSettingPreviewDesc = findViewById(R.id.txt_setting_preview_desc)
+        btnSettingPreviewAction = findViewById(R.id.btn_setting_preview_action)
+
+        // Botão Tela Cheia
+        btnFullscreen.setOnClickListener {
+            currentPlayingChannel?.let { openFullScreenPlayer(it) }
+        }
+        btnFullscreen.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                focusCurrentChannel()
+                return@setOnKeyListener true
+            }
+            false
         }
 
-        // Verificação de atualização automática
+        // Configuração dos Ajustes
+        setupSettings()
+    }
+
+    private fun loadDataAndStartInitialChannel() {
+        val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
+        val allSafeChannels = repoCategories.filter { !it.isLocked }.flatMap { it.channels }
+
+        // Categoria especial "Todos os Canais" no topo
+        val catTodos = ChannelCategory(
+            id = "cat_todos",
+            name = "⭐ Todos os Canais",
+            iconRes = R.drawable.ic_all_channels,
+            channels = allSafeChannels
+        )
+
+        // Categoria de Ajustes ao final
+        val catSettings = ChannelCategory(
+            id = "cat_settings",
+            name = "⚙️ Ajustes",
+            iconRes = R.drawable.ic_settings,
+            channels = emptyList()
+        )
+
+        val fullCategoryList = mutableListOf<ChannelCategory>()
+        fullCategoryList.add(catTodos)
+        fullCategoryList.addAll(repoCategories)
+        fullCategoryList.add(catSettings)
+        allCategories = fullCategoryList
+
+        // Descobre canal inicial (último assistido ou Globo/primeiro canal)
+        val prefs = getSharedPreferences("wdtechtv_prefs", Context.MODE_PRIVATE)
+        val lastChannelId = prefs.getString("last_played_channel_id", null)
+        val initialChannel = allSafeChannels.firstOrNull { it.id == lastChannelId }
+            ?: allSafeChannels.firstOrNull { it.id == "globo_sp" || it.id.contains("globo", ignoreCase = true) }
+            ?: allSafeChannels.firstOrNull()
+            ?: return
+
+        // Identifica qual categoria contém esse canal (preferindo uma categoria específica e não 'cat_todos')
+        val initialCategory = repoCategories.firstOrNull { cat -> cat.channels.any { it.id == initialChannel.id } }
+            ?: catTodos
+
+        currentSelectedCategory = initialCategory
+
+        // 1. Configura Adaptador da Barra Lateral
+        sidebarAdapter = CategorySidebarAdapter(
+            categories = allCategories,
+            onCategoryFocused = { cat ->
+                onSidebarCategoryFocused(cat)
+            },
+            onCategoryClicked = { cat ->
+                onSidebarCategoryClicked(cat)
+            },
+            onNavigateRightToContent = {
+                if (isSettingsMode) {
+                    focusFirstSetting()
+                } else {
+                    focusCurrentChannel()
+                }
+            }
+        )
+        sidebarAdapter.setSelectedCategory(initialCategory)
+        rvSidebar.adapter = sidebarAdapter
+
+        // 2. Configura Adaptador de Canais
+        channelAdapter = ChannelListAdapter(
+            channels = initialCategory.channels,
+            onChannelSelected = { channel ->
+                onChannelFocused(channel)
+            },
+            onChannelClicked = { channel ->
+                openFullScreenPlayer(channel)
+            },
+            onNavigateToCategories = {
+                focusCurrentCategory()
+            },
+            onNavigateToPlayer = {
+                btnFullscreen.requestFocus()
+            }
+        )
+        rvChannelList.adapter = channelAdapter
+
+        // Atualiza textos do cabeçalho
+        txtHeaderBreadcrumb.text = "WDTECH TV • ${initialCategory.name.uppercase()}"
+        txtSelectedCategoryTitle.text = initialCategory.name
+        txtCategoryBadge.text = initialCategory.channels.size.toString()
+
+        // 3. REQUISITO CRÍTICO: Inicia reprodução imediata do canal ao vivo com imagem!
+        playChannelPreview(initialChannel)
+
+        // 4. Posiciona o foco do controle remoto diretamente no canal em reprodução
+        val initialIndex = initialCategory.channels.indexOfFirst { it.id == initialChannel.id }.coerceAtLeast(0)
         Handler(Looper.getMainLooper()).postDelayed({
             if (!isFinishing && !isDestroyed) {
-                AppUpdateManager.checkForUpdates(this, isManualCheck = false)
+                rvChannelList.scrollToPosition(initialIndex)
+                rvChannelList.postDelayed({
+                    val vh = rvChannelList.findViewHolderForAdapterPosition(initialIndex)
+                    vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
+                }, 100)
             }
-        }, 3000)
+        }, 150)
     }
 
-    private fun bindViews() {
-        rvSidebar = findViewById(R.id.rv_category_sidebar)
-        txtHeaderBreadcrumb = findViewById(R.id.txt_header_breadcrumb)
-        btnSidebarSettings = findViewById(R.id.btn_sidebar_settings)
+    private fun onSidebarCategoryFocused(category: ChannelCategory) {
+        currentSelectedCategory = category
+        txtHeaderBreadcrumb.text = "WDTECH TV • ${category.name.uppercase()}"
+        txtSelectedCategoryTitle.text = category.name
 
-        // Viewports
-        viewHome = findViewById(R.id.layout_view_home)
-        viewGrid = findViewById(R.id.layout_view_grid)
-        viewFutebol = findViewById(R.id.layout_view_futebol)
-        viewPosters = findViewById(R.id.layout_view_posters)
-        viewSearch = findViewById(R.id.layout_view_search)
-        viewSettings = findViewById(R.id.layout_view_settings)
+        if (category.id == "cat_settings") {
+            isSettingsMode = true
+            panelChannels.visibility = View.VISIBLE
+            rvChannelList.visibility = View.GONE
+            rvSettingsList.visibility = View.VISIBLE
+            playerPreviewContainer.visibility = View.GONE
+            layoutSettingsPreview.visibility = View.VISIBLE
+            txtCategoryBadge.text = "AJUSTES"
+            updateSettingPreview(getSettingItems().first())
+        } else {
+            isSettingsMode = false
+            panelChannels.visibility = View.VISIBLE
+            rvSettingsList.visibility = View.GONE
+            rvChannelList.visibility = View.VISIBLE
+            layoutSettingsPreview.visibility = View.GONE
+            playerPreviewContainer.visibility = View.VISIBLE
+            txtCategoryBadge.text = category.channels.size.toString()
 
-        // Início / Hero
-        imgHeroBackdrop = findViewById(R.id.img_hero_backdrop)
-        txtHeroTitle = findViewById(R.id.txt_hero_title)
-        txtHeroMatch = findViewById(R.id.txt_hero_match)
-        txtHeroYear = findViewById(R.id.txt_hero_year)
-        txtHeroAge = findViewById(R.id.txt_hero_age)
-        txtHeroDescription = findViewById(R.id.txt_hero_description)
-        btnHeroWatch = findViewById(R.id.btn_hero_watch)
-        btnHeroDetails = findViewById(R.id.btn_hero_details)
-        rvHomeContinue = findViewById(R.id.rv_home_continue)
-        rvHomeFeatured = findViewById(R.id.rv_home_featured)
-
-        // Grade de Canais
-        viewGridIconBadge = findViewById(R.id.view_grid_icon_badge)
-        imgGridCategoryIcon = findViewById(R.id.img_grid_category_icon)
-        txtGridCategoryTitle = findViewById(R.id.txt_grid_category_title)
-        txtGridChannelCount = findViewById(R.id.txt_grid_channel_count)
-        rvOttChannelGrid = findViewById(R.id.rv_ott_channel_grid)
-
-        // Futebol
-        rvFutebolMatches = findViewById(R.id.rv_futebol_matches)
-        rvFutebolChannels = findViewById(R.id.rv_futebol_channels)
-
-        // Pôsteres
-        imgPosterCategoryIcon = findViewById(R.id.img_poster_category_icon)
-        txtPosterCategoryTitle = findViewById(R.id.txt_poster_category_title)
-        rvOttPosterGrid = findViewById(R.id.rv_ott_poster_grid)
-
-        // Busca
-        edtSearchQuery = findViewById(R.id.edt_search_query)
-        btnSearchSubmit = findViewById(R.id.btn_search_submit)
-        txtSearchResultsCount = findViewById(R.id.txt_search_results_count)
-        rvSearchResults = findViewById(R.id.rv_search_results)
-
-        // Ajustes
-        rvSettingsGrid = findViewById(R.id.rv_settings_grid)
+            // Atualiza a lista de canais dinamicamente SEM interromper o vídeo ao vivo que está passando!
+            channelAdapter.updateChannels(category.channels)
+        }
     }
 
+    private fun onSidebarCategoryClicked(category: ChannelCategory) {
+        onSidebarCategoryFocused(category)
+        if (isSettingsMode) {
+            focusFirstSetting()
+        } else {
+            focusFirstChannel()
+        }
+    }
+
+    private fun onChannelFocused(channel: Channel) {
+        // Atualiza imediatamente informações visuais no HUD inferior
+        updatePreviewHUD(channel)
+
+        // Debounce de 350ms para troca de canal no preview (evita disparar requisições em navegação rápida)
+        zapHandler.removeCallbacksAndMessages(null)
+        zapHandler.postDelayed({
+            if (currentPlayingChannel?.id != channel.id) {
+                playChannelPreview(channel)
+            }
+        }, 350)
+    }
+
+    private fun updatePreviewHUD(channel: Channel) {
+        val num = channel.number.toIntOrNull() ?: 1
+        txtPreviewTitle.text = String.format("%03d - %s", num, channel.title)
+        txtPreviewInfo.text = "${channel.category} • ${channel.quality}"
+        txtPreviewPlayback.visibility = if (channel.hasPlayback) View.VISIBLE else View.GONE
+
+        val epg = channel.currentProgram
+        if (epg != null) {
+            txtEpgNowTitle.text = epg.title
+            txtEpgNowTime.text = "${epg.startTime} - ${epg.endTime}"
+            txtEpgSynopsis.text = if (epg.synopsis.isNotEmpty()) epg.synopsis else (channel.description ?: "")
+            pbEpgProgress.progress = epg.getProgressPercent().coerceIn(5, 95)
+        } else {
+            txtEpgNowTitle.text = "Transmissão Ao Vivo (${channel.quality})"
+            txtEpgNowTime.text = "24 Horas no Ar"
+            txtEpgSynopsis.text = channel.description ?: ""
+            pbEpgProgress.progress = 50
+        }
+
+        txtEpgNext.text = "Próximo: Programação contínua 24H"
+    }
+
+    private fun setupPlayer() {
+        val bufferMode = AppSettings.getBufferMode(this)
+        val (minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs) = when (bufferMode) {
+            AppSettings.BUFFER_FAST -> listOf(10_000, 25_000, 1_000, 2_000)
+            AppSettings.BUFFER_STABLE -> listOf(20_000, 45_000, 2_000, 4_000)
+            else -> listOf(15_000, 30_000, 1_500, 3_000) // BALANCED
+        }
+
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs)
+            .setPrioritizeTimeOverSizeThresholds(false)
+            .setBackBuffer(0, false)
+            .build()
+
+        val renderersFactory = DefaultRenderersFactory(this).apply {
+            setEnableDecoderFallback(true)
+            setAllowedVideoJoiningTimeMs(4000)
+            setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+        }
+
+        exoPlayer?.release()
+        val player = ExoPlayer.Builder(this, renderersFactory)
+            .setLoadControl(loadControl)
+            .build()
+        player.playWhenReady = true
+        player.addListener(object : Player.Listener {
+            override fun onPlaybackStateChanged(state: Int) {
+                when (state) {
+                    Player.STATE_BUFFERING -> {
+                        previewLoadingLayout.visibility = View.VISIBLE
+                        txtBitrate.text = "SINTONIZANDO..."
+                    }
+                    Player.STATE_READY -> {
+                        previewLoadingLayout.visibility = View.GONE
+                    }
+                    Player.STATE_ENDED -> {
+                        previewLoadingLayout.visibility = View.GONE
+                    }
+                    Player.STATE_IDLE -> {
+                    }
+                }
+            }
+
+            override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                previewLoadingLayout.visibility = View.GONE
+                // Tenta restabelecer silenciosamente se ainda estiver visível
+                currentPlayingChannel?.let { ch ->
+                    zapHandler.postDelayed({
+                        if (!isFinishing && !isDestroyed && currentPlayingChannel?.id == ch.id) {
+                            playChannelPreview(ch)
+                        }
+                    }, 2000)
+                }
+            }
+        })
+
+        playerView.player = player
+        exoPlayer = player
+    }
+
+    private fun playChannelPreview(channel: Channel) {
+        val player = exoPlayer ?: return
+        if (isFinishing || isDestroyed) return
+
+        currentPlayingChannel = channel
+        updatePreviewHUD(channel)
+
+        // Salva canal nas preferências como último assistido
+        getSharedPreferences("wdtechtv_prefs", Context.MODE_PRIVATE)
+            .edit()
+            .putString("last_played_channel_id", channel.id)
+            .apply()
+
+        previewLoadingLayout.visibility = View.VISIBLE
+        txtBitrate.text = "SINTONIZANDO..."
+
+        try {
+            player.stop()
+            player.clearMediaItems()
+
+            val httpFactory = DefaultHttpDataSource.Factory()
+                .setUserAgent("IPTVSmartersPro")
+                .setAllowCrossProtocolRedirects(true)
+                .setConnectTimeoutMs(8000)
+                .setReadTimeoutMs(10000)
+                .setKeepPostFor302Redirects(true)
+
+            val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
+            val targetUrl = channel.streamUrl
+
+            val extractorsFactory = DefaultExtractorsFactory().apply {
+                setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
+                setTsExtractorFlags(
+                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES or
+                    DefaultTsPayloadReaderFactory.FLAG_DETECT_ACCESS_UNITS
+                )
+                setConstantBitrateSeekingEnabled(true)
+            }
+
+            val mediaItem = MediaItem.Builder()
+                .setUri(targetUrl)
+                .apply {
+                    if (targetUrl.endsWith(".ts") || targetUrl.contains(".ts?")) {
+                        setMimeType(MimeTypes.VIDEO_MP2T)
+                    }
+                }
+                .setLiveConfiguration(
+                    MediaItem.LiveConfiguration.Builder()
+                        .setTargetOffsetMs(20_000)
+                        .setMinOffsetMs(10_000)
+                        .setMaxOffsetMs(40_000)
+                        .setMinPlaybackSpeed(0.97f)
+                        .setMaxPlaybackSpeed(1.03f)
+                        .build()
+                )
+                .build()
+
+            val mediaSource = if (targetUrl.contains(".m3u8")) {
+                HlsMediaSource.Factory(dataSourceFactory)
+                    .setAllowChunklessPreparation(true)
+                    .createMediaSource(mediaItem)
+            } else {
+                DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
+                    .createMediaSource(mediaItem)
+            }
+
+            player.setMediaSource(mediaSource)
+            player.prepare()
+            player.play()
+        } catch (t: Throwable) {
+            previewLoadingLayout.visibility = View.GONE
+        }
+    }
+
+    private fun openFullScreenPlayer(channel: Channel) {
+        zapHandler.removeCallbacksAndMessages(null)
+        exoPlayer?.stop()
+        exoPlayer?.clearMediaItems()
+        previewLoadingLayout.visibility = View.GONE
+
+        val channelsInScope = currentSelectedCategory?.channels?.filter { it.streamUrl.isNotEmpty() }
+            ?: allCategories.firstOrNull { it.id == "cat_todos" }?.channels
+            ?: listOf(channel)
+
+        val currentIndex = channelsInScope.indexOfFirst { it.id == channel.id }.coerceAtLeast(0)
+
+        val intent = Intent(this, PlayerActivity::class.java).apply {
+            putExtra(PlayerActivity.EXTRA_CHANNEL, channel)
+            putExtra(PlayerActivity.EXTRA_CHANNEL_LIST, ArrayList(channelsInScope))
+            putExtra(PlayerActivity.EXTRA_CHANNEL_INDEX, currentIndex)
+        }
+        startActivity(intent)
+    }
+
+    private fun focusCurrentCategory() {
+        val selIndex = sidebarAdapter.getSelectedPosition()
+        rvSidebar.stopScroll()
+        rvSidebar.scrollToPosition(selIndex)
+        rvSidebar.post {
+            val vh = rvSidebar.findViewHolderForAdapterPosition(selIndex)
+            vh?.itemView?.requestFocus() ?: rvSidebar.requestFocus()
+        }
+    }
+
+    private fun focusFirstChannel() {
+        if (channelAdapter.itemCount == 0) return
+        rvChannelList.stopScroll()
+        rvChannelList.scrollToPosition(0)
+        rvChannelList.post {
+            val vh = rvChannelList.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
+        }
+    }
+
+    private fun focusCurrentChannel() {
+        val curr = currentPlayingChannel
+        val idx = if (curr != null) {
+            channelAdapter.getChannels().indexOfFirst { it.id == curr.id }.coerceAtLeast(0)
+        } else {
+            0
+        }
+        rvChannelList.stopScroll()
+        rvChannelList.scrollToPosition(idx)
+        rvChannelList.post {
+            val vh = rvChannelList.findViewHolderForAdapterPosition(idx)
+            vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
+        }
+    }
+
+    private fun focusFirstSetting() {
+        if (settingAdapter.itemCount == 0) return
+        rvSettingsList.stopScroll()
+        rvSettingsList.scrollToPosition(0)
+        rvSettingsList.post {
+            val vh = rvSettingsList.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus() ?: rvSettingsList.requestFocus()
+        }
+    }
+
+    // --- Configuração dos Ajustes ---
+    private fun setupSettings() {
+        val items = getSettingItems()
+        settingAdapter = SettingListAdapter(
+            items = items,
+            onSettingFocused = { item ->
+                currentSettingItem = item
+                updateSettingPreview(item)
+            },
+            onSettingClicked = { item ->
+                currentSettingItem = item
+                executeSettingAction(item)
+            },
+            onNavigateToCategories = {
+                focusCurrentCategory()
+            },
+            onNavigateToPreview = {
+                btnSettingPreviewAction.requestFocus()
+            }
+        )
+        rvSettingsList.adapter = settingAdapter
+
+        btnSettingPreviewAction.setOnClickListener {
+            currentSettingItem?.let { executeSettingAction(it) }
+        }
+        btnSettingPreviewAction.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                focusFirstSetting()
+                return@setOnKeyListener true
+            }
+            false
+        }
+    }
+
+    private fun getSettingItems(): List<SettingItem> {
+        val bufferLabel = AppSettings.getBufferLabel(AppSettings.getBufferMode(this))
+        val aspectLabel = AppSettings.getAspectRatioLabel(AppSettings.getAspectRatio(this))
+        return listOf(
+            SettingItem(
+                id = "setting_update",
+                title = "Atualizações do App",
+                subtitle = "Verificar novas versões e novidades",
+                iconRes = R.drawable.ic_check_update,
+                badgeText = "V2.8.3",
+                description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
+                actionButtonText = "Verificar Atualizações Agora (OK)"
+            ),
+            SettingItem(
+                id = "setting_network",
+                title = "Teste de Conexão & Ping",
+                subtitle = "Medir latência e velocidade com o servidor CDN",
+                iconRes = R.drawable.ic_wifi_tv,
+                badgeText = "TESTAR",
+                description = "Mede a resposta e estabilidade da sua conexão com o servidor de transmissão WDTECH TV (64.31.23.207:80). Pressione para medir a latência em tempo real.",
+                actionButtonText = "Testar Ping com o Servidor (OK)"
+            ),
+            SettingItem(
+                id = "setting_buffer",
+                title = "Buffer de Reprodução",
+                subtitle = "Modo ativo: $bufferLabel",
+                iconRes = R.drawable.ic_speed,
+                badgeText = bufferLabel.split(" ")[0].uppercase(),
+                description = "Ajusta a memória de buffer do player para evitar travamentos:\n\n• Rápido (10s): Troca de canais instantânea.\n• Equilibrado (25s): Recomendado padrão, alta estabilidade com troca rápida.\n• Anti-Travamento (45s): Máxima proteção contra oscilações de Wi-Fi.",
+                actionButtonText = "Alternar Modo de Buffer (OK)"
+            ),
+            SettingItem(
+                id = "setting_aspect",
+                title = "Formato de Tela (Aspect Ratio)",
+                subtitle = "Modo ativo: $aspectLabel",
+                iconRes = R.drawable.ic_aspect_ratio,
+                badgeText = aspectLabel.split(" ")[0].uppercase(),
+                description = "Ajusta o enquadramento do vídeo na sua televisão:\n\n• Original (16:9): Mantém a proporção exata da transmissão original.\n• Zoom: Remove possíveis faixas pretas preenchendo a tela.\n• Esticar: Expande o vídeo para ocupar 100% da sua TV.",
+                actionButtonText = "Alternar Formato de Tela (OK)"
+            ),
+            SettingItem(
+                id = "setting_cache",
+                title = "Limpar Cache & Memória",
+                subtitle = "Liberar memória RAM e espaço em disco",
+                iconRes = R.drawable.ic_clean,
+                badgeText = "OTIMIZAR",
+                description = "Limpa arquivos temporários de imagens, logos de canais e buffers acumulados em memória para acelerar a resposta do app.",
+                actionButtonText = "Limpar Cache Agora (OK)"
+            ),
+            SettingItem(
+                id = "setting_exit",
+                title = "Sair do Aplicativo",
+                subtitle = "Encerrar WDTECH TV com segurança",
+                iconRes = R.drawable.ic_exit,
+                badgeText = "ENCERRAR",
+                description = "Fecha o aplicativo com segurança e salva todas as suas preferências e histórico.",
+                actionButtonText = "Confirmar Saída (OK)"
+            )
+        )
+    }
+
+    private fun updateSettingPreview(item: SettingItem) {
+        txtSettingPreviewTitle.text = item.title
+        txtSettingPreviewBadge.text = item.badgeText
+        txtSettingPreviewDesc.text = item.description
+        btnSettingPreviewAction.text = item.actionButtonText
+        imgSettingPreviewIcon.setImageResource(item.iconRes)
+    }
+
+    private fun executeSettingAction(item: SettingItem) {
+        when (item.id) {
+            "setting_update" -> {
+                Toast.makeText(this, "Verificando atualizações no servidor...", Toast.LENGTH_SHORT).show()
+                AppUpdateManager.checkForUpdates(this, isManualCheck = true)
+            }
+            "setting_network" -> {
+                txtSettingPreviewBadge.text = "MEDINDO..."
+                btnSettingPreviewAction.isEnabled = false
+                lifecycleScope.launch {
+                    val result = AppSettings.testConnectionLatency()
+                    btnSettingPreviewAction.isEnabled = true
+                    if (result.first) {
+                        val ping = result.second
+                        val quality = if (ping < 60) "Excelente" else if (ping < 120) "Boa" else "Instável"
+                        txtSettingPreviewBadge.text = "${ping}ms • $quality"
+                        txtSettingPreviewDesc.text = "Servidor CDN WDTECH TV (64.31.23.207:80) online!\n\n• Latência: ${ping}ms ($quality)\n• Status: Online e Transmitindo\n• Conexão pronta para alta definição."
+                        Toast.makeText(this@MainActivity, "Ping com Servidor: ${ping}ms ($quality)", Toast.LENGTH_LONG).show()
+                    } else {
+                        txtSettingPreviewBadge.text = "FALHA"
+                        txtSettingPreviewDesc.text = "Não foi possível conectar ao servidor.\nVerifique a sua internet."
+                        Toast.makeText(this@MainActivity, "Erro ao testar conexão.", Toast.LENGTH_SHORT).show()
+                    }
+                    settingAdapter.notifyDataSetChanged()
+                }
+            }
+            "setting_buffer" -> {
+                val nextMode = AppSettings.cycleBufferMode(this)
+                val label = AppSettings.getBufferLabel(nextMode)
+                item.badgeText = label.split(" ")[0].uppercase()
+                item.actionButtonText = "Modo Ativo: $label (OK)"
+                updateSettingPreview(item)
+                settingAdapter.notifyDataSetChanged()
+                setupPlayer()
+                currentPlayingChannel?.let { playChannelPreview(it) }
+                Toast.makeText(this, "Buffer configurado para: $label", Toast.LENGTH_SHORT).show()
+            }
+            "setting_aspect" -> {
+                val nextAspect = AppSettings.cycleAspectRatio(this)
+                val label = AppSettings.getAspectRatioLabel(nextAspect)
+                playerView.resizeMode = nextAspect
+                item.badgeText = label.split(" ")[0].uppercase()
+                item.actionButtonText = "Formato: $label (OK)"
+                updateSettingPreview(item)
+                settingAdapter.notifyDataSetChanged()
+                Toast.makeText(this, "Formato alterado: $label", Toast.LENGTH_SHORT).show()
+            }
+            "setting_cache" -> {
+                btnSettingPreviewAction.isEnabled = false
+                txtSettingPreviewBadge.text = "LIMPANDO..."
+                lifecycleScope.launch {
+                    val bytesFreed = AppSettings.clearCache(this@MainActivity)
+                    btnSettingPreviewAction.isEnabled = true
+                    val mbFreed = String.format("%.2f", bytesFreed / (1024.0 * 1024.0))
+                    txtSettingPreviewBadge.text = "LIMPO"
+                    txtSettingPreviewDesc.text = "Memória limpa com sucesso!\n\n• Liberado: ${mbFreed} MB\n• Sistema otimizado para reprodução contínua."
+                    Toast.makeText(this@MainActivity, "Memória limpa! ${mbFreed} MB liberados.", Toast.LENGTH_LONG).show()
+                    settingAdapter.notifyDataSetChanged()
+                }
+            }
+            "setting_exit" -> {
+                showExitConfirmation()
+            }
+        }
+    }
+
+    // --- Controle do Botão Voltar (D-Pad Back) e Diálogo de Saída ---
     private fun setupBackPressed() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (currentActiveTabId != "cat_home") {
-                    switchToTab("cat_home")
-                    rvSidebar.post {
-                        val vh = rvSidebar.findViewHolderForAdapterPosition(1)
-                        vh?.itemView?.requestFocus()
-                    }
+                if (btnFullscreen.hasFocus()) {
+                    focusCurrentChannel()
+                } else if (rvChannelList.hasFocus() || rvSettingsList.hasFocus() || btnSettingPreviewAction.hasFocus()) {
+                    focusCurrentCategory()
                 } else {
                     showExitConfirmation()
                 }
@@ -234,10 +722,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showExitConfirmation() {
-        val dialog = android.app.Dialog(this)
-        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_simple_exit)
-        dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setDimAmount(0.75f)
 
         val btnSim = dialog.findViewById<Button>(R.id.btn_dialog_exit_sim)
@@ -252,7 +740,6 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
-        // Foco inicial padrão no NÃO para prevenir encerramento involuntário
         dialog.setOnShowListener {
             btnNao.requestFocus()
         }
@@ -260,671 +747,30 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun initData() {
-        val repoCategories = EpgRepository.enrichCategories(ChannelRepository.getCategories())
-        allChannels = repoCategories.flatMap { it.channels }
-
-        // 1. A Fazenda 24H (7 Câmeras)
-        fazendaChannels = repoCategories.filter { it.id == "cat_fazenda" }.flatMap { it.channels }
-
-        // 2. Premiere FC (Todos os 8 canais separados)
-        premiereChannels = repoCategories.filter { it.id == "cat_premiere" }.flatMap { it.channels }
-
-        // 3. Futebol & Campeonatos
-        futebolChannels = repoCategories.filter { it.id in listOf("cat_jogos_dia", "cat_campeonatos") }.flatMap { it.channels }
-
-        // 4. SporTV & Esportes Gerais
-        sportsChannels = repoCategories.filter {
-            it.id in listOf("cat_esportes", "cat_espn", "cat_f1")
-        }.flatMap { it.channels }
-
-        // 5. Canais Abertos
-        abertosChannels = repoCategories.filter {
-            it.id in listOf("cat_globo", "cat_sbt", "cat_record", "cat_band", "cat_noticias")
-        }.flatMap { it.channels }
-
-        // 6. Rede Telecine
-        telecineChannels = repoCategories.filter { it.id == "cat_telecine" }.flatMap { it.channels }
-
-        // 7. Canais HBO
-        hboChannels = repoCategories.filter { it.id == "cat_hbo" }.flatMap { it.channels }
-
-        // 8. Universo Discovery
-        discoveryChannels = repoCategories.filter { it.id == "cat_discovery" }.flatMap { it.channels }
-
-        // 9. Filmes & Séries
-        filmesChannels = repoCategories.filter { it.id == "cat_filmes" }.flatMap { it.channels }
-
-        // 10. Infantil & Kids
-        kidsChannels = repoCategories.filter { it.id == "cat_kids" }.flatMap { it.channels }
-
-        // 11. Canais 24 Horas
-        series24hChannels = repoCategories.filter { it.id == "cat_24h" }.flatMap { it.channels }
-
-        // 12. 4K Ultra HD & H.265
-        ultra4kChannels = repoCategories.filter { it.id in listOf("cat_4k", "cat_h265") }.flatMap { it.channels }
-
-        // 13. Músicas & Shows
-        musicaChannels = repoCategories.filter { it.id == "cat_musica" }.flatMap { it.channels }
-
-        // 14. Documentários & Variedades
-        docsChannels = repoCategories.filter { it.id in listOf("cat_docs", "cat_variedades") }.flatMap { it.channels }
-
-        // Favoritos Inteligentes
-        favoritosChannels = abertosChannels.take(4) + premiereChannels.take(2) + fazendaChannels.take(2) + telecineChannels.take(3)
-
-        // Canais em Destaque no Início (Mix rico com Fazenda, Premiere, Esportes, Filmes e Globo)
-        featuredChannels = fazendaChannels.take(2) + premiereChannels.take(3) + sportsChannels.take(2) + telecineChannels.take(2) + abertosChannels.take(2)
-
-        // Destaque Hero: primeiro canal de filme ou esporte com streaming ativo
-        featuredHeroChannel = telecineChannels.firstOrNull() ?: premiereChannels.firstOrNull() ?: allChannels.firstOrNull()
-
-        // Lista de Jogos do Dia Simulados & Reais
-        matchesList = listOf(
-            OttMatchItem(
-                id = "m1",
-                teamA = "Flamengo",
-                teamB = "Palmeiras",
-                time = "AO VIVO",
-                champ = "Brasileirão Série A",
-                channel = premiereChannels.firstOrNull() ?: sportsChannels.firstOrNull()
-            ),
-            OttMatchItem(
-                id = "m2",
-                teamA = "Real Madrid",
-                teamB = "Manchester City",
-                time = "16:00",
-                champ = "Champions League",
-                channel = sportsChannels.firstOrNull { it.title.contains("ESPN", true) }
-            ),
-            OttMatchItem(
-                id = "m3",
-                teamA = "São Paulo",
-                teamB = "Corinthians",
-                time = "18:30",
-                champ = "Paulistão",
-                channel = sportsChannels.firstOrNull { it.title.contains("SporTV", true) }
-            ),
-            OttMatchItem(
-                id = "m4",
-                teamA = "Arsenal",
-                teamB = "Liverpool",
-                time = "13:30",
-                champ = "Premier League",
-                channel = sportsChannels.firstOrNull { it.title.contains("ESPN", true) }
-            )
-        )
-
-        // Catálogo Curado de Filmes e Séries
-        val sampleStream = allChannels.firstOrNull()?.streamUrl ?: ""
-        moviesList = listOf(
-            VodItem(
-                id = "m_oppenheimer",
-                name = "Oppenheimer",
-                posterUrl = "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=600&auto=format&fit=crop",
-                rating = "8.9",
-                categoryId = "filmes",
-                year = "2023",
-                genre = "Drama • Biografia",
-                streamUrl = sampleStream
-            ),
-            VodItem(
-                id = "m_john_wick_4",
-                name = "John Wick 4: Baba Yaga",
-                posterUrl = "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=600&auto=format&fit=crop",
-                rating = "8.2",
-                categoryId = "filmes",
-                year = "2023",
-                genre = "Ação • Adrenalina",
-                streamUrl = sampleStream
-            ),
-            VodItem(
-                id = "m_interstellar",
-                name = "Interestelar",
-                posterUrl = "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600&auto=format&fit=crop",
-                rating = "8.7",
-                categoryId = "filmes",
-                year = "2024",
-                genre = "Ficção Científica",
-                streamUrl = sampleStream
-            ),
-            VodItem(
-                id = "m_batman",
-                name = "The Batman",
-                posterUrl = "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?q=80&w=600&auto=format&fit=crop",
-                rating = "8.0",
-                categoryId = "filmes",
-                year = "2022",
-                genre = "Ação • Investigação",
-                streamUrl = sampleStream
-            )
-        )
-
-        seriesList = listOf(
-            VodItem(
-                id = "s_tlou",
-                name = "The Last of Us",
-                posterUrl = "https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=600&auto=format&fit=crop",
-                rating = "9.1",
-                categoryId = "series",
-                year = "2023",
-                genre = "Em Alta • Sobrevivência",
-                isSeries = true,
-                streamUrl = sampleStream
-            ),
-            VodItem(
-                id = "s_succession",
-                name = "Succession",
-                posterUrl = "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=600&auto=format&fit=crop",
-                rating = "8.9",
-                categoryId = "series",
-                year = "2023",
-                genre = "Drama • Corporativo",
-                isSeries = true,
-                streamUrl = sampleStream
-            ),
-            VodItem(
-                id = "s_stranger_things",
-                name = "Stranger Things",
-                posterUrl = "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop",
-                rating = "8.7",
-                categoryId = "series",
-                year = "2024",
-                genre = "Ficção • Mistério",
-                isSeries = true,
-                streamUrl = sampleStream
-            ),
-            VodItem(
-                id = "s_severance",
-                name = "Ruptura (Severance)",
-                posterUrl = "https://images.unsplash.com/photo-1573165231977-3f0e27806045?q=80&w=600&auto=format&fit=crop",
-                rating = "8.8",
-                categoryId = "series",
-                year = "2024",
-                genre = "Suspense Psicológico",
-                isSeries = true,
-                streamUrl = sampleStream
-            )
-        )
-
-        // Sincroniza Jogos do Dia remotos
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val freshJogos = ChannelRepository.fetchJogosDoDia()
-                if (freshJogos.isNotEmpty()) {
-                    val dynamicMatches = freshJogos.mapIndexed { index, ch ->
-                        val parts = ch.title.split(Regex(" x | X | vs | VS "))
-                        val tA = if (parts.size >= 2) parts[0].trim() else ch.title
-                        val tB = if (parts.size >= 2) parts[1].trim() else "Ao Vivo"
-                        OttMatchItem(
-                            id = "remote_m_$index",
-                            teamA = tA,
-                            teamB = tB,
-                            time = if (ch.quality.contains("VIVO", true)) "AO VIVO" else "HOJE",
-                            champ = ch.category.ifEmpty { "Futebol Ao Vivo" },
-                            channel = ch
-                        )
-                    }
-                    withContext(Dispatchers.Main) {
-                        matchesList = dynamicMatches
-                        matchAdapter.updateMatches(matchesList)
-                    }
-                }
-            } catch (_: Exception) {}
+    override fun onResume() {
+        super.onResume()
+        if (exoPlayer == null) {
+            setupPlayer()
         }
+        currentPlayingChannel?.let { playChannelPreview(it) }
     }
 
-    private fun setupSidebar() {
-        val sidebarItems = listOf(
-            ChannelCategory(id = "cat_buscar", name = "Buscar", iconRes = R.drawable.ic_search_tv, isLocked = false, channels = emptyList()),
-            ChannelCategory(id = "cat_home", name = "Início", iconRes = R.drawable.ic_home_tv, isLocked = false, channels = emptyList()),
-            ChannelCategory(id = "cat_fazenda", name = "A Fazenda 24H", iconRes = R.drawable.ic_fazenda, isLocked = false, channels = fazendaChannels),
-            ChannelCategory(id = "cat_premiere", name = "Premiere FC", iconRes = R.drawable.ic_premiere, isLocked = false, channels = premiereChannels),
-            ChannelCategory(id = "cat_futebol", name = "Futebol & Jogos", iconRes = R.drawable.ic_soccer_ball, isLocked = false, channels = futebolChannels),
-            ChannelCategory(id = "cat_esportes", name = "SporTV & Esportes", iconRes = R.drawable.ic_sports_tv, isLocked = false, channels = sportsChannels),
-            ChannelCategory(id = "cat_abertos", name = "Canais Abertos", iconRes = R.drawable.ic_tv_aberta, isLocked = false, channels = abertosChannels),
-            ChannelCategory(id = "cat_telecine", name = "Rede Telecine", iconRes = R.drawable.ic_star_kids, isLocked = false, channels = telecineChannels),
-            ChannelCategory(id = "cat_hbo", name = "Canais HBO", iconRes = R.drawable.outline_live_tv_24, isLocked = false, channels = hboChannels),
-            ChannelCategory(id = "cat_filmes", name = "Filmes & Séries", iconRes = R.drawable.ic_movie_vod, isLocked = false, channels = filmesChannels),
-            ChannelCategory(id = "cat_kids", name = "Infantil & Kids", iconRes = R.drawable.ic_star_kids, isLocked = false, channels = kidsChannels),
-            ChannelCategory(id = "cat_discovery", name = "Universo Discovery", iconRes = R.drawable.ic_tv_fechada, isLocked = false, channels = discoveryChannels),
-            ChannelCategory(id = "cat_24h", name = "Canais 24 Horas", iconRes = R.drawable.ic_playback, isLocked = false, channels = series24hChannels),
-            ChannelCategory(id = "cat_4k", name = "4K Ultra HD & HEVC", iconRes = R.drawable.ic_4k, isLocked = false, channels = ultra4kChannels),
-            ChannelCategory(id = "cat_musica", name = "Músicas & Shows", iconRes = R.drawable.ic_music, isLocked = false, channels = musicaChannels),
-            ChannelCategory(id = "cat_docs", name = "Variedades & Docs", iconRes = R.drawable.ic_tv_fechada, isLocked = false, channels = docsChannels),
-            ChannelCategory(id = "cat_all", name = "Todos os Canais", iconRes = R.drawable.ic_all_channels, isLocked = false, channels = allChannels),
-            ChannelCategory(id = "cat_favoritos", name = "Favoritos", iconRes = R.drawable.ic_heart_fav, isLocked = false, channels = favoritosChannels)
-        )
-
-        rvSidebar.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        sidebarAdapter = CategorySidebarAdapter(
-            categories = sidebarItems,
-            onCategoryFocused = { cat ->
-                txtHeaderBreadcrumb.text = "WDTECH TV • ${cat.name.uppercase()}"
-            },
-            onCategoryClicked = { cat ->
-                switchToTab(cat.id)
-            },
-            onNavigateRightToContent = {
-                focusCurrentViewport()
-            }
-        )
-        rvSidebar.adapter = sidebarAdapter
-
-        btnSidebarSettings.setOnClickListener {
-            switchToTab("cat_settings")
-        }
-
-        btnSidebarSettings.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                switchToTab("cat_settings")
-                focusCurrentViewport()
-                return@setOnKeyListener true
-            }
-            false
-        }
+    override fun onPause() {
+        super.onPause()
+        zapHandler.removeCallbacksAndMessages(null)
+        exoPlayer?.pause()
     }
 
-    private fun setupHomeHero() {
-        // Inicializa Hero Content
-        imgHeroBackdrop.load("https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2094&auto=format&fit=crop") {
-            crossfade(true)
-            placeholder(R.drawable.tv_bg)
-            error(R.drawable.tv_bg)
-        }
-
-        btnHeroWatch.setOnClickListener {
-            featuredHeroChannel?.let { ch ->
-                openFullScreenPlayer(ch, allChannels)
-            } ?: run {
-                Toast.makeText(this, "Iniciando transmissão...", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        btnHeroDetails.setOnClickListener {
-            AlertDialog.Builder(this, R.style.Theme_MyTvApp_Dialog)
-                .setTitle("Duna: Parte Dois (2024)")
-                .setMessage("A jornada mítica de Paul Atreides continua enquanto ele se une a Chani e aos Fremen em uma guerra de vingança contra os conspiradores que destruíram sua família.\n\nFormato: 4K HDR • 60 FPS • Áudio 5.1 Dolby")
-                .setPositiveButton("Assistir Agora") { _, _ ->
-                    featuredHeroChannel?.let { ch -> openFullScreenPlayer(ch, allChannels) }
-                }
-                .setNegativeButton("Fechar", null)
-                .show()
-        }
-
-        // Trilho: Continuar Assistindo
-        rvHomeContinue.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val savedProgress = WatchProgressRepository.getContinueWatchingList(this)
-        continueAdapter = OttContinueAdapter(savedProgress) { progress ->
-            val ch = progress.toChannel()
-            openFullScreenPlayer(ch, listOf(ch))
-        }
-        rvHomeContinue.adapter = continueAdapter
-
-        // Trilho: Canais em Destaque
-        rvHomeFeatured.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        featuredChannelsAdapter = OttChannelCardAdapter(
-            channels = featuredChannels,
-            defaultGradientRes = R.drawable.bg_channel_gradient_blue,
-            onChannelClick = { ch ->
-                openFullScreenPlayer(ch, featuredChannels)
-            }
-        )
-        rvHomeFeatured.adapter = featuredChannelsAdapter
+    override fun onStop() {
+        super.onStop()
+        zapHandler.removeCallbacksAndMessages(null)
+        exoPlayer?.stop()
     }
 
-    private fun setupGrids() {
-        // Grade de Canais (3 Colunas)
-        rvOttChannelGrid.layoutManager = GridLayoutManager(this, 3)
-        ottChannelGridAdapter = OttChannelCardAdapter(
-            channels = emptyList(),
-            defaultGradientRes = R.drawable.bg_channel_gradient_blue,
-            onChannelClick = { ch ->
-                openFullScreenPlayer(ch, ottChannelGridAdapter.getChannels())
-            }
-        )
-        rvOttChannelGrid.adapter = ottChannelGridAdapter
-
-        // Seção Futebol: Jogos de Hoje (2 Colunas)
-        rvFutebolMatches.layoutManager = GridLayoutManager(this, 2)
-        matchAdapter = OttMatchAdapter(matchesList) { match ->
-            match.channel?.let { ch ->
-                openFullScreenPlayer(ch, sportsChannels)
-            } ?: run {
-                val sportCh = sportsChannels.firstOrNull()
-                if (sportCh != null) {
-                    openFullScreenPlayer(sportCh, sportsChannels)
-                } else {
-                    Toast.makeText(this, "Sinal do jogo sintonizado!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        rvFutebolMatches.adapter = matchAdapter
-
-        // Seção Futebol: Canais Esportivos (3 Colunas)
-        rvFutebolChannels.layoutManager = GridLayoutManager(this, 3)
-        sportsChannelsAdapter = OttChannelCardAdapter(
-            channels = sportsChannels,
-            defaultGradientRes = R.drawable.bg_channel_gradient_green,
-            onChannelClick = { ch ->
-                openFullScreenPlayer(ch, sportsChannels)
-            }
-        )
-        rvFutebolChannels.adapter = sportsChannelsAdapter
-
-        // Grade de Pôsteres (4 Colunas)
-        rvOttPosterGrid.layoutManager = GridLayoutManager(this, 4)
-        posterAdapter = OttPosterAdapter(emptyList()) { item ->
-            val ch = item.toChannel()
-            openFullScreenPlayer(ch, listOf(ch))
-        }
-        rvOttPosterGrid.adapter = posterAdapter
-    }
-
-    private fun setupSearch() {
-        rvSearchResults.layoutManager = GridLayoutManager(this, 3)
-        searchResultsAdapter = OttChannelCardAdapter(
-            channels = emptyList(),
-            defaultGradientRes = R.drawable.bg_channel_gradient_dark,
-            onChannelClick = { ch ->
-                openFullScreenPlayer(ch, searchResultsAdapter.getChannels())
-            }
-        )
-        rvSearchResults.adapter = searchResultsAdapter
-
-        btnSearchSubmit.setOnClickListener {
-            performSearch(edtSearchQuery.text.toString().trim())
-        }
-
-        edtSearchQuery.setOnEditorActionListener { _, _, _ ->
-            performSearch(edtSearchQuery.text.toString().trim())
-            true
-        }
-    }
-
-    private fun performSearch(query: String) {
-        if (query.isEmpty()) {
-            searchResultsAdapter.updateChannels(emptyList())
-            txtSearchResultsCount.text = "Digite algo para buscar..."
-            return
-        }
-
-        val results = allChannels.filter {
-            it.title.contains(query, ignoreCase = true) || it.category.contains(query, ignoreCase = true)
-        }
-        searchResultsAdapter.updateChannels(results)
-        txtSearchResultsCount.text = "${results.size} resultados encontrados para \"$query\""
-
-        if (results.isNotEmpty()) {
-            rvSearchResults.post {
-                val vh = rvSearchResults.findViewHolderForAdapterPosition(0)
-                vh?.itemView?.requestFocus()
-            }
-        }
-    }
-
-    private fun setupSettings() {
-        rvSettingsGrid.layoutManager = GridLayoutManager(this, 2)
-        val settingsList = listOf(
-            SettingItem(
-                id = "set_aspect",
-                title = "Proporção de Tela",
-                subtitle = "Ajustar Zoom / 16:9 / Original",
-                iconRes = R.drawable.ic_aspect_ratio,
-                badgeText = "AJUSTAR",
-                description = "Alterna entre Ajustar à Tela, Zoom e Esticar.",
-                actionButtonText = "Alterar"
-            ),
-            SettingItem(
-                id = "set_engine",
-                title = "Motor de Reprodução",
-                subtitle = "Media3 ExoPlayer Ultra HD",
-                iconRes = R.drawable.outline_live_tv_24,
-                badgeText = "ATIVO",
-                description = "Buffer adaptativo inteligente com anti-travamento.",
-                actionButtonText = "Ver Detalhes"
-            ),
-            SettingItem(
-                id = "set_update",
-                title = "Verificar Atualização",
-                subtitle = "WDTECH TV v2.8.1",
-                iconRes = R.drawable.ic_check_update,
-                badgeText = "V2.8.1",
-                description = "Consulta a versão mais recente diretamente no GitHub.",
-                actionButtonText = "Verificar"
-            ),
-            SettingItem(
-                id = "set_speed",
-                title = "Teste de Conexão",
-                subtitle = "Latência e Banda de Rede",
-                iconRes = R.drawable.ic_wifi_tv,
-                badgeText = "100%",
-                description = "Mede a estabilidade da rota para os fluxos HLS.",
-                actionButtonText = "Testar"
-            )
-        )
-
-        settingsAdapter = SettingListAdapter(
-            items = settingsList,
-            onSettingFocused = {},
-            onSettingClicked = { item ->
-                when (item.id) {
-                    "set_update" -> AppUpdateManager.checkForUpdates(this, isManualCheck = true)
-                    "set_aspect" -> Toast.makeText(this, "Proporção padrão definida para 16:9 Full HD", Toast.LENGTH_SHORT).show()
-                    "set_engine" -> Toast.makeText(this, "Motor ExoPlayer Media3 operando em 60 FPS", Toast.LENGTH_SHORT).show()
-                    "set_speed" -> Toast.makeText(this, "Conexão excelente: 0ms jitter", Toast.LENGTH_SHORT).show()
-                }
-            },
-            onNavigateToCategories = {
-                rvSidebar.post {
-                    val vh = rvSidebar.findViewHolderForAdapterPosition(1)
-                    vh?.itemView?.requestFocus()
-                }
-            },
-            onNavigateToPreview = {}
-        )
-        rvSettingsGrid.adapter = settingsAdapter
-    }
-
-    private fun switchToTab(tabId: String) {
-        currentActiveTabId = tabId
-
-        // Oculta todas as views de conteúdo
-        viewHome.visibility = View.GONE
-        viewGrid.visibility = View.GONE
-        viewFutebol.visibility = View.GONE
-        viewPosters.visibility = View.GONE
-        viewSearch.visibility = View.GONE
-        viewSettings.visibility = View.GONE
-
-        when (tabId) {
-            "cat_home" -> {
-                viewHome.visibility = View.VISIBLE
-                txtHeaderBreadcrumb.text = "INÍCIO • DESTAQUES & CONTINUAR ASSISTINDO"
-                val updated = WatchProgressRepository.getContinueWatchingList(this)
-                continueAdapter.updateItems(updated)
-            }
-            "cat_fazenda" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "A Fazenda 24H"
-                txtGridChannelCount.text = "${fazendaChannels.size} CÂMERAS AO VIVO"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_fazenda)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(fazendaChannels)
-                txtHeaderBreadcrumb.text = "A FAZENDA 24H • CÂMERAS AO VIVO EM TEMPO REAL"
-            }
-            "cat_premiere" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Premiere FC"
-                txtGridChannelCount.text = "${premiereChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_premiere)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(premiereChannels)
-                txtHeaderBreadcrumb.text = "PREMIERE FC • TODOS OS JOGOS AO VIVO"
-            }
-            "cat_futebol" -> {
-                viewFutebol.visibility = View.VISIBLE
-                txtHeaderBreadcrumb.text = "FUTEBOL & CAMPEONATOS • JOGOS DE HOJE"
-            }
-            "cat_esportes" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "SporTV & Esportes Gerais"
-                txtGridChannelCount.text = "${sportsChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_sports_tv)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(sportsChannels)
-                txtHeaderBreadcrumb.text = "SPORTV & ESPORTES • TRANSMISSÃO AO VIVO"
-            }
-            "cat_abertos" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Canais Abertos & Notícias"
-                txtGridChannelCount.text = "${abertosChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_tv_aberta)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(abertosChannels)
-                txtHeaderBreadcrumb.text = "CANAIS ABERTOS • GLOBO, SBT, RECORD, BAND E NOTÍCIAS"
-            }
-            "cat_telecine" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Rede Telecine"
-                txtGridChannelCount.text = "${telecineChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_star_kids)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(telecineChannels)
-                txtHeaderBreadcrumb.text = "REDE TELECINE • O MELHOR DO CINEMA"
-            }
-            "cat_hbo" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Canais HBO"
-                txtGridChannelCount.text = "${hboChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.outline_live_tv_24)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(hboChannels)
-                txtHeaderBreadcrumb.text = "CANAIS HBO • SÉRIES E PRODUÇÕES EXCLUSIVAS"
-            }
-            "cat_filmes" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Filmes & Séries (Ao Vivo)"
-                txtGridChannelCount.text = "${filmesChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_movie_vod)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(filmesChannels)
-                txtHeaderBreadcrumb.text = "FILMES & SÉRIES • MEGAPIX, WARNER, TNT, SONY, AXN"
-            }
-            "cat_kids" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Infantil & Kids"
-                txtGridChannelCount.text = "${kidsChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_star_kids)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(kidsChannels)
-                txtHeaderBreadcrumb.text = "INFANTIL & KIDS • CARTOON, NICK, DISNEY, GLOOB"
-            }
-            "cat_discovery" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Universo Discovery"
-                txtGridChannelCount.text = "${discoveryChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_tv_fechada)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(discoveryChannels)
-                txtHeaderBreadcrumb.text = "UNIVERSO DISCOVERY • DOCUMENTÁRIOS & CIÊNCIA"
-            }
-            "cat_24h" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Canais 24 Horas"
-                txtGridChannelCount.text = "${series24hChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_playback)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(series24hChannels)
-                txtHeaderBreadcrumb.text = "CANAIS 24H • CHAVES, CHAPOLIN, SIMPSONS, CHRIS, FRIENDS"
-            }
-            "cat_4k" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Canais 4K Ultra HD & H.265"
-                txtGridChannelCount.text = "${ultra4kChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_4k)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(ultra4kChannels)
-                txtHeaderBreadcrumb.text = "4K ULTRA HD & HEVC • MÁXIMA DEFINIÇÃO"
-            }
-            "cat_musica" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Músicas & Shows"
-                txtGridChannelCount.text = "${musicaChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_music)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(musicaChannels)
-                txtHeaderBreadcrumb.text = "MÚSICAS & SHOWS • MULTISHOW, BIS, MTV E RÁDIOS"
-            }
-            "cat_docs" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Variedades & Documentários"
-                txtGridChannelCount.text = "${docsChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_tv_fechada)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(docsChannels)
-                txtHeaderBreadcrumb.text = "VARIEDADES & DOCS • HISTORY, NAT GEO, ANIMAL PLANET"
-            }
-            "cat_all" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Todos os Canais"
-                txtGridChannelCount.text = "${allChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_all_channels)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(allChannels)
-                txtHeaderBreadcrumb.text = "GRADE COMPLETA • TODOS OS ${allChannels.size} CANAIS"
-            }
-            "cat_favoritos" -> {
-                viewGrid.visibility = View.VISIBLE
-                txtGridCategoryTitle.text = "Meus Favoritos"
-                txtGridChannelCount.text = "${favoritosChannels.size} CANAIS"
-                imgGridCategoryIcon.setImageResource(R.drawable.ic_heart_fav)
-                viewGridIconBadge.setBackgroundResource(R.drawable.badge_hd)
-                ottChannelGridAdapter.updateChannels(favoritosChannels)
-                txtHeaderBreadcrumb.text = "FAVORITOS • ACESSO RÁPIDO"
-            }
-            "cat_buscar" -> {
-                viewSearch.visibility = View.VISIBLE
-                txtHeaderBreadcrumb.text = "BUSCA • ENCONTRE QUALQUER CANAL OU CONTEÚDO"
-            }
-            "cat_settings" -> {
-                viewSettings.visibility = View.VISIBLE
-                txtHeaderBreadcrumb.text = "CONFIGURAÇÕES • AJUSTES DO WDTECH TV"
-            }
-        }
-    }
-
-    private fun focusCurrentViewport() {
-        when (currentActiveTabId) {
-            "cat_home" -> btnHeroWatch.requestFocus()
-            "cat_futebol" -> {
-                rvFutebolMatches.post {
-                    val vh = rvFutebolMatches.findViewHolderForAdapterPosition(0)
-                    vh?.itemView?.requestFocus()
-                }
-            }
-            "cat_buscar" -> edtSearchQuery.requestFocus()
-            "cat_settings" -> {
-                rvSettingsGrid.post {
-                    val vh = rvSettingsGrid.findViewHolderForAdapterPosition(0)
-                    vh?.itemView?.requestFocus()
-                }
-            }
-            else -> {
-                rvOttChannelGrid.post {
-                    val vh = rvOttChannelGrid.findViewHolderForAdapterPosition(0)
-                    vh?.itemView?.requestFocus()
-                }
-            }
-        }
-    }
-
-    private fun openFullScreenPlayer(channel: Channel, listContext: List<Channel>) {
-        val intent = Intent(this, PlayerActivity::class.java).apply {
-            putExtra(PlayerActivity.EXTRA_CHANNEL, channel)
-            putExtra(PlayerActivity.EXTRA_CHANNEL_LIST, ArrayList(listContext))
-        }
-        startActivity(intent)
+    override fun onDestroy() {
+        super.onDestroy()
+        zapHandler.removeCallbacksAndMessages(null)
+        exoPlayer?.release()
+        exoPlayer = null
     }
 }
