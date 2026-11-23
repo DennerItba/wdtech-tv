@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         previewWatchdogRunnable = runnable
-        previewWatchdogHandler.postDelayed(runnable, 8000L)
+        previewWatchdogHandler.postDelayed(runnable, 5000L)
     }
 
     private fun buildStreamCandidates(channel: Channel): List<String> {
@@ -533,7 +533,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val loadControl = DefaultLoadControl.Builder()
-            .setBufferDurationsMs(minBufferMs, maxBufferMs, 800, 1500)
+            .setBufferDurationsMs(8_000, 25_000, 250, 800)
             .setPrioritizeTimeOverSizeThresholds(true)
             .setBackBuffer(0, false)
             .build()
@@ -609,8 +609,8 @@ class MainActivity : AppCompatActivity() {
             val httpFactory = DefaultHttpDataSource.Factory()
                 .setUserAgent("IPTVSmartersPro")
                 .setAllowCrossProtocolRedirects(true)
-                .setConnectTimeoutMs(3500)
-                .setReadTimeoutMs(5000)
+                .setConnectTimeoutMs(2500)
+                .setReadTimeoutMs(3500)
                 .setKeepPostFor302Redirects(true)
 
             val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)

@@ -361,7 +361,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
         stallWatchdogRunnable = runnable
-        stallWatchdogHandler.postDelayed(runnable, 8000L)
+        stallWatchdogHandler.postDelayed(runnable, 5000L)
     }
 
     private fun buildStreamCandidates(channel: Channel, customUrl: String? = null): List<String> {
@@ -429,15 +429,11 @@ class PlayerActivity : AppCompatActivity() {
         errorLayout.visibility = View.GONE
         bufferingProgress.visibility = View.VISIBLE
 
-        player?.release()
-        player = null
-
-        // Timeout rápido estilo Netflix (3.5s connect, 5s read)
         val httpFactory = androidx.media3.datasource.DefaultHttpDataSource.Factory()
             .setUserAgent("IPTVSmartersPro")
             .setAllowCrossProtocolRedirects(true)
-            .setConnectTimeoutMs(3500)
-            .setReadTimeoutMs(5000)
+            .setConnectTimeoutMs(2500)
+            .setReadTimeoutMs(3500)
             .setKeepPostFor302Redirects(true)
             .setDefaultRequestProperties(mapOf(
                 "Accept" to "*/*",
@@ -446,42 +442,35 @@ class PlayerActivity : AppCompatActivity() {
 
         val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
 
-        // Algoritmo de Buffer Inteligente Netflix: Partida instantânea com 800ms e buffer profundo de 45s
-        val bufferMode = com.mytv.app.utils.AppSettings.getBufferMode(this)
-        val (minBufferMs, maxBufferMs) = when (bufferMode) {
-            com.mytv.app.utils.AppSettings.BUFFER_FAST -> Pair(10_000, 25_000)
-            com.mytv.app.utils.AppSettings.BUFFER_STABLE -> Pair(25_000, 60_000)
-            else -> Pair(15_000, 45_000) // BALANCED
-        }
+        // Partida instantânea com 250ms de buffer e sem recriação pesada de codecs
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                minBufferMs,
-                maxBufferMs,
-                800,  // bufferForPlaybackMs = 800ms (Partida ultra rápida)
-                1500  // afterRebufferMs = 1500ms
+                10_000,
+                30_000,
+                250,  // Partida instantânea com 250ms de áudio/vídeo
+                800
             )
             .setPrioritizeTimeOverSizeThresholds(true)
             .setBackBuffer(0, false)
             .build()
 
-        // Seleção de trilhas com transição suave, evitando micro-travas na troca de bitrate HLS
         val trackSelector = androidx.media3.exoplayer.trackselection.DefaultTrackSelector(this).apply {
             setParameters(
                 buildUponParameters()
                     .setAllowVideoMixedMimeTypeAdaptiveness(true)
                     .setAllowVideoNonSeamlessAdaptiveness(true)
                     .setExceedRendererCapabilitiesIfNecessary(true)
-                    .setTunnelingEnabled(false) // Desativa tunneling que congela vídeo em chipsets Amlogic/Rockchip
+                    .setTunnelingEnabled(false)
             )
         }
 
         val renderersFactory = DefaultRenderersFactory(this).apply {
-            setEnableDecoderFallback(true) // Fallback automático HW -> SW
-            setAllowedVideoJoiningTimeMs(4000)
+            setEnableDecoderFallback(true)
+            setAllowedVideoJoiningTimeMs(2000)
             setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
         }
 
-        val exo = ExoPlayer.Builder(this, renderersFactory)
+        val exo = player ?: ExoPlayer.Builder(this, renderersFactory)
             .setLoadControl(loadControl)
             .setTrackSelector(trackSelector)
             .build().apply {
@@ -567,9 +556,12 @@ class PlayerActivity : AppCompatActivity() {
                 .createMediaSource(mediaItem)
         }
 
+        exo.stop()
+        exo.clearMediaItems()
         startStallWatchdog(channel)
         exo.setMediaSource(mediaSource)
         exo.prepare()
+        exo.play()
 
         playerView.player = exo
         this.player = exo
