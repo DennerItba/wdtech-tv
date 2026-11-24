@@ -84,6 +84,8 @@ object AppUpdateManager {
 
                 if (info != null && info.versionCode > currentVersionCode && info.apkUrl.isNotEmpty()) {
                     showUpdateAvailableDialog(activity, info, currentVersionName)
+                } else if (isManualCheck) {
+                    android.widget.Toast.makeText(activity, "Você já está na versão mais recente (v$currentVersionName)!", android.widget.Toast.LENGTH_SHORT).show()
                 }
             }
         }

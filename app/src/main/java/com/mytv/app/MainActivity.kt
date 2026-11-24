@@ -358,11 +358,6 @@ class MainActivity : AppCompatActivity() {
         btnMenuHome.setOnClickListener {
             showHomeScreen()
         }
-        btnMenuHome.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && !isHomeMode) {
-                showHomeScreen()
-            }
-        }
 
         val tabButtons = listOf(
             btnMenuTv to MainSection.TV,
@@ -375,11 +370,6 @@ class MainActivity : AppCompatActivity() {
             btn.setOnClickListener {
                 openMenu(section, shouldFocusCategory = true)
             }
-            btn.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus && (currentSection != section || isHomeMode)) {
-                    openMenu(section, shouldFocusCategory = false)
-                }
-            }
             btn.setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
                     focusFirstCategory()
@@ -391,11 +381,6 @@ class MainActivity : AppCompatActivity() {
 
         btnMenuSettings.setOnClickListener {
             openSettingsMode()
-        }
-        btnMenuSettings.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && !isSettingsMode) {
-                openSettingsMode()
-            }
         }
         btnMenuSettings.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
@@ -1180,6 +1165,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun focusCurrentSetting() {
+        val idx = settingAdapter.getSelectedIndex().coerceAtLeast(0)
+        rvSettingsList.stopScroll()
+        rvSettingsList.scrollToPosition(idx)
+        rvSettingsList.post {
+            val vh = rvSettingsList.findViewHolderForAdapterPosition(idx)
+            vh?.itemView?.requestFocus() ?: rvSettingsList.requestFocus()
+        }
+    }
+
     private fun focusFirstSetting() {
         if (settingAdapter.itemCount == 0) return
         rvSettingsList.stopScroll()
@@ -1256,7 +1251,7 @@ class MainActivity : AppCompatActivity() {
         }
         btnSettingPreviewAction.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                focusFirstSetting()
+                focusCurrentSetting()
                 return@setOnKeyListener true
             }
             false
@@ -1273,7 +1268,7 @@ class MainActivity : AppCompatActivity() {
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "v2.9.4",
+                badgeText = "v2.9.5",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
             ),
@@ -1342,6 +1337,13 @@ class MainActivity : AppCompatActivity() {
         imgSettingPreviewIcon.setImageResource(item.iconRes)
     }
 
+    private fun notifySettingItemUpdated(item: SettingItem) {
+        val idx = settingAdapter.getItems().indexOfFirst { it.id == item.id }
+        if (idx >= 0) {
+            settingAdapter.notifyItemChanged(idx)
+        }
+    }
+
     private fun executeSettingAction(item: SettingItem) {
         when (item.id) {
             "setting_turbo_doh" -> {
@@ -1351,7 +1353,7 @@ class MainActivity : AppCompatActivity() {
                 item.subtitle = "DNS Seguro DoH: $label"
                 item.actionButtonText = "Aceleração: ${if (newState) "LIGADA" else "DESLIGADA"} (OK)"
                 updateSettingPreview(item)
-                settingAdapter.notifyDataSetChanged()
+                notifySettingItemUpdated(item)
                 Toast.makeText(this, "Aceleração Cloudflare: $label", Toast.LENGTH_SHORT).show()
             }
             "setting_update" -> {
@@ -1360,10 +1362,9 @@ class MainActivity : AppCompatActivity() {
             }
             "setting_network" -> {
                 txtSettingPreviewBadge.text = "MEDINDO..."
-                btnSettingPreviewAction.isEnabled = false
+                btnSettingPreviewAction.text = "Medindo Latência..."
                 lifecycleScope.launch {
                     val result = AppSettings.testConnectionLatency()
-                    btnSettingPreviewAction.isEnabled = true
                     if (result.first) {
                         val ping = result.second
                         val quality = if (ping < 60) "Excelente" else if (ping < 120) "Boa" else "Instável"
@@ -1375,16 +1376,18 @@ class MainActivity : AppCompatActivity() {
                         txtSettingPreviewDesc.text = "Não foi possível conectar ao servidor.\nVerifique a sua internet."
                         Toast.makeText(this@MainActivity, "Erro ao testar conexão.", Toast.LENGTH_SHORT).show()
                     }
-                    settingAdapter.notifyDataSetChanged()
+                    btnSettingPreviewAction.text = item.actionButtonText
+                    notifySettingItemUpdated(item)
                 }
             }
             "setting_buffer" -> {
                 val nextMode = AppSettings.cycleBufferMode(this)
                 val label = AppSettings.getBufferLabel(nextMode)
                 item.badgeText = label.split(" ")[0].uppercase()
+                item.subtitle = "Modo ativo: $label"
                 item.actionButtonText = "Modo Ativo: $label (OK)"
                 updateSettingPreview(item)
-                settingAdapter.notifyDataSetChanged()
+                notifySettingItemUpdated(item)
                 Toast.makeText(this, "Buffer configurado para: $label", Toast.LENGTH_SHORT).show()
             }
             "setting_aspect" -> {
@@ -1392,22 +1395,23 @@ class MainActivity : AppCompatActivity() {
                 val label = AppSettings.getAspectRatioLabel(nextAspect)
                 playerView.resizeMode = nextAspect
                 item.badgeText = label.split(" ")[0].uppercase()
+                item.subtitle = "Modo ativo: $label"
                 item.actionButtonText = "Formato: $label (OK)"
                 updateSettingPreview(item)
-                settingAdapter.notifyDataSetChanged()
+                notifySettingItemUpdated(item)
                 Toast.makeText(this, "Formato alterado: $label", Toast.LENGTH_SHORT).show()
             }
             "setting_cache" -> {
-                btnSettingPreviewAction.isEnabled = false
                 txtSettingPreviewBadge.text = "LIMPANDO..."
+                btnSettingPreviewAction.text = "Limpando Memória..."
                 lifecycleScope.launch {
                     val bytesFreed = AppSettings.clearCache(this@MainActivity)
-                    btnSettingPreviewAction.isEnabled = true
                     val mbFreed = String.format("%.2f", bytesFreed / (1024.0 * 1024.0))
                     txtSettingPreviewBadge.text = "LIMPO"
                     txtSettingPreviewDesc.text = "Memória limpa com sucesso!\n\n• Liberado: ${mbFreed} MB\n• Sistema otimizado para reprodução contínua."
+                    btnSettingPreviewAction.text = item.actionButtonText
                     Toast.makeText(this@MainActivity, "Memória limpa! ${mbFreed} MB liberados.", Toast.LENGTH_LONG).show()
-                    settingAdapter.notifyDataSetChanged()
+                    notifySettingItemUpdated(item)
                 }
             }
             "setting_exit" -> {

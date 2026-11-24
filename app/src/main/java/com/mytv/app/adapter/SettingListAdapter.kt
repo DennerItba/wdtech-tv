@@ -109,4 +109,10 @@ class SettingListAdapter(
     }
 
     fun getItems(): List<SettingItem> = items
+
+    fun getSelectedIndex(): Int = selectedIndex
+
+    fun setSelectedIndex(index: Int) {
+        selectedIndex = index
+    }
 }

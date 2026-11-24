@@ -955,7 +955,11 @@
                     android:textAllCaps="false"
                     android:textColor="@color/btn_playback_text_selector"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:nextFocusLeft="@id/rv_settings_list"
+                    android:nextFocusUp="@id/btn_setting_preview_action"
+                    android:nextFocusDown="@id/btn_setting_preview_action"
+                    android:nextFocusRight="@id/btn_setting_preview_action" />
             </LinearLayout>
         </RelativeLayout>
 
