@@ -63,10 +63,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnMenuTv: Button
     private lateinit var btnMenuFilmes: Button
     private lateinit var btnMenuSeries: Button
-    private lateinit var btnMenuInfantil: Button
     private lateinit var btnMenuFutebol: Button
-    private lateinit var btnMenuSettings: ImageButton
+    private lateinit var btnMenuSettings: Button
     private lateinit var txtSidebarSectionTitle: TextView
+    private var vodFetchJob: kotlinx.coroutines.Job? = null
 
     private var currentSection: MainSection = MainSection.TV
 
@@ -244,7 +244,6 @@ class MainActivity : AppCompatActivity() {
         btnMenuTv = findViewById(R.id.btn_menu_tv)
         btnMenuFilmes = findViewById(R.id.btn_menu_filmes)
         btnMenuSeries = findViewById(R.id.btn_menu_series)
-        btnMenuInfantil = findViewById(R.id.btn_menu_infantil)
         btnMenuFutebol = findViewById(R.id.btn_menu_futebol)
         btnMenuSettings = findViewById(R.id.btn_menu_settings)
         txtSidebarSectionTitle = findViewById(R.id.txt_sidebar_section_title)
@@ -333,7 +332,8 @@ class MainActivity : AppCompatActivity() {
         playerView.setOnKeyListener(playerKeyListener)
         btnFullscreen.setOnClickListener(expandToFullScreen)
 
-        // Configuração dos Ajustes
+        // Configuração de VOD (Filmes e Séries) e Ajustes
+        setupVod()
         setupSettings()
     }
 
@@ -368,7 +368,6 @@ class MainActivity : AppCompatActivity() {
             btnMenuTv to MainSection.TV,
             btnMenuFilmes to MainSection.FILMES,
             btnMenuSeries to MainSection.SERIES,
-            btnMenuInfantil to MainSection.INFANTIL,
             btnMenuFutebol to MainSection.FUTEBOL
         )
 
@@ -423,7 +422,6 @@ class MainActivity : AppCompatActivity() {
             btnMenuTv.isSelected = false
             btnMenuFilmes.isSelected = false
             btnMenuSeries.isSelected = false
-            btnMenuInfantil.isSelected = false
             btnMenuFutebol.isSelected = false
             btnMenuSettings.isSelected = false
 
@@ -456,14 +454,16 @@ class MainActivity : AppCompatActivity() {
         btnMenuTv.isSelected = (section == MainSection.TV)
         btnMenuFilmes.isSelected = (section == MainSection.FILMES)
         btnMenuSeries.isSelected = (section == MainSection.SERIES)
-        btnMenuInfantil.isSelected = (section == MainSection.INFANTIL)
         btnMenuFutebol.isSelected = (section == MainSection.FUTEBOL)
         btnMenuSettings.isSelected = false
 
         if (section == MainSection.FILMES) {
             pausePreviewPlayer()
             panelChannels.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.GONE
+            playerPreviewContainer.visibility = View.VISIBLE
+            playerView.visibility = View.GONE
+            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
+            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
             layoutVodPreview.visibility = View.VISIBLE
             rvChannelList.visibility = View.GONE
@@ -471,25 +471,40 @@ class MainActivity : AppCompatActivity() {
             rvVodList.visibility = View.VISIBLE
 
             txtSidebarSectionTitle.text = "CATÁLOGO • FILMES (VOD)"
-            lifecycleScope.launch {
+
+            // 1. Apresenta catálogo instantâneo com títulos e capas sem espera
+            val instantCats = VodRepository.getFallbackMovieCategories().map {
+                ChannelCategory(id = "vod_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_movie_vod, channels = emptyList())
+            }
+            allCategories = instantCats
+            val first = instantCats.first()
+            currentSelectedCategory = first
+            sidebarAdapter.updateCategories(instantCats)
+            sidebarAdapter.setSelectedCategory(first)
+            txtHeaderBreadcrumb.text = "WDTECH TV • FILMES • ${first.name.uppercase()}"
+            txtSelectedCategoryTitle.text = first.name
+            val instantMovies = VodRepository.getFallbackMovies(first.id.removePrefix("vod_cat_"))
+            vodAdapter.updateItems(instantMovies)
+            txtCategoryBadge.text = instantMovies.size.toString()
+            updateVodPreview(instantMovies.firstOrNull())
+            if (shouldFocusCategory) {
+                focusFirstCategory()
+            }
+
+            // 2. Carrega categorias remotas do acervo em segundo plano
+            vodFetchJob?.cancel()
+            vodFetchJob = lifecycleScope.launch {
                 val cats = VodRepository.getMovieCategories()
                 val mapped = cats.map {
                     ChannelCategory(id = "vod_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_movie_vod, channels = emptyList())
                 }
-                allCategories = mapped
-                val first = mapped.firstOrNull() ?: return@launch
-                currentSelectedCategory = first
-                sidebarAdapter.updateCategories(mapped)
-                sidebarAdapter.setSelectedCategory(first)
-                txtHeaderBreadcrumb.text = "WDTECH TV • FILMES • ${first.name.uppercase()}"
-                txtSelectedCategoryTitle.text = first.name
-                val rawId = first.id.removePrefix("vod_cat_")
-                val movies = VodRepository.getMoviesByCategory(rawId, first.name)
-                vodAdapter.updateItems(movies)
-                txtCategoryBadge.text = movies.size.toString()
-                updateVodPreview(movies.firstOrNull())
-                if (shouldFocusCategory) {
-                    focusFirstCategory()
+                if (currentSection == MainSection.FILMES && mapped.isNotEmpty()) {
+                    allCategories = mapped
+                    sidebarAdapter.updateCategories(mapped)
+                    val activeId = currentSelectedCategory?.id ?: mapped.first().id
+                    val activeCat = mapped.find { it.id == activeId } ?: mapped.first()
+                    currentSelectedCategory = activeCat
+                    sidebarAdapter.setSelectedCategory(activeCat)
                 }
             }
             return
@@ -498,7 +513,10 @@ class MainActivity : AppCompatActivity() {
         if (section == MainSection.SERIES) {
             pausePreviewPlayer()
             panelChannels.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.GONE
+            playerPreviewContainer.visibility = View.VISIBLE
+            playerView.visibility = View.GONE
+            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
+            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
             layoutVodPreview.visibility = View.VISIBLE
             rvChannelList.visibility = View.GONE
@@ -506,37 +524,55 @@ class MainActivity : AppCompatActivity() {
             rvVodList.visibility = View.VISIBLE
 
             txtSidebarSectionTitle.text = "CATÁLOGO • SÉRIES (VOD)"
-            lifecycleScope.launch {
+
+            // 1. Apresenta séries instantâneas com temporadas e pôsteres
+            val instantCats = VodRepository.getFallbackSeriesCategories().map {
+                ChannelCategory(id = "vod_series_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_series_vod, channels = emptyList())
+            }
+            allCategories = instantCats
+            val first = instantCats.first()
+            currentSelectedCategory = first
+            sidebarAdapter.updateCategories(instantCats)
+            sidebarAdapter.setSelectedCategory(first)
+            txtHeaderBreadcrumb.text = "WDTECH TV • SÉRIES • ${first.name.uppercase()}"
+            txtSelectedCategoryTitle.text = first.name
+            val instantSeries = VodRepository.getFallbackSeries(first.id.removePrefix("vod_series_cat_"))
+            vodAdapter.updateItems(instantSeries)
+            txtCategoryBadge.text = instantSeries.size.toString()
+            updateVodPreview(instantSeries.firstOrNull())
+            if (shouldFocusCategory) {
+                focusFirstCategory()
+            }
+
+            // 2. Carrega categorias remotas de séries em segundo plano
+            vodFetchJob?.cancel()
+            vodFetchJob = lifecycleScope.launch {
                 val cats = VodRepository.getSeriesCategories()
                 val mapped = cats.map {
                     ChannelCategory(id = "vod_series_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_series_vod, channels = emptyList())
                 }
-                allCategories = mapped
-                val first = mapped.firstOrNull() ?: return@launch
-                currentSelectedCategory = first
-                sidebarAdapter.updateCategories(mapped)
-                sidebarAdapter.setSelectedCategory(first)
-                txtHeaderBreadcrumb.text = "WDTECH TV • SÉRIES • ${first.name.uppercase()}"
-                txtSelectedCategoryTitle.text = first.name
-                val rawId = first.id.removePrefix("vod_series_cat_")
-                val series = VodRepository.getSeriesByCategory(rawId, first.name)
-                vodAdapter.updateItems(series)
-                txtCategoryBadge.text = series.size.toString()
-                updateVodPreview(series.firstOrNull())
-                if (shouldFocusCategory) {
-                    focusFirstCategory()
+                if (currentSection == MainSection.SERIES && mapped.isNotEmpty()) {
+                    allCategories = mapped
+                    sidebarAdapter.updateCategories(mapped)
+                    val activeId = currentSelectedCategory?.id ?: mapped.first().id
+                    val activeCat = mapped.find { it.id == activeId } ?: mapped.first()
+                    currentSelectedCategory = activeCat
+                    sidebarAdapter.setSelectedCategory(activeCat)
                 }
             }
             return
         }
 
-        // Modo TV / FUTEBOL / INFANTIL
+        // Modo TV / FUTEBOL
         layoutVodPreview.visibility = View.GONE
         rvVodList.visibility = View.GONE
         layoutSettingsPreview.visibility = View.GONE
         rvSettingsList.visibility = View.GONE
         panelChannels.visibility = View.VISIBLE
         playerPreviewContainer.visibility = View.VISIBLE
+        playerView.visibility = View.VISIBLE
+        findViewById<View>(R.id.live_badge_container)?.visibility = View.VISIBLE
+        findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.VISIBLE
         rvChannelList.visibility = View.VISIBLE
 
         txtSidebarSectionTitle.text = "CATEGORIAS • ${section.title}"
@@ -569,34 +605,54 @@ class MainActivity : AppCompatActivity() {
 
     private fun openSettingsMode() {
         isSettingsMode = true
+        pausePreviewPlayer()
+
         btnMenuTv.isSelected = false
         btnMenuFilmes.isSelected = false
         btnMenuSeries.isSelected = false
-        btnMenuInfantil.isSelected = false
         btnMenuFutebol.isSelected = false
         btnMenuSettings.isSelected = true
 
         txtSidebarSectionTitle.text = "AJUSTES • SISTEMA"
         panelChannels.visibility = View.VISIBLE
         rvChannelList.visibility = View.GONE
-        rvSettingsList.visibility = View.VISIBLE
-        playerPreviewContainer.visibility = View.GONE
-        layoutVodPreview.visibility = View.GONE
         rvVodList.visibility = View.GONE
+        rvSettingsList.visibility = View.VISIBLE
+
+        playerPreviewContainer.visibility = View.VISIBLE
+        playerView.visibility = View.GONE
+        findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
+        findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
+        layoutVodPreview.visibility = View.GONE
         layoutSettingsPreview.visibility = View.VISIBLE
-        txtCategoryBadge.text = "AJUSTES"
-        txtSelectedCategoryTitle.text = "Ajustes do Aplicativo"
+
+        val settingCats = listOf(
+            ChannelCategory(id = "cat_settings", name = "⚙️ Configurações", iconRes = R.drawable.ic_settings, channels = emptyList())
+        )
+        allCategories = settingCats
+        sidebarAdapter.updateCategories(settingCats)
+        sidebarAdapter.setSelectedCategory(settingCats[0])
+
+        val items = getSettingItems()
+        settingAdapter.updateItems(items)
+        txtCategoryBadge.text = items.size.toString()
+        txtSelectedCategoryTitle.text = "Configurações do Sistema"
         txtHeaderBreadcrumb.text = "WDTECH TV • AJUSTES DO SISTEMA"
-        updateSettingPreview(getSettingItems().first())
+        updateSettingPreview(items.first())
+        focusFirstSetting()
     }
 
     private fun focusActiveTab() {
+        if (isSettingsMode) {
+            btnMenuSettings.requestFocus()
+            return
+        }
         when (currentSection) {
             MainSection.TV -> btnMenuTv.requestFocus()
             MainSection.FILMES -> btnMenuFilmes.requestFocus()
             MainSection.SERIES -> btnMenuSeries.requestFocus()
-            MainSection.INFANTIL -> btnMenuInfantil.requestFocus()
             MainSection.FUTEBOL -> btnMenuFutebol.requestFocus()
+            else -> btnMenuTv.requestFocus()
         }
     }
 
@@ -711,26 +767,44 @@ class MainActivity : AppCompatActivity() {
             rvChannelList.visibility = View.GONE
             rvVodList.visibility = View.GONE
             rvSettingsList.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.GONE
+            playerPreviewContainer.visibility = View.VISIBLE
+            playerView.visibility = View.GONE
+            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
+            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
             layoutVodPreview.visibility = View.GONE
             layoutSettingsPreview.visibility = View.VISIBLE
-            txtCategoryBadge.text = "AJUSTES"
-            updateSettingPreview(getSettingItems().first())
+            val items = getSettingItems()
+            txtCategoryBadge.text = items.size.toString()
+            updateSettingPreview(items.first())
         } else if (category.id.startsWith("vod_cat_")) {
             isSettingsMode = false
             panelChannels.visibility = View.VISIBLE
             rvChannelList.visibility = View.GONE
             rvSettingsList.visibility = View.GONE
             rvVodList.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.GONE
+            playerPreviewContainer.visibility = View.VISIBLE
+            playerView.visibility = View.GONE
+            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
+            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
             layoutVodPreview.visibility = View.VISIBLE
             val rawId = category.id.removePrefix("vod_cat_")
-            lifecycleScope.launch {
+
+            // 1. Títulos e capas instantâneos sem latência
+            val instantMovies = VodRepository.getFallbackMovies(rawId)
+            vodAdapter.updateItems(instantMovies)
+            txtCategoryBadge.text = instantMovies.size.toString()
+            updateVodPreview(instantMovies.firstOrNull())
+
+            // 2. Consulta em segundo plano para categorias do servidor
+            vodFetchJob?.cancel()
+            vodFetchJob = lifecycleScope.launch {
                 val movies = VodRepository.getMoviesByCategory(rawId, category.name)
-                vodAdapter.updateItems(movies)
-                txtCategoryBadge.text = movies.size.toString()
-                updateVodPreview(movies.firstOrNull())
+                if (movies.isNotEmpty() && currentSelectedCategory?.id == category.id) {
+                    vodAdapter.updateItems(movies)
+                    txtCategoryBadge.text = movies.size.toString()
+                    updateVodPreview(movies.firstOrNull())
+                }
             }
         } else if (category.id.startsWith("vod_series_cat_")) {
             isSettingsMode = false
@@ -738,15 +812,29 @@ class MainActivity : AppCompatActivity() {
             rvChannelList.visibility = View.GONE
             rvSettingsList.visibility = View.GONE
             rvVodList.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.GONE
+            playerPreviewContainer.visibility = View.VISIBLE
+            playerView.visibility = View.GONE
+            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
+            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
             layoutVodPreview.visibility = View.VISIBLE
             val rawId = category.id.removePrefix("vod_series_cat_")
-            lifecycleScope.launch {
+
+            // 1. Séries instantâneas
+            val instantSeries = VodRepository.getFallbackSeries(rawId)
+            vodAdapter.updateItems(instantSeries)
+            txtCategoryBadge.text = instantSeries.size.toString()
+            updateVodPreview(instantSeries.firstOrNull())
+
+            // 2. Consulta em segundo plano para séries do servidor
+            vodFetchJob?.cancel()
+            vodFetchJob = lifecycleScope.launch {
                 val series = VodRepository.getSeriesByCategory(rawId, category.name)
-                vodAdapter.updateItems(series)
-                txtCategoryBadge.text = series.size.toString()
-                updateVodPreview(series.firstOrNull())
+                if (series.isNotEmpty() && currentSelectedCategory?.id == category.id) {
+                    vodAdapter.updateItems(series)
+                    txtCategoryBadge.text = series.size.toString()
+                    updateVodPreview(series.firstOrNull())
+                }
             }
         } else {
             isSettingsMode = false
@@ -757,6 +845,9 @@ class MainActivity : AppCompatActivity() {
             layoutVodPreview.visibility = View.GONE
             rvChannelList.visibility = View.VISIBLE
             playerPreviewContainer.visibility = View.VISIBLE
+            playerView.visibility = View.VISIBLE
+            findViewById<View>(R.id.live_badge_container)?.visibility = View.VISIBLE
+            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.VISIBLE
             txtCategoryBadge.text = category.channels.size.toString()
 
             // Atualiza a lista de canais dinamicamente SEM interromper o vídeo ao vivo que está passando!
@@ -1099,6 +1190,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // --- Configuração do Catálogo VOD (Filmes e Séries) ---
+    private fun setupVod() {
+        vodAdapter = VodListAdapter(
+            items = emptyList(),
+            onItemSelected = { item ->
+                currentSelectedVodItem = item
+                updateVodPreview(item)
+            },
+            onItemClicked = { item ->
+                currentSelectedVodItem = item
+                openVodPlayer(item)
+            },
+            onNavigateToCategories = {
+                focusCurrentCategory()
+            },
+            onNavigateToDetails = {
+                btnVodAction.requestFocus()
+            },
+            onNavigateUpToTabs = {
+                focusActiveTab()
+            }
+        )
+        rvVodList.adapter = vodAdapter
+
+        btnVodAction.setOnClickListener {
+            currentSelectedVodItem?.let { openVodPlayer(it) }
+        }
+        btnVodAction.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                focusFirstVod()
+                return@setOnKeyListener true
+            }
+            false
+        }
+    }
+
     // --- Configuração dos Ajustes ---
     private fun setupSettings() {
         val items = getSettingItems()
@@ -1117,6 +1244,9 @@ class MainActivity : AppCompatActivity() {
             },
             onNavigateToPreview = {
                 btnSettingPreviewAction.requestFocus()
+            },
+            onNavigateUpToTabs = {
+                focusActiveTab()
             }
         )
         rvSettingsList.adapter = settingAdapter
@@ -1143,7 +1273,7 @@ class MainActivity : AppCompatActivity() {
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "V2.8.8",
+                badgeText = "v2.9.4",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
             ),
@@ -1222,8 +1352,6 @@ class MainActivity : AppCompatActivity() {
                 item.actionButtonText = "Aceleração: ${if (newState) "LIGADA" else "DESLIGADA"} (OK)"
                 updateSettingPreview(item)
                 settingAdapter.notifyDataSetChanged()
-                setupPlayer()
-                currentPlayingChannel?.let { playChannelPreview(it) }
                 Toast.makeText(this, "Aceleração Cloudflare: $label", Toast.LENGTH_SHORT).show()
             }
             "setting_update" -> {
@@ -1257,8 +1385,6 @@ class MainActivity : AppCompatActivity() {
                 item.actionButtonText = "Modo Ativo: $label (OK)"
                 updateSettingPreview(item)
                 settingAdapter.notifyDataSetChanged()
-                setupPlayer()
-                currentPlayingChannel?.let { playChannelPreview(it) }
                 Toast.makeText(this, "Buffer configurado para: $label", Toast.LENGTH_SHORT).show()
             }
             "setting_aspect" -> {

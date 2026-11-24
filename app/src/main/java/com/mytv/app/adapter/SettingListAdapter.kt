@@ -16,7 +16,8 @@ class SettingListAdapter(
     private val onSettingFocused: (SettingItem) -> Unit,
     private val onSettingClicked: (SettingItem) -> Unit,
     private val onNavigateToCategories: () -> Unit,
-    private val onNavigateToPreview: () -> Unit
+    private val onNavigateToPreview: () -> Unit,
+    private val onNavigateUpToTabs: (() -> Unit)? = null
 ) : RecyclerView.Adapter<SettingListAdapter.SettingViewHolder>() {
 
     private var selectedIndex = 0
@@ -64,6 +65,12 @@ class SettingListAdapter(
                 val pos = holder.bindingAdapterPosition
                 if (pos != RecyclerView.NO_POSITION && pos < items.size) {
                     when (keyCode) {
+                        KeyEvent.KEYCODE_DPAD_UP -> {
+                            if (pos == 0) {
+                                onNavigateUpToTabs?.invoke()
+                                return@setOnKeyListener true
+                            }
+                        }
                         KeyEvent.KEYCODE_DPAD_CENTER,
                         KeyEvent.KEYCODE_ENTER,
                         KeyEvent.KEYCODE_NUMPAD_ENTER -> {

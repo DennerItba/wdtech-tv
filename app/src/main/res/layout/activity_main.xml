@@ -63,11 +63,12 @@
             android:layout_toEndOf="@id/logo_layout"
             android:layout_marginStart="16dp"
             android:background="@drawable/bg_button_selector"
-            android:text="☰ ABRIR MENU (OK)"
+            android:text="☰ MENU (OK)"
             android:textColor="@color/btn_playback_text_selector"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:focusable="true"
+            android:focusable="false"
+            android:clickable="true"
             android:paddingStart="14dp"
             android:paddingEnd="14dp" />
 
@@ -281,11 +282,11 @@
 
     </LinearLayout>
 
-    <!-- 1.5 BARRA DE MENU PRINCIPAL: TV | FILMES | SERIES | INFANTIL | FUTEBOL -->
+    <!-- 1.5 BARRA DE MENU PRINCIPAL: 6 TABS ALINHADAS E EQUILIBRADAS -->
     <LinearLayout
         android:id="@+id/layout_main_menu_tabs"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="46dp"
         android:layout_below="@id/top_navigation_bar"
         android:orientation="horizontal"
         android:gravity="center_vertical"
@@ -297,7 +298,7 @@
         <Button
             android:id="@+id/btn_menu_home"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_tab_selector"
@@ -306,29 +307,32 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:focusable="true"
+            android:nextFocusLeft="@id/btn_menu_home"
+            android:nextFocusRight="@id/btn_menu_tv"
             android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusRight="@id/btn_menu_tv" />
+            android:nextFocusUp="@id/btn_menu_home" />
 
         <Button
             android:id="@+id/btn_menu_tv"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_tab_selector"
-            android:text="📺 TV"
+            android:text="📺 TV AO VIVO"
             android:textColor="#FFFFFF"
             android:textSize="13sp"
             android:textStyle="bold"
             android:focusable="true"
             android:nextFocusLeft="@id/btn_menu_home"
+            android:nextFocusRight="@id/btn_menu_filmes"
             android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusRight="@id/btn_menu_filmes" />
+            android:nextFocusUp="@id/btn_menu_tv" />
 
         <Button
             android:id="@+id/btn_menu_filmes"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_tab_selector"
@@ -338,45 +342,31 @@
             android:textStyle="bold"
             android:focusable="true"
             android:nextFocusLeft="@id/btn_menu_tv"
+            android:nextFocusRight="@id/btn_menu_series"
             android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusRight="@id/btn_menu_series" />
+            android:nextFocusUp="@id/btn_menu_filmes" />
 
         <Button
             android:id="@+id/btn_menu_series"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_tab_selector"
-            android:text="🍿 SERIES"
+            android:text="🍿 SÉRIES"
             android:textColor="#FFFFFF"
             android:textSize="13sp"
             android:textStyle="bold"
             android:focusable="true"
             android:nextFocusLeft="@id/btn_menu_filmes"
+            android:nextFocusRight="@id/btn_menu_futebol"
             android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusRight="@id/btn_menu_infantil" />
-
-        <Button
-            android:id="@+id/btn_menu_infantil"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_tab_selector"
-            android:text="👶 INFANTIL"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_series"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusRight="@id/btn_menu_futebol" />
+            android:nextFocusUp="@id/btn_menu_series" />
 
         <Button
             android:id="@+id/btn_menu_futebol"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_tab_selector"
@@ -385,20 +375,26 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_infantil"
+            android:nextFocusLeft="@id/btn_menu_series"
+            android:nextFocusRight="@id/btn_menu_settings"
             android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusRight="@id/btn_menu_settings" />
+            android:nextFocusUp="@id/btn_menu_futebol" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_menu_settings"
-            android:layout_width="44dp"
-            android:layout_height="42dp"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
             android:background="@drawable/bg_tab_selector"
-            android:src="@drawable/ic_settings"
-            android:contentDescription="Ajustes"
+            android:text="⚙️ AJUSTES"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
             android:focusable="true"
             android:nextFocusLeft="@id/btn_menu_futebol"
-            android:nextFocusDown="@id/rv_category_sidebar" />
+            android:nextFocusRight="@id/btn_menu_settings"
+            android:nextFocusDown="@id/rv_category_sidebar"
+            android:nextFocusUp="@id/btn_menu_settings" />
     </LinearLayout>
 
     <!-- 2. Corpo em 3 Painéis (Sidebar de Categorias + Grade de Canais + Player ao Vivo) -->
@@ -525,7 +521,7 @@
                 android:focusable="false"
                 android:nextFocusLeft="@id/rv_category_sidebar"
                 android:nextFocusRight="@id/player_preview_container"
-                android:nextFocusUp="@id/rv_channel_list"
+                android:nextFocusUp="@id/btn_menu_tv"
                 android:scrollbars="none" />
 
             <!-- Lista de Filmes / Séries (VOD) -->
@@ -538,8 +534,8 @@
                 android:descendantFocusability="afterDescendants"
                 android:focusable="false"
                 android:nextFocusLeft="@id/rv_category_sidebar"
-                android:nextFocusRight="@id/player_preview_container"
-                android:nextFocusUp="@id/rv_vod_list"
+                android:nextFocusRight="@id/btn_vod_action"
+                android:nextFocusUp="@id/btn_menu_filmes"
                 android:scrollbars="none"
                 android:visibility="gone" />
 
@@ -553,8 +549,8 @@
                 android:descendantFocusability="afterDescendants"
                 android:focusable="false"
                 android:nextFocusLeft="@id/rv_category_sidebar"
-                android:nextFocusRight="@id/player_preview_container"
-                android:nextFocusUp="@id/rv_settings_list"
+                android:nextFocusRight="@id/btn_setting_preview_action"
+                android:nextFocusUp="@id/btn_menu_settings"
                 android:scrollbars="none"
                 android:visibility="gone" />
 
@@ -592,6 +588,7 @@
 
             <!-- Badge Superior Esquerdo [AO VIVO] -->
             <LinearLayout
+                android:id="@+id/live_badge_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -649,6 +646,7 @@
 
             <!-- Barra Inferior OTT / BTV Limpa (Igual à Foto do Usuário) -->
             <LinearLayout
+                android:id="@+id/layout_preview_bottom_hud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

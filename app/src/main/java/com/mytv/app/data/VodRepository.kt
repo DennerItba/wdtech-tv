@@ -88,8 +88,9 @@ object VodRepository {
             if (!jsonText.isNullOrEmpty()) {
                 val array = JSONArray(jsonText)
                 val list = mutableListOf<VodItem>()
+                val limit = minOf(array.length(), 60)
 
-                for (i in 0 until array.length()) {
+                for (i in 0 until limit) {
                     val obj = array.getJSONObject(i)
                     val streamId = obj.optString("stream_id", "")
                     val name = obj.optString("name", "").trim()
@@ -193,8 +194,9 @@ object VodRepository {
             if (!jsonText.isNullOrEmpty()) {
                 val array = JSONArray(jsonText)
                 val list = mutableListOf<VodItem>()
+                val limit = minOf(array.length(), 60)
 
-                for (i in 0 until array.length()) {
+                for (i in 0 until limit) {
                     val obj = array.getJSONObject(i)
                     val seriesId = obj.optString("series_id", "")
                     val name = obj.optString("name", "").trim()
@@ -305,8 +307,8 @@ object VodRepository {
         return try {
             val url = URL(urlStr)
             val conn = (url.openConnection() as HttpURLConnection).apply {
-                connectTimeout = 10000
-                readTimeout = 18000
+                connectTimeout = 6000
+                readTimeout = 8000
                 setRequestProperty("User-Agent", "IPTVSmartersPro")
             }
             if (conn.responseCode == HttpURLConnection.HTTP_OK) {
