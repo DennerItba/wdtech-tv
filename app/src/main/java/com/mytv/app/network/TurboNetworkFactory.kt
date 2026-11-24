@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 object TurboNetworkFactory {
 
-    private const val USER_AGENT = "IPTVSmartersPro"
+    private const val USER_AGENT = "Mozilla/5.0 (Linux; Android 10; TV) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 IPTVSmartersPro/3.1.5 VLC/3.0.18"
     private var cachedOkHttpClient: OkHttpClient? = null
     private var lastDohState: Boolean? = null
 
@@ -26,13 +26,14 @@ object TurboNetworkFactory {
             return cachedOkHttpClient!!
         }
 
+        // Pool de conexões otimizado para streaming contínuo sem reabertura de sockets
         val pool = ConnectionPool(16, 5, TimeUnit.MINUTES)
 
         val clientBuilder = OkHttpClient.Builder()
             .connectionPool(pool)
-            .connectTimeout(2500, TimeUnit.MILLISECONDS)
-            .readTimeout(4500, TimeUnit.MILLISECONDS)
-            .writeTimeout(4500, TimeUnit.MILLISECONDS)
+            .connectTimeout(15000, TimeUnit.MILLISECONDS) // 15s para conexões internacionais/CDN
+            .readTimeout(25000, TimeUnit.MILLISECONDS)    // 25s para download de chunks HLS sem aborto precoce
+            .writeTimeout(15000, TimeUnit.MILLISECONDS)
             .retryOnConnectionFailure(true)
             .followRedirects(true)
             .followSslRedirects(true)
@@ -41,8 +42,8 @@ object TurboNetworkFactory {
             try {
                 // Bootstrap com resolução direta de IPs para evitar dependência do DNS local do ISP
                 val bootstrapClient = OkHttpClient.Builder()
-                    .connectTimeout(2000, TimeUnit.MILLISECONDS)
-                    .readTimeout(3000, TimeUnit.MILLISECONDS)
+                    .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                    .readTimeout(5000, TimeUnit.MILLISECONDS)
                     .build()
 
                 val cloudflareDoh = DnsOverHttps.Builder()
@@ -55,7 +56,7 @@ object TurboNetworkFactory {
                         InetAddress.getByName("8.8.4.4")
                     )
                     .includeIPv6(false) // TV Boxes geralmente possuem melhor performance em IPv4
-                    .post(true) // POST reduz rastreamento e overhead
+                    .post(true)
                     .build()
 
                 clientBuilder.dns(cloudflareDoh)
@@ -82,7 +83,8 @@ object TurboNetworkFactory {
             .setDefaultRequestProperties(
                 mapOf(
                     "Accept" to "*/*",
-                    "Connection" to "keep-alive"
+                    "Connection" to "keep-alive",
+                    "Icy-MetaData" to "1"
                 )
             )
 

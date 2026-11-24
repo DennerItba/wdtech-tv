@@ -371,7 +371,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
         stallWatchdogRunnable = runnable
-        stallWatchdogHandler.postDelayed(runnable, 5000L)
+        stallWatchdogHandler.postDelayed(runnable, 25000L)
     }
 
     private fun buildStreamCandidates(channel: Channel, customUrl: String? = null): List<String> {
@@ -397,30 +397,26 @@ class PlayerActivity : AppCompatActivity() {
         return list
     }
 
-    private fun triggerAutoFailover(channel: Channel, reason: String) {
+        private fun triggerAutoFailover(channel: Channel, reason: String) {
         if (isFinishing || isDestroyed) return
         cancelStallWatchdog()
-        currentCandidateIndex++
-
-        if (currentCandidateIndex < streamCandidates.size) {
-            val nextUrl = streamCandidates[currentCandidateIndex]
-            android.util.Log.i("WDTECH_NETFLIX", "Failover [Tentativa ${currentCandidateIndex + 1}/${streamCandidates.size}] para: $nextUrl ($reason)")
-            bufferingProgress.visibility = View.VISIBLE
-            errorLayout.visibility = View.GONE
-            startStreamInternal(channel, nextUrl)
-        } else {
-            // Apenas se todas as rotas redundantes falharem
-            bufferingProgress.visibility = View.GONE
-            errorLayout.visibility = View.VISIBLE
-            txtErrorTitle.text = "Sinal Instável: ${channel.title}"
-            txtErrorMessage.text = if (isPlaybackMode) {
-                "A gravação deste horário não pôde ser carregada. Você pode tentar novamente ou retornar à transmissão Ao Vivo."
-            } else {
-                "O sinal deste canal está temporariamente indisponível na operadora de origem. Você pode tentar novamente ou escolher outro canal na grade."
-            }
-            txtErrorCountdown.visibility = View.GONE
-            btnErrorRetry.requestFocus()
+        if (streamCandidates.isEmpty()) {
+            streamCandidates = buildStreamCandidates(channel)
         }
+        currentCandidateIndex = (currentCandidateIndex + 1) % streamCandidates.size
+        val nextUrl = streamCandidates[currentCandidateIndex]
+        android.util.Log.i("WDTECH_NETFLIX", "Failover suave contínuo [Candidato ${currentCandidateIndex + 1}/${streamCandidates.size}] para: $nextUrl ($reason)")
+        
+        // Estilo Netflix/UniTV: Mantém sempre a tela limpa com spinner de carregamento, sem popup bloqueante
+        showBufferingWithDebounce(150L)
+        errorLayout.visibility = View.GONE
+        
+        retryHandler.removeCallbacksAndMessages(null)
+        retryHandler.postDelayed({
+            if (!isFinishing && !isDestroyed) {
+                startStreamInternal(channel, nextUrl)
+            }
+        }, 1200L)
     }
 
     private fun startStream(channel: Channel, customUrl: String? = null) {
@@ -449,7 +445,7 @@ class PlayerActivity : AppCompatActivity() {
                 bufCfg.bufferForPlaybackMs,
                 bufCfg.afterRebufferMs
             )
-            .setPrioritizeTimeOverSizeThresholds(true)
+            .setPrioritizeTimeOverSizeThresholds(false)
             .setBackBuffer(0, false)
             .build()
 
@@ -537,11 +533,8 @@ class PlayerActivity : AppCompatActivity() {
             }
             .setLiveConfiguration(
                 MediaItem.LiveConfiguration.Builder()
-                    .setTargetOffsetMs(25_000)
-                    .setMinOffsetMs(10_000)
-                    .setMaxOffsetMs(50_000)
-                    .setMinPlaybackSpeed(0.97f) // Modulação suave de velocidade (±3%) elimina travamento
-                    .setMaxPlaybackSpeed(1.03f)
+                    .setMinPlaybackSpeed(0.98f)
+                    .setMaxPlaybackSpeed(1.02f)
                     .build()
             )
             .build()
@@ -759,71 +752,14 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleLiveStreamEnded(channel: Channel) {
+        private fun handleLiveStreamEnded(channel: Channel) {
         if (isFinishing || isDestroyed) return
-        if (retryCount < maxAutoRetries) {
-            retryCount++
-            bufferingProgress.visibility = View.VISIBLE
-            // Chaveia instantaneamente para o servidor de contingência
-            val fallbackUrl = currentStreamUrl?.let { getFallbackUrl(it) }
-            val nextUrl = fallbackUrl ?: currentStreamUrl ?: channel.streamUrl
-            retryHandler.postDelayed({
-                if (!isFinishing && !isDestroyed) {
-                    startStream(channel, nextUrl)
-                }
-            }, 500)
-        } else {
-            handlePlaybackError(
-                PlaybackException("Fim de transmissão ao vivo inesperado (EOF)", null, PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_FAILED),
-                channel
-            )
-        }
+        triggerAutoFailover(channel, "Fim de transmissão ao vivo inesperado (EOF)")
     }
 
     private fun handlePlaybackError(error: PlaybackException, channel: Channel) {
         if (isFinishing || isDestroyed) return
-
-        if (retryCount < maxAutoRetries) {
-            retryCount++
-            // NUNCA exibe popup bloqueante nas primeiras tentativas: recupera em silêncio!
-            errorLayout.visibility = View.GONE
-            bufferingProgress.visibility = View.VISIBLE
-
-            // Imediatamente busca a melhor URL alternativa (backup oficial ou fallback cruzado)
-            val backups = channel.backupUrls
-            val backupCandidate = backups.getOrNull(retryCount - 1)
-            val fallbackCandidate = currentStreamUrl?.let { getFallbackUrl(it) }
-            val streamToUse = if (backupCandidate != null && backupCandidate != currentStreamUrl) {
-                backupCandidate
-            } else if (fallbackCandidate != null && fallbackCandidate != currentStreamUrl) {
-                fallbackCandidate
-            } else if (backups.isNotEmpty() && backups.first() != currentStreamUrl) {
-                backups.first()
-            } else {
-                channel.streamUrl
-            }
-
-            val runnable = Runnable {
-                if (!isFinishing && !isDestroyed) {
-                    startStream(channel, streamToUse)
-                }
-            }
-            retryRunnable = runnable
-            // Reconexão ultrarrápida (600ms) sem travar a tela do usuário
-            retryHandler.postDelayed(runnable, 600)
-        } else {
-            // Apenas se TODAS as 6 tentativas em todas as fontes falharem
-            bufferingProgress.visibility = View.GONE
-            errorLayout.visibility = View.VISIBLE
-            txtErrorTitle.text = "Sinal Instável: ${channel.title}"
-            txtErrorMessage.text = if (isPlaybackMode) {
-                "A gravação deste horário não pôde ser carregada. Você pode tentar novamente ou retornar à transmissão Ao Vivo."
-            } else {
-                "O sinal deste canal está temporariamente indisponível na operadora de origem. Você pode tentar novamente ou escolher outro canal na grade."
-            }
-            txtErrorCountdown.visibility = View.GONE
-            btnErrorRetry.requestFocus()
-        }
+        triggerAutoFailover(channel, "Erro no player: ${error.errorCodeName}")
     }
 
     private fun showOverlayTemporarily() {

@@ -37,9 +37,9 @@ object AppSettings {
 
     fun getBufferConfig(context: Context): BufferConfig {
         return when (getBufferMode(context)) {
-            BUFFER_FAST -> BufferConfig(10_000, 25_000, 250, 800)
-            BUFFER_STABLE -> BufferConfig(35_000, 65_000, 500, 2_000)
-            else -> BufferConfig(20_000, 45_000, 300, 1_200) // BALANCED
+            BUFFER_FAST -> BufferConfig(10_000, 25_000, 300, 1_000)
+            BUFFER_STABLE -> BufferConfig(25_000, 60_000, 600, 2_000)
+            else -> BufferConfig(15_000, 45_000, 400, 1_500) // BALANCED (Modo Netflix / UniTV)
         }
     }
 

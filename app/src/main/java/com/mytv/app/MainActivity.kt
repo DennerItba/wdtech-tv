@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         previewWatchdogRunnable = runnable
-        previewWatchdogHandler.postDelayed(runnable, 5000L)
+        previewWatchdogHandler.postDelayed(runnable, 20000L)
     }
 
     private fun buildStreamCandidates(channel: Channel): List<String> {
@@ -159,19 +159,17 @@ class MainActivity : AppCompatActivity() {
         return list
     }
 
-    private fun triggerPreviewFailover(channel: Channel, reason: String) {
+        private fun triggerPreviewFailover(channel: Channel, reason: String) {
         if (isFinishing || isDestroyed) return
         cancelPreviewWatchdog()
-        previewCandidateIndex++
-
-        if (previewCandidateIndex < previewCandidates.size) {
-            val nextUrl = previewCandidates[previewCandidateIndex]
-            previewLoadingLayout.visibility = View.VISIBLE
-            txtBitrate.text = "RECONECTANDO..."
-            playChannelPreviewInternal(channel, nextUrl)
-        } else {
-            previewLoadingLayout.visibility = View.GONE
+        if (previewCandidates.isEmpty()) {
+            previewCandidates = buildStreamCandidates(channel)
         }
+        previewCandidateIndex = (previewCandidateIndex + 1) % previewCandidates.size
+        val nextUrl = previewCandidates[previewCandidateIndex]
+        android.util.Log.i("WDTECH_NETFLIX", "Preview failover contínuo [Candidato ${previewCandidateIndex + 1}/${previewCandidates.size}] para: $nextUrl ($reason)")
+        previewLoadingLayout.visibility = View.VISIBLE
+        playChannelPreviewInternal(channel, nextUrl)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -574,7 +572,7 @@ class MainActivity : AppCompatActivity() {
                 bufCfg.bufferForPlaybackMs,
                 bufCfg.afterRebufferMs
             )
-            .setPrioritizeTimeOverSizeThresholds(true)
+            .setPrioritizeTimeOverSizeThresholds(false)
             .setBackBuffer(0, false)
             .build()
 
@@ -665,14 +663,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 .setLiveConfiguration(
-                    MediaItem.LiveConfiguration.Builder()
-                        .setTargetOffsetMs(25_000)
-                        .setMinOffsetMs(10_000)
-                        .setMaxOffsetMs(50_000)
-                        .setMinPlaybackSpeed(0.97f)
-                        .setMaxPlaybackSpeed(1.03f)
-                        .build()
-                )
+                MediaItem.LiveConfiguration.Builder()
+                    .setMinPlaybackSpeed(0.98f)
+                    .setMaxPlaybackSpeed(1.02f)
+                    .build()
+            )
                 .build()
 
             val mediaSource = if (targetUrl.contains(".m3u8")) {
