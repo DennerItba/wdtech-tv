@@ -14,16 +14,35 @@
         app:surface_type="texture_view"
         app:resize_mode="fit" />
 
-    <!-- Indicador de Carregamento Central -->
-    <ProgressBar
-        android:id="@+id/player_buffering"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <!-- Indicador de Carregamento Central com Bitrate (Estilo OTT BTV) -->
+    <LinearLayout
+        android:id="@+id/player_buffering_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:indeterminateTint="@color/brand_red"
-        android:visibility="gone" />
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <!-- Card de Erro e Reconexão Futurista (Cyberpunk TV) -->
+        <ProgressBar
+            android:id="@+id/player_buffering"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:indeterminateTint="@color/brand_red"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_player_buffering_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="26KB/S"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Card de Erro e Reconexão Futurista -->
     <LinearLayout
         android:id="@+id/player_error_layout"
         android:layout_width="520dp"
@@ -108,118 +127,29 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- OSD Overlay (Controles e Informações na Tela) -->
+    <!-- OSD Overlay: HUD Moderno OTT / BTV Sem Poluição de Botões -->
     <RelativeLayout
         android:id="@+id/player_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible">
 
-        <!-- Barra Superior com Botão de Voltar / Sair e Info do Canal -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:background="@drawable/gradient_bottom"
-            android:rotation="180"
-            android:padding="20dp" />
+        <!-- Relógio no Topo Direito (Limpo e Elegante) -->
+        <TextClock
+            android:id="@+id/tc_player_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="36dp"
+            android:format24Hour="HH:mm"
+            android:format12Hour="hh:mm a"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp">
-
-            <!-- Botão Voltar / Sair do Player -->
-            <Button
-                android:id="@+id/btn_player_back"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_button_selector"
-                android:drawableStart="@drawable/ic_back"
-                android:drawablePadding="8dp"
-                android:focusable="true"
-                android:nextFocusRight="@id/btn_player_aspect_ratio"
-                android:nextFocusDown="@id/btn_player_live"
-                android:paddingStart="14dp"
-                android:paddingEnd="16dp"
-                android:text="Voltar à Grade"
-                android:textAllCaps="false"
-                android:textColor="@color/btn_text_selector"
-                android:textSize="14sp" />
-
-            <!-- Botão Formato de Tela (Aspect Ratio) -->
-            <Button
-                android:id="@+id/btn_player_aspect_ratio"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/bg_button_selector"
-                android:focusable="true"
-                android:nextFocusLeft="@id/btn_player_back"
-                android:nextFocusRight="@id/btn_player_settings"
-                android:nextFocusDown="@id/btn_player_live"
-                android:paddingStart="14dp"
-                android:paddingEnd="16dp"
-                android:text="📐 Formato: Ajustar"
-                android:textAllCaps="false"
-                android:textColor="@color/btn_text_selector"
-                android:textSize="13sp" />
-
-            <!-- Botão Configurações de Reprodução (Áudio, Legendas, Sincronia) -->
-            <Button
-                android:id="@+id/btn_player_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/bg_button_selector"
-                android:focusable="true"
-                android:nextFocusLeft="@id/btn_player_aspect_ratio"
-                android:nextFocusDown="@id/btn_player_live"
-                android:paddingStart="14dp"
-                android:paddingEnd="16dp"
-                android:text="⚙ Configurações"
-                android:textAllCaps="false"
-                android:textColor="@color/btn_text_selector"
-                android:textSize="13sp" />
-
-            <!-- Nome do Canal Atual -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txt_player_channel_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nome do Canal"
-                    android:textColor="@color/btn_text_selector"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_player_channel_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TV Ao Vivo • Alta Definição"
-                    android:textColor="@color/text_gray"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <TextClock
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:format24Hour="HH:mm"
-                android:format12Hour="hh:mm a"
-                android:textColor="@color/btn_text_selector"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <!-- Barra Inferior com Guia EPG Completo (No Ar & A Seguir) -->
+        <!-- Rodapé Moderno OTT / BTV (Exato como na Foto do Usuário) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -228,8 +158,8 @@
             android:orientation="vertical"
             android:paddingStart="36dp"
             android:paddingEnd="36dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="16dp">
+            android:paddingTop="26dp"
+            android:paddingBottom="24dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -237,214 +167,157 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/txt_player_badge_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/badge_live"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="6dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:text="AO VIVO"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                <!-- Logo Circular do Canal com Borda Cyan -->
+                <RelativeLayout
+                    android:id="@+id/layout_player_logo_container"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/bg_channel_logo_circle">
 
-                <TextView
-                    android:id="@+id/txt_player_playback_badge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:background="@drawable/badge_playback"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="6dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:text="⟲ 7D PLAYBACK"
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                    <ImageView
+                        android:id="@+id/img_player_channel_logo"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/logo"
+                        android:contentDescription="Canal Logo" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/txt_player_epg_now_title"
+                <!-- Informações do Canal e Programação EPG -->
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Programa Atual"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txt_player_epg_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="20:30 - 21:45"
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    <!-- Linha 1: Número do Canal em Cyan e Nome do Canal em Branco -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_player_channel_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4"
+                            android:textColor="#00E5FF"
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_player_channel_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="A FAZENDA 18 SINAL 4"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Linha 2: "Atual:" em vermelho + Programa atual + "próximo:" em cinza + Próximo programa + Horário -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_player_label_atual"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Atual: "
+                            android:textColor="#FF3B30"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_player_epg_now_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Transmissão Ao Vivo"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txt_player_label_proximo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="próximo: "
+                            android:textColor="#8899AA"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/txt_player_epg_next"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="A Seguir"
+                            android:textColor="#CCD6E0"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/txt_player_epg_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="20:00 - 21:30"
+                            android:textColor="#00E5FF"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Linha 3: Barra de Progresso Horizontal Fina Neon -->
+                    <ProgressBar
+                        android:id="@+id/pb_player_epg"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="8dp"
+                        android:max="100"
+                        android:progress="45"
+                        android:progressDrawable="@drawable/progress_epg" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <!-- Barra de Progresso EPG -->
-            <ProgressBar
-                android:id="@+id/pb_player_epg"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginTop="6dp"
-                android:max="100"
-                android:progress="50"
-                android:progressDrawable="@drawable/progress_epg" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        <!-- Elementos Ocultos para total compatibilidade com lógica existente (Sem Poluição de Botões) -->
+        <LinearLayout
+            android:id="@+id/layout_player_playback_controls"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/txt_player_epg_synopsis"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:text="Sinopse do programa..."
-                    android:textColor="#A8C0E0"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="2dp" />
-
-                <TextView
-                    android:id="@+id/txt_player_epg_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="▶ A Seguir: Próximo Programa"
-                    android:textColor="#607D8B"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-            <!-- Barra de Ações do Playback 7 Dias -->
-            <LinearLayout
-                android:id="@+id/layout_player_playback_controls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <!-- Botão Voltar 1 Minuto -->
-                <Button
-                    android:id="@+id/btn_player_rewind"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:background="@drawable/bg_button_selector"
-                    android:focusable="true"
-                    android:nextFocusUp="@id/btn_player_back"
-                    android:nextFocusRight="@id/btn_player_forward"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:text="⏮ -1m"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_playback_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <!-- Botão Avançar 1 Minuto -->
-                <Button
-                    android:id="@+id/btn_player_forward"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_button_selector"
-                    android:focusable="true"
-                    android:nextFocusUp="@id/btn_player_back"
-                    android:nextFocusLeft="@id/btn_player_rewind"
-                    android:nextFocusRight="@id/btn_player_restart"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:text="⏭ +1m"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_playback_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <!-- Botão Voltar ao Início do Programa -->
-                <Button
-                    android:id="@+id/btn_player_restart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_button_selector"
-                    android:focusable="true"
-                    android:nextFocusUp="@id/btn_player_aspect_ratio"
-                    android:nextFocusLeft="@id/btn_player_forward"
-                    android:nextFocusRight="@id/btn_player_live"
-                    android:paddingStart="14dp"
-                    android:paddingEnd="14dp"
-                    android:text="⟲ Início"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_playback_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <!-- Botão Retornar ao Ao Vivo -->
-                <Button
-                    android:id="@+id/btn_player_live"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_button_selector"
-                    android:focusable="true"
-                    android:nextFocusUp="@id/btn_player_aspect_ratio"
-                    android:nextFocusLeft="@id/btn_player_restart"
-                    android:nextFocusRight="@id/btn_player_history"
-                    android:paddingStart="14dp"
-                    android:paddingEnd="14dp"
-                    android:text="🔴 Ao Vivo"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_playback_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <!-- Botão Abrir Guia dos Últimos 7 Dias -->
-                <Button
-                    android:id="@+id/btn_player_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="14dp"
-                    android:background="@drawable/bg_button_selector"
-                    android:focusable="true"
-                    android:nextFocusUp="@id/btn_player_aspect_ratio"
-                    android:nextFocusLeft="@id/btn_player_live"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="📅 7 Dias Gravados"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_playback_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_player_playback_status"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Controle remoto: ◀ e ▶ para retroceder / avançar"
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="11sp" />
-            </LinearLayout>
+            <Button android:id="@+id/btn_player_back" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_player_aspect_ratio" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_player_settings" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_player_channel_category" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_player_badge_mode" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_player_playback_badge" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_player_rewind" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_player_forward" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_player_restart" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_player_live" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_player_history" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_player_playback_status" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_player_epg_synopsis" android:layout_width="0dp" android:layout_height="0dp" />
         </LinearLayout>
 
     </RelativeLayout>

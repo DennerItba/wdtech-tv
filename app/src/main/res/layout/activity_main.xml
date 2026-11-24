@@ -446,170 +446,136 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Barra Inferior com TÃ­tulo do Canal, Guia EPG e BotÃ£o de Tela Cheia -->
-            <RelativeLayout
+            <!-- Barra Inferior OTT / BTV Limpa (Igual à Foto do Usuário) -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="#DD05080E"
+                android:background="#E0070B14"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="10dp"
+                android:paddingBottom="12dp">
 
+                <!-- Logo Circular do Canal com Borda Neon -->
+                <RelativeLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/bg_channel_logo_circle">
+
+                    <ImageView
+                        android:id="@+id/img_preview_channel_logo"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/logo"
+                        android:contentDescription="Logo" />
+                </RelativeLayout>
+
+                <!-- Informações e Programação EPG -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/layout_epg_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/btn_fullscreen"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <!-- CabeÃ§alho do Canal e ResoluÃ§Ã£o -->
-                    <LinearLayout
+                    <!-- Linha 1: Número e Nome do Canal -->
+                    <TextView
+                        android:id="@+id/txt_preview_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Selecione um canal"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- Linha 2: "Atual:" em vermelho + Programa atual + "próximo:" em cinza + Próximo + Horário -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/txt_preview_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Selecione um canal"
-                            android:textColor="@color/text_high"
-                            android:textSize="15sp"
+                            android:text="Atual: "
+                            android:textColor="#FF3B30"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/txt_preview_info"
+                            android:id="@+id/txt_epg_now_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Transmissão Ao Vivo"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="1080p Full HD • Ao Vivo"
-                            android:textColor="@color/neon_cyan"
+                            android:layout_marginStart="12dp"
+                            android:text="próximo: "
+                            android:textColor="#8899AA"
                             android:textSize="11sp" />
 
                         <TextView
-                            android:id="@+id/txt_preview_playback"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/badge_playback"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="5dp"
-                            android:paddingTop="1dp"
-                            android:paddingBottom="1dp"
-                            android:text="⟲ 7 Dias Gravados"
-                            android:textColor="@color/neon_cyan"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-                    </LinearLayout>
-
-                    <!-- EPG: Programa no Ar e HorÃ¡rio -->
-                    <LinearLayout
-                        android:id="@+id/layout_epg_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/badge_live"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:paddingTop="1dp"
-                                android:paddingBottom="1dp"
-                                android:text="NO AR"
-                                android:textColor="#FFFFFF"
-                                android:textSize="9sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txt_epg_now_title"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="Carregando guia de programaÃ§Ã£o..."
-                                android:textColor="#FFFFFF"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txt_epg_now_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:text="20:30 - 21:45"
-                                android:textColor="@color/neon_cyan"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <!-- Barra de Progresso do Programa Atual -->
-                        <ProgressBar
-                            android:id="@+id/pb_epg_progress"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="4dp"
-                            android:layout_marginTop="4dp"
-                            android:max="100"
-                            android:progress="45"
-                            android:progressDrawable="@drawable/progress_epg" />
-
-                        <!-- Sinopse do Programa Atual -->
-                        <TextView
-                            android:id="@+id/txt_epg_synopsis"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:ellipsize="end"
-                            android:maxLines="3"
-                            android:text="Sinopse do programa atual..."
-                            android:textColor="#A0B8D8"
-                            android:textSize="11sp"
-                            android:lineSpacingExtra="2dp" />
-
-                        <!-- PrÃ³ximo Programa (A Seguir) -->
-                        <TextView
                             android:id="@+id/txt_epg_next"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_weight="1"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="&#9658; A Seguir: Carregando pr&#243;ximo programa..."
-                            android:textColor="#5B7398"
-                            android:textSize="10sp" />
+                            android:text="A Seguir"
+                            android:textColor="#CCD6E0"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/txt_epg_now_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="20:00 - 21:30"
+                            android:textColor="#00E5FF"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
+                    <!-- Linha 3: Barra de Progresso Horizontal Fina -->
+                    <ProgressBar
+                        android:id="@+id/pb_epg_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="5dp"
+                        android:max="100"
+                        android:progress="45"
+                        android:progressDrawable="@drawable/progress_epg" />
                 </LinearLayout>
 
-                <!-- BotÃ£o de Tela Cheia [ â›¶ ] -->
-                <ImageButton
-                    android:id="@+id/btn_fullscreen"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_button_selector"
-                    android:focusable="true"
-                    android:src="@drawable/ic_fullscreen"
-                    android:contentDescription="Tela Cheia" />
-            </RelativeLayout>
+                <!-- Elementos ocultos para manter compatibilidade com MainActivity.kt -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone">
 
-            <!-- Painel de Detalhes do Filme / Série (VOD Mode) -->
+                    <TextView android:id="@+id/txt_preview_info" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/txt_preview_playback" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/txt_epg_synopsis" android:layout_width="0dp" android:layout_height="0dp" />
+                    <ImageButton android:id="@+id/btn_fullscreen" android:layout_width="0dp" android:layout_height="0dp" />
+                </LinearLayout>
+            </LinearLayout><!-- Painel de Detalhes do Filme / Série (VOD Mode) -->
             <LinearLayout
                 android:id="@+id/layout_vod_preview"
                 android:layout_width="match_parent"

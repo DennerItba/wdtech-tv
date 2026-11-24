@@ -14,6 +14,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import coil.load
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -84,6 +85,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var playerView: PlayerView
     private lateinit var previewLoadingLayout: View
     private lateinit var txtBitrate: TextView
+    private var imgPreviewLogo: ImageView? = null
     private lateinit var txtPreviewTitle: TextView
     private lateinit var txtPreviewInfo: TextView
     private lateinit var txtPreviewPlayback: TextView
@@ -219,6 +221,7 @@ class MainActivity : AppCompatActivity() {
         playerView = findViewById(R.id.player_preview_view)
         previewLoadingLayout = findViewById(R.id.preview_loading_layout)
         txtBitrate = findViewById(R.id.txt_bitrate)
+        imgPreviewLogo = findViewById(R.id.img_preview_channel_logo)
         txtPreviewTitle = findViewById(R.id.txt_preview_title)
         txtPreviewInfo = findViewById(R.id.txt_preview_info)
         txtPreviewPlayback = findViewById(R.id.txt_preview_playback)
@@ -504,9 +507,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun updatePreviewHUD(channel: Channel) {
         val num = channel.number.toIntOrNull() ?: 1
-        txtPreviewTitle.text = String.format("%03d - %s", num, channel.title)
+        txtPreviewTitle.text = String.format("%d  %s", num, channel.title.uppercase())
         txtPreviewInfo.text = "${channel.category} • ${channel.quality}"
-        txtPreviewPlayback.visibility = if (channel.hasPlayback) View.VISIBLE else View.GONE
+        txtPreviewPlayback.visibility = View.GONE
+
+        if (!channel.logoUrl.isNullOrEmpty()) {
+            imgPreviewLogo?.load(channel.logoUrl) {
+                crossfade(false)
+                placeholder(R.drawable.logo)
+                error(R.drawable.logo)
+            }
+        } else {
+            imgPreviewLogo?.setImageResource(R.drawable.logo)
+        }
 
         val epg = channel.currentProgram
         if (epg != null) {
@@ -516,12 +529,17 @@ class MainActivity : AppCompatActivity() {
             pbEpgProgress.progress = epg.getProgressPercent().coerceIn(5, 95)
         } else {
             txtEpgNowTitle.text = "Transmissão Ao Vivo (${channel.quality})"
-            txtEpgNowTime.text = "24 Horas no Ar"
+            txtEpgNowTime.text = "24 Horas"
             txtEpgSynopsis.text = channel.description ?: ""
             pbEpgProgress.progress = 50
         }
 
-        txtEpgNext.text = "Próximo: Programação contínua 24H"
+        val nextEpg = channel.nextProgram
+        if (nextEpg != null) {
+            txtEpgNext.text = "${nextEpg.title} (${nextEpg.startTime})"
+        } else {
+            txtEpgNext.text = "Programação contínua 24H"
+        }
     }
 
     private fun setupPlayer() {

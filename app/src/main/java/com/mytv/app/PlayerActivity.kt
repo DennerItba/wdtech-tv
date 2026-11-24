@@ -12,6 +12,8 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
+import coil.load
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -66,6 +68,7 @@ class PlayerActivity : AppCompatActivity() {
     private val bufferingHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private val showBufferingRunnable = Runnable {
         bufferingProgress.visibility = android.view.View.VISIBLE
+        findViewById<View>(R.id.txt_player_buffering_speed)?.visibility = android.view.View.VISIBLE
     }
 
     private fun showBufferingWithDebounce(delayMs: Long = 700L) {
@@ -76,6 +79,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun hideBuffering() {
         bufferingHandler.removeCallbacks(showBufferingRunnable)
         bufferingProgress.visibility = android.view.View.GONE
+        findViewById<View>(R.id.txt_player_buffering_speed)?.visibility = android.view.View.GONE
     }
 
     // Navegacao por Canais (Zapping)
@@ -119,6 +123,43 @@ class PlayerActivity : AppCompatActivity() {
         overlayView.animate().alpha(0f).setDuration(300).withEndAction {
             overlayView.visibility = View.GONE
         }.start()
+    }
+
+    private fun updatePlayerHUD(channel: Channel) {
+        val num = channel.number.toIntOrNull() ?: 1
+        findViewById<TextView>(R.id.txt_player_channel_number)?.text = "$num"
+        findViewById<TextView>(R.id.txt_player_channel_title)?.text = channel.title.uppercase()
+
+        val imgLogo = findViewById<ImageView>(R.id.img_player_channel_logo)
+        if (imgLogo != null) {
+            if (!channel.logoUrl.isNullOrEmpty()) {
+                imgLogo.load(channel.logoUrl) {
+                    crossfade(false)
+                    placeholder(R.drawable.logo)
+                    error(R.drawable.logo)
+                }
+            } else {
+                imgLogo.setImageResource(R.drawable.logo)
+            }
+        }
+
+        val epg = channel.currentProgram
+        if (epg != null) {
+            findViewById<TextView>(R.id.txt_player_epg_now_title)?.text = epg.title
+            findViewById<TextView>(R.id.txt_player_epg_time)?.text = "${epg.startTime} - ${epg.endTime}"
+            findViewById<ProgressBar>(R.id.pb_player_epg)?.progress = epg.getProgressPercent().coerceIn(5, 95)
+        } else {
+            findViewById<TextView>(R.id.txt_player_epg_now_title)?.text = "Transmissão Ao Vivo (${channel.quality})"
+            findViewById<TextView>(R.id.txt_player_epg_time)?.text = "24 Horas"
+            findViewById<ProgressBar>(R.id.pb_player_epg)?.progress = 50
+        }
+
+        val nextEpg = channel.nextProgram
+        if (nextEpg != null) {
+            findViewById<TextView>(R.id.txt_player_epg_next)?.text = "${nextEpg.title} (${nextEpg.startTime})"
+        } else {
+            findViewById<TextView>(R.id.txt_player_epg_next)?.text = "Programação contínua 24H"
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -211,23 +252,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<TextView>(R.id.txt_player_channel_title).text = enriched.title
-        findViewById<TextView>(R.id.txt_player_channel_category).text =
-            "${enriched.category} • Transmissão em Alta Definição"
-
-        // Exibe o EPG (Guia de Programação) no player
-        val epg = enriched.currentProgram
-        if (epg != null) {
-            findViewById<TextView>(R.id.txt_player_epg_now_title).text = epg.title
-            findViewById<TextView>(R.id.txt_player_epg_time).text = "${epg.startTime} - ${epg.endTime}"
-            findViewById<ProgressBar>(R.id.pb_player_epg).progress = epg.getProgressPercent()
-            findViewById<TextView>(R.id.txt_player_epg_synopsis).text = epg.synopsis.ifEmpty { "Transmissão ao vivo de alta definição." }
-        }
-
-        val nextEpg = enriched.nextProgram
-        if (nextEpg != null) {
-            findViewById<TextView>(R.id.txt_player_epg_next).text = "▶ A Seguir (${nextEpg.startTime}): ${nextEpg.title}"
-        }
+        updatePlayerHUD(enriched)
 
         // Busca assincronamente o EPG ao vivo no player
         lifecycleScope.launch {
@@ -235,12 +260,11 @@ class PlayerActivity : AppCompatActivity() {
             if (livePrograms != null && !isFinishing && !isDestroyed) {
                 val liveNow = livePrograms.first
                 val liveNext = livePrograms.second
-                findViewById<TextView>(R.id.txt_player_epg_now_title).text = liveNow.title
-                findViewById<TextView>(R.id.txt_player_epg_time).text = "${liveNow.startTime} - ${liveNow.endTime}"
-                findViewById<ProgressBar>(R.id.pb_player_epg).progress = liveNow.getProgressPercent()
-                findViewById<TextView>(R.id.txt_player_epg_synopsis).text = liveNow.synopsis.ifEmpty { "Transmissão ao vivo de alta definição." }
+                findViewById<TextView>(R.id.txt_player_epg_now_title)?.text = liveNow.title
+                findViewById<TextView>(R.id.txt_player_epg_time)?.text = "${liveNow.startTime} - ${liveNow.endTime}"
+                findViewById<ProgressBar>(R.id.pb_player_epg)?.progress = liveNow.getProgressPercent().coerceIn(5, 95)
                 if (liveNext != null) {
-                    findViewById<TextView>(R.id.txt_player_epg_next).text = "▶ A Seguir (${liveNext.startTime}): ${liveNext.title}"
+                    findViewById<TextView>(R.id.txt_player_epg_next)?.text = "${liveNext.title} (${liveNext.startTime})"
                 }
             }
         }
@@ -309,22 +333,7 @@ class PlayerActivity : AppCompatActivity() {
         } else nextChannel
         this.currentChannel = enriched
 
-        findViewById<TextView>(R.id.txt_player_channel_title).text = enriched.title
-        findViewById<TextView>(R.id.txt_player_channel_category).text =
-            "${enriched.category} • Transmissão em Alta Definição"
-
-        val epg = enriched.currentProgram
-        if (epg != null) {
-            findViewById<TextView>(R.id.txt_player_epg_now_title).text = epg.title
-            findViewById<TextView>(R.id.txt_player_epg_time).text = "${epg.startTime} - ${epg.endTime}"
-            findViewById<ProgressBar>(R.id.pb_player_epg).progress = epg.getProgressPercent()
-            findViewById<TextView>(R.id.txt_player_epg_synopsis).text = epg.synopsis.ifEmpty { "Transmissão ao vivo de alta definição." }
-        }
-
-        val nextEpg = enriched.nextProgram
-        if (nextEpg != null) {
-            findViewById<TextView>(R.id.txt_player_epg_next).text = "▶ A Seguir (${nextEpg.startTime}): ${nextEpg.title}"
-        }
+        updatePlayerHUD(enriched)
 
         // Atualiza controles de Playback
         if (enriched.hasPlayback) {
