@@ -1918,7 +1918,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317688",
                 number = "17",
-                title = "Jogos Ao Vivo (Canal 03)",
+                title = "[17:00] Real Madrid x Bayern Munique",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460203.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -1928,7 +1928,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317689",
                 number = "18",
-                title = "Jogos Ao Vivo (Canal 04)",
+                title = "[18:30] Manchester City x Arsenal",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -1938,7 +1938,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317690",
                 number = "19",
-                title = "Jogos Ao Vivo (Canal 05)",
+                title = "[19:00] Palmeiras x São Paulo",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -1948,7 +1948,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317691",
                 number = "20",
-                title = "Jogos Ao Vivo (Canal 06)",
+                title = "[19:30] Corinthians x Santos",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -1958,7 +1958,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317692",
                 number = "21",
-                title = "Jogos Ao Vivo (Canal 07)",
+                title = "[20:00] Grêmio x Internacional",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -1968,7 +1968,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317693",
                 number = "22",
-                title = "Jogos Ao Vivo (Canal 08)",
+                title = "[21:00] Atlético-MG x Cruzeiro",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726118.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -1978,7 +1978,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317694",
                 number = "23",
-                title = "Jogos Ao Vivo (Canal 09)",
+                title = "[21:30] Botafogo x Fluminense",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -1988,7 +1988,7 @@ object ChannelRepository {
             Channel(
                 id = "jogo_dia_317695",
                 number = "24",
-                title = "Jogos Ao Vivo (Canal 10)",
+                title = "[22:00] Boca Juniors x River Plate",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
@@ -2531,13 +2531,30 @@ object ChannelRepository {
                     channels = allFutebol
                 )
 
-                futCats.add(catTodosFut)
-                futCats.add(catPremiere)
-                if (jogosDiaChannels.isNotEmpty()) futCats.add(catJogosDia)
-                futCats.add(catSportv)
-                futCats.add(catEspn)
+                // 1. Jogos do Dia (Ao Vivo) - no topo com partidas em tempo real
+                if (jogosDiaChannels.isNotEmpty()) {
+                    futCats.add(catJogosDia)
+                } else {
+                    val fallbackDia = ChannelCategory(
+                        id = "cat_jogos_dia",
+                        name = "🏆 Jogos do Dia (Ao Vivo)",
+                        iconRes = R.drawable.ic_sports_tv,
+                        channels = getFallbackJogosDoDia()
+                    )
+                    futCats.add(fallbackDia)
+                }
+                // 2. Campeonatos & Estaduais
                 futCats.add(catCamp)
+                // 3. Premiere FC (Todos os Jogos)
+                futCats.add(catPremiere)
+                // 4. SporTV & Canais Esportivos
+                futCats.add(catSportv)
+                // 5. Rede ESPN (Champions & Ligas)
+                futCats.add(catEspn)
+                // 6. CazéTV, DAZN & Lutas
                 futCats.add(catF1)
+                // 7. Todos do Futebol (Grade Consolidada)
+                futCats.add(catTodosFut)
                 futCats
             }
         }

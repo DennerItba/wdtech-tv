@@ -104,7 +104,7 @@
         android:id="@+id/layout_main_menu_tabs"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/layout_main_menu_tabs"
+        android:layout_below="@id/top_navigation_bar"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
@@ -206,7 +206,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_navigation_bar"
+        android:layout_below="@id/layout_main_menu_tabs"
         android:baselineAligned="false"
         android:orientation="horizontal"
         android:paddingStart="20dp"
@@ -654,7 +654,11 @@
                             android:textAllCaps="false"
                             android:textColor="@color/btn_playback_text_selector"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:nextFocusLeft="@id/rv_vod_list"
+                            android:nextFocusUp="@id/btn_vod_action"
+                            android:nextFocusDown="@id/btn_vod_action"
+                            android:nextFocusRight="@id/btn_vod_action" />
                     </LinearLayout>
                 </LinearLayout>
 
