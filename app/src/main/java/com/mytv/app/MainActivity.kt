@@ -525,15 +525,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupPlayer() {
-        val bufferMode = AppSettings.getBufferMode(this)
-        val (minBufferMs, maxBufferMs, bufferForPlaybackMs, afterRebufferMs) = when (bufferMode) {
-            AppSettings.BUFFER_FAST -> listOf(10_000, 25_000, 1_000, 2_000)
-            AppSettings.BUFFER_STABLE -> listOf(20_000, 45_000, 2_000, 4_000)
-            else -> listOf(15_000, 30_000, 1_500, 3_000) // BALANCED
-        }
+        val bufCfg = AppSettings.getBufferConfig(this)
 
         val loadControl = DefaultLoadControl.Builder()
-            .setBufferDurationsMs(8_000, 25_000, 250, 800)
+            .setBufferDurationsMs(
+                bufCfg.minBufferMs,
+                bufCfg.maxBufferMs,
+                bufCfg.bufferForPlaybackMs,
+                bufCfg.afterRebufferMs
+            )
             .setPrioritizeTimeOverSizeThresholds(true)
             .setBackBuffer(0, false)
             .build()
@@ -606,14 +606,7 @@ class MainActivity : AppCompatActivity() {
             player.stop()
             player.clearMediaItems()
 
-            val httpFactory = DefaultHttpDataSource.Factory()
-                .setUserAgent("IPTVSmartersPro")
-                .setAllowCrossProtocolRedirects(true)
-                .setConnectTimeoutMs(2500)
-                .setReadTimeoutMs(3500)
-                .setKeepPostFor302Redirects(true)
-
-            val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
+            val dataSourceFactory = com.mytv.app.network.TurboNetworkFactory.createDataSourceFactory(this)
 
             val extractorsFactory = DefaultExtractorsFactory().apply {
                 setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
@@ -633,9 +626,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 .setLiveConfiguration(
                     MediaItem.LiveConfiguration.Builder()
-                        .setTargetOffsetMs(18_000)
-                        .setMinOffsetMs(8_000)
-                        .setMaxOffsetMs(35_000)
+                        .setTargetOffsetMs(25_000)
+                        .setMinOffsetMs(10_000)
+                        .setMaxOffsetMs(50_000)
                         .setMinPlaybackSpeed(0.97f)
                         .setMaxPlaybackSpeed(1.03f)
                         .build()
@@ -772,15 +765,25 @@ class MainActivity : AppCompatActivity() {
     private fun getSettingItems(): List<SettingItem> {
         val bufferLabel = AppSettings.getBufferLabel(AppSettings.getBufferMode(this))
         val aspectLabel = AppSettings.getAspectRatioLabel(AppSettings.getAspectRatio(this))
+        val isTurboActive = AppSettings.isTurboDohEnabled(this)
         return listOf(
             SettingItem(
                 id = "setting_update",
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "V2.8.3",
+                badgeText = "V2.8.8",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
+            ),
+            SettingItem(
+                id = "setting_turbo_doh",
+                title = "Aceleração Cloudflare & Anti-Trava",
+                subtitle = "DNS Seguro DoH: ${AppSettings.getTurboDohLabel(isTurboActive)}",
+                iconRes = R.drawable.ic_speed,
+                badgeText = if (isTurboActive) "ATIVO" else "OFF",
+                description = "Ignora bloqueios e Traffic Shaping da sua operadora (Claro, Vivo, Oi) usando criptografia Cloudflare 1.1.1.1 e múltiplos canais de conexão TCP.\n\n• Ativado: Conexão direta aos servidores Cloudflare sem restrição de velocidade.\n• Desativado: Usa o DNS padrão do provedor de internet.",
+                actionButtonText = "Alternar Aceleração Cloudflare (OK)"
             ),
             SettingItem(
                 id = "setting_network",
@@ -840,6 +843,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun executeSettingAction(item: SettingItem) {
         when (item.id) {
+            "setting_turbo_doh" -> {
+                val newState = AppSettings.toggleTurboDoh(this)
+                val label = AppSettings.getTurboDohLabel(newState)
+                item.badgeText = if (newState) "ATIVO" else "OFF"
+                item.subtitle = "DNS Seguro DoH: $label"
+                item.actionButtonText = "Aceleração: ${if (newState) "LIGADA" else "DESLIGADA"} (OK)"
+                updateSettingPreview(item)
+                settingAdapter.notifyDataSetChanged()
+                setupPlayer()
+                currentPlayingChannel?.let { playChannelPreview(it) }
+                Toast.makeText(this, "Aceleração Cloudflare: $label", Toast.LENGTH_SHORT).show()
+            }
             "setting_update" -> {
                 Toast.makeText(this, "Verificando atualizações no servidor...", Toast.LENGTH_SHORT).show()
                 AppUpdateManager.checkForUpdates(this, isManualCheck = true)

@@ -11,8 +11,8 @@ android {
         applicationId = "com.mytv.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 56
-        versionName = "2.8.7"
+        versionCode = 57
+        versionName = "2.8.8"
         setProperty("archivesBaseName", "wdtechtv")
 
         vectorDrawables {
@@ -57,6 +57,8 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer:1.3.1")
     implementation("androidx.media3:media3-exoplayer-hls:1.3.1")
     implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("androidx.media3:media3-datasource-okhttp:1.3.1")
+    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.12.0")
 
     // Rede & Imagens
     implementation("com.squareup.retrofit2:retrofit:2.11.0")

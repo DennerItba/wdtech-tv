@@ -38,6 +38,7 @@ import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mytv.app.adapter.PlaybackHistoryAdapter
+import com.mytv.app.utils.AppSettings
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.util.TypedValue
@@ -429,26 +430,15 @@ class PlayerActivity : AppCompatActivity() {
         errorLayout.visibility = View.GONE
         bufferingProgress.visibility = View.VISIBLE
 
-        val httpFactory = androidx.media3.datasource.DefaultHttpDataSource.Factory()
-            .setUserAgent("IPTVSmartersPro")
-            .setAllowCrossProtocolRedirects(true)
-            .setConnectTimeoutMs(2500)
-            .setReadTimeoutMs(3500)
-            .setKeepPostFor302Redirects(true)
-            .setDefaultRequestProperties(mapOf(
-                "Accept" to "*/*",
-                "Connection" to "keep-alive"
-            ))
+        val dataSourceFactory = com.mytv.app.network.TurboNetworkFactory.createDataSourceFactory(this)
 
-        val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
-
-        // Partida instantânea com 250ms de buffer e sem recriação pesada de codecs
+        val bufCfg = AppSettings.getBufferConfig(this)
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                10_000,
-                30_000,
-                250,  // Partida instantânea com 250ms de áudio/vídeo
-                800
+                bufCfg.minBufferMs,
+                bufCfg.maxBufferMs,
+                bufCfg.bufferForPlaybackMs,
+                bufCfg.afterRebufferMs
             )
             .setPrioritizeTimeOverSizeThresholds(true)
             .setBackBuffer(0, false)
@@ -538,9 +528,9 @@ class PlayerActivity : AppCompatActivity() {
             }
             .setLiveConfiguration(
                 MediaItem.LiveConfiguration.Builder()
-                    .setTargetOffsetMs(18_000)
-                    .setMinOffsetMs(8_000)
-                    .setMaxOffsetMs(40_000)
+                    .setTargetOffsetMs(25_000)
+                    .setMinOffsetMs(10_000)
+                    .setMaxOffsetMs(50_000)
                     .setMinPlaybackSpeed(0.97f) // Modulação suave de velocidade (±3%) elimina travamento
                     .setMaxPlaybackSpeed(1.03f)
                     .build()

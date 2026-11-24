@@ -16,15 +16,31 @@ object AppSettings {
     private const val KEY_BUFFER_MODE = "buffer_mode"
     private const val KEY_ASPECT_RATIO = "aspect_ratio"
     private const val KEY_PARENTAL_PIN = "parental_pin"
+    private const val KEY_TURBO_DOH = "turbo_doh_enabled"
 
     // Buffer Modes
-    const val BUFFER_FAST = "FAST"           // 4s
-    const val BUFFER_BALANCED = "BALANCED"   // 12s
-    const val BUFFER_STABLE = "STABLE"       // 25s
+    const val BUFFER_FAST = "FAST"           // 10s min, 25s max
+    const val BUFFER_BALANCED = "BALANCED"   // 20s min, 45s max
+    const val BUFFER_STABLE = "STABLE"       // 35s min, 65s max (Anti-Travamento profundo)
+
+    data class BufferConfig(
+        val minBufferMs: Int,
+        val maxBufferMs: Int,
+        val bufferForPlaybackMs: Int,
+        val afterRebufferMs: Int
+    )
 
     fun getBufferMode(context: Context): String {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         return prefs.getString(KEY_BUFFER_MODE, BUFFER_BALANCED) ?: BUFFER_BALANCED
+    }
+
+    fun getBufferConfig(context: Context): BufferConfig {
+        return when (getBufferMode(context)) {
+            BUFFER_FAST -> BufferConfig(10_000, 25_000, 250, 800)
+            BUFFER_STABLE -> BufferConfig(35_000, 65_000, 500, 2_000)
+            else -> BufferConfig(20_000, 45_000, 300, 1_200) // BALANCED
+        }
     }
 
     fun cycleBufferMode(context: Context): String {
@@ -43,10 +59,29 @@ object AppSettings {
 
     fun getBufferLabel(mode: String): String {
         return when (mode) {
-            BUFFER_FAST -> "Rápido (4s)"
-            BUFFER_STABLE -> "Anti-Travamento (25s)"
-            else -> "Equilibrado (12s)"
+            BUFFER_FAST -> "Rápido (10s)"
+            BUFFER_STABLE -> "Anti-Travamento (35s-65s)"
+            else -> "Equilibrado (20s-45s)"
         }
+    }
+
+    fun isTurboDohEnabled(context: Context): Boolean {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return prefs.getBoolean(KEY_TURBO_DOH, true)
+    }
+
+    fun toggleTurboDoh(context: Context): Boolean {
+        val next = !isTurboDohEnabled(context)
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean(KEY_TURBO_DOH, next)
+            .apply()
+        com.mytv.app.network.TurboNetworkFactory.invalidateClient()
+        return next
+    }
+
+    fun getTurboDohLabel(enabled: Boolean): String {
+        return if (enabled) "ATIVADO (Cloudflare 1.1.1.1)" else "DESATIVADO (Padrão ISP)"
     }
 
     fun getAspectRatio(context: Context): Int {
