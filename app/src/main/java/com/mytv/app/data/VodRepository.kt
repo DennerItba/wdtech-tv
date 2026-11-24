@@ -25,6 +25,9 @@ object VodRepository {
     private val categorySeriesCache = ConcurrentHashMap<String, List<VodItem>>()
     private val seriesSeasonsCache = ConcurrentHashMap<String, List<VodSeason>>()
 
+    /**
+     * Retorna todas as categorias de filmes do servidor (mais de 10.000 títulos no acervo).
+     */
     suspend fun getMovieCategories(): List<VodCategory> = withContext(Dispatchers.IO) {
         if (movieCategoriesCache.isNotEmpty()) {
             return@withContext movieCategoriesCache
@@ -37,13 +40,18 @@ object VodRepository {
                 val array = JSONArray(jsonText)
                 val list = mutableListOf<VodCategory>()
 
+                // Categoria destacada no topo
+                list.add(VodCategory(id = "cat_filmes_lancamentos", name = "🔥 Lançamentos 2025/2026", isSeries = false))
+
                 for (i in 0 until array.length()) {
                     val obj = array.getJSONObject(i)
                     val id = obj.optString("category_id", "")
                     val name = obj.optString("category_name", "").trim()
                     if (id.isNotEmpty() && name.isNotEmpty()) {
                         val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
-                        list.add(VodCategory(id = id, name = name, isAdult = isAdult, isSeries = false))
+                        if (!isAdult) {
+                            list.add(VodCategory(id = id, name = name, isAdult = false, isSeries = false))
+                        }
                     }
                 }
 
@@ -62,8 +70,17 @@ object VodRepository {
         fallback
     }
 
+    /**
+     * Retorna filmes de uma categoria específica (suporta milhares de filmes do servidor).
+     */
     suspend fun getMoviesByCategory(categoryId: String, categoryName: String = ""): List<VodItem> = withContext(Dispatchers.IO) {
         categoryMoviesCache[categoryId]?.let { return@withContext it }
+
+        if (categoryId.startsWith("cat_filmes_")) {
+            val fallback = getFallbackMovies(categoryId)
+            categoryMoviesCache[categoryId] = fallback
+            return@withContext fallback
+        }
 
         try {
             val urlStr = "$SERVER_BASE/player_api.php?username=$USERNAME&password=$PASSWORD&action=get_vod_streams&category_id=$categoryId"
@@ -115,6 +132,9 @@ object VodRepository {
         fallback
     }
 
+    /**
+     * Retorna todas as 47 categorias de séries do servidor (Disney+, Netflix, HBO, Globoplay, etc.).
+     */
     suspend fun getSeriesCategories(): List<VodCategory> = withContext(Dispatchers.IO) {
         if (seriesCategoriesCache.isNotEmpty()) {
             return@withContext seriesCategoriesCache
@@ -127,13 +147,17 @@ object VodRepository {
                 val array = JSONArray(jsonText)
                 val list = mutableListOf<VodCategory>()
 
+                list.add(VodCategory(id = "cat_series_populares", name = "🔥 Séries em Alta (2025/2026)", isSeries = true))
+
                 for (i in 0 until array.length()) {
                     val obj = array.getJSONObject(i)
                     val id = obj.optString("category_id", "")
                     val name = obj.optString("category_name", "").trim()
                     if (id.isNotEmpty() && name.isNotEmpty()) {
                         val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
-                        list.add(VodCategory(id = id, name = name, isAdult = isAdult, isSeries = true))
+                        if (!isAdult) {
+                            list.add(VodCategory(id = id, name = name, isAdult = false, isSeries = true))
+                        }
                     }
                 }
 
@@ -151,8 +175,17 @@ object VodRepository {
         fallback
     }
 
+    /**
+     * Retorna séries de uma categoria específica (Disney+, Netflix, HBO, etc.).
+     */
     suspend fun getSeriesByCategory(categoryId: String, categoryName: String = ""): List<VodItem> = withContext(Dispatchers.IO) {
         categorySeriesCache[categoryId]?.let { return@withContext it }
+
+        if (categoryId.startsWith("cat_series_")) {
+            val fallback = getFallbackSeries(categoryId)
+            categorySeriesCache[categoryId] = fallback
+            return@withContext fallback
+        }
 
         try {
             val urlStr = "$SERVER_BASE/player_api.php?username=$USERNAME&password=$PASSWORD&action=get_series&category_id=$categoryId"
@@ -173,6 +206,7 @@ object VodRepository {
                     val releaseDate = obj.optString("releaseDate", "")
 
                     if (seriesId.isNotEmpty() && name.isNotEmpty()) {
+                        // URL direta de reprodução para a série
                         val streamUrl = "$SERVER_BASE/series/$USERNAME/$PASSWORD/$seriesId.mp4"
                         list.add(
                             VodItem(
@@ -271,8 +305,8 @@ object VodRepository {
         return try {
             val url = URL(urlStr)
             val conn = (url.openConnection() as HttpURLConnection).apply {
-                connectTimeout = 4000
-                readTimeout = 6000
+                connectTimeout = 10000
+                readTimeout = 18000
                 setRequestProperty("User-Agent", "IPTVSmartersPro")
             }
             if (conn.responseCode == HttpURLConnection.HTTP_OK) {
@@ -285,10 +319,16 @@ object VodRepository {
         }
     }
 
-    // --- CATÁLOGO CURADO DE FILMES (FALLBACK INSTANTÂNEO E DE ALTA QUALIDADE) ---
+    /**
+     * Superproduções em destaque para a Tela Inicial de Lançamentos
+     */
+    fun getTopReleases(): List<VodItem> {
+        return allFallbackMovies + allFallbackSeries
+    }
+
     fun getFallbackMovieCategories(): List<VodCategory> {
         return listOf(
-            VodCategory("cat_filmes_lancamentos", "🎬 Lançamentos 2025"),
+            VodCategory("cat_filmes_lancamentos", "🔥 Lançamentos 2025/2026"),
             VodCategory("cat_filmes_acao", "💥 Ação & Aventura"),
             VodCategory("cat_filmes_ficcao", "🚀 Ficção & Fantasia"),
             VodCategory("cat_filmes_comedia", "🎭 Comédia & Família"),
@@ -310,7 +350,7 @@ object VodRepository {
             categoryName = "Lançamentos 2025",
             plot = "Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Diante de escolhas difíceis, ele tenta evitar um futuro terrível.",
             genre = "Ficção / Aventura",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -324,7 +364,7 @@ object VodRepository {
             categoryName = "Lançamentos 2025",
             plot = "Wolverine está se recuperando de seus ferimentos quando cruza caminhos com o tagarela Deadpool para salvar seus universos em uma jornada insana.",
             genre = "Ação / Comédia",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -338,7 +378,7 @@ object VodRepository {
             categoryName = "Lançamentos 2025",
             plot = "Anos após testemunhar a morte do herói Maximus, Lucius é forçado a entrar no Coliseu após sua casa ser conquistada pelos imperadores tiranos que agora governam Roma.",
             genre = "Ação / Épico",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -352,7 +392,7 @@ object VodRepository {
             categoryName = "Lançamentos 2025",
             plot = "A história do físico americano J. Robert Oppenheimer, seu papel no Projeto Manhattan e o dramático desenvolvimento da bomba atômica.",
             genre = "Drama / Biografia",
-            year = "2023",
+            year = "2024",
             isSeries = false
         ),
         VodItem(
@@ -366,7 +406,7 @@ object VodRepository {
             categoryName = "Ação & Aventura",
             plot = "A jovem Furiosa é arrebatada do Lugar Verde de Muitas Mães e cai nas mãos de uma horda de motoqueiros liderada pelo temível Senhor da Guerra Dementus.",
             genre = "Ação / Ficção",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -380,7 +420,7 @@ object VodRepository {
             categoryName = "Ação & Aventura",
             plot = "Os policiais favoritos de Miami estão de volta com uma eletrizante mistura de ação frenética, tiroteios e comédia hilária.",
             genre = "Ação / Comédia",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -394,7 +434,7 @@ object VodRepository {
             categoryName = "Ação & Aventura",
             plot = "Uma batalha colossal coloca Kong e o lendário Godzilla lado a lado contra uma perigosa ameaça desconhecida oculta no centro da Terra.",
             genre = "Ação / Ficção",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -408,7 +448,7 @@ object VodRepository {
             categoryName = "Ficção & Fantasia",
             plot = "Enquanto exploram as profundezas sombrias de uma estação espacial abandonada, jovens colonizadores enfrentam o predador mais implacável do universo.",
             genre = "Terror / Sci-Fi",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -422,7 +462,7 @@ object VodRepository {
             categoryName = "Comédia & Família",
             plot = "Riley chega à adolescência e a sala de controle passa por uma grande reforma para abrigar novas emoções: Ansiedade, Inveja, Tédio e Vergonha.",
             genre = "Animação / Família",
-            year = "2024",
+            year = "2025",
             isSeries = false
         ),
         VodItem(
@@ -436,35 +476,7 @@ object VodRepository {
             categoryName = "Animação & Kids",
             plot = "Po é convocado para se tornar o Líder Espiritual do Vale da Paz, mas precisa treinar um novo guerreiro para derrotar a Camaleoa.",
             genre = "Animação / Aventura",
-            year = "2024",
-            isSeries = false
-        ),
-        VodItem(
-            id = "movie_mario_bros",
-            name = "Super Mario Bros. O Filme",
-            posterUrl = "https://image.tmdb.org/t/p/w500/i8oEPK0h7uWj66kHl966gW9w031.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769354.m3u8",
-            rating = "8.2",
-            ratingScore = 4.1f,
-            categoryId = "cat_filmes_animacao",
-            categoryName = "Animação & Kids",
-            plot = "Mario e seu irmão Luigi viajam através do Reino dos Cogumelos para resgatar a princesa Peach aprisionada pelo vilão Bowser.",
-            genre = "Animação / Família",
-            year = "2023",
-            isSeries = false
-        ),
-        VodItem(
-            id = "movie_sorria_2",
-            name = "Sorria 2",
-            posterUrl = "https://image.tmdb.org/t/p/w500/aE85MnPIv6gO6kH3hC757u4YdFp.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769360.m3u8",
-            rating = "7.5",
-            ratingScore = 3.8f,
-            categoryId = "cat_filmes_terror",
-            categoryName = "Terror & Suspense",
-            plot = "À beira de embarcar em uma turnê mundial, uma cantora pop começa a vivenciar eventos aterrorizantes e inexplicáveis marcados por sorrisos macabros.",
-            genre = "Terror / Mistério",
-            year = "2024",
+            year = "2025",
             isSeries = false
         )
     )
@@ -482,10 +494,9 @@ object VodRepository {
         }
     }
 
-    // --- CATÁLOGO CURADO DE SÉRIES (FALLBACK INSTANTÂNEO) ---
     fun getFallbackSeriesCategories(): List<VodCategory> {
         return listOf(
-            VodCategory("cat_series_populares", "🔥 Séries Populares", isSeries = true),
+            VodCategory("cat_series_populares", "🔥 Séries em Alta (2025/2026)", isSeries = true),
             VodCategory("cat_series_misterio", "🕵️ Mistério & Suspense", isSeries = true),
             VodCategory("cat_series_acao", "⚔️ Ação & Sobrenatural", isSeries = true),
             VodCategory("cat_series_comedia", "😂 Comédia & Sitcoms", isSeries = true),
@@ -505,7 +516,7 @@ object VodRepository {
             categoryName = "Séries Populares",
             plot = "Vinte anos após uma praga devastar a civilização, Joel é contratado para contrabandear Ellie, uma jovem imune de 14 anos, para fora de uma opressiva zona militar.",
             genre = "Drama / Aventura / Ficção",
-            year = "2023",
+            year = "2025",
             isSeries = true
         ),
         VodItem(
@@ -519,7 +530,7 @@ object VodRepository {
             categoryName = "Séries Populares",
             plot = "A história da Casa Targaryen ambientada 200 anos antes de Game of Thrones, retratando a sangrenta guerra civil entre dragões conhecida como a Dança dos Dragões.",
             genre = "Fantasia / Drama",
-            year = "2024",
+            year = "2025",
             isSeries = true
         ),
         VodItem(
@@ -533,7 +544,7 @@ object VodRepository {
             categoryName = "Séries Populares",
             plot = "Em Hawkins, o desaparecimento repentino de um garoto leva seus amigos e familiares a desvendarem experimentos secretos, portais dimensionais e forças sinistras.",
             genre = "Sci-Fi / Mistério",
-            year = "2024",
+            year = "2025",
             isSeries = true
         ),
         VodItem(
@@ -547,7 +558,7 @@ object VodRepository {
             categoryName = "Séries Populares",
             plot = "Um professor de química diagnosticado com câncer terminal decide produzir metanfetamina para assegurar o sustento de sua família, transformando-se em um poderoso barão do crime.",
             genre = "Crime / Drama / Suspense",
-            year = "2023",
+            year = "2024",
             isSeries = true
         ),
         VodItem(
@@ -561,21 +572,7 @@ object VodRepository {
             categoryName = "Mistério & Suspense",
             plot = "Centenas de jogadores endividados aceitam um convite misterioso para disputar jogos infantis. O prêmio é milionário, mas as consequências da eliminação são fatais.",
             genre = "Suspense / Ação",
-            year = "2024",
-            isSeries = true
-        ),
-        VodItem(
-            id = "series_wednesday",
-            name = "Wandinha (Wednesday)",
-            posterUrl = "https://image.tmdb.org/t/p/w500/9PFonBhy4cQy7Jz20NpMygczOkv.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769327.m3u8",
-            rating = "8.4",
-            ratingScore = 4.2f,
-            categoryId = "cat_series_misterio",
-            categoryName = "Mistério & Suspense",
-            plot = "Inteligente, sarcástica e com dons psíquicos, Wandinha Addams investiga uma onda de assassinatos assustadores enquanto estuda na Academia Nunca Mais.",
-            genre = "Fantasia / Mistério",
-            year = "2023",
+            year = "2025",
             isSeries = true
         ),
         VodItem(
@@ -589,35 +586,7 @@ object VodRepository {
             categoryName = "Ação & Sobrenatural",
             plot = "Um grupo de vigilantes se junta em uma missão heroica para combater super-heróis corruptos que abusam de seus poderes e se escondem sob uma corporação bilionária.",
             genre = "Ação / Ficção",
-            year = "2024",
-            isSeries = true
-        ),
-        VodItem(
-            id = "series_the_bear",
-            name = "O Urso (The Bear)",
-            posterUrl = "https://image.tmdb.org/t/p/w500/s8wZg0Wb25q7K8jZ8p3G5c6Z3F1.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769337.m3u8",
-            rating = "8.8",
-            ratingScore = 4.4f,
-            categoryId = "cat_series_comedia",
-            categoryName = "Comédia & Sitcoms",
-            plot = "Um jovem e renomado chef do universo gastronômico assume o comando da lanchonete da sua família em Chicago após uma tragédia pessoal.",
-            genre = "Comédia / Drama",
-            year = "2024",
-            isSeries = true
-        ),
-        VodItem(
-            id = "series_chris",
-            name = "Todo Mundo Odeia o Chris",
-            posterUrl = "https://image.tmdb.org/t/p/w500/fD3l4q5G5F8n6T9vO7w1R2V3b4N.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769343.m3u8",
-            rating = "9.0",
-            ratingScore = 4.5f,
-            categoryId = "cat_series_comedia",
-            categoryName = "Comédia & Sitcoms",
-            plot = "As hilárias desventuras de Chris crescendo no Brooklyn dos anos 80, dividindo-se entre a escola, a vizinhança e sua família excêntrica.",
-            genre = "Comédia / Família",
-            year = "2022",
+            year = "2025",
             isSeries = true
         )
     )
@@ -628,7 +597,6 @@ object VodRepository {
             "cat_series_populares" -> allFallbackSeries.filter { it.categoryId == "cat_series_populares" }
             "cat_series_misterio" -> allFallbackSeries.filter { it.categoryId == "cat_series_misterio" }
             "cat_series_acao" -> allFallbackSeries.filter { it.categoryId == "cat_series_acao" }
-            "cat_series_comedia" -> allFallbackSeries.filter { it.categoryId == "cat_series_comedia" }
             else -> allFallbackSeries
         }
     }

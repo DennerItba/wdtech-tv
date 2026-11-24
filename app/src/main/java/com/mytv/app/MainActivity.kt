@@ -41,6 +41,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mytv.app.adapter.CategorySidebarAdapter
 import com.mytv.app.adapter.ChannelListAdapter
 import com.mytv.app.adapter.SettingListAdapter
+import com.mytv.app.adapter.OttPosterAdapter
 import com.mytv.app.adapter.VodListAdapter
 import com.mytv.app.data.VodRepository
 import com.mytv.app.model.VodItem
@@ -98,6 +99,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtEpgSynopsis: TextView
     private lateinit var txtEpgNext: TextView
     private lateinit var btnFullscreen: ImageButton
+
+    // --- Home Lançamentos & Navegação ---
+    private var isHomeMode: Boolean = true
+    private lateinit var btnToggleMenu: Button
+    private lateinit var btnMenuHome: Button
+    private lateinit var layoutHomeLancamentos: View
+    private lateinit var layoutThreePanels: View
+    private lateinit var imgHeroBackdrop: ImageView
+    private lateinit var txtHeroTitle: TextView
+    private lateinit var txtHeroMeta: TextView
+    private lateinit var txtHeroPlot: TextView
+    private lateinit var btnHeroWatch: Button
+    private lateinit var btnHeroOpenMenu: Button
+    private lateinit var rvHomeLancamentos: RecyclerView
+    private lateinit var homeLancamentosAdapter: OttPosterAdapter
+    private var currentHeroVodItem: VodItem? = null
 
     // --- VOD (Filmes e Séries) ---
     private lateinit var rvVodList: RecyclerView
@@ -188,6 +205,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Escudo de Estabilidade Definitivo: Intercepta qualquer exceção não tratada evitando que o app feche
+        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            android.util.Log.e("WDTECH_CRASH", "Exceção interceptada com sucesso na thread ${thread.name}: ${throwable.message}", throwable)
+        }
+
         setContentView(R.layout.activity_main)
 
         initViews()
@@ -200,8 +224,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-                // Barra de Menu Principal (5 Menus Separados)
+                // Barra de Navegação e Botão de Alternar Menu
+        btnToggleMenu = findViewById(R.id.btn_toggle_menu)
+        layoutHomeLancamentos = findViewById(R.id.layout_home_lancamentos)
+        layoutThreePanels = findViewById(R.id.layout_three_panels)
+
+        // Banner Hero e Carrossel de Lançamentos
+        imgHeroBackdrop = findViewById(R.id.img_hero_backdrop)
+        txtHeroTitle = findViewById(R.id.txt_hero_title)
+        txtHeroMeta = findViewById(R.id.txt_hero_meta)
+        txtHeroPlot = findViewById(R.id.txt_hero_plot)
+        btnHeroWatch = findViewById(R.id.btn_hero_watch)
+        btnHeroOpenMenu = findViewById(R.id.btn_hero_open_menu)
+        rvHomeLancamentos = findViewById(R.id.rv_home_lancamentos)
+
+        // Barra de Menu Principal
         layoutMainMenuTabs = findViewById(R.id.layout_main_menu_tabs)
+        btnMenuHome = findViewById(R.id.btn_menu_home)
         btnMenuTv = findViewById(R.id.btn_menu_tv)
         btnMenuFilmes = findViewById(R.id.btn_menu_filmes)
         btnMenuSeries = findViewById(R.id.btn_menu_series)
@@ -300,6 +339,31 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setupMainMenuTabs() {
+        btnToggleMenu.setOnClickListener {
+            if (isHomeMode) {
+                openMenu(currentSection)
+            } else {
+                showHomeScreen()
+            }
+        }
+
+        btnHeroOpenMenu.setOnClickListener {
+            openMenu(MainSection.TV)
+        }
+
+        btnHeroWatch.setOnClickListener {
+            currentHeroVodItem?.let { openVodPlayer(it) }
+        }
+
+        btnMenuHome.setOnClickListener {
+            showHomeScreen()
+        }
+        btnMenuHome.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && !isHomeMode) {
+                showHomeScreen()
+            }
+        }
+
         val tabButtons = listOf(
             btnMenuTv to MainSection.TV,
             btnMenuFilmes to MainSection.FILMES,
@@ -310,11 +374,11 @@ class MainActivity : AppCompatActivity() {
 
         for ((btn, section) in tabButtons) {
             btn.setOnClickListener {
-                selectMainSection(section, shouldFocusCategory = true)
+                openMenu(section, shouldFocusCategory = true)
             }
             btn.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus && currentSection != section) {
-                    selectMainSection(section, shouldFocusCategory = false)
+                if (hasFocus && (currentSection != section || isHomeMode)) {
+                    openMenu(section, shouldFocusCategory = false)
                 }
             }
             btn.setOnKeyListener { _, keyCode, event ->
@@ -330,7 +394,7 @@ class MainActivity : AppCompatActivity() {
             openSettingsMode()
         }
         btnMenuSettings.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
+            if (hasFocus && !isSettingsMode) {
                 openSettingsMode()
             }
         }
@@ -340,6 +404,48 @@ class MainActivity : AppCompatActivity() {
                 return@setOnKeyListener true
             }
             false
+        }
+    }
+
+    private fun showHomeScreen() {
+        try {
+            isHomeMode = true
+            isSettingsMode = false
+            pausePreviewPlayer()
+
+            layoutHomeLancamentos.visibility = View.VISIBLE
+            layoutMainMenuTabs.visibility = View.GONE
+            layoutThreePanels.visibility = View.GONE
+
+            btnToggleMenu.text = "☰ ABRIR MENU (OK)"
+            txtHeaderBreadcrumb.text = "WDTECH TV • LANÇAMENTOS 2025/2026"
+            btnMenuHome.isSelected = true
+            btnMenuTv.isSelected = false
+            btnMenuFilmes.isSelected = false
+            btnMenuSeries.isSelected = false
+            btnMenuInfantil.isSelected = false
+            btnMenuFutebol.isSelected = false
+            btnMenuSettings.isSelected = false
+
+            btnHeroWatch.requestFocus()
+        } catch (e: Throwable) {
+            android.util.Log.e("MainActivity", "Erro ao exibir tela inicial", e)
+        }
+    }
+
+    private fun openMenu(section: MainSection = currentSection, shouldFocusCategory: Boolean = false) {
+        try {
+            isHomeMode = false
+            layoutHomeLancamentos.visibility = View.GONE
+            layoutMainMenuTabs.visibility = View.VISIBLE
+            layoutThreePanels.visibility = View.VISIBLE
+
+            btnToggleMenu.text = "🏠 INÍCIO (OK)"
+            btnMenuHome.isSelected = false
+
+            selectMainSection(section, shouldFocusCategory)
+        } catch (e: Throwable) {
+            android.util.Log.e("MainActivity", "Erro ao abrir menu", e)
         }
     }
 
@@ -505,6 +611,26 @@ class MainActivity : AppCompatActivity() {
 
         val firstCat = sectionCats.firstOrNull() ?: return
         currentSelectedCategory = firstCat
+
+        // 0. Configura Carrossel Horizontal de Lançamentos da Tela Inicial
+        val topReleases = VodRepository.getTopReleases()
+        homeLancamentosAdapter = OttPosterAdapter(
+            items = topReleases,
+            onItemFocus = { item ->
+                updateHeroBanner(item)
+            },
+            onItemClick = { item ->
+                openVodPlayer(item)
+            },
+            onNavigateUpToHero = {
+                btnHeroWatch.requestFocus()
+            }
+        )
+        rvHomeLancamentos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvHomeLancamentos.adapter = homeLancamentosAdapter
+
+        // Inicializa o Hero Banner com o primeiro lançamento de destaque
+        topReleases.firstOrNull()?.let { updateHeroBanner(it) }
 
         // 1. Configura Adaptador da Barra Lateral
         sidebarAdapter = CategorySidebarAdapter(
@@ -869,6 +995,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateHeroBanner(item: VodItem) {
+        currentHeroVodItem = item
+        txtHeroTitle.text = item.name
+        val rating = item.getFormattedRating()
+        val yearStr = item.year ?: (if (item.isSeries) "2025" else "2026")
+        val genreStr = item.genre ?: (if (item.isSeries) "Série Completa" else "Filme")
+        txtHeroMeta.text = "$rating • $yearStr • $genreStr • 4K ULTRA HD"
+        txtHeroPlot.text = item.plot ?: "Superprodução em alta definição sob demanda no WDTECH TV."
+        btnHeroWatch.text = if (item.isSeries) "▶ Assistir Série (OK)" else "▶ Assistir Filme (OK)"
+
+        if (!item.posterUrl.isNullOrEmpty()) {
+            imgHeroBackdrop.load(item.posterUrl) {
+                crossfade(true)
+                placeholder(R.drawable.logo)
+                error(R.drawable.logo)
+            }
+        } else {
+            imgHeroBackdrop.setImageResource(R.drawable.logo)
+        }
+    }
+
     private fun focusFirstVod() {
         if (vodAdapter.itemCount == 0) return
         rvVodList.stopScroll()
@@ -1147,14 +1294,19 @@ class MainActivity : AppCompatActivity() {
     private fun setupBackPressed() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (btnFullscreen.hasFocus() || btnVodAction.hasFocus()) {
-                    if (currentSection == MainSection.FILMES || currentSection == MainSection.SERIES) {
-                        focusFirstVod()
+                if (!isHomeMode) {
+                    if (btnFullscreen.hasFocus() || btnVodAction.hasFocus()) {
+                        if (currentSection == MainSection.FILMES || currentSection == MainSection.SERIES) {
+                            focusFirstVod()
+                        } else {
+                            focusCurrentChannel()
+                        }
+                    } else if (rvChannelList.hasFocus() || rvSettingsList.hasFocus() || rvVodList.hasFocus() || btnSettingPreviewAction.hasFocus()) {
+                        focusCurrentCategory()
                     } else {
-                        focusCurrentChannel()
+                        // Fecha o menu e retorna para a Tela Principal de Lançamentos!
+                        showHomeScreen()
                     }
-                } else if (rvChannelList.hasFocus() || rvSettingsList.hasFocus() || rvVodList.hasFocus() || btnSettingPreviewAction.hasFocus()) {
-                    focusCurrentCategory()
                 } else {
                     showExitConfirmation()
                 }

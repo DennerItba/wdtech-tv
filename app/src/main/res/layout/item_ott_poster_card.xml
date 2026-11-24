@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:layout_margin="8dp"
+    android:layout_width="145dp"
+    android:layout_height="215dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:clickable="true"
     android:focusable="true"
     android:clipToPadding="false"
@@ -14,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/tv_bg"
+        android:background="#151E2D"
+        android:src="@drawable/logo"
         android:contentDescription="Poster" />
 
     <!-- Camada de Gradiente Escuro -->
@@ -29,16 +33,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|start"
-        android:layout_margin="12dp"
+        android:layout_margin="8dp"
         android:background="@drawable/badge_live"
-        android:backgroundTint="#CC2563EB"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:text="Lançamento"
-        android:textColor="#FFFFFF"
-        android:textSize="10sp"
+        android:backgroundTint="#CC00E5FF"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="2025"
+        android:textColor="#050B14"
+        android:textSize="9sp"
         android:textStyle="bold" />
 
     <!-- Título Inferior -->
@@ -47,16 +51,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="12dp"
+        android:layout_margin="8dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:shadowColor="#CC000000"
         android:shadowDx="0"
         android:shadowDy="2"
         android:shadowRadius="4"
-        android:text="Oppenheimer"
+        android:text="Filme / Série"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <!-- Borda e Destaque de Foco D-Pad -->
@@ -64,6 +68,7 @@
         android:id="@+id/view_poster_focus_ring"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_card_tv_focus" />
+        android:background="@drawable/bg_card_tv_focus"
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.mytv.app.adapter
 
+import android.graphics.Color
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.RoundedCornersTransformation
 import com.mytv.app.R
 import com.mytv.app.model.VodItem
 
@@ -68,11 +68,12 @@ class VodListAdapter(
                 else -> "FHD"
             }
 
-            // Carrega Poster via Coil
+            // Carrega Poster via Coil de forma segura
             if (!item.posterUrl.isNullOrEmpty()) {
                 imgPoster.load(item.posterUrl) {
                     crossfade(true)
-                    transformations(RoundedCornersTransformation(6f))
+                    placeholder(R.drawable.logo)
+                    error(R.drawable.logo)
                 }
             } else {
                 imgPoster.setImageResource(R.drawable.logo)
@@ -80,17 +81,16 @@ class VodListAdapter(
 
             itemView.isSelected = isSelected
 
+            // Foco 100% seguro sem chamar notifyItemChanged durante o layout pass!
             itemView.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
-                    val prev = selectedPosition
                     selectedPosition = bindingAdapterPosition
-                    if (prev != selectedPosition && prev in items.indices) {
-                        notifyItemChanged(prev)
-                    }
                     itemView.isSelected = true
+                    txtTitle.setTextColor(Color.parseColor("#00E5FF"))
                     onItemSelected(item)
                 } else {
                     itemView.isSelected = false
+                    txtTitle.setTextColor(Color.parseColor("#E6EDF8"))
                 }
             }
 

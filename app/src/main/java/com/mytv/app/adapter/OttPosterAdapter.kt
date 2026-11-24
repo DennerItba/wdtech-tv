@@ -12,7 +12,9 @@ import com.mytv.app.model.VodItem
 
 class OttPosterAdapter(
     private var items: List<VodItem>,
-    private val onItemClick: (VodItem) -> Unit
+    private val onItemFocus: (VodItem) -> Unit,
+    private val onItemClick: (VodItem) -> Unit,
+    private val onNavigateUpToHero: (() -> Unit)? = null
 ) : RecyclerView.Adapter<OttPosterAdapter.PosterViewHolder>() {
 
     class PosterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -37,22 +39,24 @@ class OttPosterAdapter(
         if (!item.posterUrl.isNullOrEmpty()) {
             holder.imgCover.load(item.posterUrl) {
                 crossfade(true)
-                placeholder(R.drawable.tv_bg)
-                error(R.drawable.tv_bg)
+                placeholder(R.drawable.logo)
+                error(R.drawable.logo)
             }
         } else {
-            holder.imgCover.setImageResource(R.drawable.tv_bg)
+            holder.imgCover.setImageResource(R.drawable.logo)
         }
 
-        // Foco e Escala Suave D-Pad
+        // Foco e Escala Suave D-Pad (100% seguro sem chamadas a notifyItemChanged)
         holder.itemView.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 holder.itemView.animate()
-                    .scaleX(1.06f)
-                    .scaleY(1.06f)
+                    .scaleX(1.08f)
+                    .scaleY(1.08f)
                     .translationZ(8f)
                     .setDuration(160)
                     .start()
+                holder.viewFocusRing.visibility = View.VISIBLE
+                onItemFocus(item)
             } else {
                 holder.itemView.animate()
                     .scaleX(1.0f)
@@ -60,11 +64,22 @@ class OttPosterAdapter(
                     .translationZ(0f)
                     .setDuration(160)
                     .start()
+                holder.viewFocusRing.visibility = View.GONE
             }
         }
 
         holder.itemView.setOnClickListener {
             onItemClick(item)
+        }
+
+        holder.itemView.setOnKeyListener { _, keyCode, event ->
+            if (event.action == android.view.KeyEvent.ACTION_DOWN) {
+                if (keyCode == android.view.KeyEvent.KEYCODE_DPAD_UP) {
+                    onNavigateUpToHero?.invoke()
+                    return@setOnKeyListener true
+                }
+            }
+            false
         }
     }
 

@@ -54,14 +54,31 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Botão Abrir/Fechar Menu Principal -->
+        <Button
+            android:id="@+id/btn_toggle_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/logo_layout"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/bg_button_selector"
+            android:text="☰ ABRIR MENU (OK)"
+            android:textColor="@color/btn_playback_text_selector"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:focusable="true"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp" />
+
         <!-- Indicador de Seção / Breadcrumb Minimalista Neon -->
         <TextView
             android:id="@+id/txt_header_breadcrumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/logo_layout"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@id/btn_toggle_menu"
             android:background="@drawable/badge_live"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
@@ -99,6 +116,171 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <!-- TELA PRINCIPAL: DESTAQUES E LANÇAMENTOS 2025/2026 -->
+    <LinearLayout
+        android:id="@+id/layout_home_lancamentos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_navigation_bar"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="16dp"
+        android:visibility="visible">
+
+        <!-- Banner Hero Superior (Destaque Principal do Lançamento) -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="12dp">
+
+            <!-- Imagem de Fundo / Backdrop do Filme/Série -->
+            <ImageView
+                android:id="@+id/img_hero_backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="#151E2D"
+                android:contentDescription="Backdrop" />
+
+            <!-- Camada de Gradiente Escuro Cinematográfico -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_poster_scrim" />
+
+            <!-- Informações do Lançamento sobre o Banner -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:padding="26dp">
+
+                <TextView
+                    android:id="@+id/txt_hero_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/badge_live"
+                    android:backgroundTint="#00E5FF"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:text="🔥 LANÇAMENTO EM DESTAQUE • ULTRA HD 4K"
+                    android:textColor="#050B14"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_hero_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Duna: Parte 2"
+                    android:textColor="@color/text_white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:shadowColor="#000000"
+                    android:shadowDx="0"
+                    android:shadowDy="2"
+                    android:shadowRadius="6" />
+
+                <TextView
+                    android:id="@+id/txt_hero_meta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="⭐ 8.6 • 2025 • Ação / Ficção • 4K HDR"
+                    android:textColor="@color/neon_cyan"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_hero_plot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:maxWidth="750dp"
+                    android:text="Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Diante de escolhas difíceis, ele tenta evitar um futuro terrível."
+                    android:textColor="#C8D8F0"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Botões de Ação no Banner -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_hero_watch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_button_selector"
+                        android:focusable="true"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:text="▶ Assistir Agora (OK)"
+                        android:textAllCaps="false"
+                        android:textColor="@color/btn_playback_text_selector"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:nextFocusRight="@id/btn_hero_open_menu"
+                        android:nextFocusDown="@id/rv_home_lancamentos" />
+
+                    <Button
+                        android:id="@+id/btn_hero_open_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="14dp"
+                        android:background="@drawable/bg_button_selector"
+                        android:focusable="true"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
+                        android:text="☰ Abrir Menu / Canais"
+                        android:textAllCaps="false"
+                        android:textColor="@color/btn_playback_text_selector"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:nextFocusLeft="@id/btn_hero_watch"
+                        android:nextFocusDown="@id/rv_home_lancamentos" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Fileira Horizontal de Lançamentos 2025 / 2026 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="🔥 LANÇAMENTOS 2025 / 2026 (EM ALTA)"
+                android:textColor="@color/neon_cyan"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_home_lancamentos"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:clipToPadding="false"
+                android:descendantFocusability="afterDescendants"
+                android:focusable="false"
+                android:nextFocusUp="@id/btn_hero_watch"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <!-- 1.5 BARRA DE MENU PRINCIPAL: TV | FILMES | SERIES | INFANTIL | FUTEBOL -->
     <LinearLayout
         android:id="@+id/layout_main_menu_tabs"
@@ -109,7 +291,23 @@
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:layout_marginBottom="6dp">
+        android:layout_marginBottom="6dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_menu_home"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_tab_selector"
+            android:text="🏠 INÍCIO"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:focusable="true"
+            android:nextFocusDown="@id/rv_category_sidebar"
+            android:nextFocusRight="@id/btn_menu_tv" />
 
         <Button
             android:id="@+id/btn_menu_tv"
@@ -123,6 +321,7 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:focusable="true"
+            android:nextFocusLeft="@id/btn_menu_home"
             android:nextFocusDown="@id/rv_category_sidebar"
             android:nextFocusRight="@id/btn_menu_filmes" />
 
@@ -204,6 +403,7 @@
 
     <!-- 2. Corpo em 3 Painéis (Sidebar de Categorias + Grade de Canais + Player ao Vivo) -->
     <LinearLayout
+        android:id="@+id/layout_three_panels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/layout_main_menu_tabs"
@@ -211,7 +411,8 @@
         android:orientation="horizontal"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        android:visibility="gone">
 
         <!-- PAINEL 1: MENU LATERAL ESQUERDO (CATEGORIAS - WD STREAM / CYBER TV 2.0) -->
         <LinearLayout
