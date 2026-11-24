@@ -1267,7 +1267,8 @@ object ChannelRepository {
             ),
             ChannelCategory(
                 id = "cat_4k",
-                name = "Canais 4K Ultra HD",
+                name = "💎 Canais 4K Ultra HD",
+                iconRes = R.drawable.ic_4k,
                 isLocked = false,
                 channels = listOf(
                     Channel(
@@ -1317,13 +1318,13 @@ object ChannelRepository {
                     Channel(
                         id = "ch_4k_disc",
                         number = "105",
-                        title = "Discovery 4K UHD",
+                        title = "Discovery Channel HD",
                         category = "Canais 4K Ultra HD",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5770295.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/discovery-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/discovery-channel-hd.png",
-                        description = "Documentarios deslumbrantes da natureza, ciencia e vida selvagem em 4K.",
-                        quality = "4K",
-                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5770295.ts", "http://gelosalgados.site:80/live/59471019/60849037/5770295.m3u8")
+                        description = "O canal pioneiro em exploracao cientifica, misterios do planeta e aventuras humanas.",
+                        quality = "FHD",
+                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769469.m3u8", "http://64.31.23.207:80/live/59471019/60849037/5769469.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769469.m3u8")
                     ),
                     Channel(
                         id = "ch_4k_nasa",

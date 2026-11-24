@@ -29,19 +29,23 @@ object EpgRepository {
     // Grade de horários padrão em minutos a partir da meia-noite (00:00)
     // 00:00, 02:00, 06:00, 08:30, 10:00, 12:00, 13:30, 15:00, 17:00, 18:30, 20:00, 21:30, 23:00, 24:00
     val timeSlots = listOf(
-        Pair(0, 120),     // Slot 0:  00:00 - 02:00
-        Pair(120, 360),   // Slot 1:  02:00 - 06:00
-        Pair(360, 510),   // Slot 2:  06:00 - 08:30
-        Pair(510, 600),   // Slot 3:  08:30 - 10:00
-        Pair(600, 720),   // Slot 4:  10:00 - 12:00
-        Pair(720, 810),   // Slot 5:  12:00 - 13:30
-        Pair(810, 900),   // Slot 6:  13:30 - 15:00
-        Pair(900, 1020),  // Slot 7:  15:00 - 17:00
-        Pair(1020, 1110), // Slot 8:  17:00 - 18:30
-        Pair(1110, 1200), // Slot 9:  18:30 - 20:00
-        Pair(1200, 1290), // Slot 10: 20:00 - 21:30
-        Pair(1290, 1380), // Slot 11: 21:30 - 23:00
-        Pair(1380, 1440)  // Slot 12: 23:00 - 00:00
+        Pair(0, 75),       // Slot 0:  00:00 - 01:15
+        Pair(75, 240),     // Slot 1:  01:15 - 04:00
+        Pair(240, 360),    // Slot 2:  04:00 - 06:00
+        Pair(360, 510),    // Slot 3:  06:00 - 08:30
+        Pair(510, 570),    // Slot 4:  08:30 - 09:30
+        Pair(570, 635),    // Slot 5:  09:30 - 10:35
+        Pair(635, 705),    // Slot 6:  10:35 - 11:45
+        Pair(705, 780),    // Slot 7:  11:45 - 13:00
+        Pair(780, 885),    // Slot 8:  13:00 - 14:45
+        Pair(885, 1025),   // Slot 9:  14:45 - 17:05
+        Pair(1025, 1105),  // Slot 10: 17:05 - 18:25
+        Pair(1105, 1155),  // Slot 11: 18:25 - 19:15
+        Pair(1155, 1185),  // Slot 12: 19:15 - 19:45
+        Pair(1185, 1230),  // Slot 13: 19:45 - 20:30
+        Pair(1230, 1280),  // Slot 14: 20:30 - 21:20 (Jornal Nacional Ao Vivo)
+        Pair(1280, 1345),  // Slot 15: 21:20 - 22:25 (Novela das Nove)
+        Pair(1345, 1440)   // Slot 16: 22:25 - 00:00 (Linha de Shows / Futebol)
     )
 
     fun enrichChannel(channel: Channel): Channel {
@@ -1199,18 +1203,22 @@ private fun formatTime(minutes: Int): String {
         if (titleLower.contains("globo") && !titleLower.contains("news") && !idLower.contains("news")) {
             val globoGrid = listOf(
                 Pair("Jornal da Globo com Renata Lo Prete", "As principais notícias do fechamento do dia e análise política e econômica."),
-                Pair("Hora Um da Notícia / Corujão", "As primeiras horas do amanhecer com o trânsito e o giro pelas capitais."),
+                Pair("Conversa com Bial / Corujão", "Entrevistas em profundidade e grandes sucessos do cinema na madrugada."),
+                Pair("Hora Um da Notícia (Ao Vivo)", "As primeiras horas do amanhecer com o trânsito e o giro pelas capitais."),
                 Pair("Bom Dia Praça (Ao Vivo)", "Telejornal local com as primeiras informações da sua região e transporte público."),
                 Pair("Bom Dia Brasil (Ao Vivo)", "As principais notícias do Brasil e do mundo com correspondentes internacionais."),
                 Pair("Encontro com Patrícia Poeta (Ao Vivo)", "Música, debate sobre os temas do momento e histórias emocionantes."),
                 Pair("Mais Você com Ana Maria Braga", "Culinária deliciosa, matérias curiosas e o bom humor do Louro Mané."),
                 Pair("Praça TV - 1ª Edição (Ao Vivo)", "O telejornal do meio-dia focado na sua cidade e prestação de serviços."),
-                Pair("Globo Esporte / Jornal Hoje", "A cobertura esportiva da rodada e o noticiário nacional com César Tralli."),
+                Pair("Globo Esporte & Jornal Hoje", "A cobertura esportiva da rodada e o noticiário nacional com César Tralli."),
                 Pair("Sessão da Tarde Especial", "Grandes sucessos do cinema mundial para reunir toda a família na sala."),
-                Pair("Vale a Pena Ver de Novo / Novela das Seis", "A reapresentação dos maiores clássicos da teledramaturgia brasileira."),
+                Pair("Vale a Pena Ver de Novo", "A reapresentação dos maiores clássicos da teledramaturgia brasileira."),
+                Pair("Novela das Seis", "Emocionantes tramas de época e romance na faixa das 18h."),
                 Pair("Praça TV - 2ª Edição (Ao Vivo)", "O resumo dos fatos mais relevantes da noite na sua região metropolitana."),
-                Pair("Jornal Nacional com William Bonner", "O telejornal de maior audiência do país trazendo a cobertura dos fatos do dia."),
-                Pair("Novela das Nove / Linha de Shows / Futebol", "A principal produção dramática da TV brasileira e grandes transmissões esportivas.")
+                Pair("Novela das Sete", "Comédia, romance e ação na faixa das 19h."),
+                Pair("Jornal Nacional (Ao Vivo)", "As principais notícias do Brasil e do mundo com cobertura completa dos fatos do dia."),
+                Pair("Novela das Nove", "A principal produção dramática da TV brasileira."),
+                Pair("Linha de Shows / Futebol / Tela Quente", "Grandes transmissões esportivas ao vivo, séries exclusivas e cinema nacional.")
             )
             return globoGrid[slotIdx % globoGrid.size]
         }

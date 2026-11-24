@@ -240,17 +240,39 @@ class MainActivity : AppCompatActivity() {
         txtSettingPreviewDesc = findViewById(R.id.txt_setting_preview_desc)
         btnSettingPreviewAction = findViewById(R.id.btn_setting_preview_action)
 
-        // Botão Tela Cheia
-        btnFullscreen.setOnClickListener {
+        // Expansão Direta para Tela Cheia ao Focar e Clicar na Tela do Player
+        val expandToFullScreen = View.OnClickListener {
             currentPlayingChannel?.let { openFullScreenPlayer(it) }
         }
-        btnFullscreen.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                focusCurrentChannel()
-                return@setOnKeyListener true
+
+        playerPreviewContainer.isFocusable = true
+        playerPreviewContainer.isClickable = true
+        playerPreviewContainer.setOnClickListener(expandToFullScreen)
+
+        playerView.isClickable = true
+        playerView.setOnClickListener(expandToFullScreen)
+
+        val playerKeyListener = View.OnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_DPAD_CENTER,
+                    KeyEvent.KEYCODE_ENTER,
+                    KeyEvent.KEYCODE_NUMPAD_ENTER -> {
+                        currentPlayingChannel?.let { openFullScreenPlayer(it) }
+                        return@OnKeyListener true
+                    }
+                    KeyEvent.KEYCODE_DPAD_LEFT -> {
+                        focusCurrentChannel()
+                        return@OnKeyListener true
+                    }
+                }
             }
             false
         }
+
+        playerPreviewContainer.setOnKeyListener(playerKeyListener)
+        playerView.setOnKeyListener(playerKeyListener)
+        btnFullscreen.setOnClickListener(expandToFullScreen)
 
         // Configuração dos Ajustes
         setupSettings()
