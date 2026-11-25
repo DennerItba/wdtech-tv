@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun setupVersionInfo() {
         val versionName = try {
-            packageManager.getPackageInfo(packageName, 0).versionName ?: "2.9.9"
+            packageManager.getPackageInfo(packageName, 0).versionName ?: "3.0.0"
         } catch (_: Exception) {
             "2.9.9"
         }

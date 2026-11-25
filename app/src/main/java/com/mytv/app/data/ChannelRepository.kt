@@ -371,7 +371,7 @@ object ChannelRepository {
                         number = "62",
                         title = "BandSports FHD",
                         category = "🏆 Campeonatos & Estaduais",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769465.m3u8",
+                        streamUrl = "http://170.83.16.50/BAND_SPORTS/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngbandsports.png",
                         description = "Futebol internacional, campeonatos de base, tênis, automobilismo e esportes olímpicos.",
                         quality = "FHD",
@@ -444,7 +444,7 @@ object ChannelRepository {
                         number = "68",
                         title = "BandSports FHD",
                         category = "📺 SporTV & Canais Esportivos",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769465.m3u8",
+                        streamUrl = "http://170.83.16.50/BAND_SPORTS/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngbandsports.png",
                         description = "Futebol internacional, treinos de Fórmula 1, lutas e esportes radicais ao vivo.",
                         quality = "FHD",
@@ -506,7 +506,7 @@ object ChannelRepository {
                         number = "73",
                         title = "ESPN 4 FHD",
                         category = "🌐 Rede ESPN (Champions & Ligas)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769631.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/espn-4/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.pngfoxsports1.png",
                         description = "A casa da Copa Libertadores da América, Copa Sul-Americana e futebol sul-americano.",
                         quality = "FHD",
@@ -725,7 +725,7 @@ object ChannelRepository {
                         number = "57",
                         title = "Discovery Kids HD",
                         category = "Rede Discovery",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5770298.m3u8",
+                        streamUrl = "http://186.219.52.187/zoomoo/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD",
@@ -842,7 +842,7 @@ object ChannelRepository {
                         number = "56",
                         title = "Canal Sony HD (Sony Channel)",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5770480.m3u8",
+                        streamUrl = "http://170.83.16.50/SONY_CHANNEL/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sony_Channel_logo_2019.svg/320px-Sony_Channel_logo_2019.svg.png",
                         description = "O lendario Canal Sony: Grey's Anatomy, The Good Doctor e as series medicas e policiais mais amadas.",
                         quality = "FHD",
@@ -853,7 +853,7 @@ object ChannelRepository {
                         number = "57",
                         title = "Sony Movies HD",
                         category = "Filmes & Séries",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769605.m3u8",
+                        streamUrl = "http://170.83.16.50/SONY_MOVIES/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Sony_Movies_logo_2022.svg/320px-Sony_Movies_logo_2022.svg.png",
                         description = "O acervo completo dos lendarios estudios da Columbia Pictures e Sony Pictures.",
                         quality = "FHD",
@@ -1056,7 +1056,7 @@ object ChannelRepository {
                         number = "75",
                         title = "History Channel HD",
                         category = "Documentários",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769544.m3u8",
+                        streamUrl = "http://170.83.16.50/HISTORY/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/History_Logo.svg/320px-History_Logo.svg.png",
                         description = "Trato Feito, Alienigenas do Passado, Forjado no Fogo e grandes acontecimentos historicos.",
                         quality = "FHD",
@@ -1203,7 +1203,7 @@ object ChannelRepository {
                         number = "95",
                         title = "Terra Viva HD",
                         category = "Variedades & Estilo",
-                        streamUrl = "https://9ada494d.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfVXBseW5rLU5ld2NvX0hMUw/playlist.m3u8",
+                        streamUrl = "http://170.83.16.50/TERRA_VIVA/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Terra_Viva_logo.png/320px-Terra_Viva_logo.png",
                         description = "Vida no campo, sustentabilidade e transmissao de eventos rurais.",
                         quality = "HD",
@@ -1246,7 +1246,7 @@ object ChannelRepository {
                         number = "99",
                         title = "Rede TV",
                         category = "Variedades & Estilo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769447.m3u8",
+                        streamUrl = "http://186.219.52.187/rede_tv/index.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/rede-tv.png",
                         description = "Entretenimento, talk shows, fofocas e debates ao vivo.",
                         quality = "HD",
@@ -1458,14 +1458,14 @@ object ChannelRepository {
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo FHD Oficial: Sinal direto de alta definicao com programacao completa e EPG ativo.",
                         quality = "FHD",
-                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769268.m3u8", "http://64.31.23.207:80/live/59471019/60849037/5769268.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769268.m3u8")
+                        backupUrls = listOf("https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703", "http://64.31.23.207:80/live/59471019/60849037/5769268.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769268.m3u8")
                     ),
                     Channel(
                         id = "globo_sp_backup",
                         number = "116",
                         title = "Globo SP (Backup Alternativo)",
                         category = "Globo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769268.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Sinal de contingencia da TV Globo Sao Paulo para garantir transmissao sem interrupcoes.",
                         quality = "FHD",
@@ -1476,7 +1476,7 @@ object ChannelRepository {
                         number = "117",
                         title = "Globo SP 4K UHD",
                         category = "Globo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769268.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo em resolucao maxima 4K Ultra HD com codec HEVC de alta definicao.",
                         quality = "4K",
@@ -1487,7 +1487,7 @@ object ChannelRepository {
                         number = "118",
                         title = "Globo Nacional FHD",
                         category = "Globo",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769251.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/globo-rj-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "Sinal nacional da Rede Globo de Televisao para todo o Brasil em Full HD.",
                         quality = "FHD",
@@ -1502,7 +1502,7 @@ object ChannelRepository {
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/globo-sp-globo-sao-paulo.png",
                         description = "TV Globo Sao Paulo: Jornalismo, novelas, futebol e programacao completa em alta definicao.",
                         quality = "HD",
-                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769268.m3u8", "http://64.31.23.207:80/live/59471019/60849037/5769268.ts")
+                        backupUrls = listOf("https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703", "http://64.31.23.207:80/live/59471019/60849037/5769268.ts")
                     ),
                     Channel(
                         id = "ch_160",
@@ -1639,7 +1639,7 @@ object ChannelRepository {
                         number = "127",
                         title = "Band SP - Band SP",
                         category = "Band",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769511.m3u8",
+                        streamUrl = "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/band-sp-band-sp.png",
                         description = "Band Sao Paulo: O canal do esporte, Formula 1, Jogo Aberto, Os Donos da Bola e MasterChef.",
                         quality = "HD",
@@ -1740,7 +1740,7 @@ object ChannelRepository {
                         number = "134",
                         title = "Cartoon Network HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5770501.m3u8",
+                        streamUrl = "https://stmv1.srvif.com/gospelcartoon/gospelcartoon/playlist.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/320px-Cartoon_Network_2010_logo.svg.png",
                         description = "O canal dos desenhos animados: Ben 10, Teen Titans Go, Hora de Aventura e Incrivel Mundo de Gumball.",
                         quality = "FHD",
@@ -1782,7 +1782,7 @@ object ChannelRepository {
                         number = "138",
                         title = "Tooncast HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://170.83.16.50:80/TOONCAST/index.m3u8",
+                        streamUrl = "http://186.219.52.187/ratimbum/index.m3u8",
                         logoUrl = "http://acstatic.co/logos/canais/tooncast.png",
                         description = "Os classicos inesqueciveis: Coragem o Cao Covarde, O Laboratorio de Dexter e Os Flintstones.",
                         quality = "HD"
@@ -1792,7 +1792,7 @@ object ChannelRepository {
                         number = "139",
                         title = "Discovery Kids HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5770298.m3u8",
+                        streamUrl = "http://186.219.52.187/zoomoo/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Discovery_Kids_logo_%282016%29.svg/320px-Discovery_Kids_logo_%282016%29.svg.png",
                         description = "O canal lider para o publico infantil: Peppa Pig, O Show da Luna e Doki.",
                         quality = "HD",
@@ -1825,7 +1825,7 @@ object ChannelRepository {
                         number = "142",
                         title = "TV Rá-Tim-Bum HD",
                         category = "Infantil & Kids",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5726198.m3u8",
+                        streamUrl = "http://186.219.52.187/ratimbum/index.m3u8",
                         logoUrl = "https://unitv.cdntv.com.br/uploads/tv_image/sm/tv-ra-tim-bum.png",
                         description = "O canal infantil brasileiro da Fundacao Padre Anchieta / TV Cultura: Cocorico e Ilha Ra-Tim-Bum.",
                         quality = "HD"
@@ -2341,8 +2341,12 @@ object ChannelRepository {
             MainSection.TV -> {
                 val tvCats = mutableListOf<ChannelCategory>()
                 val catIds = listOf(
-                    "cat_globo", "cat_sbt", "cat_record", "cat_band", "cat_noticias",
-                    "cat_kids", "cat_discovery", "cat_docs", "cat_variedades", "cat_musica",
+                    "cat_globo", "cat_sbt", "cat_record", "cat_band",
+                    "cat_premiere", "cat_campeonatos", "cat_jogos_dia",
+                    "cat_esportes", "cat_espn",
+                    "cat_telecine", "cat_hbo", "cat_filmes",
+                    "cat_noticias", "cat_f1", "cat_discovery", "cat_docs",
+                    "cat_kids", "cat_musica", "cat_variedades",
                     "cat_fazenda", "cat_24h", "cat_4k", "cat_h265"
                 )
                 val matched = catIds.mapNotNull { id -> allCats.find { it.id == id } }
@@ -2354,8 +2358,8 @@ object ChannelRepository {
                     iconRes = R.drawable.ic_all_channels,
                     channels = allTvChannels
                 )
-                tvCats.add(catTodosTv)
                 tvCats.addAll(matched)
+                tvCats.add(catTodosTv)
                 tvCats
             }
 

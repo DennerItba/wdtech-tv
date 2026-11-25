@@ -101,6 +101,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnRailCategories: ImageView
     private lateinit var txtTvCategoryTitle: TextView
     private lateinit var txtCategoryBadge: TextView
+    private var layoutTvCategoryHeader: LinearLayout? = null
     private lateinit var rvChannelList: RecyclerView
     private lateinit var channelAdapter: ChannelListAdapter
 
@@ -226,6 +227,7 @@ class MainActivity : AppCompatActivity() {
         btnRailCategories = findViewById(R.id.btn_rail_categories)
         txtTvCategoryTitle = findViewById(R.id.txt_tv_category_title)
         txtCategoryBadge = findViewById(R.id.txt_category_badge)
+        layoutTvCategoryHeader = findViewById(R.id.layout_tv_category_header)
         rvChannelList = findViewById(R.id.rv_channel_list)
         rvChannelList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -363,7 +365,7 @@ class MainActivity : AppCompatActivity() {
         layoutVodCatalogMode.visibility = View.GONE
         layoutSettingsMode.visibility = View.GONE
 
-        txtHomeVersion.text = "Versão 2.9.9"
+        txtHomeVersion.text = "Versão 3.0.0"
         txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -495,12 +497,16 @@ class MainActivity : AppCompatActivity() {
             favs?.let { setTvCategory(it) }
         }
         btnRailRecents.setOnClickListener {
-            val todos = tvCategories.find { it.id == "cat_todos" } ?: tvCategories.firstOrNull()
+            val todos = tvCategories.find { it.id == "cat_tv_todos" } ?: tvCategories.firstOrNull()
             todos?.let { setTvCategory(it) }
         }
-        btnRailCategories.setOnClickListener {
-            cycleNextCategory()
+
+        val openCats = View.OnClickListener {
+            showCategoryPickerDialog()
         }
+        btnRailCategories.setOnClickListener(openCats)
+        layoutTvCategoryHeader?.setOnClickListener(openCats)
+        txtTvCategoryTitle.setOnClickListener(openCats)
 
         val railKeyListener = View.OnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
@@ -513,6 +519,15 @@ class MainActivity : AppCompatActivity() {
         btnRailFavorites.setOnKeyListener(railKeyListener)
         btnRailRecents.setOnKeyListener(railKeyListener)
         btnRailCategories.setOnKeyListener(railKeyListener)
+
+        // D-Pad Esquerda na lista de canais move foco para o botão de categorias
+        rvChannelList.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                btnRailCategories.requestFocus()
+                return@setOnKeyListener true
+            }
+            false
+        }
 
         // Clique na tela do player expande para tela cheia (Requisito Explícito do Usuário)
         val expandToFullScreen = View.OnClickListener {
@@ -543,6 +558,45 @@ class MainActivity : AppCompatActivity() {
         }
         playerPreviewContainer.setOnKeyListener(playerKeyListener)
         playerView.setOnKeyListener(playerKeyListener)
+    }
+
+    private fun showCategoryPickerDialog() {
+        if (tvCategories.isEmpty()) return
+
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_category_picker)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.52).toInt().coerceAtLeast(420),
+            (resources.displayMetrics.heightPixels * 0.85).toInt()
+        )
+
+        val rv = dialog.findViewById<RecyclerView>(R.id.rv_dialog_categories)
+        val btnClose = dialog.findViewById<Button>(R.id.btn_dialog_close_cats)
+
+        btnClose?.setOnClickListener { dialog.dismiss() }
+
+        rv?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val adapter = com.mytv.app.adapter.CategoryPickerAdapter(
+            categories = tvCategories,
+            currentSelectedId = currentTvCategory?.id,
+            onCategorySelected = { selected ->
+                dialog.dismiss()
+                setTvCategory(selected)
+            }
+        )
+        rv?.adapter = adapter
+
+        val currentIdx = tvCategories.indexOfFirst { it.id == currentTvCategory?.id }.coerceAtLeast(0)
+        rv?.scrollToPosition(currentIdx)
+
+        dialog.show()
+
+        rv?.postDelayed({
+            val vh = rv.findViewHolderForAdapterPosition(currentIdx)
+            vh?.itemView?.requestFocus() ?: rv.requestFocus()
+        }, 150)
     }
 
     private fun cycleNextCategory() {
@@ -1074,35 +1128,38 @@ class MainActivity : AppCompatActivity() {
         cancelPreviewWatchdog()
         val runnable = Runnable {
             if (!isFinishing && !isDestroyed && (exoPlayer?.playbackState == Player.STATE_BUFFERING || exoPlayer?.playbackState == Player.STATE_IDLE)) {
-                android.util.Log.w("WDTECH_NETFLIX", "Preview stall detectado (12s) no canal ${channel.title}. Acionando auto-failover...")
-                triggerPreviewFailover(channel, "Stall de buffer no preview (12s)")
+                android.util.Log.w("WDTECH_NETFLIX", "Preview stall detectado (3.5s) no canal ${channel.title}. Acionando auto-failover instantâneo...")
+                triggerPreviewFailover(channel, "Stall de buffer no preview (3.5s)")
             }
         }
         previewWatchdogRunnable = runnable
-        previewWatchdogHandler.postDelayed(runnable, 12000L)
+        previewWatchdogHandler.postDelayed(runnable, 3500L)
     }
 
     private fun buildStreamCandidates(channel: Channel): List<String> {
-        val list = mutableListOf<String>()
+        val rawList = mutableListOf<String>()
         val primary = channel.streamUrl
-        if (primary.isNotEmpty()) {
-            list.add(primary)
-            if (primary.contains("64.31.23.207")) {
-                if (primary.endsWith(".m3u8")) list.add(primary.replace(".m3u8", ".ts"))
-                else if (primary.endsWith(".ts")) list.add(primary.replace(".ts", ".m3u8"))
-            }
+        if (primary.isNotEmpty()) rawList.add(primary)
+        for (b in channel.backupUrls) {
+            if (b.isNotEmpty() && !rawList.contains(b)) rawList.add(b)
         }
 
-        for (b in channel.backupUrls) {
-            if (b.isNotEmpty() && !list.contains(b)) {
-                list.add(b)
-                if (b.contains("64.31.23.207")) {
-                    val alt = if (b.endsWith(".m3u8")) b.replace(".m3u8", ".ts") else if (b.endsWith(".ts")) b.replace(".ts", ".m3u8") else null
-                    if (alt != null && !list.contains(alt)) list.add(alt)
-                }
+        // Prioriza CDNs de alta velocidade e baixa latência
+        val sortedList = rawList.sortedBy { url ->
+            if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 0
+            else if (url.contains("64.31.23.207")) 2
+            else 1
+        }
+
+        val result = mutableListOf<String>()
+        for (u in sortedList) {
+            if (!result.contains(u)) result.add(u)
+            if (u.contains("64.31.23.207")) {
+                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else null
+                if (alt != null && !result.contains(alt)) result.add(alt)
             }
         }
-        return list
+        return result
     }
 
     private fun triggerPreviewFailover(channel: Channel, reason: String) {

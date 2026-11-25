@@ -401,35 +401,38 @@ class PlayerActivity : AppCompatActivity() {
         cancelStallWatchdog()
         val runnable = Runnable {
             if (!isFinishing && !isDestroyed && (player?.playbackState == Player.STATE_BUFFERING || player?.playbackState == Player.STATE_IDLE)) {
-                android.util.Log.w("WDTECH_NETFLIX", "Stall detectado (8000ms) no canal ${channel.title}. Acionando auto-failover...")
-                triggerAutoFailover(channel, "Stall de buffer detectado (8.0s)")
+                android.util.Log.w("WDTECH_NETFLIX", "Stall detectado (4.5s) no canal ${channel.title}. Acionando auto-failover instantâneo...")
+                triggerAutoFailover(channel, "Stall de buffer detectado (4.5s)")
             }
         }
         stallWatchdogRunnable = runnable
-        stallWatchdogHandler.postDelayed(runnable, 25000L)
+        stallWatchdogHandler.postDelayed(runnable, 4500L)
     }
 
     private fun buildStreamCandidates(channel: Channel, customUrl: String? = null): List<String> {
-        val list = mutableListOf<String>()
+        val rawList = mutableListOf<String>()
         val primary = customUrl ?: channel.streamUrl
-        if (primary.isNotEmpty()) {
-            list.add(primary)
-            if (primary.contains("64.31.23.207")) {
-                if (primary.endsWith(".m3u8")) list.add(primary.replace(".m3u8", ".ts"))
-                else if (primary.endsWith(".ts")) list.add(primary.replace(".ts", ".m3u8"))
-            }
+        if (primary.isNotEmpty()) rawList.add(primary)
+        for (b in channel.backupUrls) {
+            if (b.isNotEmpty() && !rawList.contains(b)) rawList.add(b)
         }
 
-        for (b in channel.backupUrls) {
-            if (b.isNotEmpty() && !list.contains(b)) {
-                list.add(b)
-                if (b.contains("64.31.23.207")) {
-                    val alt = if (b.endsWith(".m3u8")) b.replace(".m3u8", ".ts") else if (b.endsWith(".ts")) b.replace(".ts", ".m3u8") else null
-                    if (alt != null && !list.contains(alt)) list.add(alt)
-                }
+        // Prioriza CDNs de alta velocidade e baixa latência
+        val sortedList = rawList.sortedBy { url ->
+            if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 0
+            else if (url.contains("64.31.23.207")) 2
+            else 1
+        }
+
+        val result = mutableListOf<String>()
+        for (u in sortedList) {
+            if (!result.contains(u)) result.add(u)
+            if (u.contains("64.31.23.207")) {
+                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else null
+                if (alt != null && !result.contains(alt)) result.add(alt)
             }
         }
-        return list
+        return result
     }
 
         private fun triggerAutoFailover(channel: Channel, reason: String) {

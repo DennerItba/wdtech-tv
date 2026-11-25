@@ -29,11 +29,12 @@ object TurboNetworkFactory {
         // Pool de conexões otimizado para streaming contínuo sem reabertura de sockets
         val pool = ConnectionPool(16, 5, TimeUnit.MINUTES)
 
+        // Timeouts rápidos (3.5s conexão / 5.0s leitura) para failover instantâneo quando canal estiver instável
         val clientBuilder = OkHttpClient.Builder()
             .connectionPool(pool)
-            .connectTimeout(15000, TimeUnit.MILLISECONDS) // 15s para conexões internacionais/CDN
-            .readTimeout(25000, TimeUnit.MILLISECONDS)    // 25s para download de chunks HLS sem aborto precoce
-            .writeTimeout(15000, TimeUnit.MILLISECONDS)
+            .connectTimeout(3500, TimeUnit.MILLISECONDS)
+            .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .writeTimeout(3500, TimeUnit.MILLISECONDS)
             .retryOnConnectionFailure(true)
             .followRedirects(true)
             .followSslRedirects(true)
@@ -42,8 +43,8 @@ object TurboNetworkFactory {
             try {
                 // Bootstrap com resolução direta de IPs para evitar dependência do DNS local do ISP
                 val bootstrapClient = OkHttpClient.Builder()
-                    .connectTimeout(5000, TimeUnit.MILLISECONDS)
-                    .readTimeout(5000, TimeUnit.MILLISECONDS)
+                    .connectTimeout(3000, TimeUnit.MILLISECONDS)
+                    .readTimeout(3000, TimeUnit.MILLISECONDS)
                     .build()
 
                 val cloudflareDoh = DnsOverHttps.Builder()
