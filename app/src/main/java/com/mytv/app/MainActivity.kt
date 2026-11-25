@@ -58,15 +58,23 @@ import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-        // --- Barra de Menu Principal (5 Menus Separados) ---
+    // --- Barra de Menu Principal (Menús Separados) ---
     private lateinit var layoutMainMenuTabs: LinearLayout
     private lateinit var btnMenuTv: Button
     private lateinit var btnMenuFilmes: Button
     private lateinit var btnMenuSeries: Button
     private lateinit var btnMenuFutebol: Button
+    private lateinit var btnMenuInfantil: Button
     private lateinit var btnMenuSettings: Button
     private lateinit var txtSidebarSectionTitle: TextView
     private var vodFetchJob: kotlinx.coroutines.Job? = null
+
+    // --- Catálogo VOD em Grade Netflix ---
+    private lateinit var layoutVodGridContainer: View
+    private lateinit var rvVodGrid: RecyclerView
+    private lateinit var txtVodCategoryTitle: TextView
+    private lateinit var txtVodItemsCount: TextView
+    private lateinit var ottVodPosterAdapter: OttPosterAdapter
 
     private var currentSection: MainSection = MainSection.TV
 
@@ -245,8 +253,15 @@ class MainActivity : AppCompatActivity() {
         btnMenuFilmes = findViewById(R.id.btn_menu_filmes)
         btnMenuSeries = findViewById(R.id.btn_menu_series)
         btnMenuFutebol = findViewById(R.id.btn_menu_futebol)
+        btnMenuInfantil = findViewById(R.id.btn_menu_infantil)
         btnMenuSettings = findViewById(R.id.btn_menu_settings)
         txtSidebarSectionTitle = findViewById(R.id.txt_sidebar_section_title)
+
+        // Catálogo VOD Grade Netflix
+        layoutVodGridContainer = findViewById(R.id.layout_vod_grid_container)
+        rvVodGrid = findViewById(R.id.rv_vod_grid)
+        txtVodCategoryTitle = findViewById(R.id.txt_vod_category_title)
+        txtVodItemsCount = findViewById(R.id.txt_vod_items_count)
 
         setupMainMenuTabs()
 
@@ -363,7 +378,8 @@ class MainActivity : AppCompatActivity() {
             btnMenuTv to MainSection.TV,
             btnMenuFilmes to MainSection.FILMES,
             btnMenuSeries to MainSection.SERIES,
-            btnMenuFutebol to MainSection.FUTEBOL
+            btnMenuFutebol to MainSection.FUTEBOL,
+            btnMenuInfantil to MainSection.INFANTIL
         )
 
         for ((btn, section) in tabButtons) {
@@ -408,6 +424,7 @@ class MainActivity : AppCompatActivity() {
             btnMenuFilmes.isSelected = false
             btnMenuSeries.isSelected = false
             btnMenuFutebol.isSelected = false
+            btnMenuInfantil.isSelected = false
             btnMenuSettings.isSelected = false
 
             btnHeroWatch.requestFocus()
@@ -440,20 +457,16 @@ class MainActivity : AppCompatActivity() {
         btnMenuFilmes.isSelected = (section == MainSection.FILMES)
         btnMenuSeries.isSelected = (section == MainSection.SERIES)
         btnMenuFutebol.isSelected = (section == MainSection.FUTEBOL)
+        btnMenuInfantil.isSelected = (section == MainSection.INFANTIL)
         btnMenuSettings.isSelected = false
 
         if (section == MainSection.FILMES) {
             pausePreviewPlayer()
-            panelChannels.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.VISIBLE
-            playerView.visibility = View.GONE
-            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
-            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
+            panelChannels.visibility = View.GONE
+            playerPreviewContainer.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.VISIBLE
-            rvChannelList.visibility = View.GONE
-            rvSettingsList.visibility = View.GONE
-            rvVodList.visibility = View.VISIBLE
+            layoutVodPreview.visibility = View.GONE
+            layoutVodGridContainer.visibility = View.VISIBLE
 
             txtSidebarSectionTitle.text = "CATÁLOGO • FILMES (VOD)"
 
@@ -468,10 +481,13 @@ class MainActivity : AppCompatActivity() {
             sidebarAdapter.setSelectedCategory(first)
             txtHeaderBreadcrumb.text = "WDTECH TV • FILMES • ${first.name.uppercase()}"
             txtSelectedCategoryTitle.text = first.name
+            txtVodCategoryTitle.text = first.name
             val instantMovies = VodRepository.getFallbackMovies(first.id.removePrefix("vod_cat_"))
+            ottVodPosterAdapter.updateItems(instantMovies)
             vodAdapter.updateItems(instantMovies)
             txtCategoryBadge.text = instantMovies.size.toString()
-            updateVodPreview(instantMovies.firstOrNull())
+            txtVodItemsCount.text = "${instantMovies.size} Títulos"
+
             if (shouldFocusCategory) {
                 focusFirstCategory()
             }
@@ -497,16 +513,11 @@ class MainActivity : AppCompatActivity() {
 
         if (section == MainSection.SERIES) {
             pausePreviewPlayer()
-            panelChannels.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.VISIBLE
-            playerView.visibility = View.GONE
-            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
-            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
+            panelChannels.visibility = View.GONE
+            playerPreviewContainer.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.VISIBLE
-            rvChannelList.visibility = View.GONE
-            rvSettingsList.visibility = View.GONE
-            rvVodList.visibility = View.VISIBLE
+            layoutVodPreview.visibility = View.GONE
+            layoutVodGridContainer.visibility = View.VISIBLE
 
             txtSidebarSectionTitle.text = "CATÁLOGO • SÉRIES (VOD)"
 
@@ -521,10 +532,13 @@ class MainActivity : AppCompatActivity() {
             sidebarAdapter.setSelectedCategory(first)
             txtHeaderBreadcrumb.text = "WDTECH TV • SÉRIES • ${first.name.uppercase()}"
             txtSelectedCategoryTitle.text = first.name
+            txtVodCategoryTitle.text = first.name
             val instantSeries = VodRepository.getFallbackSeries(first.id.removePrefix("vod_series_cat_"))
+            ottVodPosterAdapter.updateItems(instantSeries)
             vodAdapter.updateItems(instantSeries)
             txtCategoryBadge.text = instantSeries.size.toString()
-            updateVodPreview(instantSeries.firstOrNull())
+            txtVodItemsCount.text = "${instantSeries.size} Títulos"
+
             if (shouldFocusCategory) {
                 focusFirstCategory()
             }
@@ -548,7 +562,8 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // Modo TV / FUTEBOL
+        // Modo TV / FUTEBOL / INFANTIL
+        layoutVodGridContainer.visibility = View.GONE
         layoutVodPreview.visibility = View.GONE
         rvVodList.visibility = View.GONE
         layoutSettingsPreview.visibility = View.GONE
@@ -596,8 +611,10 @@ class MainActivity : AppCompatActivity() {
         btnMenuFilmes.isSelected = false
         btnMenuSeries.isSelected = false
         btnMenuFutebol.isSelected = false
+        btnMenuInfantil.isSelected = false
         btnMenuSettings.isSelected = true
 
+        layoutVodGridContainer.visibility = View.GONE
         txtSidebarSectionTitle.text = "AJUSTES • SISTEMA"
         panelChannels.visibility = View.VISIBLE
         rvChannelList.visibility = View.GONE
@@ -663,7 +680,7 @@ class MainActivity : AppCompatActivity() {
             onItemClick = { item ->
                 openVodPlayer(item)
             },
-            onNavigateUpToHero = {
+            onNavigateUpToTabs = {
                 btnHeroWatch.requestFocus()
             }
         )
@@ -763,66 +780,65 @@ class MainActivity : AppCompatActivity() {
             updateSettingPreview(items.first())
         } else if (category.id.startsWith("vod_cat_")) {
             isSettingsMode = false
-            panelChannels.visibility = View.VISIBLE
-            rvChannelList.visibility = View.GONE
-            rvSettingsList.visibility = View.GONE
-            rvVodList.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.VISIBLE
-            playerView.visibility = View.GONE
-            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
-            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
+            layoutVodGridContainer.visibility = View.VISIBLE
+            panelChannels.visibility = View.GONE
+            playerPreviewContainer.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.VISIBLE
+            layoutVodPreview.visibility = View.GONE
+
+            txtVodCategoryTitle.text = category.name
             val rawId = category.id.removePrefix("vod_cat_")
 
             // 1. Títulos e capas instantâneos sem latência
             val instantMovies = VodRepository.getFallbackMovies(rawId)
+            ottVodPosterAdapter.updateItems(instantMovies)
             vodAdapter.updateItems(instantMovies)
             txtCategoryBadge.text = instantMovies.size.toString()
-            updateVodPreview(instantMovies.firstOrNull())
+            txtVodItemsCount.text = "${instantMovies.size} Títulos"
 
             // 2. Consulta em segundo plano para categorias do servidor
             vodFetchJob?.cancel()
             vodFetchJob = lifecycleScope.launch {
                 val movies = VodRepository.getMoviesByCategory(rawId, category.name)
                 if (movies.isNotEmpty() && currentSelectedCategory?.id == category.id) {
+                    ottVodPosterAdapter.updateItems(movies)
                     vodAdapter.updateItems(movies)
                     txtCategoryBadge.text = movies.size.toString()
-                    updateVodPreview(movies.firstOrNull())
+                    txtVodItemsCount.text = "${movies.size} Títulos"
                 }
             }
         } else if (category.id.startsWith("vod_series_cat_")) {
             isSettingsMode = false
-            panelChannels.visibility = View.VISIBLE
-            rvChannelList.visibility = View.GONE
-            rvSettingsList.visibility = View.GONE
-            rvVodList.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.VISIBLE
-            playerView.visibility = View.GONE
-            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
-            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
+            layoutVodGridContainer.visibility = View.VISIBLE
+            panelChannels.visibility = View.GONE
+            playerPreviewContainer.visibility = View.GONE
             layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.VISIBLE
+            layoutVodPreview.visibility = View.GONE
+
+            txtVodCategoryTitle.text = category.name
             val rawId = category.id.removePrefix("vod_series_cat_")
 
             // 1. Séries instantâneas
             val instantSeries = VodRepository.getFallbackSeries(rawId)
+            ottVodPosterAdapter.updateItems(instantSeries)
             vodAdapter.updateItems(instantSeries)
             txtCategoryBadge.text = instantSeries.size.toString()
-            updateVodPreview(instantSeries.firstOrNull())
+            txtVodItemsCount.text = "${instantSeries.size} Títulos"
 
             // 2. Consulta em segundo plano para séries do servidor
             vodFetchJob?.cancel()
             vodFetchJob = lifecycleScope.launch {
                 val series = VodRepository.getSeriesByCategory(rawId, category.name)
                 if (series.isNotEmpty() && currentSelectedCategory?.id == category.id) {
+                    ottVodPosterAdapter.updateItems(series)
                     vodAdapter.updateItems(series)
                     txtCategoryBadge.text = series.size.toString()
-                    updateVodPreview(series.firstOrNull())
+                    txtVodItemsCount.text = "${series.size} Títulos"
                 }
             }
         } else {
             isSettingsMode = false
+            layoutVodGridContainer.visibility = View.GONE
             panelChannels.visibility = View.VISIBLE
             rvSettingsList.visibility = View.GONE
             rvVodList.visibility = View.GONE
@@ -845,7 +861,7 @@ class MainActivity : AppCompatActivity() {
         if (isSettingsMode) {
             focusFirstSetting()
         } else if (category.id.startsWith("vod_cat_") || category.id.startsWith("vod_series_cat_")) {
-            focusFirstVod()
+            focusFirstVodGrid()
         } else {
             focusFirstChannel()
         }
@@ -1093,13 +1109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun focusFirstVod() {
-        if (vodAdapter.itemCount == 0) return
-        rvVodList.stopScroll()
-        rvVodList.scrollToPosition(0)
-        rvVodList.post {
-            val vh = rvVodList.findViewHolderForAdapterPosition(0)
-            vh?.itemView?.requestFocus() ?: rvVodList.requestFocus()
-        }
+        focusFirstVodGrid()
     }
 
     private fun updateVodPreview(item: VodItem?) {
@@ -1129,8 +1139,114 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openVodPlayer(item: VodItem) {
-        val channel = item.toChannel()
-        openFullScreenPlayer(channel)
+        if (item.isSeries) {
+            lifecycleScope.launch {
+                val seasons = VodRepository.getSeriesInfo(item.id)
+                val firstEp = seasons.firstOrNull()?.episodes?.firstOrNull()
+                if (firstEp != null) {
+                    val epChannel = Channel(
+                        id = "vod_ep_${firstEp.id}",
+                        number = "🍿",
+                        title = "${item.name} - ${firstEp.getDisplayName()}",
+                        category = "Séries • ${item.categoryName}",
+                        streamUrl = firstEp.streamUrl,
+                        logoUrl = item.posterUrl,
+                        description = firstEp.plot ?: item.plot ?: "",
+                        quality = "FHD",
+                        isHls = firstEp.streamUrl.contains(".m3u8")
+                    )
+                    openFullScreenPlayer(epChannel)
+                } else {
+                    showSeriesEpisodesDialog(item)
+                }
+            }
+        } else {
+            val channel = item.toChannel()
+            openFullScreenPlayer(channel)
+        }
+    }
+
+    private fun showSeriesEpisodesDialog(series: VodItem) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_series_episodes)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.90).toInt(),
+            (resources.displayMetrics.heightPixels * 0.88).toInt()
+        )
+
+        val txtTitle = dialog.findViewById<TextView>(R.id.txt_dialog_series_title)
+        val txtGenre = dialog.findViewById<TextView>(R.id.txt_dialog_series_genre)
+        val imgPoster = dialog.findViewById<ImageView>(R.id.img_dialog_series_cover)
+        val txtSynopsis = dialog.findViewById<TextView>(R.id.txt_dialog_series_plot)
+        val rvSeasons = dialog.findViewById<RecyclerView>(R.id.rv_dialog_seasons)
+        val rvEpisodes = dialog.findViewById<RecyclerView>(R.id.rv_dialog_episodes)
+        val btnClose = dialog.findViewById<Button>(R.id.btn_dialog_close)
+
+        txtTitle?.text = series.name
+        txtGenre?.text = "${series.getFormattedRating()} • ${series.year ?: "2025"} • ${series.genre ?: "Série"}"
+        txtSynopsis?.text = series.plot ?: "Superprodução em alta definição sob demanda no WDTECH TV."
+
+        if (imgPoster != null && !series.posterUrl.isNullOrEmpty()) {
+            imgPoster.load(series.posterUrl) {
+                crossfade(true)
+                placeholder(R.drawable.logo)
+                error(R.drawable.logo)
+            }
+        }
+
+        btnClose?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        rvSeasons?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvEpisodes?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        val episodeAdapter = com.mytv.app.adapter.EpisodeAdapter(emptyList()) { ep ->
+            dialog.dismiss()
+            val epChannel = Channel(
+                id = "vod_ep_${ep.id}",
+                number = "🍿",
+                title = "${series.name} - ${ep.getDisplayName()}",
+                category = "Séries • ${series.categoryName}",
+                streamUrl = ep.streamUrl,
+                logoUrl = series.posterUrl,
+                description = ep.plot ?: series.plot ?: "",
+                quality = "FHD",
+                isHls = ep.streamUrl.contains(".m3u8")
+            )
+            openFullScreenPlayer(epChannel)
+        }
+        rvEpisodes?.adapter = episodeAdapter
+
+        val seasonAdapter = com.mytv.app.adapter.SeasonAdapter(emptyList()) { season ->
+            episodeAdapter.updateEpisodes(season.episodes)
+        }
+        rvSeasons?.adapter = seasonAdapter
+
+        lifecycleScope.launch {
+            val seasons = VodRepository.getSeriesInfo(series.id)
+            if (!isFinishing && !isDestroyed && seasons.isNotEmpty()) {
+                seasonAdapter.updateSeasons(seasons)
+                val firstSeason = seasons.firstOrNull()
+                if (firstSeason != null) {
+                    episodeAdapter.updateEpisodes(firstSeason.episodes)
+                }
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun focusFirstVodGrid() {
+        if (ottVodPosterAdapter.itemCount == 0) return
+        rvVodGrid.stopScroll()
+        rvVodGrid.scrollToPosition(0)
+        rvVodGrid.post {
+            val vh = rvVodGrid.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus() ?: rvVodGrid.requestFocus()
+        }
     }
 
     private fun pausePreviewPlayer() {
@@ -1187,6 +1303,26 @@ class MainActivity : AppCompatActivity() {
 
     // --- Configuração do Catálogo VOD (Filmes e Séries) ---
     private fun setupVod() {
+        ottVodPosterAdapter = OttPosterAdapter(
+            items = emptyList(),
+            onItemFocus = { item ->
+                currentSelectedVodItem = item
+                txtHeaderBreadcrumb.text = "WDTECH TV • ${if (item.isSeries) "SÉRIES" else "FILMES"} • ${item.name.uppercase()}"
+            },
+            onItemClick = { item ->
+                currentSelectedVodItem = item
+                if (item.isSeries) {
+                    showSeriesEpisodesDialog(item)
+                } else {
+                    openVodPlayer(item)
+                }
+            },
+            onNavigateUpToTabs = {
+                focusActiveTab()
+            }
+        )
+        rvVodGrid.adapter = ottVodPosterAdapter
+
         vodAdapter = VodListAdapter(
             items = emptyList(),
             onItemSelected = { item ->
@@ -1195,7 +1331,11 @@ class MainActivity : AppCompatActivity() {
             },
             onItemClicked = { item ->
                 currentSelectedVodItem = item
-                openVodPlayer(item)
+                if (item.isSeries) {
+                    showSeriesEpisodesDialog(item)
+                } else {
+                    openVodPlayer(item)
+                }
             },
             onNavigateToCategories = {
                 focusCurrentCategory()
@@ -1210,11 +1350,17 @@ class MainActivity : AppCompatActivity() {
         rvVodList.adapter = vodAdapter
 
         btnVodAction.setOnClickListener {
-            currentSelectedVodItem?.let { openVodPlayer(it) }
+            currentSelectedVodItem?.let {
+                if (it.isSeries) {
+                    showSeriesEpisodesDialog(it)
+                } else {
+                    openVodPlayer(it)
+                }
+            }
         }
         btnVodAction.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                focusFirstVod()
+                focusFirstVodGrid()
                 return@setOnKeyListener true
             }
             false

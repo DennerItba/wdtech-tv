@@ -376,9 +376,26 @@
             android:textStyle="bold"
             android:focusable="true"
             android:nextFocusLeft="@id/btn_menu_series"
-            android:nextFocusRight="@id/btn_menu_settings"
+            android:nextFocusRight="@id/btn_menu_infantil"
             android:nextFocusDown="@id/rv_category_sidebar"
             android:nextFocusUp="@id/btn_menu_futebol" />
+
+        <Button
+            android:id="@+id/btn_menu_infantil"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_tab_selector"
+            android:text="👶 INFANTIL"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:focusable="true"
+            android:nextFocusLeft="@id/btn_menu_futebol"
+            android:nextFocusRight="@id/btn_menu_settings"
+            android:nextFocusDown="@id/rv_category_sidebar"
+            android:nextFocusUp="@id/btn_menu_infantil" />
 
         <Button
             android:id="@+id/btn_menu_settings"
@@ -391,7 +408,7 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_futebol"
+            android:nextFocusLeft="@id/btn_menu_infantil"
             android:nextFocusRight="@id/btn_menu_settings"
             android:nextFocusDown="@id/rv_category_sidebar"
             android:nextFocusUp="@id/btn_menu_settings" />
@@ -962,6 +979,73 @@
                     android:nextFocusRight="@id/btn_setting_preview_action" />
             </LinearLayout>
         </RelativeLayout>
+
+        <!-- PAINEL VOD: GRADE NETFLIX / UNITV MODERNA (FILMES E SÉRIES) -->
+        <LinearLayout
+            android:id="@+id/layout_vod_grid_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:visibility="gone">
+
+            <!-- Cabeçalho do Catálogo VOD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="2dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/txt_vod_category_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎬 Filmes | Lançamentos"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_vod_items_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_netflix_badge"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="Carregando..."
+                    android:textColor="#00E5FF"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="OK p/ Assistir • Setas p/ Navegar"
+                    android:textColor="#7A8FA6"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Grade de Posters Estilo Netflix / UniTV -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_vod_grid"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:descendantFocusability="afterDescendants"
+                android:focusable="false"
+                android:nextFocusLeft="@id/rv_category_sidebar"
+                android:scrollbars="none" />
+        </LinearLayout>
 
     </LinearLayout>
 

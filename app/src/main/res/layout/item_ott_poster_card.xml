@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="145dp"
-    android:layout_height="215dp"
+    android:layout_width="142dp"
+    android:layout_height="212dp"
     android:layout_marginStart="6dp"
     android:layout_marginEnd="6dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:clickable="true"
     android:focusable="true"
     android:clipToPadding="false"
     android:clipChildren="false">
 
-    <!-- Poster da Mídia -->
+    <!-- Poster da Mídia com Cantos Arredondados -->
     <ImageView
         android:id="@+id/img_poster_cover"
         android:layout_width="match_parent"
@@ -21,40 +21,58 @@
         android:src="@drawable/logo"
         android:contentDescription="Poster" />
 
-    <!-- Camada de Gradiente Escuro -->
+    <!-- Camada de Gradiente Escuro Inferior -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_poster_scrim" />
 
-    <!-- Tag Superior Esquerda (Ex: Lançamento, Ação, 4K) -->
+    <!-- Micro-Badge Estilo Netflix no Topo Esquerdo (Discreto) -->
     <TextView
         android:id="@+id/txt_poster_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|start"
-        android:layout_margin="8dp"
-        android:background="@drawable/badge_live"
-        android:backgroundTint="#CC00E5FF"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_netflix_badge"
         android:paddingStart="6dp"
         android:paddingEnd="6dp"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
-        android:text="2025"
-        android:textColor="#050B14"
+        android:text="4K"
+        android:textColor="#00E5FF"
         android:textSize="9sp"
         android:textStyle="bold" />
 
-    <!-- Título Inferior -->
+    <!-- Micro-Badge Nota / IMDb no Topo Direito (Discreto) -->
+    <TextView
+        android:id="@+id/txt_poster_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="6dp"
+        android:background="@drawable/bg_netflix_badge"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="⭐ 8.5"
+        android:textColor="#FFD700"
+        android:textSize="9sp"
+        android:textStyle="bold" />
+
+    <!-- Título do Filme / Série na Base -->
     <TextView
         android:id="@+id/txt_poster_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:shadowColor="#CC000000"
+        android:shadowColor="#EE000000"
         android:shadowDx="0"
         android:shadowDy="2"
         android:shadowRadius="4"
@@ -63,12 +81,12 @@
         android:textSize="12sp"
         android:textStyle="bold" />
 
-    <!-- Borda e Destaque de Foco D-Pad -->
+    <!-- Borda e Destaque de Foco D-Pad Neon -->
     <View
         android:id="@+id/view_poster_focus_ring"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_card_tv_focus"
+        android:background="@drawable/bg_netflix_card_focus"
         android:visibility="gone" />
 
 </FrameLayout>

@@ -1896,64 +1896,69 @@ object ChannelRepository {
     fun getFallbackJogosDoDia(): List<Channel> {
         return listOf(
             Channel(
-                id = "jogo_dia_317686",
+                id = "jogo_dia_prem1",
                 number = "15",
-                title = "[15:00] Ah-Ali x Al-Khaleej",
+                title = "[AO VIVO] Premiere FC 1 - Brasileirão",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460209.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769291.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Partida ao vivo de hoje: [15:00] Ah-Ali x Al-Khaleej",
-                quality = "FHD"
+                description = "Partida ao vivo de hoje com cobertura completa direto do estádio.",
+                quality = "FHD",
+                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769291.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769291.m3u8")
             ),
             Channel(
-                id = "jogo_dia_317687",
+                id = "jogo_dia_prem2",
                 number = "16",
-                title = "[21:30] Flamengo x Estudiantes",
+                title = "[AO VIVO] Premiere FC 2 - Copa do Brasil",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460200.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769297.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Partida ao vivo de hoje: [21:30] Flamengo x Estudiantes",
-                quality = "FHD"
+                description = "Transmissão ao vivo de partida decisiva com narração e comentários.",
+                quality = "FHD",
+                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769297.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769297.m3u8")
             ),
             Channel(
-                id = "jogo_dia_317688",
+                id = "jogo_dia_sportv",
                 number = "17",
-                title = "[17:00] Real Madrid x Bayern Munique",
+                title = "[AO VIVO] SporTV Principal - Rodada Ao Vivo",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/3460203.m3u8",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769288.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Canal reservado para transmissões dos jogos do dia.",
-                quality = "FHD"
+                description = "Transmissão ao vivo dos maiores clássicos e campeonatos nacionais.",
+                quality = "FHD",
+                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769288.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769288.m3u8")
             ),
             Channel(
-                id = "jogo_dia_317689",
+                id = "jogo_dia_caze",
                 number = "18",
-                title = "[18:30] Manchester City x Arsenal",
+                title = "[AO VIVO] CazéTV - Jogos e Campeonatos",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Canal reservado para transmissões dos jogos do dia.",
+                description = "A maior transmissão digital com Casimiro Miguel e equipe completa.",
                 quality = "FHD"
             ),
             Channel(
-                id = "jogo_dia_317690",
+                id = "jogo_dia_espn",
                 number = "19",
-                title = "[19:00] Palmeiras x São Paulo",
+                title = "[AO VIVO] ESPN - Futebol Internacional & Ligas",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769299.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Canal reservado para transmissões dos jogos do dia.",
-                quality = "FHD"
+                description = "Premier League, La Liga, Serie A e Champions League ao vivo.",
+                quality = "FHD",
+                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769299.ts", "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703")
             ),
             Channel(
-                id = "jogo_dia_317691",
+                id = "jogo_dia_espn2",
                 number = "20",
-                title = "[19:30] Corinthians x Santos",
+                title = "[AO VIVO] ESPN 2 - Libertadores & Sul-Americana",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769300.m3u8",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Canal reservado para transmissões dos jogos do dia.",
-                quality = "FHD"
+                description = "As emoções do futebol sul-americano e copas internacionais ao vivo.",
+                quality = "FHD",
+                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769300.ts")
             ),
             Channel(
                 id = "jogo_dia_317692",
@@ -2317,7 +2322,7 @@ object ChannelRepository {
                 val tvCats = mutableListOf<ChannelCategory>()
                 val catIds = listOf(
                     "cat_globo", "cat_sbt", "cat_record", "cat_band", "cat_noticias",
-                    "cat_discovery", "cat_docs", "cat_variedades", "cat_musica",
+                    "cat_kids", "cat_discovery", "cat_docs", "cat_variedades", "cat_musica",
                     "cat_fazenda", "cat_24h", "cat_4k", "cat_h265"
                 )
                 val matched = catIds.mapNotNull { id -> allCats.find { it.id == id } }

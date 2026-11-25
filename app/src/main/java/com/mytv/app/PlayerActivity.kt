@@ -126,8 +126,14 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun updatePlayerHUD(channel: Channel) {
-        val num = channel.number.toIntOrNull() ?: 1
-        findViewById<TextView>(R.id.txt_player_channel_number)?.text = "$num"
+        val isVod = channel.id.startsWith("vod_") ||
+                    currentStreamUrl?.contains("/movie/") == true ||
+                    currentStreamUrl?.contains("/series/") == true ||
+                    channel.category.contains("Filmes", ignoreCase = true) ||
+                    channel.category.contains("Séries", ignoreCase = true)
+
+        val num = channel.number.toIntOrNull()
+        findViewById<TextView>(R.id.txt_player_channel_number)?.text = if (isVod) (if (channel.category.contains("Série", ignoreCase = true)) "🍿" else "🎬") else (num?.toString() ?: channel.number)
         findViewById<TextView>(R.id.txt_player_channel_title)?.text = channel.title.uppercase()
 
         val imgLogo = findViewById<ImageView>(R.id.img_player_channel_logo)
@@ -142,6 +148,27 @@ class PlayerActivity : AppCompatActivity() {
                 imgLogo.setImageResource(R.drawable.logo)
             }
         }
+
+        if (isVod) {
+            findViewById<TextView>(R.id.txt_player_label_atual)?.text = if (channel.category.contains("Série", ignoreCase = true)) "Série: " else "Filme: "
+            findViewById<TextView>(R.id.txt_player_epg_now_title)?.text = channel.title
+            findViewById<TextView>(R.id.txt_player_label_proximo)?.visibility = View.GONE
+            findViewById<TextView>(R.id.txt_player_epg_next)?.visibility = View.GONE
+            val dur = player?.duration ?: 0L
+            val pos = player?.currentPosition ?: 0L
+            if (dur > 0) {
+                findViewById<TextView>(R.id.txt_player_epg_time)?.text = "${formatDurationMs(pos)} / ${formatDurationMs(dur)}"
+                findViewById<ProgressBar>(R.id.pb_player_epg)?.progress = ((pos * 100) / dur).toInt().coerceIn(0, 100)
+            } else {
+                findViewById<TextView>(R.id.txt_player_epg_time)?.text = "SOB DEMANDA"
+                findViewById<ProgressBar>(R.id.pb_player_epg)?.progress = 0
+            }
+            return
+        }
+
+        findViewById<TextView>(R.id.txt_player_label_atual)?.text = "Atual: "
+        findViewById<TextView>(R.id.txt_player_label_proximo)?.visibility = View.VISIBLE
+        findViewById<TextView>(R.id.txt_player_epg_next)?.visibility = View.VISIBLE
 
         val epg = channel.currentProgram
         if (epg != null) {
@@ -160,6 +187,14 @@ class PlayerActivity : AppCompatActivity() {
         } else {
             findViewById<TextView>(R.id.txt_player_epg_next)?.text = "Programação contínua 24H"
         }
+    }
+
+    private fun formatDurationMs(ms: Long): String {
+        val totalSec = ms / 1000
+        val h = totalSec / 3600
+        val m = (totalSec % 3600) / 60
+        val s = totalSec % 60
+        return if (h > 0) String.format("%02d:%02d:%02d", h, m, s) else String.format("%02d:%02d", m, s)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -524,24 +559,33 @@ class PlayerActivity : AppCompatActivity() {
             setConstantBitrateSeekingEnabled(true)
         }
 
-        val mediaItem = MediaItem.Builder()
-            .setUri(targetUrl)
-            .apply {
-                if (targetUrl.endsWith(".ts") || targetUrl.contains(".ts?")) {
-                    setMimeType(MimeTypes.VIDEO_MP2T)
-                }
-            }
-            .setLiveConfiguration(
+        val isVodMedia = targetUrl.endsWith(".mp4", ignoreCase = true) ||
+                         targetUrl.endsWith(".mkv", ignoreCase = true) ||
+                         targetUrl.contains("/movie/") ||
+                         targetUrl.contains("/series/") ||
+                         (currentChannel?.category?.contains("Filmes", ignoreCase = true) == true) ||
+                         (currentChannel?.category?.contains("Séries", ignoreCase = true) == true)
+
+        val mediaItemBuilder = MediaItem.Builder().setUri(targetUrl)
+        if (targetUrl.endsWith(".ts") || targetUrl.contains(".ts?")) {
+            mediaItemBuilder.setMimeType(MimeTypes.VIDEO_MP2T)
+        }
+        if (!isVodMedia) {
+            mediaItemBuilder.setLiveConfiguration(
                 MediaItem.LiveConfiguration.Builder()
                     .setMinPlaybackSpeed(0.98f)
                     .setMaxPlaybackSpeed(1.02f)
                     .build()
             )
-            .build()
+        }
+        val mediaItem = mediaItemBuilder.build()
 
         val mediaSource = if (targetUrl.contains(".m3u8")) {
             HlsMediaSource.Factory(dataSourceFactory)
                 .setAllowChunklessPreparation(true)
+                .createMediaSource(mediaItem)
+        } else if (isVodMedia) {
+            androidx.media3.exoplayer.source.ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(mediaItem)
         } else {
             DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
@@ -550,7 +594,9 @@ class PlayerActivity : AppCompatActivity() {
 
         exo.stop()
         exo.clearMediaItems()
-        startStallWatchdog(channel)
+        if (!isVodMedia) {
+            startStallWatchdog(channel)
+        }
         exo.setMediaSource(mediaSource)
         exo.prepare()
         exo.play()
