@@ -95,10 +95,10 @@ class MainActivity : AppCompatActivity() {
 
     // --- 2. TELA TV AO VIVO (Imagem 3) ---
     private lateinit var layoutTvMode: View
-    private lateinit var btnRailSearch: ImageButton
-    private lateinit var btnRailFavorites: ImageButton
-    private lateinit var btnRailRecents: ImageButton
-    private lateinit var btnRailCategories: ImageButton
+    private lateinit var btnRailSearch: ImageView
+    private lateinit var btnRailFavorites: ImageView
+    private lateinit var btnRailRecents: ImageView
+    private lateinit var btnRailCategories: ImageView
     private lateinit var txtTvCategoryTitle: TextView
     private lateinit var txtCategoryBadge: TextView
     private lateinit var rvChannelList: RecyclerView
@@ -121,9 +121,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnVodSearch: Button
     private lateinit var rvCategorySidebar: RecyclerView
     private lateinit var sidebarAdapter: CategorySidebarAdapter
-    private lateinit var btnVodActionMenu: Button
-    private lateinit var btnVodActionSort: Button
-    private lateinit var btnVodActionFav: Button
+    private lateinit var btnVodActionMenu: View
+    private lateinit var btnVodActionSort: View
+    private lateinit var btnVodActionFav: View
     private lateinit var txtVodCategoryTitle: TextView
     private lateinit var txtVodItemsCount: TextView
     private lateinit var rvVodGrid: RecyclerView
@@ -363,7 +363,7 @@ class MainActivity : AppCompatActivity() {
         layoutVodCatalogMode.visibility = View.GONE
         layoutSettingsMode.visibility = View.GONE
 
-        txtHomeVersion.text = "Versão 2.9.8"
+        txtHomeVersion.text = "Versão 2.9.9"
         txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -405,15 +405,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getDeviceKey(context: Context): String {
-        val prefs = context.getSharedPreferences("wdtech_tv_settings", Context.MODE_PRIVATE)
-        var key = prefs.getString("device_key", null)
-        if (key == null) {
-            val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) ?: "WDTECH"
-            val hash = (androidId + "WDTECH_TV_VIVAON").hashCode()
-            key = String.format("%06X", abs(hash)).take(6)
-            prefs.edit().putString("device_key", key).apply()
+        return try {
+            val prefs = context.getSharedPreferences("wdtech_tv_settings", Context.MODE_PRIVATE)
+            var key = prefs.getString("device_key", null)
+            if (key == null) {
+                val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) ?: "WDTECH"
+                val hash = (androidId + "WDTECH_TV_VIVAON").hashCode().toLong() and 0xFFFFFFL
+                key = String.format("%06X", hash)
+                prefs.edit().putString("device_key", key).apply()
+            }
+            key ?: "SS5A88"
+        } catch (_: Exception) {
+            "SS5A88"
         }
-        return key
     }
 
     // =========================================================================
@@ -854,7 +858,7 @@ class MainActivity : AppCompatActivity() {
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "v2.9.8",
+                badgeText = "v2.9.9",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
             ),
