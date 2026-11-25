@@ -161,26 +161,41 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Escudo de Estabilidade Definitivo: Intercepta qualquer exceção não tratada evitando crash
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            android.util.Log.e("WDTECH_CRASH", "Exceção interceptada na thread ${thread.name}: ${throwable.message}", throwable)
-        }
-
         setContentView(R.layout.activity_main)
 
-        initViews()
-        setupPlayer()
+        try {
+            initViews()
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_INIT", "Erro ao inicializar views", t)
+        }
+
+        try {
+            setupPlayer()
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_INIT", "Erro ao inicializar player", t)
+        }
+
         setupHubListeners()
         setupTvModeListeners()
         setupVodModeListeners()
         setupSettingsModeListeners()
         setupBackPressed()
 
+        // Inicializa dados locais de canais imediatamente na memória (zero espera)
+        try {
+            val localCats = ChannelRepository.getCategoriesForSection(MainSection.TV)
+            if (localCats.isNotEmpty()) {
+                tvCategories = localCats
+                currentTvCategory = localCats.first()
+            }
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_INIT", "Erro ao carregar canais locais", t)
+        }
+
         // Inicia na Tela Inicial (Home Hub - Imagem 2)
         showHomeHub()
 
-        // Pré-carrega canais de TV em segundo plano
+        // Enriquece grade e EPG em segundo plano
         preloadTvData()
 
         // Verificação silenciosa de atualização
@@ -348,7 +363,7 @@ class MainActivity : AppCompatActivity() {
         layoutVodCatalogMode.visibility = View.GONE
         layoutSettingsMode.visibility = View.GONE
 
-        txtHomeVersion.text = "Versão 2.9.7"
+        txtHomeVersion.text = "Versão 2.9.8"
         txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -839,7 +854,7 @@ class MainActivity : AppCompatActivity() {
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "v2.9.7",
+                badgeText = "v2.9.8",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
             ),

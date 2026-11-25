@@ -9,7 +9,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F2080D16" />
+        android:background="#A0080D16" />
 
     <!-- ================================================================= -->
     <!-- TELA 1: HOME HUB (TELA INICIAL - FIEL À IMAGEM 2)                -->
@@ -110,8 +110,9 @@
                     android:nextFocusDown="@+id/btn_home_reload">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:tint="#FFFFFF"
                         android:src="@drawable/outline_live_tv_24"
                         android:contentDescription="TV AO VIVO" />
 
@@ -141,8 +142,9 @@
                     android:nextFocusDown="@+id/btn_home_reload">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:tint="#FFFFFF"
                         android:src="@drawable/ic_movie_vod"
                         android:contentDescription="FILMES" />
 
@@ -172,8 +174,9 @@
                     android:nextFocusDown="@+id/btn_home_reload">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:tint="#FFFFFF"
                         android:src="@drawable/ic_series_vod"
                         android:contentDescription="SÉRIES" />
 
@@ -202,8 +205,9 @@
                     android:nextFocusDown="@+id/btn_home_reload">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:tint="#FFFFFF"
                         android:src="@drawable/ic_settings"
                         android:contentDescription="AJUSTES" />
 
