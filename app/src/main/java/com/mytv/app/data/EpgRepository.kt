@@ -221,7 +221,7 @@ object EpgRepository {
             return@withContext pair
         }
 
-        // Resolve o ID do stream ativo com prioridade máxima para o servidor oficial 64.31.23.207
+        // Resolve o ID do stream ativo com prioridade máxima para o servidor cdn9.my
         val streamId = PlaybackRepository.PLAYBACK_STREAM_MAP[channel.id]
             ?: extractStreamIdFromUrl(channel.streamUrl)
             ?: channel.playbackStreamId
@@ -229,7 +229,7 @@ object EpgRepository {
 
         if (streamId == null) return@withContext null
 
-        val serverUrl = "http://64.31.23.207:80/player_api.php?username=59471019&password=60849037&action=get_short_epg&stream_id=$streamId&limit=6"
+        val serverUrl = "http://cdn9.my:80/player_api.php?username=726hjvc&password=693bjjz&action=get_short_epg&stream_id=$streamId&limit=6"
 
         try {
             val url = URL(serverUrl)

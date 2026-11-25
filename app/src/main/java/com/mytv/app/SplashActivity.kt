@@ -55,9 +55,9 @@ class SplashActivity : AppCompatActivity() {
 
     private fun setupVersionInfo() {
         val versionName = try {
-            packageManager.getPackageInfo(packageName, 0).versionName ?: "3.0.0"
+            packageManager.getPackageInfo(packageName, 0).versionName ?: "3.1.0"
         } catch (_: Exception) {
-            "2.9.9"
+            "3.1.0"
         }
         txtVersionBadge.text = "VERSÃO $versionName"
         txtFooter.text = "WDTECH TV v$versionName • 4K Ultra HD • Guia EPG Integrado • Leanback Edition"

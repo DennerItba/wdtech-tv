@@ -14,9 +14,9 @@ import java.util.concurrent.ConcurrentHashMap
 
 object VodRepository {
 
-    private const val SERVER_BASE = "http://64.31.23.207:80"
-    private const val USERNAME = "59471019"
-    private const val PASSWORD = "60849037"
+    private const val SERVER_BASE = "http://cdn9.my:80"
+    private const val USERNAME = "726hjvc"
+    private const val PASSWORD = "693bjjz"
 
     // Caches em memória para navegação ágil no controle remoto
     private val movieCategoriesCache = mutableListOf<VodCategory>()
@@ -85,9 +85,14 @@ object VodRepository {
         categoryMoviesCache[categoryId]?.let { return@withContext it }
 
         val remoteCatId = when (categoryId) {
-            "cat_filmes_lancamentos" -> "1297" // ⭐FILMES | 2026
-            "cat_filmes_todos" -> "1321" // Filmes | 4K / UHD
-            "cat_filmes_acao" -> "1319" // ⭐ Filmes | Mais Assistidos ⭐
+            "cat_filmes_lancamentos" -> "16831" // Lançamentos
+            "cat_filmes_todos" -> "16833" // UHD | 4K
+            "cat_filmes_acao" -> "16832" // Ação
+            "cat_filmes_comedia" -> "16837" // Comedia
+            "cat_filmes_animacao" -> "16834" // Animacao
+            "cat_filmes_terror" -> "16850" // Terror
+            "cat_filmes_ficcao" -> "16840" // Ficcao Cientifica
+            "cat_filmes_nacionais" -> "16845" // Nacionais
             else -> if (categoryId.startsWith("cat_filmes_")) null else categoryId
         }
 
@@ -194,7 +199,15 @@ object VodRepository {
         categorySeriesCache[categoryId]?.let { return@withContext it }
 
         val remoteCatId = when (categoryId) {
-            "cat_series_populares" -> "1252" // ⭐ Séries | Mais Assistidas ⭐
+            "cat_series_populares" -> "16887" // Netflix
+            "cat_series_netflix" -> "16887"
+            "cat_series_disney" -> "16891"
+            "cat_series_hbo" -> "16893"
+            "cat_series_prime" -> "16890"
+            "cat_series_globoplay" -> "16892"
+            "cat_series_apple" -> "16888"
+            "cat_series_star" -> "16895"
+            "cat_series_paramount" -> "16894"
             else -> if (categoryId.startsWith("cat_series_")) null else categoryId
         }
 
@@ -386,7 +399,7 @@ object VodRepository {
             id = "5759004",
             name = "Batman: A Queda do Morcego - Parte 1",
             posterUrl = "https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5759004.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/24348766.mp4",
             rating = "8.6",
             ratingScore = 4.3f,
             categoryId = "cat_filmes_lancamentos",
@@ -400,7 +413,7 @@ object VodRepository {
             id = "5759007",
             name = "Demon Slayer: Castelo Infinito",
             posterUrl = "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5759007.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/24348767.mp4",
             rating = "8.8",
             ratingScore = 4.4f,
             categoryId = "cat_filmes_lancamentos",
@@ -414,7 +427,7 @@ object VodRepository {
             id = "5759005",
             name = "Avatar Aang: O Último Mestre do Ar",
             posterUrl = "https://image.tmdb.org/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5759005.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/24348768.mp4",
             rating = "8.2",
             ratingScore = 4.1f,
             categoryId = "cat_filmes_lancamentos",
@@ -428,7 +441,7 @@ object VodRepository {
             id = "5759010",
             name = "O Poderoso Chefão (4K Remastered)",
             posterUrl = "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5759010.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/24348769.mp4",
             rating = "9.2",
             ratingScore = 4.6f,
             categoryId = "cat_filmes_lancamentos",
@@ -442,7 +455,7 @@ object VodRepository {
             id = "5728674",
             name = "A Terapia Certa 4K [DV][HDR]",
             posterUrl = "https://image.tmdb.org/t/p/w500/iADOJ8Zymht2JPMoy3R7xUMZ51Q.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5728674.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/5728674.mp4",
             rating = "7.9",
             ratingScore = 4.0f,
             categoryId = "cat_filmes_acao",
@@ -456,7 +469,7 @@ object VodRepository {
             id = "5728698",
             name = "Sobrenatural: Agora Entre Nós 4K",
             posterUrl = "https://image.tmdb.org/t/p/w500/nP6RliHjxsz4irTKsxe8FRhKZYl.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5728698.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/5728698.mp4",
             rating = "7.6",
             ratingScore = 3.8f,
             categoryId = "cat_filmes_terror",
@@ -470,7 +483,7 @@ object VodRepository {
             id = "5728707",
             name = "Sobrevivência 4K [DV][HDR]",
             posterUrl = "https://image.tmdb.org/t/p/w500/tMefBSflR6PGQLv7WvFPpKLZkyk.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5728707.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/5728707.mp4",
             rating = "7.5",
             ratingScore = 3.7f,
             categoryId = "cat_filmes_acao",
@@ -484,7 +497,7 @@ object VodRepository {
             id = "5768532",
             name = "12 Homens e uma Sentença",
             posterUrl = "https://image.tmdb.org/t/p/w500/b33nnKl1GSFbao8l3urDDujMMQj.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5768532.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/5768532.mp4",
             rating = "9.0",
             ratingScore = 4.5f,
             categoryId = "cat_filmes_ficcao",
@@ -498,7 +511,7 @@ object VodRepository {
             id = "5759009",
             name = "Um Sonho de Liberdade",
             posterUrl = "https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5759009.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/5759009.mp4",
             rating = "9.3",
             ratingScore = 4.7f,
             categoryId = "cat_filmes_comedia",
@@ -512,7 +525,7 @@ object VodRepository {
             id = "5759011",
             name = "Devoradores de Estrelas",
             posterUrl = "https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg",
-            streamUrl = "http://64.31.23.207:80/movie/59471019/60849037/5759011.mp4",
+            streamUrl = "http://cdn9.my:80/movie/726hjvc/693bjjz/5759011.mp4",
             rating = "7.8",
             ratingScore = 3.9f,
             categoryId = "cat_filmes_animacao",
@@ -557,7 +570,7 @@ object VodRepository {
             id = "series_last_of_us",
             name = "The Last of Us",
             posterUrl = "https://image.tmdb.org/t/p/w500/uKvVjK19dn5249T695oN1Vv0W4n.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "9.1",
             ratingScore = 4.6f,
             categoryId = "1223",
@@ -571,7 +584,7 @@ object VodRepository {
             id = "series_house_dragon",
             name = "A Casa do Dragão (House of the Dragon)",
             posterUrl = "https://image.tmdb.org/t/p/w500/1X4h40fcB4WWUmIBK0auT4zRBAV.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "8.7",
             ratingScore = 4.4f,
             categoryId = "1223",
@@ -585,7 +598,7 @@ object VodRepository {
             id = "series_stranger_things",
             name = "Stranger Things",
             posterUrl = "https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "8.9",
             ratingScore = 4.5f,
             categoryId = "1198",
@@ -599,7 +612,7 @@ object VodRepository {
             id = "series_breaking_bad",
             name = "Breaking Bad",
             posterUrl = "https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "9.5",
             ratingScore = 4.8f,
             categoryId = "1198",
@@ -613,7 +626,7 @@ object VodRepository {
             id = "series_round_6",
             name = "Round 6 (Squid Game)",
             posterUrl = "https://image.tmdb.org/t/p/w500/dDlG1Tz6zY3n732F5k4R50mO33y.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "8.4",
             ratingScore = 4.2f,
             categoryId = "1198",
@@ -627,7 +640,7 @@ object VodRepository {
             id = "series_the_boys",
             name = "The Boys",
             posterUrl = "https://image.tmdb.org/t/p/w500/7Ns6tO3aYjppFyNJda227um9io6.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "8.8",
             ratingScore = 4.4f,
             categoryId = "1225",
@@ -641,7 +654,7 @@ object VodRepository {
             id = "series_loki",
             name = "Loki",
             posterUrl = "https://image.tmdb.org/t/p/w500/voHUmlvjysvgFzHj9HqFsmWJ7gZ.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "8.5",
             ratingScore = 4.3f,
             categoryId = "1230",
@@ -655,7 +668,7 @@ object VodRepository {
             id = "series_mandalorian",
             name = "The Mandalorian",
             posterUrl = "https://image.tmdb.org/t/p/w500/eU1i6eHXlzMOlEq0ku1R07Y87Nu.jpg",
-            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            streamUrl = "http://cdn9.my:80/series/726hjvc/693bjjz/5663943.mp4",
             rating = "8.7",
             ratingScore = 4.4f,
             categoryId = "1230",

@@ -365,7 +365,7 @@ class MainActivity : AppCompatActivity() {
         layoutVodCatalogMode.visibility = View.GONE
         layoutSettingsMode.visibility = View.GONE
 
-        txtHomeVersion.text = "Versão 3.0.0"
+        txtHomeVersion.text = "Versão 3.1.0"
         txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -931,7 +931,7 @@ class MainActivity : AppCompatActivity() {
                 subtitle = "Medir latência e velocidade com o servidor CDN",
                 iconRes = R.drawable.ic_wifi_tv,
                 badgeText = "TESTAR",
-                description = "Mede a resposta e estabilidade da sua conexão com o servidor de transmissão WDTECH TV (64.31.23.207:80). Pressione para medir a latência em tempo real.",
+                description = "Mede a resposta e estabilidade da sua conexão com o servidor de transmissão WDTECH TV (cdn9.my:80). Pressione para medir a latência em tempo real.",
                 actionButtonText = "Testar Ping com o Servidor (OK)"
             ),
             SettingItem(
@@ -1012,7 +1012,7 @@ class MainActivity : AppCompatActivity() {
                         val ping = result.second
                         val quality = if (ping < 60) "Excelente" else if (ping < 120) "Boa" else "Instável"
                         txtSettingPreviewBadge.text = "${ping}ms • $quality"
-                        txtSettingPreviewDesc.text = "Servidor CDN WDTECH TV (64.31.23.207:80) online!\n\n• Latência: ${ping}ms ($quality)\n• Status: Online e Transmitindo\n• Conexão pronta para alta definição."
+                        txtSettingPreviewDesc.text = "Servidor CDN WDTECH TV (cdn9.my:80) online!\n\n• Latência: ${ping}ms ($quality)\n• Status: Online e Transmitindo\n• Conexão pronta para alta definição."
                         Toast.makeText(this@MainActivity, "Ping com Servidor: ${ping}ms ($quality)", Toast.LENGTH_LONG).show()
                     } else {
                         txtSettingPreviewBadge.text = "FALHA"
@@ -1144,18 +1144,19 @@ class MainActivity : AppCompatActivity() {
             if (b.isNotEmpty() && !rawList.contains(b)) rawList.add(b)
         }
 
-        // Prioriza CDNs de alta velocidade e baixa latência
+        // Prioriza streams .ts e cdn9.my de alta velocidade e resposta direta
         val sortedList = rawList.sortedBy { url ->
-            if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 0
-            else if (url.contains("64.31.23.207")) 2
-            else 1
+            if (url.contains("cdn9.my") && url.endsWith(".ts")) 0
+            else if (url.contains("cdn9.my")) 1
+            else if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 2
+            else 3
         }
 
         val result = mutableListOf<String>()
         for (u in sortedList) {
             if (!result.contains(u)) result.add(u)
-            if (u.contains("64.31.23.207")) {
-                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else null
+            if (u.contains("cdn9.my")) {
+                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else "$u.ts"
                 if (alt != null && !result.contains(alt)) result.add(alt)
             }
         }

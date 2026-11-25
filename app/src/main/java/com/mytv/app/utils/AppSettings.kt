@@ -157,7 +157,7 @@ object AppSettings {
     }
 
     suspend fun testConnectionLatency(): Pair<Boolean, Long> = withContext(Dispatchers.IO) {
-        val testUrl = "http://64.31.23.207:80/player_api.php?username=59471019&password=60849037"
+        val testUrl = "http://cdn9.my:80/player_api.php?username=726hjvc&password=693bjjz"
         val start = System.currentTimeMillis()
         try {
             val url = URL(testUrl)
@@ -181,6 +181,6 @@ object AppSettings {
         val brand = Build.BRAND
         val androidVer = Build.VERSION.RELEASE
         val sdk = Build.VERSION.SDK_INT
-        return "Dispositivo: $brand $model • Android $androidVer (API $sdk)\nServidor CDN: 64.31.23.207 (Porta 80) • Status: Ativo"
+        return "Dispositivo: $brand $model • Android $androidVer (API $sdk)\nServidor CDN: cdn9.my (Porta 80) • Status: Ativo"
     }
 }

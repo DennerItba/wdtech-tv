@@ -417,18 +417,19 @@ class PlayerActivity : AppCompatActivity() {
             if (b.isNotEmpty() && !rawList.contains(b)) rawList.add(b)
         }
 
-        // Prioriza CDNs de alta velocidade e baixa latência
+        // Prioriza streams .ts e cdn9.my de alta velocidade e resposta direta
         val sortedList = rawList.sortedBy { url ->
-            if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 0
-            else if (url.contains("64.31.23.207")) 2
-            else 1
+            if (url.contains("cdn9.my") && url.endsWith(".ts")) 0
+            else if (url.contains("cdn9.my")) 1
+            else if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 2
+            else 3
         }
 
         val result = mutableListOf<String>()
         for (u in sortedList) {
             if (!result.contains(u)) result.add(u)
-            if (u.contains("64.31.23.207")) {
-                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else null
+            if (u.contains("cdn9.my")) {
+                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else "$u.ts"
                 if (alt != null && !result.contains(alt)) result.add(alt)
             }
         }
@@ -1243,26 +1244,26 @@ class PlayerActivity : AppCompatActivity() {
         )
 
         private val CROSS_CDN_FALLBACKS = mapOf(
-            // Formula 1 (UniTV CDN Band SP HD <-> Corruptx BandSports)
-            "band-sp-hd" to "http://64.31.23.207:80/live/59471019/60849037/3460153.m3u8",
+            // Formula 1 (UniTV CDN Band SP HD <-> CDN9 BandSports)
+            "band-sp-hd" to "http://cdn9.my:80/live/726hjvc/693bjjz/24351656.ts",
             "8661.m3u8" to "https://cdn1.uniredes.com.br/hls/band-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
-            // UniTV Discovery <-> Corruptx Discovery
-            "discovery-hd" to "http://64.31.23.207:80/live/59471019/60849037/297936.m3u8",
+            // UniTV Discovery <-> CDN9 Discovery
+            "discovery-hd" to "http://cdn9.my:80/live/726hjvc/693bjjz/24351656.ts",
             "8736.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-            "discovery-turbo-hd" to "http://64.31.23.207:80/live/59471019/60849037/297943.m3u8",
+            "discovery-turbo-hd" to "http://cdn9.my:80/live/726hjvc/693bjjz/24351656.ts",
             "8756.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-turbo-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
-            "discovery-hh" to "http://64.31.23.207:80/live/59471019/60849037/297940.m3u8",
+            "discovery-hh" to "http://cdn9.my:80/live/726hjvc/693bjjz/24351656.ts",
             "8740.m3u8" to "https://cdn1.uniredes.com.br/hls/discovery-hh/index.m3u8?token=2d3232fe89d2b637a2093703",
-            "tlc-hd" to "http://64.31.23.207:80/live/59471019/60849037/5378655.m3u8",
+            "tlc-hd" to "http://cdn9.my:80/live/726hjvc/693bjjz/24351656.ts",
             "8754.m3u8" to "https://cdn1.uniredes.com.br/hls/tlc-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
-            // UniTV ESPN <-> Corruptx ESPN
-            "espn-hd" to "http://64.31.23.207:80/live/59471019/60849037/3460183.m3u8",
+            // UniTV ESPN <-> CDN9 ESPN
+            "espn-hd" to "http://cdn9.my:80/live/726hjvc/693bjjz/24351656.ts",
             "598914.m3u8" to "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
-            // UniTV Globo SP <-> Corruptx Globo SP
-            "globo-sp-hd" to "http://64.31.23.207:80/live/59471019/60849037/5676596.m3u8",
+            // UniTV Globo SP <-> CDN9 Globo SP
+            "globo-sp-hd" to "http://cdn9.my:80/live/726hjvc/693bjjz/24351656.ts",
             "1168918.m3u8" to "https://cdn1.uniredes.com.br/hls/globo-sp-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
 
             // Kids

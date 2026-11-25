@@ -9,7 +9,7 @@ import java.util.TimeZone
 
 object PlaybackRepository {
 
-    private const val PLAYBACK_SERVER_BASE = "http://64.31.23.207:80/live/59471019/60849037/"
+    private const val PLAYBACK_SERVER_BASE = "http://cdn9.my:80/live/726hjvc/693bjjz/"
     private val timeZone = TimeZone.getTimeZone("America/Sao_Paulo")
 
     // Mapeamento dos 72 canais que possuem arquivo de 7 dias na nuvem
