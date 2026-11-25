@@ -25,6 +25,14 @@ object VodRepository {
     private val categorySeriesCache = ConcurrentHashMap<String, List<VodItem>>()
     private val seriesSeasonsCache = ConcurrentHashMap<String, List<VodSeason>>()
 
+    fun clearCache() {
+        movieCategoriesCache.clear()
+        seriesCategoriesCache.clear()
+        categoryMoviesCache.clear()
+        categorySeriesCache.clear()
+        seriesSeasonsCache.clear()
+    }
+
     /**
      * Retorna todas as categorias de filmes do servidor (mais de 10.000 títulos no acervo).
      */
@@ -358,13 +366,18 @@ object VodRepository {
 
     fun getFallbackMovieCategories(): List<VodCategory> {
         return listOf(
-            VodCategory("cat_filmes_lancamentos", "🔥 Lançamentos 2025/2026"),
-            VodCategory("cat_filmes_acao", "💥 Ação & Aventura"),
-            VodCategory("cat_filmes_ficcao", "🚀 Ficção & Fantasia"),
-            VodCategory("cat_filmes_comedia", "🎭 Comédia & Família"),
-            VodCategory("cat_filmes_terror", "👻 Terror & Suspense"),
-            VodCategory("cat_filmes_animacao", "👶 Animação & Kids"),
-            VodCategory("cat_filmes_todos", "⭐ Todos os Filmes")
+            VodCategory("cat_filmes_netflix", "Filmes/Netflix"),
+            VodCategory("cat_filmes_disney", "Filmes/Disney+"),
+            VodCategory("cat_filmes_hbomax", "Filmes/HBOmax"),
+            VodCategory("cat_filmes_prime", "Filmes | Prime Video"),
+            VodCategory("cat_filmes_globoplay", "Filmes | GloboPlay"),
+            VodCategory("cat_filmes_appletv", "Filmes | Apple TV+"),
+            VodCategory("cat_filmes_star", "Filmes | Star +"),
+            VodCategory("cat_filmes_paramount", "Filmes | Paramount +"),
+            VodCategory("cat_filmes_4k", "Filmes | 4K UHD"),
+            VodCategory("cat_filmes_lancamentos", "Filmes | Lançamentos 2026"),
+            VodCategory("cat_filmes_acao", "Filmes | Ação & Aventura"),
+            VodCategory("cat_filmes_todos", "Filmes | Todos os Filmes")
         )
     }
 
@@ -526,11 +539,16 @@ object VodRepository {
 
     fun getFallbackSeriesCategories(): List<VodCategory> {
         return listOf(
-            VodCategory("cat_series_populares", "🔥 Séries em Alta (2025/2026)", isSeries = true),
-            VodCategory("cat_series_misterio", "🕵️ Mistério & Suspense", isSeries = true),
-            VodCategory("cat_series_acao", "⚔️ Ação & Sobrenatural", isSeries = true),
-            VodCategory("cat_series_comedia", "😂 Comédia & Sitcoms", isSeries = true),
-            VodCategory("cat_series_todas", "⭐ Todas as Séries", isSeries = true)
+            VodCategory("1198", "Séries/Netflix", isSeries = true),
+            VodCategory("1230", "Séries/Disney+", isSeries = true),
+            VodCategory("1223", "Séries/HBO Max", isSeries = true),
+            VodCategory("1225", "Séries | Prime Video", isSeries = true),
+            VodCategory("1236", "Séries | GloboPlay", isSeries = true),
+            VodCategory("1207", "Séries | Star+", isSeries = true),
+            VodCategory("1238", "Séries | Paramount+", isSeries = true),
+            VodCategory("1252", "Séries | Mais Assistidas", isSeries = true),
+            VodCategory("1213", "Séries | Novelas", isSeries = true),
+            VodCategory("cat_series_todas", "Séries | Todas as Séries", isSeries = true)
         )
     }
 
@@ -539,11 +557,11 @@ object VodRepository {
             id = "series_last_of_us",
             name = "The Last of Us",
             posterUrl = "https://image.tmdb.org/t/p/w500/uKvVjK19dn5249T695oN1Vv0W4n.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769291.m3u8",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
             rating = "9.1",
             ratingScore = 4.6f,
-            categoryId = "cat_series_populares",
-            categoryName = "Séries Populares",
+            categoryId = "1223",
+            categoryName = "HBO Max",
             plot = "Vinte anos após uma praga devastar a civilização, Joel é contratado para contrabandear Ellie, uma jovem imune de 14 anos, para fora de uma opressiva zona militar.",
             genre = "Drama / Aventura / Ficção",
             year = "2025",
@@ -553,11 +571,11 @@ object VodRepository {
             id = "series_house_dragon",
             name = "A Casa do Dragão (House of the Dragon)",
             posterUrl = "https://image.tmdb.org/t/p/w500/1X4h40fcB4WWUmIBK0auT4zRBAV.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769297.m3u8",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
             rating = "8.7",
             ratingScore = 4.4f,
-            categoryId = "cat_series_populares",
-            categoryName = "Séries Populares",
+            categoryId = "1223",
+            categoryName = "HBO Max",
             plot = "A história da Casa Targaryen ambientada 200 anos antes de Game of Thrones, retratando a sangrenta guerra civil entre dragões conhecida como a Dança dos Dragões.",
             genre = "Fantasia / Drama",
             year = "2025",
@@ -567,11 +585,11 @@ object VodRepository {
             id = "series_stranger_things",
             name = "Stranger Things",
             posterUrl = "https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769309.m3u8",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
             rating = "8.9",
             ratingScore = 4.5f,
-            categoryId = "cat_series_populares",
-            categoryName = "Séries Populares",
+            categoryId = "1198",
+            categoryName = "Netflix",
             plot = "Em Hawkins, o desaparecimento repentino de um garoto leva seus amigos e familiares a desvendarem experimentos secretos, portais dimensionais e forças sinistras.",
             genre = "Sci-Fi / Mistério",
             year = "2025",
@@ -581,11 +599,11 @@ object VodRepository {
             id = "series_breaking_bad",
             name = "Breaking Bad",
             posterUrl = "https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769315.m3u8",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
             rating = "9.5",
             ratingScore = 4.8f,
-            categoryId = "cat_series_populares",
-            categoryName = "Séries Populares",
+            categoryId = "1198",
+            categoryName = "Netflix",
             plot = "Um professor de química diagnosticado com câncer terminal decide produzir metanfetamina para assegurar o sustento de sua família, transformando-se em um poderoso barão do crime.",
             genre = "Crime / Drama / Suspense",
             year = "2024",
@@ -595,11 +613,11 @@ object VodRepository {
             id = "series_round_6",
             name = "Round 6 (Squid Game)",
             posterUrl = "https://image.tmdb.org/t/p/w500/dDlG1Tz6zY3n732F5k4R50mO33y.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769322.m3u8",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
             rating = "8.4",
             ratingScore = 4.2f,
-            categoryId = "cat_series_misterio",
-            categoryName = "Mistério & Suspense",
+            categoryId = "1198",
+            categoryName = "Netflix",
             plot = "Centenas de jogadores endividados aceitam um convite misterioso para disputar jogos infantis. O prêmio é milionário, mas as consequências da eliminação são fatais.",
             genre = "Suspense / Ação",
             year = "2025",
@@ -609,25 +627,48 @@ object VodRepository {
             id = "series_the_boys",
             name = "The Boys",
             posterUrl = "https://image.tmdb.org/t/p/w500/7Ns6tO3aYjppFyNJda227um9io6.jpg",
-            streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769332.m3u8",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
             rating = "8.8",
             ratingScore = 4.4f,
-            categoryId = "cat_series_acao",
-            categoryName = "Ação & Sobrenatural",
+            categoryId = "1225",
+            categoryName = "Prime Video",
             plot = "Um grupo de vigilantes se junta em uma missão heroica para combater super-heróis corruptos que abusam de seus poderes e se escondem sob uma corporação bilionária.",
             genre = "Ação / Ficção",
             year = "2025",
+            isSeries = true
+        ),
+        VodItem(
+            id = "series_loki",
+            name = "Loki",
+            posterUrl = "https://image.tmdb.org/t/p/w500/voHUmlvjysvgFzHj9HqFsmWJ7gZ.jpg",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            rating = "8.5",
+            ratingScore = 4.3f,
+            categoryId = "1230",
+            categoryName = "Disney+",
+            plot = "O Deus da Trapaça viaja através do tempo e do espaço ao ser recrutado pela Autoridade de Variância Temporal.",
+            genre = "Ação / Ficção",
+            year = "2024",
+            isSeries = true
+        ),
+        VodItem(
+            id = "series_mandalorian",
+            name = "The Mandalorian",
+            posterUrl = "https://image.tmdb.org/t/p/w500/eU1i6eHXlzMOlEq0ku1R07Y87Nu.jpg",
+            streamUrl = "http://64.31.23.207:80/series/59471019/60849037/5663943.mp4",
+            rating = "8.7",
+            ratingScore = 4.4f,
+            categoryId = "1230",
+            categoryName = "Disney+",
+            plot = "As viagens de um caçador de recompensas solitário nos confins da galáxia, longe da autoridade da Nova República.",
+            genre = "Sci-Fi / Aventura",
+            year = "2024",
             isSeries = true
         )
     )
 
     fun getFallbackSeries(categoryId: String): List<VodItem> {
-        return when (categoryId) {
-            "cat_series_todas" -> allFallbackSeries
-            "cat_series_populares" -> allFallbackSeries.filter { it.categoryId == "cat_series_populares" }
-            "cat_series_misterio" -> allFallbackSeries.filter { it.categoryId == "cat_series_misterio" }
-            "cat_series_acao" -> allFallbackSeries.filter { it.categoryId == "cat_series_acao" }
-            else -> allFallbackSeries
-        }
+        val filtered = allFallbackSeries.filter { it.categoryId == categoryId }
+        return if (filtered.isNotEmpty()) filtered else allFallbackSeries
     }
 }

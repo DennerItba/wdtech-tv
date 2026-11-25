@@ -221,33 +221,33 @@ object ChannelRepository {
                         number = "49",
                         title = "Premiere Clubes FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769291.m3u8",
+                        streamUrl = "http://181.78.197.59:8000/play/a07z/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "O melhor do futebol brasileiro 24 horas por dia com jogos ao vivo e programas exclusivos.",
                         quality = "FHD",
-                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769291.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769291.m3u8")
+                        backupUrls = listOf("https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703", "http://181.78.197.59:8000/play/a07n/index.m3u8")
                     ),
                     Channel(
                         id = "prem_2",
                         number = "50",
                         title = "Premiere 2 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769297.m3u8",
+                        streamUrl = "http://181.78.197.59:8000/play/a07n/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Transmissões ao vivo das Séries A e B do Brasileirão e campeonatos regionais.",
                         quality = "FHD",
-                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769297.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769297.m3u8")
+                        backupUrls = listOf("http://181.78.197.59:8000/play/a07a/index.m3u8", "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703")
                     ),
                     Channel(
                         id = "prem_3",
                         number = "51",
                         title = "Premiere 3 FHD",
                         category = "⚽ Premiere FC (Todos os Jogos)",
-                        streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769303.m3u8",
+                        streamUrl = "http://181.78.197.59:8000/play/a07a/index.m3u8",
                         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
                         description = "Partidas simultâneas ao vivo e transmissão completa dos principais clubes do Brasil.",
                         quality = "FHD",
-                        backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769303.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769303.m3u8")
+                        backupUrls = listOf("http://181.78.197.59:8000/play/a07c/index.m3u8", "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703")
                     ),
                     Channel(
                         id = "prem_4",
@@ -1896,69 +1896,89 @@ object ChannelRepository {
     fun getFallbackJogosDoDia(): List<Channel> {
         return listOf(
             Channel(
-                id = "jogo_dia_prem1",
-                number = "15",
-                title = "[AO VIVO] Premiere FC 1 - Brasileirão",
-                category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769291.m3u8",
-                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Partida ao vivo de hoje com cobertura completa direto do estádio.",
-                quality = "FHD",
-                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769291.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769291.m3u8")
-            ),
-            Channel(
-                id = "jogo_dia_prem2",
-                number = "16",
-                title = "[AO VIVO] Premiere FC 2 - Copa do Brasil",
-                category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769297.m3u8",
-                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Transmissão ao vivo de partida decisiva com narração e comentários.",
-                quality = "FHD",
-                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769297.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769297.m3u8")
-            ),
-            Channel(
-                id = "jogo_dia_sportv",
-                number = "17",
-                title = "[AO VIVO] SporTV Principal - Rodada Ao Vivo",
-                category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769288.m3u8",
-                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "Transmissão ao vivo dos maiores clássicos e campeonatos nacionais.",
-                quality = "FHD",
-                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769288.ts", "http://gelosalgados.site:80/live/59471019/60849037/5769288.m3u8")
-            ),
-            Channel(
                 id = "jogo_dia_caze",
-                number = "18",
-                title = "[AO VIVO] CazéTV - Jogos e Campeonatos",
+                number = "01",
+                title = "[AO VIVO] CazéTV - Transmissões & Copas",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
                 streamUrl = "https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
-                description = "A maior transmissão digital com Casimiro Miguel e equipe completa.",
-                quality = "FHD"
+                description = "Transmissões completas e gratuitas com Casimiro Miguel e equipe.",
+                quality = "FHD",
+                backupUrls = listOf("http://181.78.197.59:8000/play/a07z/index.m3u8")
+            ),
+            Channel(
+                id = "jogo_dia_prem1",
+                number = "02",
+                title = "[AO VIVO] Premiere Clubes - Brasileirão",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://181.78.197.59:8000/play/a07z/index.m3u8",
+                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
+                description = "Partida ao vivo de hoje com cobertura completa direto do estádio.",
+                quality = "FHD",
+                backupUrls = listOf("https://cdn1.uniredes.com.br/hls/caze-tv-hd/index.m3u8?token=2d3232fe89d2b637a2093703")
+            ),
+            Channel(
+                id = "jogo_dia_prem2",
+                number = "03",
+                title = "[AO VIVO] Premiere 2 - Copa do Brasil",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://181.78.197.59:8000/play/a07n/index.m3u8",
+                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Premiere_logo.svg/320px-Premiere_logo.svg.png",
+                description = "Transmissão ao vivo de partida decisiva com narração e comentários.",
+                quality = "FHD",
+                backupUrls = listOf("http://181.78.197.59:8000/play/a07a/index.m3u8")
             ),
             Channel(
                 id = "jogo_dia_espn",
-                number = "19",
-                title = "[AO VIVO] ESPN - Futebol Internacional & Ligas",
+                number = "04",
+                title = "[AO VIVO] ESPN HD - Futebol Internacional & Ligas",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769299.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "Premier League, La Liga, Serie A e Champions League ao vivo.",
                 quality = "FHD",
-                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769299.ts", "https://cdn1.uniredes.com.br/hls/espn-hd/index.m3u8?token=2d3232fe89d2b637a2093703")
+                backupUrls = listOf("https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703")
             ),
             Channel(
                 id = "jogo_dia_espn2",
-                number = "20",
+                number = "05",
                 title = "[AO VIVO] ESPN 2 - Libertadores & Sul-Americana",
                 category = "⚽ Jogos do Dia (Ao Vivo)",
-                streamUrl = "http://64.31.23.207:80/live/59471019/60849037/5769300.m3u8",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-2-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
                 description = "As emoções do futebol sul-americano e copas internacionais ao vivo.",
                 quality = "FHD",
-                backupUrls = listOf("http://64.31.23.207:80/live/59471019/60849037/5769300.ts")
+                backupUrls = listOf("https://cdn1.uniredes.com.br/hls/espn-3-hd/index.m3u8?token=2d3232fe89d2b637a2093703")
+            ),
+            Channel(
+                id = "jogo_dia_espn3",
+                number = "06",
+                title = "[AO VIVO] ESPN 3 - Copa da Liga & UEFA",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/espn-3-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
+                description = "Cobertura completa dos grandes torneios mundiais.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_tnt",
+                number = "07",
+                title = "[AO VIVO] TNT HD - Champions League Ao Vivo",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "https://cdn1.uniredes.com.br/hls/tnt-hd/index.m3u8?token=2d3232fe89d2b637a2093703",
+                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
+                description = "A maior liga de futebol do mundo ao vivo.",
+                quality = "FHD"
+            ),
+            Channel(
+                id = "jogo_dia_sportv",
+                number = "08",
+                title = "[AO VIVO] SporTV - Transmissão Rodada Ao Vivo",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                streamUrl = "http://181.78.197.59:8000/play/a07a/index.m3u8",
+                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/240px-Soccerball.svg.png",
+                description = "Transmissão ao vivo dos maiores clássicos e campeonatos nacionais.",
+                quality = "FHD"
             ),
             Channel(
                 id = "jogo_dia_317692",

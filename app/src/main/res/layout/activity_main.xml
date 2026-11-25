@@ -5,105 +5,37 @@
     android:layout_height="match_parent"
     android:background="@drawable/tv_bg">
 
-    <!-- Camada de Gradiente Escuro Cyberpunk/Futurista -->
+    <!-- Camada de Gradiente Escuro Cinematográfico Fundo -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EB070B12" />
+        android:background="#F2080D16" />
 
-    <!-- 1. Barra Superior Minimalista e Futurista: Logo WDTECH TV à Esquerda, Status e Relógio à Direita -->
+    <!-- ================================================================= -->
+    <!-- TELA 1: HOME HUB (TELA INICIAL - FIEL À IMAGEM 2)                -->
+    <!-- ================================================================= -->
     <RelativeLayout
-        android:id="@+id/top_navigation_bar"
+        android:id="@+id/layout_home_hub"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
-        <!-- Logo WDTECH TV -->
+        <!-- Topo: Relógio e WiFi à Direita -->
         <LinearLayout
-            android:id="@+id/logo_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/logo"
-                android:adjustViewBounds="true"
-                android:contentDescription="Logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="WDTECH"
-                android:textColor="@color/text_high"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="TV"
-                android:textColor="@color/neon_cyan"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- Botão Abrir/Fechar Menu Principal -->
-        <Button
-            android:id="@+id/btn_toggle_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/logo_layout"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/bg_button_selector"
-            android:text="☰ MENU (OK)"
-            android:textColor="@color/btn_playback_text_selector"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:focusable="false"
-            android:clickable="true"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp" />
-
-        <!-- Indicador de Seção / Breadcrumb Minimalista Neon -->
-        <TextView
-            android:id="@+id/txt_header_breadcrumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="14dp"
-            android:layout_toEndOf="@id/btn_toggle_menu"
-            android:background="@drawable/badge_live"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:text="WDTECH TV • SISTEMA PRONTO"
-            android:textColor="@color/neon_cyan"
-            android:textSize="11sp"
-            android:textStyle="bold" />
-
-        <!-- Status e Relógio no Topo Direito (Sem Botões Poluídos) -->
-        <LinearLayout
-            android:id="@+id/top_status_container"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:layout_marginEnd="12dp"
                 android:src="@drawable/ic_wifi_tv"
-                android:layout_marginEnd="16dp"
                 android:contentDescription="WiFi" />
 
             <TextClock
@@ -111,859 +43,929 @@
                 android:layout_height="wrap_content"
                 android:format24Hour="HH:mm"
                 android:format12Hour="hh:mm a"
-                android:textColor="@color/text_high"
-                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </RelativeLayout>
 
-    <!-- TELA PRINCIPAL: DESTAQUES E LANÇAMENTOS 2025/2026 -->
-    <LinearLayout
-        android:id="@+id/layout_home_lancamentos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/top_navigation_bar"
-        android:orientation="vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="16dp"
-        android:visibility="visible">
-
-        <!-- Banner Hero Superior (Destaque Principal do Lançamento) -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="12dp">
-
-            <!-- Imagem de Fundo / Backdrop do Filme/Série -->
-            <ImageView
-                android:id="@+id/img_hero_backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:background="#151E2D"
-                android:contentDescription="Backdrop" />
-
-            <!-- Camada de Gradiente Escuro Cinematográfico -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_poster_scrim" />
-
-            <!-- Informações do Lançamento sobre o Banner -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="bottom"
-                android:padding="26dp">
-
-                <TextView
-                    android:id="@+id/txt_hero_badge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/badge_live"
-                    android:backgroundTint="#00E5FF"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:text="🔥 LANÇAMENTO EM DESTAQUE • ULTRA HD 4K"
-                    android:textColor="#050B14"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_hero_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Duna: Parte 2"
-                    android:textColor="@color/text_white"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    android:shadowColor="#000000"
-                    android:shadowDx="0"
-                    android:shadowDy="2"
-                    android:shadowRadius="6" />
-
-                <TextView
-                    android:id="@+id/txt_hero_meta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="⭐ 8.6 • 2025 • Ação / Ficção • 4K HDR"
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_hero_plot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:maxWidth="750dp"
-                    android:text="Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Diante de escolhas difíceis, ele tenta evitar um futuro terrível."
-                    android:textColor="#C8D8F0"
-                    android:textSize="13sp"
-                    android:lineSpacingExtra="2dp" />
-
-                <!-- Botões de Ação no Banner -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_hero_watch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:background="@drawable/bg_button_selector"
-                        android:focusable="true"
-                        android:paddingStart="24dp"
-                        android:paddingEnd="24dp"
-                        android:text="▶ Assistir Agora (OK)"
-                        android:textAllCaps="false"
-                        android:textColor="@color/btn_playback_text_selector"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:nextFocusRight="@id/btn_hero_open_menu"
-                        android:nextFocusDown="@id/rv_home_lancamentos" />
-
-                    <Button
-                        android:id="@+id/btn_hero_open_menu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:layout_marginStart="14dp"
-                        android:background="@drawable/bg_button_selector"
-                        android:focusable="true"
-                        android:paddingStart="22dp"
-                        android:paddingEnd="22dp"
-                        android:text="☰ Abrir Menu / Canais"
-                        android:textAllCaps="false"
-                        android:textColor="@color/btn_playback_text_selector"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:nextFocusLeft="@id/btn_hero_watch"
-                        android:nextFocusDown="@id/rv_home_lancamentos" />
-                </LinearLayout>
-            </LinearLayout>
-        </FrameLayout>
-
-        <!-- Fileira Horizontal de Lançamentos 2025 / 2026 -->
+        <!-- Centro do Hub: Logo + 4 Círculos Grandes + Botão Recarregar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <!-- Logo e Emblema WDTECH TV Central -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="🔥 LANÇAMENTOS 2025 / 2026 (EM ALTA)"
-                android:textColor="@color/neon_cyan"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_home_lancamentos"
-                android:layout_width="match_parent"
-                android:layout_height="225dp"
-                android:clipToPadding="false"
-                android:descendantFocusability="afterDescendants"
-                android:focusable="false"
-                android:nextFocusUp="@id/btn_hero_watch"
-                android:scrollbars="none" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- 1.5 BARRA DE MENU PRINCIPAL: 6 TABS ALINHADAS E EQUILIBRADAS -->
-    <LinearLayout
-        android:id="@+id/layout_main_menu_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_below="@id/top_navigation_bar"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:layout_marginBottom="6dp"
-        android:visibility="gone">
-
-        <Button
-            android:id="@+id/btn_menu_home"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_tab_selector"
-            android:text="🏠 INÍCIO"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_home"
-            android:nextFocusRight="@id/btn_menu_tv"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusUp="@id/btn_menu_home" />
-
-        <Button
-            android:id="@+id/btn_menu_tv"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_tab_selector"
-            android:text="📺 TV AO VIVO"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_home"
-            android:nextFocusRight="@id/btn_menu_filmes"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusUp="@id/btn_menu_tv" />
-
-        <Button
-            android:id="@+id/btn_menu_filmes"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_tab_selector"
-            android:text="🎬 FILMES"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_tv"
-            android:nextFocusRight="@id/btn_menu_series"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusUp="@id/btn_menu_filmes" />
-
-        <Button
-            android:id="@+id/btn_menu_series"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_tab_selector"
-            android:text="🍿 SÉRIES"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_filmes"
-            android:nextFocusRight="@id/btn_menu_futebol"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusUp="@id/btn_menu_series" />
-
-        <Button
-            android:id="@+id/btn_menu_futebol"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_tab_selector"
-            android:text="⚽ FUTEBOL"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_series"
-            android:nextFocusRight="@id/btn_menu_infantil"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusUp="@id/btn_menu_futebol" />
-
-        <Button
-            android:id="@+id/btn_menu_infantil"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_tab_selector"
-            android:text="👶 INFANTIL"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_futebol"
-            android:nextFocusRight="@id/btn_menu_settings"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusUp="@id/btn_menu_infantil" />
-
-        <Button
-            android:id="@+id/btn_menu_settings"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_tab_selector"
-            android:text="⚙️ AJUSTES"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:nextFocusLeft="@id/btn_menu_infantil"
-            android:nextFocusRight="@id/btn_menu_settings"
-            android:nextFocusDown="@id/rv_category_sidebar"
-            android:nextFocusUp="@id/btn_menu_settings" />
-    </LinearLayout>
-
-    <!-- 2. Corpo em 3 Painéis (Sidebar de Categorias + Grade de Canais + Player ao Vivo) -->
-    <LinearLayout
-        android:id="@+id/layout_three_panels"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/layout_main_menu_tabs"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="16dp"
-        android:visibility="gone">
-
-        <!-- PAINEL 1: MENU LATERAL ESQUERDO (CATEGORIAS - WD STREAM / CYBER TV 2.0) -->
-        <LinearLayout
-            android:id="@+id/panel_sidebar"
-            android:layout_width="220dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingEnd="12dp">
-
-            <!-- Cabeçalho de Categoria Simples e Elegante -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="4dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:id="@+id/txt_sidebar_section_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CATEGORIAS • TV"
-                    android:textColor="#00E5FF"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_category_sidebar"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:descendantFocusability="afterDescendants"
-                android:focusable="false"
-                android:nextFocusRight="@id/rv_channel_list"
-                android:nextFocusUp="@id/rv_category_sidebar"
-                android:scrollbars="none" />
-
-
-        </LinearLayout>
-
-        <!-- PAINEL 2: CENTRO - LISTA DE CANAIS -->
-        <LinearLayout
-            android:id="@+id/panel_channels"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingStart="6dp"
-            android:paddingEnd="12dp">
-
-            <!-- CabeÃ§alho do Canal com Contador -->
-            <LinearLayout
-                android:id="@+id/layout_channel_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:clickable="true"
-                android:focusable="false"
-                android:paddingTop="2dp"
-                android:paddingBottom="6dp"
-                android:paddingStart="8dp">
-
-                <TextView
-                    android:id="@+id/txt_btn_back_categories"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="◄ "
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/txt_selected_category_title" 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Todos os Canais"
-                    android:textColor="@color/text_high"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_category_badge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/badge_hd"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="6dp"
-                    android:paddingTop="1dp"
-                    android:paddingBottom="1dp"
-                    android:text="124"
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Lista Vertical de Canais -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_channel_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:descendantFocusability="afterDescendants"
-                android:focusable="false"
-                android:nextFocusLeft="@id/rv_category_sidebar"
-                android:nextFocusRight="@id/player_preview_container"
-                android:nextFocusUp="@id/btn_menu_tv"
-                android:scrollbars="none" />
-
-            <!-- Lista de Filmes / Séries (VOD) -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_vod_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:descendantFocusability="afterDescendants"
-                android:focusable="false"
-                android:nextFocusLeft="@id/rv_category_sidebar"
-                android:nextFocusRight="@id/btn_vod_action"
-                android:nextFocusUp="@id/btn_menu_filmes"
-                android:scrollbars="none"
-                android:visibility="gone" />
-
-            <!-- Lista de Opções de Ajustes (Settings Mode) -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_settings_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:descendantFocusability="afterDescendants"
-                android:focusable="false"
-                android:nextFocusLeft="@id/rv_category_sidebar"
-                android:nextFocusRight="@id/btn_setting_preview_action"
-                android:nextFocusUp="@id/btn_menu_settings"
-                android:scrollbars="none"
-                android:visibility="gone" />
-
-            <!-- RodapÃ© com InstruÃ§Ã£o -->
-            <TextView
-                android:id="@+id/txt_channel_footer_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:paddingStart="8dp"
-                android:text="&#9668; Categorias  &#8226;  OK Tela Cheia  &#8226;  &#9658; Player"
-                android:textColor="@color/text_low"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <!-- PAINEL 3: DIREITO - PLAYER AO VIVO (PREVIEW) -->
-        <RelativeLayout
-            android:id="@+id/player_preview_container"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_player_frame"
-            android:clickable="true"
-            android:focusable="true"
-            android:nextFocusLeft="@id/rv_channel_list">
-
-            <!-- Player de VÃ­deo ExoPlayer -->
-            <androidx.media3.ui.PlayerView
-                android:id="@+id/player_preview_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:use_controller="false"
-                app:resize_mode="fit"
-                app:surface_type="texture_view" />
-
-            <!-- Badge Superior Esquerdo [AO VIVO] -->
-            <LinearLayout
-                android:id="@+id/live_badge_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="14dp"
-                android:background="@drawable/badge_live"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingEnd="10dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp">
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:background="#FF1744" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="AO VIVO"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Spinner de Carregamento -->
-            <LinearLayout
-                android:id="@+id/preview_loading_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
-                <ProgressBar
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:indeterminateTint="@color/neon_cyan" />
+                <ImageView
+                    android:id="@+id/img_home_logo"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/logo"
+                    android:contentDescription="WDTECH TV Logo" />
 
                 <TextView
-                    android:id="@+id/txt_bitrate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="SINTONIZANDO CANAL..."
-                    android:textColor="@color/neon_cyan"
+                    android:letterSpacing="0.1"
+                    android:shadowColor="#FFB300"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="12"
+                    android:text="WDTECH TV"
+                    android:textColor="#FFFFFF"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 4 Grandes Botões Circulares Estilo Vivaon (Imagem 2) -->
+            <LinearLayout
+                android:id="@+id/layout_hub_circles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- 1. HUB: TV AO VIVO -->
+                <LinearLayout
+                    android:id="@+id/hub_tv"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="14dp"
+                    android:background="@drawable/bg_hub_circle"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:nextFocusRight="@+id/hub_filmes"
+                    android:nextFocusDown="@+id/btn_home_reload">
+
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/outline_live_tv_24"
+                        android:contentDescription="TV AO VIVO" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="TV AO VIVO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 2. HUB: FILMES -->
+                <LinearLayout
+                    android:id="@+id/hub_filmes"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="14dp"
+                    android:background="@drawable/bg_hub_circle"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:nextFocusLeft="@+id/hub_tv"
+                    android:nextFocusRight="@+id/hub_series"
+                    android:nextFocusDown="@+id/btn_home_reload">
+
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_movie_vod"
+                        android:contentDescription="FILMES" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="FILMES"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 3. HUB: SÉRIES -->
+                <LinearLayout
+                    android:id="@+id/hub_series"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="14dp"
+                    android:background="@drawable/bg_hub_circle"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:nextFocusLeft="@+id/hub_filmes"
+                    android:nextFocusRight="@+id/hub_ajustes"
+                    android:nextFocusDown="@+id/btn_home_reload">
+
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_series_vod"
+                        android:contentDescription="SÉRIES" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="SÉRIES"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 4. HUB: AJUSTES -->
+                <LinearLayout
+                    android:id="@+id/hub_ajustes"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="14dp"
+                    android:background="@drawable/bg_hub_circle"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:nextFocusLeft="@+id/hub_series"
+                    android:nextFocusDown="@+id/btn_home_reload">
+
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_settings"
+                        android:contentDescription="AJUSTES" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="AJUSTES"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Botão Recarregar o Aplicativo (Pill) -->
+            <Button
+                android:id="@+id/btn_home_reload"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_vivaon_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="🔄  Recarregar o aplicativo"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:nextFocusUp="@+id/hub_tv" />
+
+            <!-- Indicador Inferior -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="▼"
+                    android:textColor="#70FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Próximos jogos &amp; Últimos adicionados"
+                    android:textColor="#8EA4C4"
                     android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Barra Inferior OTT / BTV Limpa (Igual à Foto do Usuário) -->
-            <LinearLayout
-                android:id="@+id/layout_preview_bottom_hud"
-                android:layout_width="match_parent"
+        </LinearLayout>
+
+        <!-- Rodapé do Hub: Chave do Dispositivo à Esquerda, Versão à Direita -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_alignParentBottom="true"
+            android:background="#A0060A12"
+            android:paddingStart="28dp"
+            android:paddingEnd="28dp">
+
+            <TextView
+                android:id="@+id/txt_device_key"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="#E0070B14"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:text="Chave do dispositivo: WD-9A88"
+                android:textColor="#C0D4EC"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_home_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="WDTECH TV v2.9.7"
+                android:textColor="#7A92B4"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!-- ================================================================= -->
+    <!-- TELA 2 & 3: CONTAINER DE CONTEÚDO (TV, VOD E AJUSTES)              -->
+    <!-- ================================================================= -->
+    <RelativeLayout
+        android:id="@+id/layout_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <!-- Barra Superior Compacta com Botão Voltar para o Hub e Breadcrumb -->
+        <RelativeLayout
+            android:id="@+id/top_navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="24dp"
+            android:gravity="center_vertical">
+
+            <!-- Botão Home / Voltar -->
+            <Button
+                android:id="@+id/btn_toggle_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_vivaon_pill"
+                android:text="🏠 INÍCIO"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:focusable="true"
+                android:clickable="true"
                 android:paddingStart="14dp"
-                android:paddingEnd="14dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="12dp">
+                android:paddingEnd="14dp" />
 
-                <!-- Logo Circular do Canal com Borda Neon -->
-                <RelativeLayout
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/bg_channel_logo_circle">
+            <!-- Breadcrumb da Seção -->
+            <TextView
+                android:id="@+id/txt_header_breadcrumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="14dp"
+                android:layout_toEndOf="@id/btn_toggle_menu"
+                android:text="WDTECH TV • TV AO VIVO"
+                android:textColor="#00E5FF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/img_preview_channel_logo"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/logo"
-                        android:contentDescription="Logo" />
-                </RelativeLayout>
+            <!-- Relógio à Direita -->
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:format24Hour="HH:mm"
+                android:format12Hour="hh:mm a"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-                <!-- Informações e Programação EPG -->
+        <!-- ============================================================= -->
+        <!-- MODO 1: TV AO VIVO (FIEL À IMAGEM 3)                         -->
+        <!-- ============================================================= -->
+        <LinearLayout
+            android:id="@+id/layout_tv_mode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/top_navigation_bar"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="14dp"
+            android:visibility="visible">
+
+            <!-- Trilho Vertical de Acesso Rápido à Esquerda (Ícones) -->
+            <LinearLayout
+                android:id="@+id/layout_quick_rail"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:gravity="top|center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="12dp">
+
+                <!-- 1. Busca -->
+                <ImageView
+                    android:id="@+id/btn_rail_search"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_rail_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_search_tv"
+                    android:contentDescription="Buscar"
+                    android:nextFocusRight="@+id/rv_channel_list" />
+
+                <!-- 2. Favoritos -->
+                <ImageView
+                    android:id="@+id/btn_rail_favorites"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_rail_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_heart_fav"
+                    android:contentDescription="Favoritos"
+                    android:nextFocusRight="@+id/rv_channel_list" />
+
+                <!-- 3. Recentes -->
+                <ImageView
+                    android:id="@+id/btn_rail_recents"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_rail_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_playback"
+                    android:contentDescription="Recentes"
+                    android:nextFocusRight="@+id/rv_channel_list" />
+
+                <!-- 4. Categorias -->
+                <ImageView
+                    android:id="@+id/btn_rail_categories"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_rail_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="9dp"
+                    android:src="@drawable/outline_live_tv_24"
+                    android:contentDescription="Categorias"
+                    android:nextFocusRight="@+id/rv_channel_list" />
+            </LinearLayout>
+
+            <!-- Coluna Central: Lista de Canais (com Header de Categoria) -->
+            <LinearLayout
+                android:layout_width="330dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
+                <!-- Header de Categoria (Ex: 🏷 Favoritos / Futebol) -->
                 <LinearLayout
-                    android:id="@+id/layout_epg_container"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="8dp">
 
-                    <!-- Linha 1: Número e Nome do Canal -->
                     <TextView
-                        android:id="@+id/txt_preview_title"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/txt_tv_category_title"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Selecione um canal"
+                        android:layout_weight="1"
+                        android:text="🏷 Favoritos"
                         android:textColor="#FFFFFF"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <!-- Linha 2: "Atual:" em vermelho + Programa atual + "próximo:" em cinza + Próximo + Horário -->
+                    <TextView
+                        android:id="@+id/txt_category_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_netflix_badge"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="24"
+                        android:textColor="#00E5FF"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- RecyclerView de Canais -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_channel_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
+                    android:descendantFocusability="afterDescendants"
+                    android:nextFocusLeft="@+id/btn_rail_favorites"
+                    android:nextFocusRight="@+id/player_preview_container"
+                    android:scrollbars="none" />
+            </LinearLayout>
+
+            <!-- Coluna Direita: Preview Player + 3 Linhas de EPG (Imagem 3) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Topo: Player Preview com Barra Superior de Dica -->
+                <RelativeLayout
+                    android:id="@+id/player_preview_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_player_frame"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <!-- Surface do Player Preview -->
+                    <androidx.media3.ui.PlayerView
+                        android:id="@+id/player_preview_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:use_controller="false"
+                        app:resize_mode="fit"
+                        app:surface_type="texture_view" />
+
+                    <!-- Faixa Superior de Dica: "Para o menu de ação, pressione longamente o botão OK" -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_alignParentTop="true"
+                        android:background="#B00A101C"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Atual: "
-                            android:textColor="#FF3B30"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_epg_now_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="Transmissão Ao Vivo"
+                            android:text="Para o menu de ação, pressione longamente o botão OK"
                             android:textColor="#FFFFFF"
-                            android:textSize="12sp" />
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Spinner de Conexão -->
+                    <LinearLayout
+                        android:id="@+id/preview_loading_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ProgressBar
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:indeterminateTint="#00E5FF" />
 
                         <TextView
+                            android:id="@+id/txt_bitrate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:text="próximo: "
-                            android:textColor="#8899AA"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:id="@+id/txt_epg_next"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="A Seguir"
-                            android:textColor="#CCD6E0"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:id="@+id/txt_epg_now_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="20:00 - 21:30"
+                            android:layout_marginTop="6dp"
+                            android:text="CONECTANDO SINAL..."
                             android:textColor="#00E5FF"
                             android:textSize="11sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Linha 3: Barra de Progresso Horizontal Fina -->
-                    <ProgressBar
-                        android:id="@+id/pb_epg_progress"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_marginTop="5dp"
-                        android:max="100"
-                        android:progress="45"
-                        android:progressDrawable="@drawable/progress_epg" />
-                </LinearLayout>
+                </RelativeLayout>
 
-                <!-- Elementos ocultos para manter compatibilidade com MainActivity.kt -->
+                <!-- Base: Programação EPG em 3 Linhas (Fiel à Imagem 3) -->
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone">
-
-                    <TextView android:id="@+id/txt_preview_info" android:layout_width="0dp" android:layout_height="0dp" />
-                    <TextView android:id="@+id/txt_preview_playback" android:layout_width="0dp" android:layout_height="0dp" />
-                    <TextView android:id="@+id/txt_epg_synopsis" android:layout_width="0dp" android:layout_height="0dp" />
-                    <ImageButton android:id="@+id/btn_fullscreen" android:layout_width="0dp" android:layout_height="0dp" />
-                </LinearLayout>
-            </LinearLayout><!-- Painel de Detalhes do Filme / Série (VOD Mode) -->
-            <LinearLayout
-                android:id="@+id/layout_vod_preview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#E8070B14"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:visibility="gone">
-
-                <LinearLayout
+                    android:id="@+id/layout_epg_schedule_container"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
-                    <!-- Pôster Grande do Filme / Série -->
-                    <ImageView
-                        android:id="@+id/img_vod_preview_poster"
-                        android:layout_width="155dp"
-                        android:layout_height="match_parent"
-                        android:background="#151E2D"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="Poster" />
-
-                    <!-- Informações: Título, Metadados e Sinopse -->
+                    <!-- Linha 1: Programa Atual (Ponto Verde) -->
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="18dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/bg_epg_row"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="9dp"
+                            android:src="@drawable/ic_dot_green"
+                            android:contentDescription="Status" />
 
                         <TextView
-                            android:id="@+id/txt_vod_preview_title"
-                            android:layout_width="match_parent"
+                            android:id="@+id/txt_epg_now_title"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Título do Filme / Série"
-                            android:textColor="@color/text_white"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_vod_preview_meta"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="⭐ 8.5 • 2025 • Lançamento • FHD"
-                            android:textColor="@color/neon_cyan"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_vod_preview_plot"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginStart="10dp"
                             android:layout_weight="1"
                             android:ellipsize="end"
-                            android:maxLines="8"
-                            android:lineSpacingExtra="3dp"
-                            android:text="Carregando sinopse..."
-                            android:textColor="#C0D1EC"
+                            android:maxLines="1"
+                            android:text="Transmissão Ao Vivo"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_epg_now_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="14:14 - 16:29"
+                            android:textColor="#C0D0E8"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Linha 2: Próximo Programa (Ponto Branco) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/bg_epg_row"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/ic_dot_white"
+                            android:alpha="0.8"
+                            android:contentDescription="Status" />
+
+                        <TextView
+                            android:id="@+id/txt_epg_next_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Próxima Atração"
+                            android:textColor="#D0E0F0"
                             android:textSize="12sp" />
 
-                        <!-- Botão de Ação Primário do VOD -->
-                        <Button
-                            android:id="@+id/btn_vod_action"
+                        <TextView
+                            android:id="@+id/txt_epg_next_time"
                             android:layout_width="wrap_content"
-                            android:layout_height="44dp"
-                            android:layout_marginTop="12dp"
-                            android:background="@drawable/bg_button_selector"
-                            android:focusable="true"
-                            android:paddingStart="24dp"
-                            android:paddingEnd="24dp"
-                            android:text="▶ Assistir Filme (OK)"
-                            android:textAllCaps="false"
-                            android:textColor="@color/btn_playback_text_selector"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:nextFocusLeft="@id/rv_vod_list"
-                            android:nextFocusUp="@id/btn_vod_action"
-                            android:nextFocusDown="@id/btn_vod_action"
-                            android:nextFocusRight="@id/btn_vod_action" />
+                            android:layout_height="wrap_content"
+                            android:text="16:29 - 18:53"
+                            android:textColor="#A0B4D0"
+                            android:textSize="11sp" />
                     </LinearLayout>
+
+                    <!-- Linha 3: Programa Seguinte (Ponto Branco) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_epg_row"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/ic_dot_white"
+                            android:alpha="0.8"
+                            android:contentDescription="Status" />
+
+                        <TextView
+                            android:id="@+id/txt_epg_third_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Programação da Noite"
+                            android:textColor="#D0E0F0"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txt_epg_third_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="18:53 - 20:38"
+                            android:textColor="#A0B4D0"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
 
-            <!-- Painel de Detalhes dos Ajustes / Configurações (Settings Mode) -->
-            <LinearLayout
-                android:id="@+id/layout_settings_preview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#E8070B14"
-                android:orientation="vertical"
-                android:padding="26dp"
-                android:visibility="gone">
+        </LinearLayout>
 
-                <!-- Cabeçalho do Card de Ajuste -->
+        <!-- ============================================================= -->
+        <!-- MODO 2: CATÁLOGO VOD FILMES & SÉRIES (FIEL À IMAGEM 1)       -->
+        <!-- ============================================================= -->
+        <LinearLayout
+            android:id="@+id/layout_vod_catalog_mode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/top_navigation_bar"
+            android:orientation="horizontal"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="14dp"
+            android:visibility="gone">
+
+            <!-- Coluna Esquerda: Botão Procurar + Lista de Categorias de Plataforma -->
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- Botão 🔍 Procurar (Topo da Coluna Esquerda como na Imagem 1) -->
+                <Button
+                    android:id="@+id/btn_vod_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_vivaon_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="🔍  Procurar"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:nextFocusDown="@+id/rv_category_sidebar"
+                    android:nextFocusRight="@+id/rv_vod_grid" />
+
+                <!-- Lista Vertical de Categorias (Filmes/Netflix, Filmes/Disney+, etc.) -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_category_sidebar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
+                    android:descendantFocusability="afterDescendants"
+                    android:nextFocusUp="@+id/btn_vod_search"
+                    android:nextFocusRight="@+id/rv_vod_grid"
+                    android:scrollbars="none" />
+            </LinearLayout>
+
+            <!-- Área Central/Direita: Botões de Ação + Grade de Posters -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Barra Superior de Ações com Bolinhas Coloridas (Imagem 1) -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp">
 
-                    <ImageView
-                        android:id="@+id/img_setting_preview_icon"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/badge_hd"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_settings"
-                        app:tint="@color/neon_cyan"
-                        android:contentDescription="Setting Icon" />
-
+                    <!-- 🔵 Menu -->
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:id="@+id/btn_vod_action_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_vivaon_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="9dp"
+                            android:src="@drawable/ic_dot_blue"
+                            android:contentDescription="Menu" />
 
                         <TextView
-                            android:id="@+id/txt_setting_preview_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ajustes do Aplicativo"
-                            android:textColor="@color/text_white"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_setting_preview_badge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/badge_live"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:text="CONFIGURAÇÃO ATIVA"
-                            android:textColor="@color/neon_cyan"
-                            android:textSize="10sp"
+                            android:layout_marginStart="8dp"
+                            android:text="Menu"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
                     </LinearLayout>
+
+                    <!-- 🟡 Ordenar -->
+                    <LinearLayout
+                        android:id="@+id/btn_vod_action_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/bg_vivaon_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="9dp"
+                            android:src="@drawable/ic_dot_yellow"
+                            android:contentDescription="Ordenar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Ordenar"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- 🟢 Favoritos -->
+                    <LinearLayout
+                        android:id="@+id/btn_vod_action_fav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/bg_vivaon_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="9dp"
+                            android:src="@drawable/ic_dot_green"
+                            android:contentDescription="Favoritos" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Favoritos"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Contador e Título da Categoria Ativa -->
+                    <TextView
+                        android:id="@+id/txt_vod_category_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="Filmes/Netflix"
+                        android:textColor="#00E5FF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_vod_items_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_netflix_badge"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Carregando..."
+                        android:textColor="#A0B4D0"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
-                <!-- Divisor Ciano Sutil -->
-                <View
+                <!-- Grade de Posters (4 Colunas com OttPosterAdapter) -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_vod_grid"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="#2000E5FF" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
+                    android:descendantFocusability="afterDescendants"
+                    android:nextFocusLeft="@+id/rv_category_sidebar"
+                    android:scrollbars="none" />
+            </LinearLayout>
 
-                <!-- Descrição Completa e Detalhes da Opção -->
+        </LinearLayout>
+
+        <!-- ============================================================= -->
+        <!-- MODO 3: AJUSTES DO SISTEMA                                   -->
+        <!-- ============================================================= -->
+        <LinearLayout
+            android:id="@+id/layout_settings_mode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/top_navigation_bar"
+            android:orientation="horizontal"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="16dp"
+            android:visibility="gone">
+
+            <!-- Lista de Opções de Configuração -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_settings_list"
+                android:layout_width="340dp"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="none" />
+
+            <!-- Painel de Detalhes da Configuração -->
+            <LinearLayout
+                android:id="@+id/layout_settings_preview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_vivaon_pill"
+                android:orientation="vertical"
+                android:padding="26dp">
+
+                <TextView
+                    android:id="@+id/txt_setting_preview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configuração"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_setting_preview_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_netflix_badge"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:text="PADRÃO"
+                    android:textColor="#00E5FF"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/txt_setting_preview_desc"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:lineSpacingExtra="4dp"
-                    android:text="Selecione um ajuste à esquerda para gerenciar configurações avançadas, reprodução e sistema."
-                    android:textColor="#C0D1EC"
-                    android:textSize="14sp" />
+                    android:lineSpacingExtra="3dp"
+                    android:text="Descrição do ajuste selecionado..."
+                    android:textColor="#C0D0E8"
+                    android:textSize="13sp" />
 
-                <!-- Botão de Ação Interativo (D-Pad navegável) -->
                 <Button
                     android:id="@+id/btn_setting_preview_action"
                     android:layout_width="wrap_content"
-                    android:layout_height="46dp"
+                    android:layout_height="44dp"
                     android:background="@drawable/bg_button_selector"
                     android:focusable="true"
                     android:paddingStart="24dp"
@@ -971,83 +973,64 @@
                     android:text="Executar Ação (OK)"
                     android:textAllCaps="false"
                     android:textColor="@color/btn_playback_text_selector"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:nextFocusLeft="@id/rv_settings_list"
-                    android:nextFocusUp="@id/btn_setting_preview_action"
-                    android:nextFocusDown="@id/btn_setting_preview_action"
-                    android:nextFocusRight="@id/btn_setting_preview_action" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <!-- PAINEL VOD: GRADE NETFLIX / UNITV MODERNA (FILMES E SÉRIES) -->
-        <LinearLayout
-            android:id="@+id/layout_vod_grid_container"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:visibility="gone">
-
-            <!-- Cabeçalho do Catálogo VOD -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingTop="2dp"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:id="@+id/txt_vod_category_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🎬 Filmes | Lançamentos"
-                    android:textColor="#FFFFFF"
-                    android:textSize="17sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_vod_items_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:background="@drawable/bg_netflix_badge"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:text="Carregando..."
-                    android:textColor="#00E5FF"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="OK p/ Assistir • Setas p/ Navegar"
-                    android:textColor="#7A8FA6"
-                    android:textSize="11sp" />
             </LinearLayout>
-
-            <!-- Grade de Posters Estilo Netflix / UniTV -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_vod_grid"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:descendantFocusability="afterDescendants"
-                android:focusable="false"
-                android:nextFocusLeft="@id/rv_category_sidebar"
-                android:scrollbars="none" />
         </LinearLayout>
 
+    </RelativeLayout>
+
+    <!-- Elementos Ocultos Mantidos para Compatibilidade de Código -->
+    <LinearLayout
+        android:id="@+id/layout_main_menu_tabs"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone">
+        <Button android:id="@+id/btn_menu_tv" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_menu_filmes" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_menu_series" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_menu_futebol" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_menu_infantil" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_menu_settings" android:layout_width="0dp" android:layout_height="0dp" />
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/layout_three_panels"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone">
+        <LinearLayout android:id="@+id/panel_sidebar" android:layout_width="0dp" android:layout_height="0dp">
+            <TextView android:id="@+id/txt_sidebar_section_title" android:layout_width="0dp" android:layout_height="0dp" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/panel_channels" android:layout_width="0dp" android:layout_height="0dp">
+            <TextView android:id="@+id/txt_selected_category_title" android:layout_width="0dp" android:layout_height="0dp" />
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_vod_list" android:layout_width="0dp" android:layout_height="0dp" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/layout_vod_preview" android:layout_width="0dp" android:layout_height="0dp">
+            <TextView android:id="@+id/txt_vod_preview_title" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_vod_preview_meta" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_vod_preview_plot" android:layout_width="0dp" android:layout_height="0dp" />
+            <ImageView android:id="@+id/img_vod_preview_poster" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_vod_action" android:layout_width="0dp" android:layout_height="0dp" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/layout_vod_grid_container" android:layout_width="0dp" android:layout_height="0dp" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout_home_lancamentos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone">
+        <ImageView android:id="@+id/img_hero_backdrop" android:layout_width="0dp" android:layout_height="0dp" />
+        <TextView android:id="@+id/txt_hero_badge" android:layout_width="0dp" android:layout_height="0dp" />
+        <TextView android:id="@+id/txt_hero_title" android:layout_width="0dp" android:layout_height="0dp" />
+        <TextView android:id="@+id/txt_hero_meta" android:layout_width="0dp" android:layout_height="0dp" />
+        <TextView android:id="@+id/txt_hero_plot" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_hero_watch" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_hero_open_menu" android:layout_width="0dp" android:layout_height="0dp" />
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_home_lancamentos" android:layout_width="0dp" android:layout_height="0dp" />
+    </LinearLayout>
+
+    <Button android:id="@+id/btn_fullscreen" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+
+</RelativeLayout>

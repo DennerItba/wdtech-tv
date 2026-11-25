@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.KeyEvent
 import android.view.View
 import android.view.Window
@@ -36,6 +37,7 @@ import androidx.media3.extractor.DefaultExtractorsFactory
 import androidx.media3.extractor.ts.DefaultTsPayloadReaderFactory
 import androidx.media3.extractor.ts.TsExtractor
 import androidx.media3.ui.PlayerView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mytv.app.adapter.CategorySidebarAdapter
@@ -43,6 +45,8 @@ import com.mytv.app.adapter.ChannelListAdapter
 import com.mytv.app.adapter.SettingListAdapter
 import com.mytv.app.adapter.OttPosterAdapter
 import com.mytv.app.adapter.VodListAdapter
+import com.mytv.app.adapter.EpisodeAdapter
+import com.mytv.app.adapter.SeasonAdapter
 import com.mytv.app.data.VodRepository
 import com.mytv.app.model.VodItem
 import com.mytv.app.data.ChannelRepository
@@ -53,275 +57,451 @@ import com.mytv.app.model.MainSection
 import com.mytv.app.model.SettingItem
 import com.mytv.app.utils.AppSettings
 import com.mytv.app.utils.AppUpdateManager
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.ArrayList
+import kotlin.math.abs
 
+/**
+ * MainActivity - Interface Vivaon Moderna (Modelos das Imagens 1, 2 e 3)
+ * Hub Central + TV Ao Vivo 3 Painéis + Catálogo VOD 4 Colunas + Ajustes Estáveis.
+ */
 class MainActivity : AppCompatActivity() {
 
-    // --- Barra de Menu Principal (Menús Separados) ---
-    private lateinit var layoutMainMenuTabs: LinearLayout
-    private lateinit var btnMenuTv: Button
-    private lateinit var btnMenuFilmes: Button
-    private lateinit var btnMenuSeries: Button
-    private lateinit var btnMenuFutebol: Button
-    private lateinit var btnMenuInfantil: Button
-    private lateinit var btnMenuSettings: Button
-    private lateinit var txtSidebarSectionTitle: TextView
-    private var vodFetchJob: kotlinx.coroutines.Job? = null
+    enum class ScreenMode {
+        HOME_HUB,
+        TV,
+        VOD_FILMES,
+        VOD_SERIES,
+        SETTINGS
+    }
 
-    // --- Catálogo VOD em Grade Netflix ---
-    private lateinit var layoutVodGridContainer: View
-    private lateinit var rvVodGrid: RecyclerView
-    private lateinit var txtVodCategoryTitle: TextView
-    private lateinit var txtVodItemsCount: TextView
-    private lateinit var ottVodPosterAdapter: OttPosterAdapter
+    private var currentMode: ScreenMode = ScreenMode.HOME_HUB
 
-    private var currentSection: MainSection = MainSection.TV
+    // --- 1. TELA HOME HUB (Imagem 2) ---
+    private lateinit var layoutHomeHub: View
+    private lateinit var hubTv: LinearLayout
+    private lateinit var hubFilmes: LinearLayout
+    private lateinit var hubSeries: LinearLayout
+    private lateinit var hubAjustes: LinearLayout
+    private lateinit var btnHomeReload: Button
+    private lateinit var txtDeviceKey: TextView
+    private lateinit var txtHomeVersion: TextView
 
-    // --- Painel Esquerdo (Categorias) ---
-    private lateinit var rvSidebar: RecyclerView
-    private lateinit var sidebarAdapter: CategorySidebarAdapter
+    // --- Container Geral de Conteúdo ---
+    private lateinit var layoutMainContent: View
+    private lateinit var btnToggleMenu: Button
     private lateinit var txtHeaderBreadcrumb: TextView
 
-    // --- Painel Central (Lista de Canais / Ajustes) ---
-    private lateinit var panelChannels: LinearLayout
-    private lateinit var txtSelectedCategoryTitle: TextView
+    // --- 2. TELA TV AO VIVO (Imagem 3) ---
+    private lateinit var layoutTvMode: View
+    private lateinit var btnRailSearch: ImageButton
+    private lateinit var btnRailFavorites: ImageButton
+    private lateinit var btnRailRecents: ImageButton
+    private lateinit var btnRailCategories: ImageButton
+    private lateinit var txtTvCategoryTitle: TextView
     private lateinit var txtCategoryBadge: TextView
     private lateinit var rvChannelList: RecyclerView
     private lateinit var channelAdapter: ChannelListAdapter
-    private lateinit var rvSettingsList: RecyclerView
-    private lateinit var settingAdapter: SettingListAdapter
 
-    // --- Painel Direito (Player Preview e Detalhes) ---
+    // Painel Preview do Player & EPG 3 Linhas
     private lateinit var playerPreviewContainer: View
     private lateinit var playerView: PlayerView
     private lateinit var previewLoadingLayout: View
     private lateinit var txtBitrate: TextView
-    private var imgPreviewLogo: ImageView? = null
-    private lateinit var txtPreviewTitle: TextView
-    private lateinit var txtPreviewInfo: TextView
-    private lateinit var txtPreviewPlayback: TextView
     private lateinit var txtEpgNowTitle: TextView
     private lateinit var txtEpgNowTime: TextView
-    private lateinit var pbEpgProgress: ProgressBar
-    private lateinit var txtEpgSynopsis: TextView
-    private lateinit var txtEpgNext: TextView
-    private lateinit var btnFullscreen: ImageButton
+    private lateinit var txtEpgNextTitle: TextView
+    private lateinit var txtEpgNextTime: TextView
+    private lateinit var txtEpgThirdTitle: TextView
+    private lateinit var txtEpgThirdTime: TextView
 
-    // --- Home Lançamentos & Navegação ---
-    private var isHomeMode: Boolean = true
-    private lateinit var btnToggleMenu: Button
-    private lateinit var btnMenuHome: Button
-    private lateinit var layoutHomeLancamentos: View
-    private lateinit var layoutThreePanels: View
-    private lateinit var imgHeroBackdrop: ImageView
-    private lateinit var txtHeroTitle: TextView
-    private lateinit var txtHeroMeta: TextView
-    private lateinit var txtHeroPlot: TextView
-    private lateinit var btnHeroWatch: Button
-    private lateinit var btnHeroOpenMenu: Button
-    private lateinit var rvHomeLancamentos: RecyclerView
-    private lateinit var homeLancamentosAdapter: OttPosterAdapter
-    private var currentHeroVodItem: VodItem? = null
+    // --- 3. TELA CATÁLOGO VOD FILMES & SÉRIES (Imagem 1) ---
+    private lateinit var layoutVodCatalogMode: View
+    private lateinit var btnVodSearch: Button
+    private lateinit var rvCategorySidebar: RecyclerView
+    private lateinit var sidebarAdapter: CategorySidebarAdapter
+    private lateinit var btnVodActionMenu: Button
+    private lateinit var btnVodActionSort: Button
+    private lateinit var btnVodActionFav: Button
+    private lateinit var txtVodCategoryTitle: TextView
+    private lateinit var txtVodItemsCount: TextView
+    private lateinit var rvVodGrid: RecyclerView
+    private lateinit var ottVodPosterAdapter: OttPosterAdapter
+    private var vodFetchJob: Job? = null
 
-    // --- VOD (Filmes e Séries) ---
-    private lateinit var rvVodList: RecyclerView
-    private lateinit var vodAdapter: VodListAdapter
-    private lateinit var layoutVodPreview: View
-    private lateinit var imgVodPreviewPoster: ImageView
-    private lateinit var txtVodPreviewTitle: TextView
-    private lateinit var txtVodPreviewMeta: TextView
-    private lateinit var txtVodPreviewPlot: TextView
-    private lateinit var btnVodAction: Button
-    private var currentSelectedVodItem: VodItem? = null
-
-    // --- Preview de Ajustes ---
+    // --- 4. TELA DE AJUSTES ---
+    private lateinit var layoutSettingsMode: View
+    private lateinit var rvSettingsList: RecyclerView
+    private lateinit var settingAdapter: SettingListAdapter
     private lateinit var layoutSettingsPreview: View
-    private lateinit var imgSettingPreviewIcon: ImageView
     private lateinit var txtSettingPreviewTitle: TextView
     private lateinit var txtSettingPreviewBadge: TextView
     private lateinit var txtSettingPreviewDesc: TextView
     private lateinit var btnSettingPreviewAction: Button
-
-    // --- Estado do Player & Navegação ---
-    private var exoPlayer: ExoPlayer? = null
-    private var currentPlayingChannel: Channel? = null
-    private var currentSelectedCategory: ChannelCategory? = null
     private var currentSettingItem: SettingItem? = null
-    private var allCategories: List<ChannelCategory> = emptyList()
-    private val zapHandler = Handler(Looper.getMainLooper())
-    private var isSettingsMode = false
 
-    // --- Tecnologia Netflix: Stall Watchdog & Multi-CDN Auto-Failover no Preview ---
+    // --- Variáveis de Estado & Dados ---
+    private var tvCategories: List<ChannelCategory> = emptyList()
+    private var currentTvCategory: ChannelCategory? = null
+    private var currentPlayingChannel: Channel? = null
+    private var exoPlayer: ExoPlayer? = null
+    private val zapHandler = Handler(Looper.getMainLooper())
+
+    // Watchdog de Buffer & Failover
     private val previewWatchdogHandler = Handler(Looper.getMainLooper())
     private var previewWatchdogRunnable: Runnable? = null
     private var previewCandidates: List<String> = emptyList()
     private var previewCandidateIndex: Int = 0
 
-    private fun cancelPreviewWatchdog() {
-        previewWatchdogRunnable?.let { previewWatchdogHandler.removeCallbacks(it) }
-        previewWatchdogRunnable = null
-    }
-
-    private fun startPreviewWatchdog(channel: Channel) {
-        cancelPreviewWatchdog()
-        val runnable = Runnable {
-            if (!isFinishing && !isDestroyed && (exoPlayer?.playbackState == Player.STATE_BUFFERING || exoPlayer?.playbackState == Player.STATE_IDLE)) {
-                android.util.Log.w("WDTECH_NETFLIX", "Preview stall detectado (8.0s) no canal ${channel.title}. Acionando auto-failover...")
-                triggerPreviewFailover(channel, "Stall de buffer no preview (8.0s)")
-            }
-        }
-        previewWatchdogRunnable = runnable
-        previewWatchdogHandler.postDelayed(runnable, 20000L)
-    }
-
-    private fun buildStreamCandidates(channel: Channel): List<String> {
-        val list = mutableListOf<String>()
-        val primary = channel.streamUrl
-        if (primary.isNotEmpty()) {
-            list.add(primary)
-            if (primary.contains("64.31.23.207")) {
-                if (primary.endsWith(".m3u8")) list.add(primary.replace(".m3u8", ".ts"))
-                else if (primary.endsWith(".ts")) list.add(primary.replace(".ts", ".m3u8"))
-            }
-        }
-
-        for (b in channel.backupUrls) {
-            if (b.isNotEmpty() && !list.contains(b)) {
-                list.add(b)
-                if (b.contains("64.31.23.207")) {
-                    val alt = if (b.endsWith(".m3u8")) b.replace(".m3u8", ".ts") else if (b.endsWith(".ts")) b.replace(".ts", ".m3u8") else null
-                    if (alt != null && !list.contains(alt)) list.add(alt)
-                }
-            }
-        }
-        return list
-    }
-
-        private fun triggerPreviewFailover(channel: Channel, reason: String) {
-        if (isFinishing || isDestroyed) return
-        cancelPreviewWatchdog()
-        if (previewCandidates.isEmpty()) {
-            previewCandidates = buildStreamCandidates(channel)
-        }
-        previewCandidateIndex = (previewCandidateIndex + 1) % previewCandidates.size
-        val nextUrl = previewCandidates[previewCandidateIndex]
-        android.util.Log.i("WDTECH_NETFLIX", "Preview failover contínuo [Candidato ${previewCandidateIndex + 1}/${previewCandidates.size}] para: $nextUrl ($reason)")
-        previewLoadingLayout.visibility = View.VISIBLE
-        playChannelPreviewInternal(channel, nextUrl)
-    }
+    // VOD Selection
+    private var currentVodCategories: List<ChannelCategory> = emptyList()
+    private var currentSelectedVodCategory: ChannelCategory? = null
+    private var currentSelectedVodItem: VodItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Escudo de Estabilidade Definitivo: Intercepta qualquer exceção não tratada evitando que o app feche
-        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+        // Escudo de Estabilidade Definitivo: Intercepta qualquer exceção não tratada evitando crash
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            android.util.Log.e("WDTECH_CRASH", "Exceção interceptada com sucesso na thread ${thread.name}: ${throwable.message}", throwable)
+            android.util.Log.e("WDTECH_CRASH", "Exceção interceptada na thread ${thread.name}: ${throwable.message}", throwable)
         }
 
         setContentView(R.layout.activity_main)
 
         initViews()
         setupPlayer()
-        loadDataAndStartInitialChannel()
+        setupHubListeners()
+        setupTvModeListeners()
+        setupVodModeListeners()
+        setupSettingsModeListeners()
         setupBackPressed()
+
+        // Inicia na Tela Inicial (Home Hub - Imagem 2)
+        showHomeHub()
+
+        // Pré-carrega canais de TV em segundo plano
+        preloadTvData()
 
         // Verificação silenciosa de atualização
         AppUpdateManager.checkForUpdates(this, isManualCheck = false)
     }
 
     private fun initViews() {
-                // Barra de Navegação e Botão de Alternar Menu
+        // 1. Home Hub
+        layoutHomeHub = findViewById(R.id.layout_home_hub)
+        hubTv = findViewById(R.id.hub_tv)
+        hubFilmes = findViewById(R.id.hub_filmes)
+        hubSeries = findViewById(R.id.hub_series)
+        hubAjustes = findViewById(R.id.hub_ajustes)
+        btnHomeReload = findViewById(R.id.btn_home_reload)
+        txtDeviceKey = findViewById(R.id.txt_device_key)
+        txtHomeVersion = findViewById(R.id.txt_home_version)
+
+        // Topo / Breadcrumb
+        layoutMainContent = findViewById(R.id.layout_main_content)
         btnToggleMenu = findViewById(R.id.btn_toggle_menu)
-        layoutHomeLancamentos = findViewById(R.id.layout_home_lancamentos)
-        layoutThreePanels = findViewById(R.id.layout_three_panels)
-
-        // Banner Hero e Carrossel de Lançamentos
-        imgHeroBackdrop = findViewById(R.id.img_hero_backdrop)
-        txtHeroTitle = findViewById(R.id.txt_hero_title)
-        txtHeroMeta = findViewById(R.id.txt_hero_meta)
-        txtHeroPlot = findViewById(R.id.txt_hero_plot)
-        btnHeroWatch = findViewById(R.id.btn_hero_watch)
-        btnHeroOpenMenu = findViewById(R.id.btn_hero_open_menu)
-        rvHomeLancamentos = findViewById(R.id.rv_home_lancamentos)
-
-        // Barra de Menu Principal
-        layoutMainMenuTabs = findViewById(R.id.layout_main_menu_tabs)
-        btnMenuHome = findViewById(R.id.btn_menu_home)
-        btnMenuTv = findViewById(R.id.btn_menu_tv)
-        btnMenuFilmes = findViewById(R.id.btn_menu_filmes)
-        btnMenuSeries = findViewById(R.id.btn_menu_series)
-        btnMenuFutebol = findViewById(R.id.btn_menu_futebol)
-        btnMenuInfantil = findViewById(R.id.btn_menu_infantil)
-        btnMenuSettings = findViewById(R.id.btn_menu_settings)
-        txtSidebarSectionTitle = findViewById(R.id.txt_sidebar_section_title)
-
-        // Catálogo VOD Grade Netflix
-        layoutVodGridContainer = findViewById(R.id.layout_vod_grid_container)
-        rvVodGrid = findViewById(R.id.rv_vod_grid)
-        txtVodCategoryTitle = findViewById(R.id.txt_vod_category_title)
-        txtVodItemsCount = findViewById(R.id.txt_vod_items_count)
-
-        setupMainMenuTabs()
-
-        // Barra Superior
         txtHeaderBreadcrumb = findViewById(R.id.txt_header_breadcrumb)
 
-        // Painel Lateral Esquerdo
-        rvSidebar = findViewById(R.id.rv_category_sidebar)
-        rvSidebar.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        // Painel Central
-        panelChannels = findViewById(R.id.panel_channels)
-        txtSelectedCategoryTitle = findViewById(R.id.txt_selected_category_title)
+        // 2. TV Ao Vivo Mode
+        layoutTvMode = findViewById(R.id.layout_tv_mode)
+        btnRailSearch = findViewById(R.id.btn_rail_search)
+        btnRailFavorites = findViewById(R.id.btn_rail_favorites)
+        btnRailRecents = findViewById(R.id.btn_rail_recents)
+        btnRailCategories = findViewById(R.id.btn_rail_categories)
+        txtTvCategoryTitle = findViewById(R.id.txt_tv_category_title)
         txtCategoryBadge = findViewById(R.id.txt_category_badge)
         rvChannelList = findViewById(R.id.rv_channel_list)
         rvChannelList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvSettingsList = findViewById(R.id.rv_settings_list)
-        rvSettingsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvVodList = findViewById(R.id.rv_vod_list)
-        rvVodList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        layoutVodPreview = findViewById(R.id.layout_vod_preview)
-        imgVodPreviewPoster = findViewById(R.id.img_vod_preview_poster)
-        txtVodPreviewTitle = findViewById(R.id.txt_vod_preview_title)
-        txtVodPreviewMeta = findViewById(R.id.txt_vod_preview_meta)
-        txtVodPreviewPlot = findViewById(R.id.txt_vod_preview_plot)
-        btnVodAction = findViewById(R.id.btn_vod_action)
 
-        // Painel Direito (Player)
+        // Player Preview e EPG
         playerPreviewContainer = findViewById(R.id.player_preview_container)
         playerView = findViewById(R.id.player_preview_view)
         previewLoadingLayout = findViewById(R.id.preview_loading_layout)
         txtBitrate = findViewById(R.id.txt_bitrate)
-        imgPreviewLogo = findViewById(R.id.img_preview_channel_logo)
-        txtPreviewTitle = findViewById(R.id.txt_preview_title)
-        txtPreviewInfo = findViewById(R.id.txt_preview_info)
-        txtPreviewPlayback = findViewById(R.id.txt_preview_playback)
         txtEpgNowTitle = findViewById(R.id.txt_epg_now_title)
         txtEpgNowTime = findViewById(R.id.txt_epg_now_time)
-        pbEpgProgress = findViewById(R.id.pb_epg_progress)
-        txtEpgSynopsis = findViewById(R.id.txt_epg_synopsis)
-        txtEpgNext = findViewById(R.id.txt_epg_next)
-        btnFullscreen = findViewById(R.id.btn_fullscreen)
+        txtEpgNextTitle = findViewById(R.id.txt_epg_next_title)
+        txtEpgNextTime = findViewById(R.id.txt_epg_next_time)
+        txtEpgThirdTitle = findViewById(R.id.txt_epg_third_title)
+        txtEpgThirdTime = findViewById(R.id.txt_epg_third_time)
 
-        // Preview Ajustes
+        // 3. VOD Catalog Mode
+        layoutVodCatalogMode = findViewById(R.id.layout_vod_catalog_mode)
+        btnVodSearch = findViewById(R.id.btn_vod_search)
+        rvCategorySidebar = findViewById(R.id.rv_category_sidebar)
+        rvCategorySidebar.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        btnVodActionMenu = findViewById(R.id.btn_vod_action_menu)
+        btnVodActionSort = findViewById(R.id.btn_vod_action_sort)
+        btnVodActionFav = findViewById(R.id.btn_vod_action_fav)
+        txtVodCategoryTitle = findViewById(R.id.txt_vod_category_title)
+        txtVodItemsCount = findViewById(R.id.txt_vod_items_count)
+        rvVodGrid = findViewById(R.id.rv_vod_grid)
+        rvVodGrid.layoutManager = GridLayoutManager(this, 4)
+
+        // 4. Settings Mode
+        layoutSettingsMode = findViewById(R.id.layout_settings_mode)
+        rvSettingsList = findViewById(R.id.rv_settings_list)
+        rvSettingsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         layoutSettingsPreview = findViewById(R.id.layout_settings_preview)
-        imgSettingPreviewIcon = findViewById(R.id.img_setting_preview_icon)
         txtSettingPreviewTitle = findViewById(R.id.txt_setting_preview_title)
         txtSettingPreviewBadge = findViewById(R.id.txt_setting_preview_badge)
         txtSettingPreviewDesc = findViewById(R.id.txt_setting_preview_desc)
         btnSettingPreviewAction = findViewById(R.id.btn_setting_preview_action)
 
-        // Expansão Direta para Tela Cheia ao Focar e Clicar na Tela do Player
+        // Adapters Setup
+        setupAdapters()
+    }
+
+    private fun setupAdapters() {
+        // Channel Adapter
+        channelAdapter = ChannelListAdapter(
+            channels = emptyList(),
+            onChannelSelected = { channel ->
+                onChannelFocused(channel)
+            },
+            onChannelClicked = { channel ->
+                openFullScreenPlayer(channel)
+            },
+            onNavigateToCategories = {
+                btnRailCategories.requestFocus()
+            },
+            onNavigateToPlayer = {
+                playerPreviewContainer.requestFocus()
+            }
+        )
+        rvChannelList.adapter = channelAdapter
+
+        // VOD Sidebar Adapter
+        sidebarAdapter = CategorySidebarAdapter(
+            categories = emptyList(),
+            onCategoryFocused = { cat ->
+                onVodCategorySelected(cat)
+            },
+            onCategoryClicked = { cat ->
+                onVodCategorySelected(cat)
+                focusFirstVodGrid()
+            },
+            onNavigateRightToContent = {
+                focusFirstVodGrid()
+            },
+            onNavigateUpToTabs = {
+                btnVodSearch.requestFocus()
+            }
+        )
+        rvCategorySidebar.adapter = sidebarAdapter
+
+        // VOD Posters Grid Adapter
+        ottVodPosterAdapter = OttPosterAdapter(
+            items = emptyList(),
+            onItemFocus = { item ->
+                currentSelectedVodItem = item
+            },
+            onItemClick = { item ->
+                currentSelectedVodItem = item
+                if (item.isSeries) {
+                    showSeriesEpisodesDialog(item)
+                } else {
+                    openVodPlayer(item)
+                }
+            },
+            onNavigateUpToTabs = {
+                btnVodActionMenu.requestFocus()
+            }
+        )
+        rvVodGrid.adapter = ottVodPosterAdapter
+
+        // Settings Adapter
+        settingAdapter = SettingListAdapter(
+            items = emptyList(),
+            onSettingFocused = { item ->
+                currentSettingItem = item
+                updateSettingPreview(item)
+            },
+            onSettingClicked = { item ->
+                currentSettingItem = item
+                executeSettingAction(item)
+            },
+            onNavigateToCategories = {
+                showHomeHub()
+            },
+            onNavigateToPreview = {
+                btnSettingPreviewAction.requestFocus()
+            },
+            onNavigateUpToTabs = {
+                btnToggleMenu.requestFocus()
+            }
+        )
+        rvSettingsList.adapter = settingAdapter
+    }
+
+    // =========================================================================
+    // 1. HOME HUB (Imagem 2)
+    // =========================================================================
+    fun showHomeHub() {
+        currentMode = ScreenMode.HOME_HUB
+        pausePreviewPlayer()
+
+        layoutHomeHub.visibility = View.VISIBLE
+        layoutMainContent.visibility = View.GONE
+        layoutTvMode.visibility = View.GONE
+        layoutVodCatalogMode.visibility = View.GONE
+        layoutSettingsMode.visibility = View.GONE
+
+        txtHomeVersion.text = "Versão 2.9.7"
+        txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (!isFinishing && !isDestroyed) {
+                hubTv.requestFocus()
+            }
+        }, 100)
+    }
+
+    private fun setupHubListeners() {
+        hubTv.setOnClickListener {
+            openTvMode()
+        }
+        hubFilmes.setOnClickListener {
+            openVodMode(isSeries = false)
+        }
+        hubSeries.setOnClickListener {
+            openVodMode(isSeries = true)
+        }
+        hubAjustes.setOnClickListener {
+            openSettingsMode()
+        }
+        btnHomeReload.setOnClickListener {
+            reloadApplicationData()
+        }
+
+        btnToggleMenu.setOnClickListener {
+            showHomeHub()
+        }
+    }
+
+    private fun reloadApplicationData() {
+        Toast.makeText(this, "Recarregando canais e catálogos...", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            VodRepository.clearCache()
+            preloadTvData()
+            Toast.makeText(this@MainActivity, "WDTECH TV: Aplicativo recarregado com sucesso!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getDeviceKey(context: Context): String {
+        val prefs = context.getSharedPreferences("wdtech_tv_settings", Context.MODE_PRIVATE)
+        var key = prefs.getString("device_key", null)
+        if (key == null) {
+            val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) ?: "WDTECH"
+            val hash = (androidId + "WDTECH_TV_VIVAON").hashCode()
+            key = String.format("%06X", abs(hash)).take(6)
+            prefs.edit().putString("device_key", key).apply()
+        }
+        return key
+    }
+
+    // =========================================================================
+    // 2. TV AO VIVO (Imagem 3)
+    // =========================================================================
+    fun openTvMode(targetCategory: ChannelCategory? = null) {
+        currentMode = ScreenMode.TV
+
+        layoutHomeHub.visibility = View.GONE
+        layoutMainContent.visibility = View.VISIBLE
+        layoutTvMode.visibility = View.VISIBLE
+        layoutVodCatalogMode.visibility = View.GONE
+        layoutSettingsMode.visibility = View.GONE
+
+        txtHeaderBreadcrumb.text = "WDTECH TV • TV AO VIVO"
+
+        if (tvCategories.isNotEmpty()) {
+            val cat = targetCategory ?: currentTvCategory ?: tvCategories.first()
+            setTvCategory(cat)
+        } else {
+            preloadTvData {
+                val cat = targetCategory ?: tvCategories.firstOrNull()
+                cat?.let { setTvCategory(it) }
+            }
+        }
+    }
+
+    private fun preloadTvData(onLoaded: (() -> Unit)? = null) {
+        lifecycleScope.launch {
+            val loaded = EpgRepository.enrichCategories(
+                ChannelRepository.getCategoriesForSection(MainSection.TV)
+            )
+            tvCategories = loaded
+            if (currentTvCategory == null && loaded.isNotEmpty()) {
+                currentTvCategory = loaded.first()
+            }
+            onLoaded?.invoke()
+        }
+    }
+
+    private fun setTvCategory(category: ChannelCategory) {
+        currentTvCategory = category
+        txtTvCategoryTitle.text = category.name
+        txtCategoryBadge.text = category.channels.size.toString()
+        txtHeaderBreadcrumb.text = "WDTECH TV • TV AO VIVO • ${category.name.uppercase()}"
+
+        channelAdapter.updateChannels(category.channels)
+
+        val firstChannel = category.channels.firstOrNull()
+        if (firstChannel != null) {
+            updateEpgRows(firstChannel)
+            if (firstChannel.id != currentPlayingChannel?.id) {
+                playChannelPreview(firstChannel)
+            }
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (!isFinishing && !isDestroyed && currentMode == ScreenMode.TV) {
+                rvChannelList.scrollToPosition(0)
+                rvChannelList.postDelayed({
+                    val vh = rvChannelList.findViewHolderForAdapterPosition(0)
+                    vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
+                }, 100)
+            }
+        }, 150)
+    }
+
+    private fun setupTvModeListeners() {
+        btnRailSearch.setOnClickListener {
+            Toast.makeText(this, "Navegue pela lista de canais", Toast.LENGTH_SHORT).show()
+            focusFirstChannel()
+        }
+        btnRailFavorites.setOnClickListener {
+            val favs = tvCategories.find { it.id == "cat_favoritos" } ?: tvCategories.firstOrNull()
+            favs?.let { setTvCategory(it) }
+        }
+        btnRailRecents.setOnClickListener {
+            val todos = tvCategories.find { it.id == "cat_todos" } ?: tvCategories.firstOrNull()
+            todos?.let { setTvCategory(it) }
+        }
+        btnRailCategories.setOnClickListener {
+            cycleNextCategory()
+        }
+
+        val railKeyListener = View.OnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                focusCurrentChannel()
+                return@OnKeyListener true
+            }
+            false
+        }
+        btnRailSearch.setOnKeyListener(railKeyListener)
+        btnRailFavorites.setOnKeyListener(railKeyListener)
+        btnRailRecents.setOnKeyListener(railKeyListener)
+        btnRailCategories.setOnKeyListener(railKeyListener)
+
+        // Clique na tela do player expande para tela cheia (Requisito Explícito do Usuário)
         val expandToFullScreen = View.OnClickListener {
             currentPlayingChannel?.let { openFullScreenPlayer(it) }
         }
-
         playerPreviewContainer.isFocusable = true
         playerPreviewContainer.isClickable = true
         playerPreviewContainer.setOnClickListener(expandToFullScreen)
-
         playerView.isClickable = true
         playerView.setOnClickListener(expandToFullScreen)
 
@@ -342,799 +522,167 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-
         playerPreviewContainer.setOnKeyListener(playerKeyListener)
         playerView.setOnKeyListener(playerKeyListener)
-        btnFullscreen.setOnClickListener(expandToFullScreen)
-
-        // Configuração de VOD (Filmes e Séries) e Ajustes
-        setupVod()
-        setupSettings()
     }
 
-
-    private fun setupMainMenuTabs() {
-        btnToggleMenu.setOnClickListener {
-            if (isHomeMode) {
-                openMenu(currentSection)
-            } else {
-                showHomeScreen()
-            }
-        }
-
-        btnHeroOpenMenu.setOnClickListener {
-            openMenu(MainSection.TV)
-        }
-
-        btnHeroWatch.setOnClickListener {
-            currentHeroVodItem?.let { openVodPlayer(it) }
-        }
-
-        btnMenuHome.setOnClickListener {
-            showHomeScreen()
-        }
-
-        val tabButtons = listOf(
-            btnMenuTv to MainSection.TV,
-            btnMenuFilmes to MainSection.FILMES,
-            btnMenuSeries to MainSection.SERIES,
-            btnMenuFutebol to MainSection.FUTEBOL,
-            btnMenuInfantil to MainSection.INFANTIL
-        )
-
-        for ((btn, section) in tabButtons) {
-            btn.setOnClickListener {
-                openMenu(section, shouldFocusCategory = true)
-            }
-            btn.setOnKeyListener { _, keyCode, event ->
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                    focusFirstCategory()
-                    return@setOnKeyListener true
-                }
-                false
-            }
-        }
-
-        btnMenuSettings.setOnClickListener {
-            openSettingsMode()
-        }
-        btnMenuSettings.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                focusFirstCategory()
-                return@setOnKeyListener true
-            }
-            false
-        }
-    }
-
-    private fun showHomeScreen() {
-        try {
-            isHomeMode = true
-            isSettingsMode = false
-            pausePreviewPlayer()
-
-            layoutHomeLancamentos.visibility = View.VISIBLE
-            layoutMainMenuTabs.visibility = View.GONE
-            layoutThreePanels.visibility = View.GONE
-
-            btnToggleMenu.text = "☰ ABRIR MENU (OK)"
-            txtHeaderBreadcrumb.text = "WDTECH TV • LANÇAMENTOS 2025/2026"
-            btnMenuHome.isSelected = true
-            btnMenuTv.isSelected = false
-            btnMenuFilmes.isSelected = false
-            btnMenuSeries.isSelected = false
-            btnMenuFutebol.isSelected = false
-            btnMenuInfantil.isSelected = false
-            btnMenuSettings.isSelected = false
-
-            btnHeroWatch.requestFocus()
-        } catch (e: Throwable) {
-            android.util.Log.e("MainActivity", "Erro ao exibir tela inicial", e)
-        }
-    }
-
-    private fun openMenu(section: MainSection = currentSection, shouldFocusCategory: Boolean = false) {
-        try {
-            isHomeMode = false
-            layoutHomeLancamentos.visibility = View.GONE
-            layoutMainMenuTabs.visibility = View.VISIBLE
-            layoutThreePanels.visibility = View.VISIBLE
-
-            btnToggleMenu.text = "🏠 INÍCIO (OK)"
-            btnMenuHome.isSelected = false
-
-            selectMainSection(section, shouldFocusCategory)
-        } catch (e: Throwable) {
-            android.util.Log.e("MainActivity", "Erro ao abrir menu", e)
-        }
-    }
-
-    private fun selectMainSection(section: MainSection, shouldFocusCategory: Boolean = false) {
-        currentSection = section
-        isSettingsMode = false
-
-        btnMenuTv.isSelected = (section == MainSection.TV)
-        btnMenuFilmes.isSelected = (section == MainSection.FILMES)
-        btnMenuSeries.isSelected = (section == MainSection.SERIES)
-        btnMenuFutebol.isSelected = (section == MainSection.FUTEBOL)
-        btnMenuInfantil.isSelected = (section == MainSection.INFANTIL)
-        btnMenuSettings.isSelected = false
-
-        if (section == MainSection.FILMES) {
-            pausePreviewPlayer()
-            panelChannels.visibility = View.GONE
-            playerPreviewContainer.visibility = View.GONE
-            layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.GONE
-            layoutVodGridContainer.visibility = View.VISIBLE
-
-            txtSidebarSectionTitle.text = "CATÁLOGO • FILMES (VOD)"
-
-            // 1. Apresenta catálogo instantâneo com títulos e capas sem espera
-            val instantCats = VodRepository.getFallbackMovieCategories().map {
-                ChannelCategory(id = "vod_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_movie_vod, channels = emptyList())
-            }
-            allCategories = instantCats
-            val first = instantCats.first()
-            currentSelectedCategory = first
-            sidebarAdapter.updateCategories(instantCats)
-            sidebarAdapter.setSelectedCategory(first)
-            txtHeaderBreadcrumb.text = "WDTECH TV • FILMES • ${first.name.uppercase()}"
-            txtSelectedCategoryTitle.text = first.name
-            txtVodCategoryTitle.text = first.name
-            val instantMovies = VodRepository.getFallbackMovies(first.id.removePrefix("vod_cat_"))
-            ottVodPosterAdapter.updateItems(instantMovies)
-            vodAdapter.updateItems(instantMovies)
-            txtCategoryBadge.text = instantMovies.size.toString()
-            txtVodItemsCount.text = "${instantMovies.size} Títulos"
-
-            if (shouldFocusCategory) {
-                focusFirstCategory()
-            }
-
-            // 2. Carrega categorias remotas do acervo em segundo plano
-            vodFetchJob?.cancel()
-            vodFetchJob = lifecycleScope.launch {
-                val cats = VodRepository.getMovieCategories()
-                val mapped = cats.map {
-                    ChannelCategory(id = "vod_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_movie_vod, channels = emptyList())
-                }
-                if (currentSection == MainSection.FILMES && mapped.isNotEmpty()) {
-                    allCategories = mapped
-                    sidebarAdapter.updateCategories(mapped)
-                    val activeId = currentSelectedCategory?.id ?: mapped.first().id
-                    val activeCat = mapped.find { it.id == activeId } ?: mapped.first()
-                    currentSelectedCategory = activeCat
-                    sidebarAdapter.setSelectedCategory(activeCat)
-                }
-            }
-            return
-        }
-
-        if (section == MainSection.SERIES) {
-            pausePreviewPlayer()
-            panelChannels.visibility = View.GONE
-            playerPreviewContainer.visibility = View.GONE
-            layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.GONE
-            layoutVodGridContainer.visibility = View.VISIBLE
-
-            txtSidebarSectionTitle.text = "CATÁLOGO • SÉRIES (VOD)"
-
-            // 1. Apresenta séries instantâneas com temporadas e pôsteres
-            val instantCats = VodRepository.getFallbackSeriesCategories().map {
-                ChannelCategory(id = "vod_series_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_series_vod, channels = emptyList())
-            }
-            allCategories = instantCats
-            val first = instantCats.first()
-            currentSelectedCategory = first
-            sidebarAdapter.updateCategories(instantCats)
-            sidebarAdapter.setSelectedCategory(first)
-            txtHeaderBreadcrumb.text = "WDTECH TV • SÉRIES • ${first.name.uppercase()}"
-            txtSelectedCategoryTitle.text = first.name
-            txtVodCategoryTitle.text = first.name
-            val instantSeries = VodRepository.getFallbackSeries(first.id.removePrefix("vod_series_cat_"))
-            ottVodPosterAdapter.updateItems(instantSeries)
-            vodAdapter.updateItems(instantSeries)
-            txtCategoryBadge.text = instantSeries.size.toString()
-            txtVodItemsCount.text = "${instantSeries.size} Títulos"
-
-            if (shouldFocusCategory) {
-                focusFirstCategory()
-            }
-
-            // 2. Carrega categorias remotas de séries em segundo plano
-            vodFetchJob?.cancel()
-            vodFetchJob = lifecycleScope.launch {
-                val cats = VodRepository.getSeriesCategories()
-                val mapped = cats.map {
-                    ChannelCategory(id = "vod_series_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_series_vod, channels = emptyList())
-                }
-                if (currentSection == MainSection.SERIES && mapped.isNotEmpty()) {
-                    allCategories = mapped
-                    sidebarAdapter.updateCategories(mapped)
-                    val activeId = currentSelectedCategory?.id ?: mapped.first().id
-                    val activeCat = mapped.find { it.id == activeId } ?: mapped.first()
-                    currentSelectedCategory = activeCat
-                    sidebarAdapter.setSelectedCategory(activeCat)
-                }
-            }
-            return
-        }
-
-        // Modo TV / FUTEBOL / INFANTIL
-        layoutVodGridContainer.visibility = View.GONE
-        layoutVodPreview.visibility = View.GONE
-        rvVodList.visibility = View.GONE
-        layoutSettingsPreview.visibility = View.GONE
-        rvSettingsList.visibility = View.GONE
-        panelChannels.visibility = View.VISIBLE
-        playerPreviewContainer.visibility = View.VISIBLE
-        playerView.visibility = View.VISIBLE
-        findViewById<View>(R.id.live_badge_container)?.visibility = View.VISIBLE
-        findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.VISIBLE
-        rvChannelList.visibility = View.VISIBLE
-
-        txtSidebarSectionTitle.text = "CATEGORIAS • ${section.title}"
-
-        val sectionCats = EpgRepository.enrichCategories(
-            ChannelRepository.getCategoriesForSection(section)
-        )
-        allCategories = sectionCats
-
-        val firstCat = sectionCats.firstOrNull() ?: return
-        currentSelectedCategory = firstCat
-
-        sidebarAdapter.updateCategories(sectionCats)
-        sidebarAdapter.setSelectedCategory(firstCat)
-
-        channelAdapter.updateChannels(firstCat.channels)
-        txtHeaderBreadcrumb.text = "WDTECH TV • ${section.title} • ${firstCat.name.uppercase()}"
-        txtSelectedCategoryTitle.text = firstCat.name
-        txtCategoryBadge.text = firstCat.channels.size.toString()
-
-        val firstChannel = firstCat.channels.firstOrNull()
-        if (firstChannel != null && firstChannel.id != currentPlayingChannel?.id) {
-            playChannelPreview(firstChannel)
-        }
-
-        if (shouldFocusCategory) {
-            focusFirstCategory()
-        }
-    }
-
-    private fun openSettingsMode() {
-        isSettingsMode = true
-        pausePreviewPlayer()
-
-        btnMenuTv.isSelected = false
-        btnMenuFilmes.isSelected = false
-        btnMenuSeries.isSelected = false
-        btnMenuFutebol.isSelected = false
-        btnMenuInfantil.isSelected = false
-        btnMenuSettings.isSelected = true
-
-        layoutVodGridContainer.visibility = View.GONE
-        txtSidebarSectionTitle.text = "AJUSTES • SISTEMA"
-        panelChannels.visibility = View.VISIBLE
-        rvChannelList.visibility = View.GONE
-        rvVodList.visibility = View.GONE
-        rvSettingsList.visibility = View.VISIBLE
-
-        playerPreviewContainer.visibility = View.VISIBLE
-        playerView.visibility = View.GONE
-        findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
-        findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
-        layoutVodPreview.visibility = View.GONE
-        layoutSettingsPreview.visibility = View.VISIBLE
-
-        val settingCats = listOf(
-            ChannelCategory(id = "cat_settings", name = "⚙️ Configurações", iconRes = R.drawable.ic_settings, channels = emptyList())
-        )
-        allCategories = settingCats
-        sidebarAdapter.updateCategories(settingCats)
-        sidebarAdapter.setSelectedCategory(settingCats[0])
-
-        val items = getSettingItems()
-        settingAdapter.updateItems(items)
-        txtCategoryBadge.text = items.size.toString()
-        txtSelectedCategoryTitle.text = "Configurações do Sistema"
-        txtHeaderBreadcrumb.text = "WDTECH TV • AJUSTES DO SISTEMA"
-        updateSettingPreview(items.first())
-        focusFirstSetting()
-    }
-
-    private fun focusActiveTab() {
-        if (isSettingsMode) {
-            btnMenuSettings.requestFocus()
-            return
-        }
-        when (currentSection) {
-            MainSection.TV -> btnMenuTv.requestFocus()
-            MainSection.FILMES -> btnMenuFilmes.requestFocus()
-            MainSection.SERIES -> btnMenuSeries.requestFocus()
-            MainSection.FUTEBOL -> btnMenuFutebol.requestFocus()
-            else -> btnMenuTv.requestFocus()
-        }
-    }
-
-    private fun loadDataAndStartInitialChannel() {
-        val initialSection = MainSection.TV
-        currentSection = initialSection
-
-        val sectionCats = EpgRepository.enrichCategories(
-            ChannelRepository.getCategoriesForSection(initialSection)
-        )
-        allCategories = sectionCats
-
-        val firstCat = sectionCats.firstOrNull() ?: return
-        currentSelectedCategory = firstCat
-
-        // 0. Configura Carrossel Horizontal de Lançamentos da Tela Inicial
-        val topReleases = VodRepository.getTopReleases()
-        homeLancamentosAdapter = OttPosterAdapter(
-            items = topReleases,
-            onItemFocus = { item ->
-                updateHeroBanner(item)
-            },
-            onItemClick = { item ->
-                openVodPlayer(item)
-            },
-            onNavigateUpToTabs = {
-                btnHeroWatch.requestFocus()
-            }
-        )
-        rvHomeLancamentos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvHomeLancamentos.adapter = homeLancamentosAdapter
-
-        // Inicializa o Hero Banner com o primeiro lançamento de destaque
-        topReleases.firstOrNull()?.let { updateHeroBanner(it) }
-
-        // 1. Configura Adaptador da Barra Lateral
-        sidebarAdapter = CategorySidebarAdapter(
-            categories = sectionCats,
-            onCategoryFocused = { cat ->
-                onSidebarCategoryFocused(cat)
-            },
-            onCategoryClicked = { cat ->
-                onSidebarCategoryClicked(cat)
-            },
-            onNavigateRightToContent = {
-                if (isSettingsMode) {
-                    focusFirstSetting()
-                } else if (currentSection == MainSection.FILMES || currentSection == MainSection.SERIES) {
-                    focusFirstVod()
-                } else {
-                    focusCurrentChannel()
-                }
-            },
-            onNavigateUpToTabs = {
-                focusActiveTab()
-            }
-        )
-        sidebarAdapter.setSelectedCategory(firstCat)
-        rvSidebar.adapter = sidebarAdapter
-
-        // 2. Configura Adaptador de Canais
-        channelAdapter = ChannelListAdapter(
-            channels = firstCat.channels,
-            onChannelSelected = { channel ->
-                onChannelFocused(channel)
-            },
-            onChannelClicked = { channel ->
-                openFullScreenPlayer(channel)
-            },
-            onNavigateToCategories = {
-                focusCurrentCategory()
-            },
-            onNavigateToPlayer = {
-                btnFullscreen.requestFocus()
-            }
-        )
-        rvChannelList.adapter = channelAdapter
-
-        // Atualiza textos do cabeçalho
-        btnMenuTv.isSelected = true
-        txtSidebarSectionTitle.text = "CATEGORIAS • TV"
-        txtHeaderBreadcrumb.text = "WDTECH TV • TV • ${firstCat.name.uppercase()}"
-        txtSelectedCategoryTitle.text = firstCat.name
-        txtCategoryBadge.text = firstCat.channels.size.toString()
-
-        // 3. REQUISITO CRÍTICO: Inicia reprodução imediata do primeiro canal ao vivo com imagem!
-        val initialChannel = firstCat.channels.firstOrNull()
-        if (initialChannel != null) {
-            playChannelPreview(initialChannel)
-        }
-
-        // 4. Posiciona o foco no canal inicial
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (!isFinishing && !isDestroyed) {
-                rvChannelList.scrollToPosition(0)
-                rvChannelList.postDelayed({
-                    val vh = rvChannelList.findViewHolderForAdapterPosition(0)
-                    vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
-                }, 100)
-            }
-        }, 150)
-    }
-
-    private fun onSidebarCategoryFocused(category: ChannelCategory) {
-        currentSelectedCategory = category
-        txtHeaderBreadcrumb.text = "WDTECH TV • ${category.name.uppercase()}"
-        txtSelectedCategoryTitle.text = category.name
-
-        if (category.id == "cat_settings") {
-            isSettingsMode = true
-            panelChannels.visibility = View.VISIBLE
-            rvChannelList.visibility = View.GONE
-            rvVodList.visibility = View.GONE
-            rvSettingsList.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.VISIBLE
-            playerView.visibility = View.GONE
-            findViewById<View>(R.id.live_badge_container)?.visibility = View.GONE
-            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.GONE
-            layoutVodPreview.visibility = View.GONE
-            layoutSettingsPreview.visibility = View.VISIBLE
-            val items = getSettingItems()
-            txtCategoryBadge.text = items.size.toString()
-            updateSettingPreview(items.first())
-        } else if (category.id.startsWith("vod_cat_")) {
-            isSettingsMode = false
-            layoutVodGridContainer.visibility = View.VISIBLE
-            panelChannels.visibility = View.GONE
-            playerPreviewContainer.visibility = View.GONE
-            layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.GONE
-
-            txtVodCategoryTitle.text = category.name
-            val rawId = category.id.removePrefix("vod_cat_")
-
-            // 1. Títulos e capas instantâneos sem latência
-            val instantMovies = VodRepository.getFallbackMovies(rawId)
-            ottVodPosterAdapter.updateItems(instantMovies)
-            vodAdapter.updateItems(instantMovies)
-            txtCategoryBadge.text = instantMovies.size.toString()
-            txtVodItemsCount.text = "${instantMovies.size} Títulos"
-
-            // 2. Consulta em segundo plano para categorias do servidor
-            vodFetchJob?.cancel()
-            vodFetchJob = lifecycleScope.launch {
-                val movies = VodRepository.getMoviesByCategory(rawId, category.name)
-                if (movies.isNotEmpty() && currentSelectedCategory?.id == category.id) {
-                    ottVodPosterAdapter.updateItems(movies)
-                    vodAdapter.updateItems(movies)
-                    txtCategoryBadge.text = movies.size.toString()
-                    txtVodItemsCount.text = "${movies.size} Títulos"
-                }
-            }
-        } else if (category.id.startsWith("vod_series_cat_")) {
-            isSettingsMode = false
-            layoutVodGridContainer.visibility = View.VISIBLE
-            panelChannels.visibility = View.GONE
-            playerPreviewContainer.visibility = View.GONE
-            layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.GONE
-
-            txtVodCategoryTitle.text = category.name
-            val rawId = category.id.removePrefix("vod_series_cat_")
-
-            // 1. Séries instantâneas
-            val instantSeries = VodRepository.getFallbackSeries(rawId)
-            ottVodPosterAdapter.updateItems(instantSeries)
-            vodAdapter.updateItems(instantSeries)
-            txtCategoryBadge.text = instantSeries.size.toString()
-            txtVodItemsCount.text = "${instantSeries.size} Títulos"
-
-            // 2. Consulta em segundo plano para séries do servidor
-            vodFetchJob?.cancel()
-            vodFetchJob = lifecycleScope.launch {
-                val series = VodRepository.getSeriesByCategory(rawId, category.name)
-                if (series.isNotEmpty() && currentSelectedCategory?.id == category.id) {
-                    ottVodPosterAdapter.updateItems(series)
-                    vodAdapter.updateItems(series)
-                    txtCategoryBadge.text = series.size.toString()
-                    txtVodItemsCount.text = "${series.size} Títulos"
-                }
-            }
-        } else {
-            isSettingsMode = false
-            layoutVodGridContainer.visibility = View.GONE
-            panelChannels.visibility = View.VISIBLE
-            rvSettingsList.visibility = View.GONE
-            rvVodList.visibility = View.GONE
-            layoutSettingsPreview.visibility = View.GONE
-            layoutVodPreview.visibility = View.GONE
-            rvChannelList.visibility = View.VISIBLE
-            playerPreviewContainer.visibility = View.VISIBLE
-            playerView.visibility = View.VISIBLE
-            findViewById<View>(R.id.live_badge_container)?.visibility = View.VISIBLE
-            findViewById<View>(R.id.layout_preview_bottom_hud)?.visibility = View.VISIBLE
-            txtCategoryBadge.text = category.channels.size.toString()
-
-            // Atualiza a lista de canais dinamicamente SEM interromper o vídeo ao vivo que está passando!
-            channelAdapter.updateChannels(category.channels)
-        }
-    }
-
-    private fun onSidebarCategoryClicked(category: ChannelCategory) {
-        onSidebarCategoryFocused(category)
-        if (isSettingsMode) {
-            focusFirstSetting()
-        } else if (category.id.startsWith("vod_cat_") || category.id.startsWith("vod_series_cat_")) {
-            focusFirstVodGrid()
-        } else {
-            focusFirstChannel()
-        }
+    private fun cycleNextCategory() {
+        if (tvCategories.isEmpty()) return
+        val currentIdx = tvCategories.indexOfFirst { it.id == currentTvCategory?.id }.coerceAtLeast(0)
+        val nextIdx = (currentIdx + 1) % tvCategories.size
+        setTvCategory(tvCategories[nextIdx])
     }
 
     private fun onChannelFocused(channel: Channel) {
-        // Atualiza imediatamente informações visuais no HUD inferior
-        updatePreviewHUD(channel)
+        updateEpgRows(channel)
 
-        // Debounce de 350ms para troca de canal no preview (evita disparar requisições em navegação rápida)
         zapHandler.removeCallbacksAndMessages(null)
         zapHandler.postDelayed({
-            if (currentPlayingChannel?.id != channel.id) {
+            if (currentPlayingChannel?.id != channel.id && currentMode == ScreenMode.TV) {
                 playChannelPreview(channel)
             }
         }, 350)
     }
 
-    private fun updatePreviewHUD(channel: Channel) {
-        val num = channel.number.toIntOrNull() ?: 1
-        txtPreviewTitle.text = String.format("%d  %s", num, channel.title.uppercase())
-        txtPreviewInfo.text = "${channel.category} • ${channel.quality}"
-        txtPreviewPlayback.visibility = View.GONE
-
-        if (!channel.logoUrl.isNullOrEmpty()) {
-            imgPreviewLogo?.load(channel.logoUrl) {
-                crossfade(false)
-                placeholder(R.drawable.logo)
-                error(R.drawable.logo)
-            }
-        } else {
-            imgPreviewLogo?.setImageResource(R.drawable.logo)
-        }
-
-        val epg = channel.currentProgram
-        if (epg != null) {
-            txtEpgNowTitle.text = epg.title
-            txtEpgNowTime.text = "${epg.startTime} - ${epg.endTime}"
-            txtEpgSynopsis.text = if (epg.synopsis.isNotEmpty()) epg.synopsis else (channel.description ?: "")
-            pbEpgProgress.progress = epg.getProgressPercent().coerceIn(5, 95)
+    private fun updateEpgRows(channel: Channel) {
+        val curr = channel.currentProgram
+        if (curr != null) {
+            txtEpgNowTitle.text = curr.title
+            txtEpgNowTime.text = "${curr.startTime}-${curr.endTime}"
         } else {
             txtEpgNowTitle.text = "Transmissão Ao Vivo (${channel.quality})"
-            txtEpgNowTime.text = "24 Horas"
-            txtEpgSynopsis.text = channel.description ?: ""
-            pbEpgProgress.progress = 50
+            txtEpgNowTime.text = "Ao Vivo"
         }
 
-        val nextEpg = channel.nextProgram
-        if (nextEpg != null) {
-            txtEpgNext.text = "${nextEpg.title} (${nextEpg.startTime})"
+        val next = channel.nextProgram
+        if (next != null) {
+            txtEpgNextTitle.text = next.title
+            txtEpgNextTime.text = "${next.startTime}-${next.endTime}"
         } else {
-            txtEpgNext.text = "Programação contínua 24H"
-        }
-    }
-
-    private fun setupPlayer() {
-        val bufCfg = AppSettings.getBufferConfig(this)
-
-        val loadControl = DefaultLoadControl.Builder()
-            .setBufferDurationsMs(
-                bufCfg.minBufferMs,
-                bufCfg.maxBufferMs,
-                bufCfg.bufferForPlaybackMs,
-                bufCfg.afterRebufferMs
-            )
-            .setPrioritizeTimeOverSizeThresholds(false)
-            .setBackBuffer(0, false)
-            .build()
-
-        val renderersFactory = DefaultRenderersFactory(this).apply {
-            setEnableDecoderFallback(true)
-            setAllowedVideoJoiningTimeMs(4000)
-            setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+            txtEpgNextTitle.text = "Programação Especial WDTECH"
+            txtEpgNextTime.text = "A Seguir"
         }
 
-        exoPlayer?.release()
-        val player = ExoPlayer.Builder(this, renderersFactory)
-            .setLoadControl(loadControl)
-            .build()
-        player.playWhenReady = true
-        player.addListener(object : Player.Listener {
-            override fun onPlaybackStateChanged(state: Int) {
-                when (state) {
-                    Player.STATE_BUFFERING -> {
-                        previewLoadingLayout.visibility = View.VISIBLE
-                        txtBitrate.text = "SINTONIZANDO..."
-                    }
-                    Player.STATE_READY -> {
-                        cancelPreviewWatchdog()
-                        previewLoadingLayout.visibility = View.GONE
-                    }
-                    Player.STATE_ENDED -> {
-                        previewLoadingLayout.visibility = View.GONE
-                    }
-                    Player.STATE_IDLE -> {
-                    }
-                }
-            }
-
-            override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
-                cancelPreviewWatchdog()
-                currentPlayingChannel?.let { triggerPreviewFailover(it, "Erro no player de preview: ${error.errorCodeName}") }
-            }
-        })
-
-        playerView.player = player
-        exoPlayer = player
+        txtEpgThirdTitle.text = "Transmissão 24 Horas"
+        txtEpgThirdTime.text = "Em Breve"
     }
 
-    private fun playChannelPreview(channel: Channel) {
-        cancelPreviewWatchdog()
-        previewCandidates = buildStreamCandidates(channel)
-        previewCandidateIndex = 0
-        val targetUrl = previewCandidates.firstOrNull() ?: channel.streamUrl
-        playChannelPreviewInternal(channel, targetUrl)
-    }
+    // =========================================================================
+    // 3. CATÁLOGO VOD FILMES & SÉRIES (Imagem 1)
+    // =========================================================================
+    fun openVodMode(isSeries: Boolean) {
+        currentMode = if (isSeries) ScreenMode.VOD_SERIES else ScreenMode.VOD_FILMES
+        pausePreviewPlayer()
 
-    private fun playChannelPreviewInternal(channel: Channel, targetUrl: String) {
-        val player = exoPlayer ?: return
-        if (isFinishing || isDestroyed) return
+        layoutHomeHub.visibility = View.GONE
+        layoutMainContent.visibility = View.VISIBLE
+        layoutTvMode.visibility = View.GONE
+        layoutVodCatalogMode.visibility = View.VISIBLE
+        layoutSettingsMode.visibility = View.GONE
 
-        currentPlayingChannel = channel
-        updatePreviewHUD(channel)
+        val modeTitle = if (isSeries) "SÉRIES" else "FILMES"
+        txtHeaderBreadcrumb.text = "WDTECH TV • $modeTitle"
 
-        // Salva canal nas preferências como último assistido
-        getSharedPreferences("wdtechtv_prefs", Context.MODE_PRIVATE)
-            .edit()
-            .putString("last_played_channel_id", channel.id)
-            .apply()
-
-        previewLoadingLayout.visibility = View.VISIBLE
-        txtBitrate.text = "SINTONIZANDO..."
-
-        try {
-            player.stop()
-            player.clearMediaItems()
-
-            val dataSourceFactory = com.mytv.app.network.TurboNetworkFactory.createDataSourceFactory(this)
-
-            val extractorsFactory = DefaultExtractorsFactory().apply {
-                setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
-                setTsExtractorFlags(
-                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES or
-                    DefaultTsPayloadReaderFactory.FLAG_DETECT_ACCESS_UNITS
-                )
-                setConstantBitrateSeekingEnabled(true)
+        // 1. Apresenta categorias instantâneas de plataformas
+        val instantCats = if (isSeries) {
+            VodRepository.getFallbackSeriesCategories().map {
+                ChannelCategory(id = "vod_series_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_series_vod, channels = emptyList())
             }
+        } else {
+            VodRepository.getFallbackMovieCategories().map {
+                ChannelCategory(id = "vod_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_movie_vod, channels = emptyList())
+            }
+        }
 
-            val mediaItem = MediaItem.Builder()
-                .setUri(targetUrl)
-                .apply {
-                    if (targetUrl.endsWith(".ts") || targetUrl.contains(".ts?")) {
-                        setMimeType(MimeTypes.VIDEO_MP2T)
-                    }
+        currentVodCategories = instantCats
+        sidebarAdapter.updateCategories(instantCats)
+
+        val firstCat = instantCats.firstOrNull()
+        if (firstCat != null) {
+            sidebarAdapter.setSelectedCategory(firstCat)
+            onVodCategorySelected(firstCat)
+        }
+
+        // Foco inicial na categoria
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (!isFinishing && !isDestroyed && (currentMode == ScreenMode.VOD_FILMES || currentMode == ScreenMode.VOD_SERIES)) {
+                focusFirstCategory()
+            }
+        }, 150)
+
+        // 2. Consulta remota de categorias do servidor em segundo plano
+        vodFetchJob?.cancel()
+        vodFetchJob = lifecycleScope.launch {
+            val remoteCats = if (isSeries) {
+                VodRepository.getSeriesCategories().map {
+                    ChannelCategory(id = "vod_series_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_series_vod, channels = emptyList())
                 }
-                .setLiveConfiguration(
-                MediaItem.LiveConfiguration.Builder()
-                    .setMinPlaybackSpeed(0.98f)
-                    .setMaxPlaybackSpeed(1.02f)
-                    .build()
-            )
-                .build()
-
-            val mediaSource = if (targetUrl.contains(".m3u8")) {
-                HlsMediaSource.Factory(dataSourceFactory)
-                    .setAllowChunklessPreparation(true)
-                    .createMediaSource(mediaItem)
             } else {
-                DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
-                    .createMediaSource(mediaItem)
+                VodRepository.getMovieCategories().map {
+                    ChannelCategory(id = "vod_cat_${it.id}", name = it.name, iconRes = R.drawable.ic_movie_vod, channels = emptyList())
+                }
             }
-
-            startPreviewWatchdog(channel)
-            player.setMediaSource(mediaSource)
-            player.prepare()
-            player.play()
-        } catch (t: Throwable) {
-            cancelPreviewWatchdog()
-            previewLoadingLayout.visibility = View.GONE
+            if (remoteCats.isNotEmpty() && (currentMode == ScreenMode.VOD_FILMES || currentMode == ScreenMode.VOD_SERIES)) {
+                currentVodCategories = remoteCats
+                sidebarAdapter.updateCategories(remoteCats)
+                val active = remoteCats.find { it.id == currentSelectedVodCategory?.id } ?: remoteCats.first()
+                sidebarAdapter.setSelectedCategory(active)
+            }
         }
     }
 
-    private fun openFullScreenPlayer(channel: Channel) {
-        zapHandler.removeCallbacksAndMessages(null)
-        exoPlayer?.stop()
-        exoPlayer?.clearMediaItems()
-        previewLoadingLayout.visibility = View.GONE
+    private fun onVodCategorySelected(category: ChannelCategory) {
+        currentSelectedVodCategory = category
+        txtVodCategoryTitle.text = category.name
+        txtHeaderBreadcrumb.text = "WDTECH TV • ${if (currentMode == ScreenMode.VOD_SERIES) "SÉRIES" else "FILMES"} • ${category.name.uppercase()}"
 
-        val channelsInScope = if (currentSection == MainSection.FILMES || currentSection == MainSection.SERIES) {
-            listOf(channel)
+        val rawId = category.id.removePrefix("vod_cat_").removePrefix("vod_series_cat_")
+        val isSeries = (currentMode == ScreenMode.VOD_SERIES)
+
+        // Carrega itens instantâneos da categoria para nunca ficar tela preta/vazia
+        val instantItems = if (isSeries) {
+            VodRepository.getFallbackSeries(rawId)
         } else {
-            currentSelectedCategory?.channels?.filter { it.streamUrl.isNotEmpty() }
-                ?: allCategories.firstOrNull { it.id == "cat_todos" }?.channels
-                ?: listOf(channel)
+            VodRepository.getFallbackMovies(rawId)
         }
+        ottVodPosterAdapter.updateItems(instantItems)
+        txtVodItemsCount.text = "${instantItems.size} Títulos"
 
-        val currentIndex = channelsInScope.indexOfFirst { it.id == channel.id }.coerceAtLeast(0)
-
-        val intent = Intent(this, PlayerActivity::class.java).apply {
-            putExtra(PlayerActivity.EXTRA_CHANNEL, channel)
-            putExtra(PlayerActivity.EXTRA_CHANNEL_LIST, ArrayList(channelsInScope))
-            putExtra(PlayerActivity.EXTRA_CHANNEL_INDEX, currentIndex)
-        }
-        startActivity(intent)
-    }
-
-    private fun focusFirstCategory() {
-        if (!isFinishing && !isDestroyed) {
-            rvSidebar.post {
-                val vh = rvSidebar.findViewHolderForAdapterPosition(0)
-                vh?.itemView?.requestFocus() ?: rvSidebar.requestFocus()
+        // Busca acervo completo no servidor Xtream Codes em segundo plano
+        vodFetchJob?.cancel()
+        vodFetchJob = lifecycleScope.launch {
+            val remoteItems = if (isSeries) {
+                VodRepository.getSeriesByCategory(rawId, category.name)
+            } else {
+                VodRepository.getMoviesByCategory(rawId, category.name)
+            }
+            if (remoteItems.isNotEmpty() && currentSelectedVodCategory?.id == category.id) {
+                ottVodPosterAdapter.updateItems(remoteItems)
+                txtVodItemsCount.text = "${remoteItems.size} Títulos"
             }
         }
     }
 
-    private fun focusCurrentCategory() {
-        val selIndex = sidebarAdapter.getSelectedPosition()
-        rvSidebar.stopScroll()
-        rvSidebar.scrollToPosition(selIndex)
-        rvSidebar.post {
-            val vh = rvSidebar.findViewHolderForAdapterPosition(selIndex)
-            vh?.itemView?.requestFocus() ?: rvSidebar.requestFocus()
+    private fun setupVodModeListeners() {
+        btnVodSearch.setOnClickListener {
+            Toast.makeText(this, "Pesquisa de títulos em catálogo", Toast.LENGTH_SHORT).show()
         }
-    }
+        btnVodActionMenu.setOnClickListener {
+            showHomeHub()
+        }
+        btnVodActionSort.setOnClickListener {
+            Toast.makeText(this, "Ordenado por: Mais Populares", Toast.LENGTH_SHORT).show()
+        }
+        btnVodActionFav.setOnClickListener {
+            Toast.makeText(this, "Favoritos do Catálogo", Toast.LENGTH_SHORT).show()
+        }
 
-    private fun updateHeroBanner(item: VodItem) {
-        currentHeroVodItem = item
-        txtHeroTitle.text = item.name
-        val rating = item.getFormattedRating()
-        val yearStr = item.year ?: (if (item.isSeries) "2025" else "2026")
-        val genreStr = item.genre ?: (if (item.isSeries) "Série Completa" else "Filme")
-        txtHeroMeta.text = "$rating • $yearStr • $genreStr • 4K ULTRA HD"
-        txtHeroPlot.text = item.plot ?: "Superprodução em alta definição sob demanda no WDTECH TV."
-        btnHeroWatch.text = if (item.isSeries) "▶ Assistir Série (OK)" else "▶ Assistir Filme (OK)"
-
-        if (!item.posterUrl.isNullOrEmpty()) {
-            imgHeroBackdrop.load(item.posterUrl) {
-                crossfade(true)
-                placeholder(R.drawable.logo)
-                error(R.drawable.logo)
+        btnVodSearch.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                focusFirstCategory()
+                return@setOnKeyListener true
             }
-        } else {
-            imgHeroBackdrop.setImageResource(R.drawable.logo)
-        }
-    }
-
-    private fun focusFirstVod() {
-        focusFirstVodGrid()
-    }
-
-    private fun updateVodPreview(item: VodItem?) {
-        currentSelectedVodItem = item
-        if (item == null) {
-            layoutVodPreview.visibility = View.GONE
-            return
-        }
-        layoutVodPreview.visibility = View.VISIBLE
-        txtVodPreviewTitle.text = item.name
-        val rating = item.getFormattedRating()
-        val yearStr = item.year ?: (if (item.isSeries) "2024" else "2025")
-        val genreStr = item.genre ?: item.categoryName.ifEmpty { if (item.isSeries) "Série Completa" else "Filme" }
-        txtVodPreviewMeta.text = "$rating • $yearStr • $genreStr • FHD"
-        txtVodPreviewPlot.text = item.plot ?: "Conteúdo em alta definição sob demanda no WDTECH TV."
-        btnVodAction.text = if (item.isSeries) "▶ Assistir Série (OK)" else "▶ Assistir Filme (OK)"
-
-        if (!item.posterUrl.isNullOrEmpty()) {
-            imgVodPreviewPoster.load(item.posterUrl) {
-                crossfade(true)
-                placeholder(R.drawable.logo)
-                error(R.drawable.logo)
-            }
-        } else {
-            imgVodPreviewPoster.setImageResource(R.drawable.logo)
+            false
         }
     }
 
@@ -1203,7 +751,7 @@ class MainActivity : AppCompatActivity() {
         rvSeasons?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvEpisodes?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        val episodeAdapter = com.mytv.app.adapter.EpisodeAdapter(emptyList()) { ep ->
+        val episodeAdapter = EpisodeAdapter(emptyList()) { ep ->
             dialog.dismiss()
             val epChannel = Channel(
                 id = "vod_ep_${ep.id}",
@@ -1220,7 +768,7 @@ class MainActivity : AppCompatActivity() {
         }
         rvEpisodes?.adapter = episodeAdapter
 
-        val seasonAdapter = com.mytv.app.adapter.SeasonAdapter(emptyList()) { season ->
+        val seasonAdapter = SeasonAdapter(emptyList()) { season ->
             episodeAdapter.updateEpisodes(season.episodes)
         }
         rvSeasons?.adapter = seasonAdapter
@@ -1239,159 +787,36 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun focusFirstVodGrid() {
-        if (ottVodPosterAdapter.itemCount == 0) return
-        rvVodGrid.stopScroll()
-        rvVodGrid.scrollToPosition(0)
-        rvVodGrid.post {
-            val vh = rvVodGrid.findViewHolderForAdapterPosition(0)
-            vh?.itemView?.requestFocus() ?: rvVodGrid.requestFocus()
-        }
-    }
+    // =========================================================================
+    // 4. AJUSTES (Settings Mode)
+    // =========================================================================
+    fun openSettingsMode() {
+        currentMode = ScreenMode.SETTINGS
+        pausePreviewPlayer()
 
-    private fun pausePreviewPlayer() {
-        try {
-            exoPlayer?.pause()
-            previewLoadingLayout.visibility = View.GONE
-        } catch (_: Exception) {}
-    }
+        layoutHomeHub.visibility = View.GONE
+        layoutMainContent.visibility = View.VISIBLE
+        layoutTvMode.visibility = View.GONE
+        layoutVodCatalogMode.visibility = View.GONE
+        layoutSettingsMode.visibility = View.VISIBLE
 
-    private fun focusFirstChannel() {
-        if (channelAdapter.itemCount == 0) return
-        rvChannelList.stopScroll()
-        rvChannelList.scrollToPosition(0)
-        rvChannelList.post {
-            val vh = rvChannelList.findViewHolderForAdapterPosition(0)
-            vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
-        }
-    }
+        txtHeaderBreadcrumb.text = "WDTECH TV • AJUSTES DO SISTEMA"
 
-    private fun focusCurrentChannel() {
-        val curr = currentPlayingChannel
-        val idx = if (curr != null) {
-            channelAdapter.getChannels().indexOfFirst { it.id == curr.id }.coerceAtLeast(0)
-        } else {
-            0
-        }
-        rvChannelList.stopScroll()
-        rvChannelList.scrollToPosition(idx)
-        rvChannelList.post {
-            val vh = rvChannelList.findViewHolderForAdapterPosition(idx)
-            vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
-        }
-    }
-
-    private fun focusCurrentSetting() {
-        val idx = settingAdapter.getSelectedIndex().coerceAtLeast(0)
-        rvSettingsList.stopScroll()
-        rvSettingsList.scrollToPosition(idx)
-        rvSettingsList.post {
-            val vh = rvSettingsList.findViewHolderForAdapterPosition(idx)
-            vh?.itemView?.requestFocus() ?: rvSettingsList.requestFocus()
-        }
-    }
-
-    private fun focusFirstSetting() {
-        if (settingAdapter.itemCount == 0) return
-        rvSettingsList.stopScroll()
-        rvSettingsList.scrollToPosition(0)
-        rvSettingsList.post {
-            val vh = rvSettingsList.findViewHolderForAdapterPosition(0)
-            vh?.itemView?.requestFocus() ?: rvSettingsList.requestFocus()
-        }
-    }
-
-    // --- Configuração do Catálogo VOD (Filmes e Séries) ---
-    private fun setupVod() {
-        ottVodPosterAdapter = OttPosterAdapter(
-            items = emptyList(),
-            onItemFocus = { item ->
-                currentSelectedVodItem = item
-                txtHeaderBreadcrumb.text = "WDTECH TV • ${if (item.isSeries) "SÉRIES" else "FILMES"} • ${item.name.uppercase()}"
-            },
-            onItemClick = { item ->
-                currentSelectedVodItem = item
-                if (item.isSeries) {
-                    showSeriesEpisodesDialog(item)
-                } else {
-                    openVodPlayer(item)
-                }
-            },
-            onNavigateUpToTabs = {
-                focusActiveTab()
-            }
-        )
-        rvVodGrid.adapter = ottVodPosterAdapter
-
-        vodAdapter = VodListAdapter(
-            items = emptyList(),
-            onItemSelected = { item ->
-                currentSelectedVodItem = item
-                updateVodPreview(item)
-            },
-            onItemClicked = { item ->
-                currentSelectedVodItem = item
-                if (item.isSeries) {
-                    showSeriesEpisodesDialog(item)
-                } else {
-                    openVodPlayer(item)
-                }
-            },
-            onNavigateToCategories = {
-                focusCurrentCategory()
-            },
-            onNavigateToDetails = {
-                btnVodAction.requestFocus()
-            },
-            onNavigateUpToTabs = {
-                focusActiveTab()
-            }
-        )
-        rvVodList.adapter = vodAdapter
-
-        btnVodAction.setOnClickListener {
-            currentSelectedVodItem?.let {
-                if (it.isSeries) {
-                    showSeriesEpisodesDialog(it)
-                } else {
-                    openVodPlayer(it)
-                }
-            }
-        }
-        btnVodAction.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                focusFirstVodGrid()
-                return@setOnKeyListener true
-            }
-            false
-        }
-    }
-
-    // --- Configuração dos Ajustes ---
-    private fun setupSettings() {
         val items = getSettingItems()
-        settingAdapter = SettingListAdapter(
-            items = items,
-            onSettingFocused = { item ->
-                currentSettingItem = item
-                updateSettingPreview(item)
-            },
-            onSettingClicked = { item ->
-                currentSettingItem = item
-                executeSettingAction(item)
-            },
-            onNavigateToCategories = {
-                focusCurrentCategory()
-            },
-            onNavigateToPreview = {
-                btnSettingPreviewAction.requestFocus()
-            },
-            onNavigateUpToTabs = {
-                focusActiveTab()
-            }
-        )
-        rvSettingsList.adapter = settingAdapter
+        settingAdapter.updateItems(items)
+        if (items.isNotEmpty()) {
+            currentSettingItem = items.first()
+            updateSettingPreview(items.first())
+        }
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (!isFinishing && !isDestroyed && currentMode == ScreenMode.SETTINGS) {
+                focusFirstSetting()
+            }
+        }, 100)
+    }
+
+    private fun setupSettingsModeListeners() {
         btnSettingPreviewAction.setOnClickListener {
             currentSettingItem?.let { executeSettingAction(it) }
         }
@@ -1414,7 +839,7 @@ class MainActivity : AppCompatActivity() {
                 title = "Atualizações do App",
                 subtitle = "Verificar novas versões e novidades",
                 iconRes = R.drawable.ic_check_update,
-                badgeText = "v2.9.5",
+                badgeText = "v2.9.7",
                 description = "Verifica se há novas atualizações disponíveis no GitHub oficial da WDTECH TV. Atualizações automáticas trazem novos canais, correções de travamento e melhorias no player.",
                 actionButtonText = "Verificar Atualizações Agora (OK)"
             ),
@@ -1480,7 +905,6 @@ class MainActivity : AppCompatActivity() {
         txtSettingPreviewBadge.text = item.badgeText
         txtSettingPreviewDesc.text = item.description
         btnSettingPreviewAction.text = item.actionButtonText
-        imgSettingPreviewIcon.setImageResource(item.iconRes)
     }
 
     private fun notifySettingItemUpdated(item: SettingItem) {
@@ -1566,25 +990,319 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // --- Controle do Botão Voltar (D-Pad Back) e Diálogo de Saída ---
+    // =========================================================================
+    // PLAYER & PREVIEW ENGINE (Multi-CDN Failover & Watchdog)
+    // =========================================================================
+    private fun setupPlayer() {
+        val bufCfg = AppSettings.getBufferConfig(this)
+
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                bufCfg.minBufferMs,
+                bufCfg.maxBufferMs,
+                bufCfg.bufferForPlaybackMs,
+                bufCfg.afterRebufferMs
+            )
+            .setPrioritizeTimeOverSizeThresholds(false)
+            .setBackBuffer(0, false)
+            .build()
+
+        val renderersFactory = DefaultRenderersFactory(this).apply {
+            setEnableDecoderFallback(true)
+            setAllowedVideoJoiningTimeMs(4000)
+            setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+        }
+
+        exoPlayer?.release()
+        val player = ExoPlayer.Builder(this, renderersFactory)
+            .setLoadControl(loadControl)
+            .build()
+        player.playWhenReady = true
+        player.addListener(object : Player.Listener {
+            override fun onPlaybackStateChanged(state: Int) {
+                when (state) {
+                    Player.STATE_BUFFERING -> {
+                        previewLoadingLayout.visibility = View.VISIBLE
+                        txtBitrate.text = "SINTONIZANDO..."
+                    }
+                    Player.STATE_READY -> {
+                        cancelPreviewWatchdog()
+                        previewLoadingLayout.visibility = View.GONE
+                    }
+                    Player.STATE_ENDED -> {
+                        previewLoadingLayout.visibility = View.GONE
+                    }
+                    Player.STATE_IDLE -> {}
+                }
+            }
+
+            override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                cancelPreviewWatchdog()
+                currentPlayingChannel?.let { triggerPreviewFailover(it, "Erro no player: ${error.errorCodeName}") }
+            }
+        })
+
+        playerView.player = player
+        exoPlayer = player
+    }
+
+    private fun cancelPreviewWatchdog() {
+        previewWatchdogRunnable?.let { previewWatchdogHandler.removeCallbacks(it) }
+        previewWatchdogRunnable = null
+    }
+
+    private fun startPreviewWatchdog(channel: Channel) {
+        cancelPreviewWatchdog()
+        val runnable = Runnable {
+            if (!isFinishing && !isDestroyed && (exoPlayer?.playbackState == Player.STATE_BUFFERING || exoPlayer?.playbackState == Player.STATE_IDLE)) {
+                android.util.Log.w("WDTECH_NETFLIX", "Preview stall detectado (12s) no canal ${channel.title}. Acionando auto-failover...")
+                triggerPreviewFailover(channel, "Stall de buffer no preview (12s)")
+            }
+        }
+        previewWatchdogRunnable = runnable
+        previewWatchdogHandler.postDelayed(runnable, 12000L)
+    }
+
+    private fun buildStreamCandidates(channel: Channel): List<String> {
+        val list = mutableListOf<String>()
+        val primary = channel.streamUrl
+        if (primary.isNotEmpty()) {
+            list.add(primary)
+            if (primary.contains("64.31.23.207")) {
+                if (primary.endsWith(".m3u8")) list.add(primary.replace(".m3u8", ".ts"))
+                else if (primary.endsWith(".ts")) list.add(primary.replace(".ts", ".m3u8"))
+            }
+        }
+
+        for (b in channel.backupUrls) {
+            if (b.isNotEmpty() && !list.contains(b)) {
+                list.add(b)
+                if (b.contains("64.31.23.207")) {
+                    val alt = if (b.endsWith(".m3u8")) b.replace(".m3u8", ".ts") else if (b.endsWith(".ts")) b.replace(".ts", ".m3u8") else null
+                    if (alt != null && !list.contains(alt)) list.add(alt)
+                }
+            }
+        }
+        return list
+    }
+
+    private fun triggerPreviewFailover(channel: Channel, reason: String) {
+        if (isFinishing || isDestroyed) return
+        cancelPreviewWatchdog()
+        if (previewCandidates.isEmpty()) {
+            previewCandidates = buildStreamCandidates(channel)
+        }
+        previewCandidateIndex = (previewCandidateIndex + 1) % previewCandidates.size
+        val nextUrl = previewCandidates[previewCandidateIndex]
+        android.util.Log.i("WDTECH_NETFLIX", "Preview failover [Candidato ${previewCandidateIndex + 1}/${previewCandidates.size}] para: $nextUrl ($reason)")
+        previewLoadingLayout.visibility = View.VISIBLE
+        playChannelPreviewInternal(channel, nextUrl)
+    }
+
+    private fun playChannelPreview(channel: Channel) {
+        cancelPreviewWatchdog()
+        previewCandidates = buildStreamCandidates(channel)
+        previewCandidateIndex = 0
+        val targetUrl = previewCandidates.firstOrNull() ?: channel.streamUrl
+        playChannelPreviewInternal(channel, targetUrl)
+    }
+
+    private fun playChannelPreviewInternal(channel: Channel, targetUrl: String) {
+        val player = exoPlayer ?: return
+        if (isFinishing || isDestroyed) return
+
+        currentPlayingChannel = channel
+
+        // Salva canal nas preferências como último assistido
+        getSharedPreferences("wdtechtv_prefs", Context.MODE_PRIVATE)
+            .edit()
+            .putString("last_played_channel_id", channel.id)
+            .apply()
+
+        previewLoadingLayout.visibility = View.VISIBLE
+        txtBitrate.text = "SINTONIZANDO..."
+
+        try {
+            player.stop()
+            player.clearMediaItems()
+
+            val dataSourceFactory = com.mytv.app.network.TurboNetworkFactory.createDataSourceFactory(this)
+
+            val extractorsFactory = DefaultExtractorsFactory().apply {
+                setTsExtractorMode(TsExtractor.MODE_SINGLE_PMT)
+                setTsExtractorFlags(
+                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES or
+                    DefaultTsPayloadReaderFactory.FLAG_DETECT_ACCESS_UNITS
+                )
+                setConstantBitrateSeekingEnabled(true)
+            }
+
+            val mediaItem = MediaItem.Builder()
+                .setUri(targetUrl)
+                .apply {
+                    if (targetUrl.endsWith(".ts") || targetUrl.contains(".ts?")) {
+                        setMimeType(MimeTypes.VIDEO_MP2T)
+                    }
+                }
+                .setLiveConfiguration(
+                    MediaItem.LiveConfiguration.Builder()
+                        .setMinPlaybackSpeed(0.98f)
+                        .setMaxPlaybackSpeed(1.02f)
+                        .build()
+                )
+                .build()
+
+            val mediaSource = if (targetUrl.contains(".m3u8")) {
+                HlsMediaSource.Factory(dataSourceFactory)
+                    .setAllowChunklessPreparation(true)
+                    .createMediaSource(mediaItem)
+            } else {
+                DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
+                    .createMediaSource(mediaItem)
+            }
+
+            startPreviewWatchdog(channel)
+            player.setMediaSource(mediaSource)
+            player.prepare()
+            player.play()
+        } catch (_: Throwable) {
+            cancelPreviewWatchdog()
+            previewLoadingLayout.visibility = View.GONE
+        }
+    }
+
+    private fun openFullScreenPlayer(channel: Channel) {
+        zapHandler.removeCallbacksAndMessages(null)
+        cancelPreviewWatchdog()
+        exoPlayer?.stop()
+        exoPlayer?.clearMediaItems()
+        previewLoadingLayout.visibility = View.GONE
+
+        val channelsInScope = if (currentMode == ScreenMode.TV) {
+            currentTvCategory?.channels?.filter { it.streamUrl.isNotEmpty() }
+                ?: listOf(channel)
+        } else {
+            listOf(channel)
+        }
+
+        val currentIndex = channelsInScope.indexOfFirst { it.id == channel.id }.coerceAtLeast(0)
+
+        val intent = Intent(this, PlayerActivity::class.java).apply {
+            putExtra(PlayerActivity.EXTRA_CHANNEL, channel)
+            putExtra(PlayerActivity.EXTRA_CHANNEL_LIST, ArrayList(channelsInScope))
+            putExtra(PlayerActivity.EXTRA_CHANNEL_INDEX, currentIndex)
+        }
+        startActivity(intent)
+    }
+
+    private fun pausePreviewPlayer() {
+        try {
+            cancelPreviewWatchdog()
+            zapHandler.removeCallbacksAndMessages(null)
+            exoPlayer?.pause()
+            previewLoadingLayout.visibility = View.GONE
+        } catch (_: Exception) {}
+    }
+
+    // =========================================================================
+    // D-PAD FOCUS HELPERS
+    // =========================================================================
+    private fun focusFirstCategory() {
+        if (sidebarAdapter.itemCount == 0) return
+        rvCategorySidebar.stopScroll()
+        rvCategorySidebar.scrollToPosition(0)
+        rvCategorySidebar.post {
+            val vh = rvCategorySidebar.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus() ?: rvCategorySidebar.requestFocus()
+        }
+    }
+
+    private fun focusFirstVodGrid() {
+        if (ottVodPosterAdapter.itemCount == 0) return
+        rvVodGrid.stopScroll()
+        rvVodGrid.scrollToPosition(0)
+        rvVodGrid.post {
+            val vh = rvVodGrid.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus() ?: rvVodGrid.requestFocus()
+        }
+    }
+
+    private fun focusFirstChannel() {
+        if (channelAdapter.itemCount == 0) return
+        rvChannelList.stopScroll()
+        rvChannelList.scrollToPosition(0)
+        rvChannelList.post {
+            val vh = rvChannelList.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
+        }
+    }
+
+    private fun focusCurrentChannel() {
+        val curr = currentPlayingChannel
+        val idx = if (curr != null) {
+            channelAdapter.getChannels().indexOfFirst { it.id == curr.id }.coerceAtLeast(0)
+        } else {
+            0
+        }
+        rvChannelList.stopScroll()
+        rvChannelList.scrollToPosition(idx)
+        rvChannelList.post {
+            val vh = rvChannelList.findViewHolderForAdapterPosition(idx)
+            vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
+        }
+    }
+
+    private fun focusFirstSetting() {
+        if (settingAdapter.itemCount == 0) return
+        rvSettingsList.stopScroll()
+        rvSettingsList.scrollToPosition(0)
+        rvSettingsList.post {
+            val vh = rvSettingsList.findViewHolderForAdapterPosition(0)
+            vh?.itemView?.requestFocus() ?: rvSettingsList.requestFocus()
+        }
+    }
+
+    private fun focusCurrentSetting() {
+        val idx = settingAdapter.getSelectedIndex().coerceAtLeast(0)
+        rvSettingsList.stopScroll()
+        rvSettingsList.scrollToPosition(idx)
+        rvSettingsList.post {
+            val vh = rvSettingsList.findViewHolderForAdapterPosition(idx)
+            vh?.itemView?.requestFocus() ?: rvSettingsList.requestFocus()
+        }
+    }
+
+    // =========================================================================
+    // CONTROLE DE BOTÃO VOLTAR (D-PAD BACK) & DIÁLOGO DE SAÍDA
+    // =========================================================================
     private fun setupBackPressed() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (!isHomeMode) {
-                    if (btnFullscreen.hasFocus() || btnVodAction.hasFocus()) {
-                        if (currentSection == MainSection.FILMES || currentSection == MainSection.SERIES) {
-                            focusFirstVod()
-                        } else {
-                            focusCurrentChannel()
-                        }
-                    } else if (rvChannelList.hasFocus() || rvSettingsList.hasFocus() || rvVodList.hasFocus() || btnSettingPreviewAction.hasFocus()) {
-                        focusCurrentCategory()
-                    } else {
-                        // Fecha o menu e retorna para a Tela Principal de Lançamentos!
-                        showHomeScreen()
+                when (currentMode) {
+                    ScreenMode.HOME_HUB -> {
+                        showExitConfirmation()
                     }
-                } else {
-                    showExitConfirmation()
+                    ScreenMode.TV -> {
+                        if (playerPreviewContainer.hasFocus() || playerView.hasFocus()) {
+                            focusCurrentChannel()
+                        } else {
+                            showHomeHub()
+                        }
+                    }
+                    ScreenMode.VOD_FILMES, ScreenMode.VOD_SERIES -> {
+                        if (rvVodGrid.hasFocus()) {
+                            focusFirstCategory()
+                        } else {
+                            showHomeHub()
+                        }
+                    }
+                    ScreenMode.SETTINGS -> {
+                        if (btnSettingPreviewAction.hasFocus()) {
+                            focusCurrentSetting()
+                        } else {
+                            showHomeHub()
+                        }
+                    }
                 }
             }
         })
@@ -1600,17 +1318,17 @@ class MainActivity : AppCompatActivity() {
         val btnSim = dialog.findViewById<Button>(R.id.btn_dialog_exit_sim)
         val btnNao = dialog.findViewById<Button>(R.id.btn_dialog_exit_nao)
 
-        btnSim.setOnClickListener {
+        btnSim?.setOnClickListener {
             dialog.dismiss()
             finishAffinity()
         }
 
-        btnNao.setOnClickListener {
+        btnNao?.setOnClickListener {
             dialog.dismiss()
         }
 
         dialog.setOnShowListener {
-            btnNao.requestFocus()
+            btnNao?.requestFocus()
         }
 
         dialog.show()
@@ -1621,7 +1339,9 @@ class MainActivity : AppCompatActivity() {
         if (exoPlayer == null) {
             setupPlayer()
         }
-        currentPlayingChannel?.let { playChannelPreview(it) }
+        if (currentMode == ScreenMode.TV) {
+            currentPlayingChannel?.let { playChannelPreview(it) }
+        }
     }
 
     override fun onPause() {
@@ -1633,6 +1353,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        cancelPreviewWatchdog()
         zapHandler.removeCallbacksAndMessages(null)
         exoPlayer?.stop()
     }

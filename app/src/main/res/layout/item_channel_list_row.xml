@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:layout_marginStart="6dp"
-    android:layout_marginEnd="6dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
-    android:background="@drawable/bg_channel_item_selector"
+    android:layout_height="48dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:background="@drawable/bg_vivaon_pill"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="false"
@@ -15,103 +15,83 @@
     android:paddingStart="12dp"
     android:paddingEnd="12dp">
 
-    <!-- Mini Logo do Canal -->
-    <ImageView
-        android:id="@+id/img_row_logo"
-        android:layout_width="34dp"
-        android:layout_height="26dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:contentDescription="Logo" />
-
-    <!-- Número do Canal (3 dígitos formatados 001, 002...) -->
+    <!-- Número do Canal (Fiel à foto da TV: 2, 3, 4, 5...) -->
     <TextView
         android:id="@+id/txt_row_number"
-        android:layout_width="38dp"
+        android:layout_width="28dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:gravity="center_vertical"
-        android:text="001"
-        android:textColor="@color/neon_cyan"
+        android:gravity="center"
+        android:text="2"
+        android:textColor="#C0D0E8"
         android:textSize="13sp"
         android:textStyle="bold" />
 
-    <!-- Bloco de Textos: Nome do Canal + EPG Atual -->
-    <LinearLayout
+    <!-- Logo Quadrada Arredondada do Canal -->
+    <FrameLayout
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_rail_button"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/img_row_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/logo"
+            android:contentDescription="Logo" />
+    </FrameLayout>
+
+    <!-- Nome do Canal em Destaque Branco -->
+    <TextView
+        android:id="@+id/txt_row_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <!-- Nome do Canal -->
-        <TextView
-            android:id="@+id/txt_row_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Nome do Canal"
-            android:textColor="@color/text_high"
-            android:textSize="13sp"
-            android:textStyle="bold" />
-
-        <!-- EPG: Programa Atual no Ar -->
-        <TextView
-            android:id="@+id/txt_row_epg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="No Ar: Carregando programação..."
-            android:textColor="#8EA2C6"
-            android:textSize="11sp" />
-
-        <!-- Barra de Progresso do Continue Assistindo -->
-        <ProgressBar
-            android:id="@+id/pb_row_progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginTop="3dp"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/progress_epg"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <!-- Tag HD / FHD / 4K -->
-    <TextView
-        android:id="@+id/txt_row_badge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/badge_hd"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:text="HD"
-        android:textColor="#9AB2D6"
-        android:textSize="9sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Premiere Clubes FHD"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
         android:textStyle="bold" />
 
-    <!-- Selo de Playback / 7 Dias Gravados -->
+    <!-- Ícone de Favorito (Coraçãozinho como na foto da TV) -->
+    <ImageView
+        android:id="@+id/btn_row_favorite"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_heart_fav"
+        android:alpha="0.8"
+        android:contentDescription="Favorito" />
+
+    <!-- Elementos mantidos para compatibilidade de código -->
+    <TextView
+        android:id="@+id/txt_row_epg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_row_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txt_row_badge"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/txt_row_playback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:background="@drawable/badge_playback"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:text="⟲ 7D"
-        android:textColor="@color/neon_cyan"
-        android:textSize="9sp"
-        android:textStyle="bold"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone" />
 
 </LinearLayout>
