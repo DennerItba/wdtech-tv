@@ -63,13 +63,17 @@ class CategorySidebarAdapter(
         }
 
         // Foco visual suave: ao mover o cursor pelo menu principal, apenas destaca visualmente
-        // NÃO abre o submenu nem troca de tela até que o usuário pressione OK / ENTER!
+        // e atualiza a coluna de canais SEM roubar o foco da navegação!
         holder.itemView.setOnFocusChangeListener { _, hasFocus ->
             val pos = holder.bindingAdapterPosition
             if (hasFocus) {
                 holder.txtName.setTextColor(Color.parseColor("#00E5FF"))
                 holder.viewIndicator.visibility = View.VISIBLE
                 if (pos != RecyclerView.NO_POSITION && pos < categories.size) {
+                    val oldIndex = selectedIndex
+                    selectedIndex = pos
+                    notifyItemChanged(oldIndex)
+                    notifyItemChanged(selectedIndex)
                     onCategoryFocused(categories[pos])
                 }
             } else {
@@ -92,23 +96,38 @@ class CategorySidebarAdapter(
 
         holder.itemView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
-                when (keyCode) {
-                    KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                        val pos = holder.bindingAdapterPosition
-                        if (pos != RecyclerView.NO_POSITION && pos < categories.size) {
+                val pos = holder.bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION && pos < categories.size) {
+                    when (keyCode) {
+                        KeyEvent.KEYCODE_DPAD_RIGHT -> {
                             val oldIndex = selectedIndex
                             selectedIndex = pos
                             notifyItemChanged(oldIndex)
                             notifyItemChanged(selectedIndex)
                             onCategoryClicked(categories[pos])
-                        }
-                        onNavigateRightToContent?.invoke()
-                        return@setOnKeyListener true
-                    }
-                    KeyEvent.KEYCODE_DPAD_UP -> {
-                        if (position == 0) {
-                            onNavigateUpToTabs?.invoke()
+                            onNavigateRightToContent?.invoke()
                             return@setOnKeyListener true
+                        }
+                        KeyEvent.KEYCODE_DPAD_CENTER,
+                        KeyEvent.KEYCODE_ENTER,
+                        KeyEvent.KEYCODE_NUMPAD_ENTER -> {
+                            val oldIndex = selectedIndex
+                            selectedIndex = pos
+                            notifyItemChanged(oldIndex)
+                            notifyItemChanged(selectedIndex)
+                            onCategoryClicked(categories[pos])
+                            onNavigateRightToContent?.invoke()
+                            return@setOnKeyListener true
+                        }
+                        KeyEvent.KEYCODE_DPAD_UP -> {
+                            if (pos == 0) {
+                                return@setOnKeyListener true
+                            }
+                        }
+                        KeyEvent.KEYCODE_DPAD_DOWN -> {
+                            if (pos == categories.size - 1) {
+                                return@setOnKeyListener true
+                            }
                         }
                     }
                 }

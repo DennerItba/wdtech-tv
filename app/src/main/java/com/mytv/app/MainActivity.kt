@@ -291,17 +291,16 @@ class MainActivity : AppCompatActivity() {
         tvCategoryAdapter = CategorySidebarAdapter(
             categories = emptyList(),
             onCategoryFocused = { cat ->
-                setTvCategory(cat)
+                setTvCategory(cat, autoFocusChannel = false)
             },
             onCategoryClicked = { cat ->
-                setTvCategory(cat)
-                focusFirstChannel()
+                setTvCategory(cat, autoFocusChannel = true)
             },
             onNavigateRightToContent = {
                 focusFirstChannel()
             },
             onNavigateUpToTabs = {
-                btnTvBack?.requestFocus() ?: showHomeHub()
+                // Mantém na lista de categorias
             }
         )
         rvTvCategories?.adapter = tvCategoryAdapter
@@ -317,7 +316,7 @@ class MainActivity : AppCompatActivity() {
                 openFullScreenPlayer(channel)
             },
             onNavigateToCategories = {
-                rvTvCategories?.requestFocus() ?: btnRailCategories.requestFocus()
+                focusTvCategory()
             },
             onNavigateToPlayer = {
                 btnTvSearch?.requestFocus() ?: playerPreviewContainer.requestFocus()
@@ -402,7 +401,7 @@ class MainActivity : AppCompatActivity() {
             layoutVodCatalogMode.visibility = View.GONE
             layoutSettingsMode.visibility = View.GONE
 
-            txtHomeVersion.text = "Versão 3.2.2"
+            txtHomeVersion.text = "Versão 3.2.3"
             txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
             Handler(Looper.getMainLooper()).postDelayed({
@@ -506,11 +505,15 @@ class MainActivity : AppCompatActivity() {
 
         if (tvCategories.isNotEmpty()) {
             val cat = targetCategory ?: currentTvCategory ?: tvCategories.first()
-            setTvCategory(cat)
+            setTvCategory(cat, autoFocusChannel = false)
+            focusTvCategory(cat)
         } else {
             preloadTvData {
                 val cat = targetCategory ?: tvCategories.firstOrNull()
-                cat?.let { setTvCategory(it) }
+                cat?.let {
+                    setTvCategory(it, autoFocusChannel = false)
+                    focusTvCategory(it)
+                }
             }
         }
     }
@@ -535,7 +538,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTvCategory(category: ChannelCategory) {
+    private fun setTvCategory(category: ChannelCategory, autoFocusChannel: Boolean = false) {
         currentTvCategory = category
         txtTvCategoryTitle.text = category.name
         txtCategoryBadge.text = category.channels.size.toString()
@@ -551,15 +554,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (!isFinishing && !isDestroyed && currentMode == ScreenMode.TV) {
-                rvChannelList.scrollToPosition(0)
-                rvChannelList.postDelayed({
-                    val vh = rvChannelList.findViewHolderForAdapterPosition(0)
-                    vh?.itemView?.requestFocus() ?: rvChannelList.requestFocus()
-                }, 100)
-            }
-        }, 150)
+        if (autoFocusChannel) {
+            focusFirstChannel()
+        }
     }
 
     private fun setupTvModeListeners() {
@@ -1414,6 +1411,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun focusTvCategory(category: ChannelCategory? = null) {
+        val target = category ?: currentTvCategory ?: tvCategories.firstOrNull() ?: return
+        val idx = tvCategories.indexOfFirst { it.id == target.id }.coerceAtLeast(0)
+        rvTvCategories?.stopScroll()
+        rvTvCategories?.scrollToPosition(idx)
+        rvTvCategories?.post {
+            val vh = rvTvCategories?.findViewHolderForAdapterPosition(idx)
+            vh?.itemView?.requestFocus() ?: rvTvCategories?.requestFocus()
+        }
+    }
+
     private fun focusFirstChannel() {
         if (channelAdapter.itemCount == 0) return
         rvChannelList.stopScroll()
@@ -1472,6 +1480,8 @@ class MainActivity : AppCompatActivity() {
                     ScreenMode.TV -> {
                         if (playerPreviewContainer.hasFocus() || playerView.hasFocus()) {
                             focusCurrentChannel()
+                        } else if (rvChannelList.hasFocus()) {
+                            focusTvCategory()
                         } else {
                             showHomeHub()
                         }
@@ -1506,7 +1516,7 @@ class MainActivity : AppCompatActivity() {
         val btnVoltar = dialog.findViewById<Button>(R.id.btn_dialog_exit_nao)
         val btnOk = dialog.findViewById<Button>(R.id.btn_dialog_exit_sim)
 
-        txtMsg?.text = "Conta • Modo Demonstração\n\nChave: ${getDeviceKey(this)}\nServidor: cdn9.my:80\nStatus: Conectado e Ativo"
+        txtMsg?.text = "Conta • Assinatura Ativa\n\nChave: ${getDeviceKey(this)}\nServidor: cdn9.my:80\nStatus: Conectado e Ativo"
         btnVoltar?.visibility = View.GONE
         btnOk?.text = "Fechar"
         btnOk?.setOnClickListener { dialog.dismiss() }

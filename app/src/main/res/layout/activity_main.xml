@@ -82,8 +82,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MODO DEMONSTRAÇÃO"
-                    android:textColor="@color/wd_text_muted"
+                    android:text="CONECTADO"
+                    android:textColor="#00E676"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
