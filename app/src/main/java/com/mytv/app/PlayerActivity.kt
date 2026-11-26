@@ -252,11 +252,6 @@ class PlayerActivity : AppCompatActivity() {
             intent.getSerializableExtra(EXTRA_CHANNEL) as? Channel
         }
 
-        if (channel != null && (channel.title.contains("cinesky", ignoreCase = true) || channel.title.contains("cine sky", ignoreCase = true))) {
-            finish()
-            return
-        }
-
         if (channel == null || channel.streamUrl.isEmpty()) {
             Toast.makeText(this, R.string.error_stream, Toast.LENGTH_SHORT).show()
             finish()

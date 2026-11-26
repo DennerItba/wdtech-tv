@@ -402,7 +402,7 @@ class MainActivity : AppCompatActivity() {
             layoutVodCatalogMode.visibility = View.GONE
             layoutSettingsMode.visibility = View.GONE
 
-            txtHomeVersion.text = "Versão 3.2.7"
+            txtHomeVersion.text = "Versão 3.2.8"
             txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
             Handler(Looper.getMainLooper()).postDelayed({
