@@ -106,10 +106,10 @@ class MainActivity : AppCompatActivity() {
     private var btnTvFavorite: Button? = null
     private var btnTvFullscreen: View? = null
 
-    private lateinit var btnRailSearch: ImageView
-    private lateinit var btnRailFavorites: ImageView
-    private lateinit var btnRailRecents: ImageView
-    private lateinit var btnRailCategories: ImageView
+    private lateinit var btnRailSearch: View
+    private lateinit var btnRailFavorites: View
+    private lateinit var btnRailRecents: View
+    private lateinit var btnRailCategories: View
     private lateinit var txtTvCategoryTitle: TextView
     private lateinit var txtCategoryBadge: TextView
     private var layoutTvCategoryHeader: LinearLayout? = null
@@ -187,11 +187,15 @@ class MainActivity : AppCompatActivity() {
             android.util.Log.e("WDTECH_INIT", "Erro ao inicializar player", t)
         }
 
-        setupHubListeners()
-        setupTvModeListeners()
-        setupVodModeListeners()
-        setupSettingsModeListeners()
-        setupBackPressed()
+        try {
+            setupHubListeners()
+            setupTvModeListeners()
+            setupVodModeListeners()
+            setupSettingsModeListeners()
+            setupBackPressed()
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_INIT", "Erro ao configurar listeners", t)
+        }
 
         // Inicializa dados locais de canais imediatamente na memória (zero espera)
         try {
@@ -397,23 +401,29 @@ class MainActivity : AppCompatActivity() {
     // 1. HOME HUB (Imagem 2)
     // =========================================================================
     fun showHomeHub() {
-        currentMode = ScreenMode.HOME_HUB
-        pausePreviewPlayer()
+        try {
+            currentMode = ScreenMode.HOME_HUB
+            pausePreviewPlayer()
 
-        layoutHomeHub.visibility = View.VISIBLE
-        layoutMainContent.visibility = View.GONE
-        layoutTvMode.visibility = View.GONE
-        layoutVodCatalogMode.visibility = View.GONE
-        layoutSettingsMode.visibility = View.GONE
+            layoutHomeHub.visibility = View.VISIBLE
+            layoutMainContent.visibility = View.GONE
+            layoutTvMode.visibility = View.GONE
+            layoutVodCatalogMode.visibility = View.GONE
+            layoutSettingsMode.visibility = View.GONE
 
-        txtHomeVersion.text = "Versão 3.2.0"
-        txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
+            txtHomeVersion.text = "Versão 3.2.1"
+            txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (!isFinishing && !isDestroyed) {
-                hubTv.requestFocus()
-            }
-        }, 100)
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (!isFinishing && !isDestroyed) {
+                    try {
+                        hubTv.requestFocus()
+                    } catch (_: Throwable) {}
+                }
+            }, 100)
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_INIT", "Erro ao exibir Home Hub", t)
+        }
     }
 
     private fun setupHubListeners() {
