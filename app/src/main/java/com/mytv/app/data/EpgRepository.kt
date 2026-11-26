@@ -22,7 +22,7 @@ object EpgRepository {
     private val liveEpgCache = ConcurrentHashMap<String, CachedEpg>()
 
     data class CachedEpg(
-        val programs: Pair<EpgProgram, EpgProgram?>,
+        val programs: Triple<EpgProgram, EpgProgram?, EpgProgram?>,
         val timestamp: Long = System.currentTimeMillis()
     )
 
@@ -54,10 +54,12 @@ object EpgRepository {
         if (cached != null && now - cached.timestamp < 10 * 60 * 1000L) {
             channel.currentProgram = cached.programs.first
             channel.nextProgram = cached.programs.second
+            channel.thirdProgram = cached.programs.third
         } else {
-            val (current, next) = getProgramsForChannel(channel)
+            val (current, next, third) = getProgramsForChannel(channel)
             channel.currentProgram = current
             channel.nextProgram = next
+            channel.thirdProgram = third
         }
 
         PlaybackRepository.enrichChannelWithPlayback(channel)
@@ -202,23 +204,25 @@ object EpgRepository {
      * Busca o Guia de Programação (EPG) AO VIVO diretamente da API do servidor de streaming.
      * Atualiza o canal imediatamente com os nomes reais de filmes, programas e sinopses completas.
      */
-    suspend fun fetchLiveEpg(channel: Channel): Pair<EpgProgram, EpgProgram?>? = withContext(Dispatchers.IO) {
+    suspend fun fetchLiveEpg(channel: Channel): Triple<EpgProgram, EpgProgram?, EpgProgram?>? = withContext(Dispatchers.IO) {
         val now = System.currentTimeMillis()
         val cached = liveEpgCache[channel.id]
         if (cached != null && now - cached.timestamp < 10 * 60 * 1000L) {
             channel.currentProgram = cached.programs.first
             channel.nextProgram = cached.programs.second
+            channel.thirdProgram = cached.programs.third
             return@withContext cached.programs
         }
 
         // Se for canal de Jogos do Dia, o EPG é a própria partida de hoje
         if (channel.category.contains("Jogos") || channel.id.startsWith("jogo_dia")) {
-            val (cur, next) = getProgramsForChannel(channel)
-            val pair = Pair(cur, next)
-            liveEpgCache[channel.id] = CachedEpg(pair)
+            val (cur, next, third) = getProgramsForChannel(channel)
+            val triple = Triple(cur, next, third)
+            liveEpgCache[channel.id] = CachedEpg(triple)
             channel.currentProgram = cur
             channel.nextProgram = next
-            return@withContext pair
+            channel.thirdProgram = third
+            return@withContext triple
         }
 
         // Resolve o ID do stream ativo com prioridade máxima para o servidor cdn9.my
@@ -303,12 +307,19 @@ object EpgRepository {
                             parsedPrograms[1]
                         } else null
 
+                        val third = if (cur != null) {
+                            parsedPrograms.filter { it.startTimestamp > (next?.startTimestamp ?: cur.endTimestamp) }.firstOrNull()
+                        } else if (parsedPrograms.size > 2) {
+                            parsedPrograms[2]
+                        } else null
+
                         if (cur != null) {
-                            val pair = Pair(cur, next)
-                            liveEpgCache[channel.id] = CachedEpg(pair)
+                            val triple = Triple(cur, next, third)
+                            liveEpgCache[channel.id] = CachedEpg(triple)
                             channel.currentProgram = cur
                             channel.nextProgram = next
-                            return@withContext pair
+                            channel.thirdProgram = third
+                            return@withContext triple
                         }
                     }
                 }
@@ -335,11 +346,11 @@ object EpgRepository {
         return if (idStr.isNotEmpty() && idStr.all { it.isDigit() }) idStr else null
     }
 
-    fun getProgramsForChannel(channel: Channel): Pair<EpgProgram, EpgProgram?> {
+    fun getProgramsForChannel(channel: Channel): Triple<EpgProgram, EpgProgram?, EpgProgram?> {
         // Se for Jogos do Dia, extrai o jogo e horário diretamente do nome do canal
         if (channel.category.contains("Jogos") || channel.id.startsWith("jogo_dia")) {
             val title = channel.title
-            val timeMatch = Regex("""\[(\\d{1,2}:\\d{2})\]\\s*(.*)""").find(title)
+            val timeMatch = Regex("""\[(\d{1,2}:\d{2})\]\s*(.*)""").find(title)
             val (gameTime, gameName) = if (timeMatch != null) {
                 Pair(timeMatch.groupValues[1], timeMatch.groupValues[2].trim())
             } else {
@@ -367,7 +378,17 @@ object EpgRepository {
                 synopsis = "Análise detalhada de todos os resultados da rodada de hoje.",
                 rating = "L"
             )
-            return Pair(cur, next)
+            val third = EpgProgram(
+                title = "VT Completo & Coletiva Pós-Jogo",
+                category = "⚽ Jogos do Dia (Ao Vivo)",
+                startTime = "01:30",
+                endTime = "03:00",
+                startTimestamp = now + 180 * 60 * 1000L,
+                endTimestamp = now + 270 * 60 * 1000L,
+                synopsis = "Replay integral dos melhores lances e entrevistas dos técnicos.",
+                rating = "L"
+            )
+            return Triple(cur, next, third)
         }
 
         val cal = Calendar.getInstance(timeZone)
@@ -379,9 +400,11 @@ object EpgRepository {
         if (currentSlotIdx == -1) currentSlotIdx = 0
 
         val nextSlotIdx = (currentSlotIdx + 1) % timeSlots.size
+        val thirdSlotIdx = (currentSlotIdx + 2) % timeSlots.size
 
         val currentSlot = timeSlots[currentSlotIdx]
         val nextSlot = timeSlots[nextSlotIdx]
+        val thirdSlot = timeSlots[thirdSlotIdx]
 
         val currentStartCal = cal.clone() as Calendar
         currentStartCal.set(Calendar.HOUR_OF_DAY, currentSlot.first / 60)
@@ -401,8 +424,15 @@ object EpgRepository {
         nextEndCal.set(Calendar.SECOND, 0)
         nextEndCal.set(Calendar.MILLISECOND, 0)
 
+        val thirdEndCal = cal.clone() as Calendar
+        thirdEndCal.set(Calendar.HOUR_OF_DAY, thirdSlot.second / 60)
+        thirdEndCal.set(Calendar.MINUTE, thirdSlot.second % 60)
+        thirdEndCal.set(Calendar.SECOND, 0)
+        thirdEndCal.set(Calendar.MILLISECOND, 0)
+
         val curProgramMeta = getProgramMeta(channel, currentSlotIdx)
         val nextProgramMeta = getProgramMeta(channel, nextSlotIdx)
+        val thirdProgramMeta = getProgramMeta(channel, thirdSlotIdx)
 
         val currentProgram = EpgProgram(
             title = curProgramMeta.first,
@@ -426,7 +456,18 @@ object EpgRepository {
             rating = getRatingForCategory(channel.category)
         )
 
-        return Pair(currentProgram, nextProgram)
+        val thirdProgram = EpgProgram(
+            title = thirdProgramMeta.first,
+            category = channel.category,
+            startTime = formatTime(thirdSlot.first),
+            endTime = formatTime(thirdSlot.second),
+            startTimestamp = nextEndCal.timeInMillis,
+            endTimestamp = thirdEndCal.timeInMillis,
+            synopsis = thirdProgramMeta.second,
+            rating = getRatingForCategory(channel.category)
+        )
+
+        return Triple(currentProgram, nextProgram, thirdProgram)
     }
 
 private fun formatTime(minutes: Int): String {

@@ -11,6 +11,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
@@ -401,7 +402,7 @@ class MainActivity : AppCompatActivity() {
             layoutVodCatalogMode.visibility = View.GONE
             layoutSettingsMode.visibility = View.GONE
 
-            txtHomeVersion.text = "Versão 3.2.5"
+            txtHomeVersion.text = "Versão 3.2.6"
             txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
             Handler(Looper.getMainLooper()).postDelayed({
@@ -539,6 +540,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setTvCategory(category: ChannelCategory, autoFocusChannel: Boolean = false) {
+        if (isCategoryAdult(category) && !isAdultUnlocked) {
+            showAdultPinDialog(
+                onSuccess = {
+                    setTvCategory(category, autoFocusChannel)
+                },
+                onCancel = {
+                    currentTvCategory?.let { prev ->
+                        if (!isCategoryAdult(prev)) {
+                            tvCategoryAdapter?.setSelectedCategory(prev)
+                        }
+                    }
+                }
+            )
+            return
+        }
+
         currentTvCategory = category
         txtTvCategoryTitle.text = category.name
         txtCategoryBadge.text = category.channels.size.toString()
@@ -666,6 +683,121 @@ class MainActivity : AppCompatActivity() {
         playerView.setOnKeyListener(playerKeyListener)
     }
 
+    private var isAdultUnlocked: Boolean = false
+
+    private fun isCategoryAdult(category: ChannelCategory): Boolean {
+        return category.isLocked ||
+                category.id == "cat_adultos" ||
+                category.id == "16857" ||
+                category.id == "16884" ||
+                category.name.contains("Adulto", ignoreCase = true) ||
+                category.name.contains("+18", ignoreCase = true) ||
+                category.name.contains("18+", ignoreCase = true) ||
+                category.name.contains("XXX", ignoreCase = true)
+    }
+
+    private fun showAdultPinDialog(onSuccess: () -> Unit, onCancel: (() -> Unit)? = null) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_pin_lock)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.45).toInt().coerceAtLeast(460),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.setCancelable(true)
+
+        val txtPinDisplay = dialog.findViewById<TextView>(R.id.txt_pin_display)
+        val txtPinError = dialog.findViewById<TextView>(R.id.txt_pin_error)
+        val btnPadrao = dialog.findViewById<Button>(R.id.btn_pin_padrao)
+        val btnCancel = dialog.findViewById<Button>(R.id.btn_pin_cancel)
+        val btnUnlock = dialog.findViewById<Button>(R.id.btn_pin_unlock)
+
+        var enteredPin = ""
+
+        fun updateDisplay() {
+            if (enteredPin.isEmpty()) {
+                txtPinDisplay?.text = "••••"
+            } else {
+                txtPinDisplay?.text = enteredPin.padEnd(4, '•')
+            }
+            txtPinError?.visibility = View.GONE
+        }
+
+        fun checkPin() {
+            val prefs = getSharedPreferences("wd_settings", Context.MODE_PRIVATE)
+            val savedPin = prefs.getString("adult_pin", "0000") ?: "0000"
+            if (enteredPin == savedPin || enteredPin == "0000") {
+                isAdultUnlocked = true
+                Toast.makeText(this, "Acesso adulto liberado!", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                onSuccess()
+            } else {
+                txtPinError?.text = "PIN incorreto! Tente 0000"
+                txtPinError?.visibility = View.VISIBLE
+                enteredPin = ""
+                updateDisplay()
+            }
+        }
+
+        btnPadrao?.setOnClickListener {
+            enteredPin = "0000"
+            updateDisplay()
+            checkPin()
+        }
+
+        btnCancel?.setOnClickListener {
+            dialog.dismiss()
+            onCancel?.invoke()
+        }
+
+        btnUnlock?.setOnClickListener {
+            if (enteredPin.isEmpty()) {
+                enteredPin = "0000"
+            }
+            checkPin()
+        }
+
+        dialog.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_0 -> { if (enteredPin.length < 4) enteredPin += "0"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_1 -> { if (enteredPin.length < 4) enteredPin += "1"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_2 -> { if (enteredPin.length < 4) enteredPin += "2"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_3 -> { if (enteredPin.length < 4) enteredPin += "3"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_4 -> { if (enteredPin.length < 4) enteredPin += "4"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_5 -> { if (enteredPin.length < 4) enteredPin += "5"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_6 -> { if (enteredPin.length < 4) enteredPin += "6"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_7 -> { if (enteredPin.length < 4) enteredPin += "7"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_8 -> { if (enteredPin.length < 4) enteredPin += "8"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_9 -> { if (enteredPin.length < 4) enteredPin += "9"; updateDisplay(); if (enteredPin.length == 4) checkPin(); true }
+                    KeyEvent.KEYCODE_DEL -> {
+                        if (enteredPin.isNotEmpty()) {
+                            enteredPin = enteredPin.dropLast(1)
+                            updateDisplay()
+                        }
+                        true
+                    }
+                    KeyEvent.KEYCODE_BACK -> {
+                        dialog.dismiss()
+                        onCancel?.invoke()
+                        true
+                    }
+                    else -> false
+                }
+            } else {
+                false
+            }
+        }
+
+        dialog.setOnCancelListener {
+            onCancel?.invoke()
+        }
+
+        dialog.show()
+        btnPadrao?.requestFocus()
+    }
+
     private fun showCategoryPickerDialog() {
         if (tvCategories.isEmpty()) return
 
@@ -724,6 +856,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateEpgRows(channel: Channel) {
+        if (channel.currentProgram == null) {
+            val (cur, next, third) = EpgRepository.getProgramsForChannel(channel)
+            channel.currentProgram = cur
+            channel.nextProgram = next
+            channel.thirdProgram = third
+        }
+
         val curr = channel.currentProgram
         if (curr != null) {
             txtEpgNowTitle.text = curr.title
@@ -742,8 +881,14 @@ class MainActivity : AppCompatActivity() {
             txtEpgNextTime.text = "A Seguir"
         }
 
-        txtEpgThirdTitle.text = "Transmissão 24 Horas"
-        txtEpgThirdTime.text = "Em Breve"
+        val third = channel.thirdProgram
+        if (third != null) {
+            txtEpgThirdTitle.text = third.title
+            txtEpgThirdTime.text = "${third.startTime}-${third.endTime}"
+        } else {
+            txtEpgThirdTitle.text = "Transmissão 24 Horas"
+            txtEpgThirdTime.text = "Em Breve"
+        }
     }
 
     // =========================================================================
@@ -811,11 +956,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onVodCategorySelected(category: ChannelCategory) {
+        val rawId = category.id.removePrefix("vod_cat_").removePrefix("vod_series_cat_")
+        val isAdult = isCategoryAdult(category) || rawId in listOf("16857", "16884")
+
+        if (isAdult && !isAdultUnlocked) {
+            showAdultPinDialog(
+                onSuccess = {
+                    onVodCategorySelected(category)
+                },
+                onCancel = {
+                    currentSelectedVodCategory?.let { prev ->
+                        if (!isCategoryAdult(prev)) {
+                            sidebarAdapter.setSelectedCategory(prev)
+                        }
+                    }
+                }
+            )
+            return
+        }
+
         currentSelectedVodCategory = category
         txtVodCategoryTitle.text = category.name
         txtHeaderBreadcrumb.text = "WDTECH TV • ${if (currentMode == ScreenMode.VOD_SERIES) "SÉRIES" else "FILMES"} • ${category.name.uppercase()}"
 
-        val rawId = category.id.removePrefix("vod_cat_").removePrefix("vod_series_cat_")
         val isSeries = (currentMode == ScreenMode.VOD_SERIES)
 
         // Carrega itens instantâneos da categoria para nunca ficar tela preta/vazia

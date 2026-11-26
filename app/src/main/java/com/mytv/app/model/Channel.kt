@@ -14,6 +14,7 @@ data class Channel(
     val quality: String = "HD",
     var currentProgram: EpgProgram? = null,
     var nextProgram: EpgProgram? = null,
+    var thirdProgram: EpgProgram? = null,
     var hasPlayback: Boolean = false,
     var playbackDays: Int = 0,
     var playbackStreamId: String? = null,

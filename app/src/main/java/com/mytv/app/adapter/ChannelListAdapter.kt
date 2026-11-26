@@ -57,12 +57,15 @@ class ChannelListAdapter(
             holder.pbProgress.visibility = View.GONE
         }
 
-        val epg = channel.currentProgram
-        if (epg != null) {
-            holder.txtEpg.text = "▶ ${epg.title} (${epg.startTime})"
-        } else {
-            holder.txtEpg.text = "▶ Transmissão Ao Vivo (${channel.quality})"
+        var epg = channel.currentProgram
+        if (epg == null) {
+            val (cur, next, third) = com.mytv.app.data.EpgRepository.getProgramsForChannel(channel)
+            channel.currentProgram = cur
+            channel.nextProgram = next
+            channel.thirdProgram = third
+            epg = cur
         }
+        holder.txtEpg.text = "▶ ${epg.title} (${epg.startTime})"
 
         if (!channel.logoUrl.isNullOrEmpty()) {
             holder.imgLogo.load(channel.logoUrl) {

@@ -47,21 +47,47 @@ object VodRepository {
             if (!jsonText.isNullOrEmpty()) {
                 val array = JSONArray(jsonText)
                 val list = mutableListOf<VodCategory>()
+                val adultList = mutableListOf<VodCategory>()
 
                 // Categoria destacada no topo
-                list.add(VodCategory(id = "cat_filmes_lancamentos", name = "🔥 Lançamentos 2025/2026", isSeries = false))
+                list.add(VodCategory(id = "16831", name = "🔥 Lançamentos 2025/2026", isSeries = false))
 
                 for (i in 0 until array.length()) {
                     val obj = array.getJSONObject(i)
                     val id = obj.optString("category_id", "")
                     val name = obj.optString("category_name", "").trim()
                     if (id.isNotEmpty() && name.isNotEmpty()) {
-                        val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
-                        if (!isAdult) {
-                            list.add(VodCategory(id = id, name = name, isAdult = false, isSeries = false))
+                        val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true) || id in listOf("16857", "16884")
+                        if (isAdult) {
+                            adultList.add(VodCategory(id = id, name = "🔞 " + name.replace("❌", "").replace("[+18]", "").trim() + " [+18]", isAdult = true, isSeries = false))
+                        } else {
+                            if (id != "16831") {
+                                val formattedName = when (id) {
+                                    "16833" -> "💎 UHD | 4K"
+                                    "16830" -> "🍿 Cinema"
+                                    "16832" -> "💥 Ação"
+                                    "16835" -> "🤠 Aventura"
+                                    "16837" -> "😂 Comédia"
+                                    "16834" -> "🧸 Animação"
+                                    "16850" -> "😱 Terror"
+                                    "16849" -> "🔍 Suspense"
+                                    "16840" -> "🚀 Ficção Científica"
+                                    "16839" -> "🎭 Drama"
+                                    "16848" -> "💖 Romance"
+                                    "16842" -> "👶 Especial Infantil"
+                                    "16838" -> "👨‍👩‍👧‍👦 Família"
+                                    "16845" -> "🇧🇷 Nacionais"
+                                    "16851" -> "📜 Documentários"
+                                    "16853" -> "🎸 Shows & Música"
+                                    "16847" -> "💬 Legendados"
+                                    else -> "🎬 $name"
+                                }
+                                list.add(VodCategory(id = id, name = formattedName, isAdult = false, isSeries = false))
+                            }
                         }
                     }
                 }
+                list.addAll(adultList)
 
                 if (list.isNotEmpty()) {
                     movieCategoriesCache.clear()
@@ -93,7 +119,7 @@ object VodRepository {
             "cat_filmes_terror" -> "16850" // Terror
             "cat_filmes_ficcao" -> "16840" // Ficcao Cientifica
             "cat_filmes_nacionais" -> "16845" // Nacionais
-            else -> if (categoryId.startsWith("cat_filmes_")) null else categoryId
+            else -> categoryId.removePrefix("vod_cat_").removePrefix("cat_filmes_")
         }
 
         if (remoteCatId != null) {
@@ -164,17 +190,31 @@ object VodRepository {
                 val array = JSONArray(jsonText)
                 val list = mutableListOf<VodCategory>()
 
-                list.add(VodCategory(id = "cat_series_populares", name = "🔥 Séries em Alta (2025/2026)", isSeries = true))
+                list.add(VodCategory(id = "16887", name = "🔥 Séries em Alta (2025/2026)", isSeries = true))
 
                 for (i in 0 until array.length()) {
                     val obj = array.getJSONObject(i)
                     val id = obj.optString("category_id", "")
                     val name = obj.optString("category_name", "").trim()
                     if (id.isNotEmpty() && name.isNotEmpty()) {
-                        val isAdult = name.contains("XXX", ignoreCase = true) || name.contains("Adulto", ignoreCase = true)
-                        if (!isAdult) {
-                            list.add(VodCategory(id = id, name = name, isAdult = false, isSeries = true))
+                        val formattedName = when (id) {
+                            "16887" -> "🌟 Netflix"
+                            "16890" -> "📦 Prime Video"
+                            "16893" -> "🎬 HBO Max"
+                            "16891" -> "🏰 Disney+"
+                            "16892" -> "🇧🇷 Globoplay"
+                            "16888" -> "🍎 Apple TV+"
+                            "16894" -> "⛰️ Paramount+"
+                            "16895" -> "⭐ Star+"
+                            "16889" -> "🧭 Discovery+"
+                            "16885" -> "📺 Novelas"
+                            "16886" -> "🇹🇷 Novelas Turcas"
+                            "16905" -> "🥢 Doramas"
+                            "16901" -> "🍜 Crunchyroll (Animes)"
+                            "16902" -> "🎙️ Programas de TV"
+                            else -> "📺 $name"
                         }
+                        list.add(VodCategory(id = id, name = formattedName, isAdult = false, isSeries = true))
                     }
                 }
 
@@ -208,7 +248,7 @@ object VodRepository {
             "cat_series_apple" -> "16888"
             "cat_series_star" -> "16895"
             "cat_series_paramount" -> "16894"
-            else -> if (categoryId.startsWith("cat_series_")) null else categoryId
+            else -> categoryId.removePrefix("vod_series_cat_").removePrefix("cat_series_")
         }
 
         if (remoteCatId != null) {
