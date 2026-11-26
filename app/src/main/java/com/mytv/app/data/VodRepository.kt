@@ -74,12 +74,21 @@ object VodRepository {
                                     "16840" -> "🚀 Ficção Científica"
                                     "16839" -> "🎭 Drama"
                                     "16848" -> "💖 Romance"
+                                    "16843" -> "🧙 Fantasia"
+                                    "16836" -> "🕵️ Crime"
+                                    "16844" -> "🐎 Faroeste"
+                                    "16841" -> "⚔️ Guerra"
                                     "16842" -> "👶 Especial Infantil"
                                     "16838" -> "👨‍👩‍👧‍👦 Família"
                                     "16845" -> "🇧🇷 Nacionais"
                                     "16851" -> "📜 Documentários"
+                                    "16852" -> "⚽ Esportes"
                                     "16853" -> "🎸 Shows & Música"
+                                    "16855" -> "🎤 Stand Up Comedy"
                                     "16847" -> "💬 Legendados"
+                                    "16856" -> "📱 Reels & Shorts"
+                                    "16846" -> "🙏 Religiosos"
+                                    "16854" -> "🎄 Especial Natal"
                                     else -> "🎬 $name"
                                 }
                                 list.add(VodCategory(id = id, name = formattedName, isAdult = false, isSeries = false))
@@ -129,7 +138,7 @@ object VodRepository {
                 if (!jsonText.isNullOrEmpty()) {
                     val array = JSONArray(jsonText)
                     val list = mutableListOf<VodItem>()
-                    val limit = minOf(array.length(), 400)
+                    val limit = minOf(array.length(), 1000)
 
                     for (i in 0 until limit) {
                         val obj = array.getJSONObject(i)
@@ -209,9 +218,18 @@ object VodRepository {
                             "16889" -> "🧭 Discovery+"
                             "16885" -> "📺 Novelas"
                             "16886" -> "🇹🇷 Novelas Turcas"
+                            "16919" -> "🎓 Malhação"
                             "16905" -> "🥢 Doramas"
+                            "16906" -> "🥢 Doramas Legendados"
                             "16901" -> "🍜 Crunchyroll (Animes)"
+                            "16900" -> "🟡 SBT+"
+                            "16898" -> "🔴 Claro video"
+                            "16899" -> "📡 DirecTV"
+                            "16897" -> "🇧🇷 Brasil Paralelo"
+                            "16904" -> "🎥 Universal"
                             "16902" -> "🎙️ Programas de TV"
+                            "16903" -> "💬 Legendadas"
+                            "16896" -> "📽️ Outras Produtoras"
                             else -> "📺 $name"
                         }
                         list.add(VodCategory(id = id, name = formattedName, isAdult = false, isSeries = true))
@@ -258,7 +276,7 @@ object VodRepository {
                 if (!jsonText.isNullOrEmpty()) {
                     val array = JSONArray(jsonText)
                     val list = mutableListOf<VodItem>()
-                    val limit = minOf(array.length(), 400)
+                    val limit = minOf(array.length(), 1000)
 
                     for (i in 0 until limit) {
                         val obj = array.getJSONObject(i)
@@ -419,18 +437,23 @@ object VodRepository {
 
     fun getFallbackMovieCategories(): List<VodCategory> {
         return listOf(
-            VodCategory("cat_filmes_netflix", "Filmes/Netflix"),
-            VodCategory("cat_filmes_disney", "Filmes/Disney+"),
-            VodCategory("cat_filmes_hbomax", "Filmes/HBOmax"),
-            VodCategory("cat_filmes_prime", "Filmes | Prime Video"),
-            VodCategory("cat_filmes_globoplay", "Filmes | GloboPlay"),
-            VodCategory("cat_filmes_appletv", "Filmes | Apple TV+"),
-            VodCategory("cat_filmes_star", "Filmes | Star +"),
-            VodCategory("cat_filmes_paramount", "Filmes | Paramount +"),
-            VodCategory("cat_filmes_4k", "Filmes | 4K UHD"),
-            VodCategory("cat_filmes_lancamentos", "Filmes | Lançamentos 2026"),
-            VodCategory("cat_filmes_acao", "Filmes | Ação & Aventura"),
-            VodCategory("cat_filmes_todos", "Filmes | Todos os Filmes")
+            VodCategory("16831", "🔥 Lançamentos 2025/2026"),
+            VodCategory("16833", "💎 UHD | 4K"),
+            VodCategory("16830", "🍿 Cinema"),
+            VodCategory("16832", "💥 Ação"),
+            VodCategory("16835", "🤠 Aventura"),
+            VodCategory("16834", "🧸 Animação"),
+            VodCategory("16837", "😂 Comédia"),
+            VodCategory("16850", "😱 Terror"),
+            VodCategory("16849", "🔍 Suspense"),
+            VodCategory("16840", "🚀 Ficção Científica"),
+            VodCategory("16839", "🎭 Drama"),
+            VodCategory("16848", "💖 Romance"),
+            VodCategory("16842", "👶 Especial Infantil"),
+            VodCategory("16845", "🇧🇷 Nacionais"),
+            VodCategory("16851", "📜 Documentários"),
+            VodCategory("16853", "🎸 Shows & Música"),
+            VodCategory("16847", "💬 Legendados")
         )
     }
 
@@ -592,16 +615,20 @@ object VodRepository {
 
     fun getFallbackSeriesCategories(): List<VodCategory> {
         return listOf(
-            VodCategory("1198", "Séries/Netflix", isSeries = true),
-            VodCategory("1230", "Séries/Disney+", isSeries = true),
-            VodCategory("1223", "Séries/HBO Max", isSeries = true),
-            VodCategory("1225", "Séries | Prime Video", isSeries = true),
-            VodCategory("1236", "Séries | GloboPlay", isSeries = true),
-            VodCategory("1207", "Séries | Star+", isSeries = true),
-            VodCategory("1238", "Séries | Paramount+", isSeries = true),
-            VodCategory("1252", "Séries | Mais Assistidas", isSeries = true),
-            VodCategory("1213", "Séries | Novelas", isSeries = true),
-            VodCategory("cat_series_todas", "Séries | Todas as Séries", isSeries = true)
+            VodCategory("16887", "🌟 Netflix", isSeries = true),
+            VodCategory("16890", "📦 Prime Video", isSeries = true),
+            VodCategory("16893", "🎬 HBO Max", isSeries = true),
+            VodCategory("16891", "🏰 Disney+", isSeries = true),
+            VodCategory("16892", "🇧🇷 Globoplay", isSeries = true),
+            VodCategory("16888", "🍎 Apple TV+", isSeries = true),
+            VodCategory("16894", "⛰️ Paramount+", isSeries = true),
+            VodCategory("16895", "⭐ Star+", isSeries = true),
+            VodCategory("16889", "🧭 Discovery+", isSeries = true),
+            VodCategory("16885", "📺 Novelas", isSeries = true),
+            VodCategory("16886", "🇹🇷 Novelas Turcas", isSeries = true),
+            VodCategory("16905", "🥢 Doramas", isSeries = true),
+            VodCategory("16901", "🍜 Crunchyroll (Animes)", isSeries = true),
+            VodCategory("16902", "🎙️ Programas de TV", isSeries = true)
         )
     }
 
