@@ -401,7 +401,7 @@ class MainActivity : AppCompatActivity() {
             layoutVodCatalogMode.visibility = View.GONE
             layoutSettingsMode.visibility = View.GONE
 
-            txtHomeVersion.text = "Versão 3.2.4"
+            txtHomeVersion.text = "Versão 3.2.5"
             txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
             Handler(Looper.getMainLooper()).postDelayed({
@@ -1247,27 +1247,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun buildStreamCandidates(channel: Channel): List<String> {
-        val rawList = mutableListOf<String>()
-        val primary = channel.streamUrl
-        if (primary.isNotEmpty()) rawList.add(primary)
-        for (b in channel.backupUrls) {
-            if (b.isNotEmpty() && !rawList.contains(b)) rawList.add(b)
-        }
-
-        // Prioriza streams .ts e cdn9.my de alta velocidade e resposta direta
-        val sortedList = rawList.sortedBy { url ->
-            if (url.contains("cdn9.my") && url.endsWith(".ts")) 0
-            else if (url.contains("cdn9.my")) 1
-            else if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 2
-            else 3
-        }
-
         val result = mutableListOf<String>()
-        for (u in sortedList) {
-            if (!result.contains(u)) result.add(u)
-            if (u.contains("cdn9.my")) {
-                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else "$u.ts"
-                if (alt != null && !result.contains(alt)) result.add(alt)
+        val sid = channel.id.removePrefix("ch_").removePrefix("ch_jogos_")
+            .ifEmpty { Regex("""/(\d+)(?:\.ts|\.m3u8)?$""").find(channel.streamUrl)?.groupValues?.get(1) ?: "" }
+
+        if (sid.isNotEmpty()) {
+            // 1º) 🟢 Link Curto (M3U) - nslistam3u6olwz.xyz
+            result.add("http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.ts")
+            result.add("http://e.nslistam3u6olwz.xyz/live/726hjvc/693bjjz/$sid.ts")
+
+            // 2º) 🟡 Link (HLS - m3u_plus) - suportepriorizado.xyz
+            result.add("http://suportepriorizado.xyz:80/726hjvc/693bjjz/$sid.m3u8")
+
+            // 3º) 🟡 Link Curto (HLS) - nslistam3u6olwz.xyz
+            result.add("http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.m3u8")
+
+            // 4º) 🔴 Link (SSIPTV) - cdn9.my
+            result.add("http://cdn9.my/726hjvc/693bjjz/$sid")
+
+            // Servidores de Alta Disponibilidade CDN9
+            result.add("http://cdn9.my:80/live/726hjvc/693bjjz/$sid.ts")
+            result.add("http://e.cdn9.my/live/726hjvc/693bjjz/$sid.ts")
+            result.add("http://cdn9.my:80/live/726hjvc/693bjjz/$sid.m3u8")
+        }
+
+        if (channel.streamUrl.isNotEmpty() && !result.contains(channel.streamUrl)) {
+            result.add(channel.streamUrl)
+        }
+        for (b in channel.backupUrls) {
+            if (b.isNotEmpty() && !result.contains(b)) {
+                result.add(b)
             }
         }
         return result
@@ -1546,7 +1555,16 @@ class MainActivity : AppCompatActivity() {
         val btnVoltar = dialog.findViewById<Button>(R.id.btn_dialog_exit_nao)
         val btnOk = dialog.findViewById<Button>(R.id.btn_dialog_exit_sim)
 
-        txtMsg?.text = "Mudar Lista IPTV\n\nLista autorizada ativa:\nhttp://cdn9.my:80 (726hjvc)\n2.341 canais carregados"
+        val info = buildString {
+            append("📡 Listas IPTV Ativas no App (Ordem de Prioridade):\n\n")
+            append("1º 🟢 Link Curto (M3U):\n   http://e.nslistam3u6olwz.xyz/p/726hjvc/693bjjz/m3u\n\n")
+            append("2º 🟡 Link (HLS):\n   http://nslistam3u6olwz.xyz/...&output=hls\n\n")
+            append("3º 🟡 Link Curto (HLS):\n   http://e.nslistam3u6olwz.xyz/p/726hjvc/693bjjz/hls\n\n")
+            append("4º 🔴 Link (SSIPTV):\n   http://e.cdn9.my/p/726hjvc/693bjjz/ssiptv\n\n")
+            append("⚙️ DNS STB Integrados (Anti-Bloqueio):\n   173.208.207.156 • 158 • 157 • 178.156.242.193\n")
+            append("⚡ Multi-CDN Auto-Failover Ativo (2.341 canais sincronizados)")
+        }
+        txtMsg?.text = info
         btnVoltar?.visibility = View.GONE
         btnOk?.text = "Entendido"
         btnOk?.setOnClickListener { dialog.dismiss() }

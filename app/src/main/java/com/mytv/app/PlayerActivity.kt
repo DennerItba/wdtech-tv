@@ -410,27 +410,48 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun buildStreamCandidates(channel: Channel, customUrl: String? = null): List<String> {
-        val rawList = mutableListOf<String>()
-        val primary = customUrl ?: channel.streamUrl
-        if (primary.isNotEmpty()) rawList.add(primary)
-        for (b in channel.backupUrls) {
-            if (b.isNotEmpty() && !rawList.contains(b)) rawList.add(b)
-        }
-
-        // Prioriza streams .ts e cdn9.my de alta velocidade e resposta direta
-        val sortedList = rawList.sortedBy { url ->
-            if (url.contains("cdn9.my") && url.endsWith(".ts")) 0
-            else if (url.contains("cdn9.my")) 1
-            else if (url.contains("uniredes") || url.contains("186.219") || url.contains("170.83") || url.contains("jmvstream")) 2
-            else 3
-        }
-
         val result = mutableListOf<String>()
-        for (u in sortedList) {
-            if (!result.contains(u)) result.add(u)
-            if (u.contains("cdn9.my")) {
-                val alt = if (u.endsWith(".m3u8")) u.replace(".m3u8", ".ts") else if (u.endsWith(".ts")) u.replace(".ts", ".m3u8") else "$u.ts"
-                if (alt != null && !result.contains(alt)) result.add(alt)
+        val sid = channel.id.removePrefix("ch_").removePrefix("ch_jogos_")
+            .ifEmpty { Regex("""/(\d+)(?:\.ts|\.m3u8)?$""").find(customUrl ?: channel.streamUrl)?.groupValues?.get(1) ?: "" }
+
+        if (!customUrl.isNullOrEmpty()) {
+            result.add(customUrl)
+        }
+
+        if (sid.isNotEmpty()) {
+            // 1º) 🟢 Link Curto (M3U) - nslistam3u6olwz.xyz
+            val u1 = "http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.ts"
+            if (!result.contains(u1)) result.add(u1)
+            val u1b = "http://e.nslistam3u6olwz.xyz/live/726hjvc/693bjjz/$sid.ts"
+            if (!result.contains(u1b)) result.add(u1b)
+
+            // 2º) 🟡 Link (HLS - m3u_plus) - suportepriorizado.xyz
+            val u2 = "http://suportepriorizado.xyz:80/726hjvc/693bjjz/$sid.m3u8"
+            if (!result.contains(u2)) result.add(u2)
+
+            // 3º) 🟡 Link Curto (HLS) - nslistam3u6olwz.xyz
+            val u3 = "http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.m3u8"
+            if (!result.contains(u3)) result.add(u3)
+
+            // 4º) 🔴 Link (SSIPTV) - cdn9.my
+            val u4 = "http://cdn9.my/726hjvc/693bjjz/$sid"
+            if (!result.contains(u4)) result.add(u4)
+
+            // Servidores de Alta Disponibilidade CDN9
+            val u5 = "http://cdn9.my:80/live/726hjvc/693bjjz/$sid.ts"
+            if (!result.contains(u5)) result.add(u5)
+            val u6 = "http://e.cdn9.my/live/726hjvc/693bjjz/$sid.ts"
+            if (!result.contains(u6)) result.add(u6)
+            val u7 = "http://cdn9.my:80/live/726hjvc/693bjjz/$sid.m3u8"
+            if (!result.contains(u7)) result.add(u7)
+        }
+
+        if (channel.streamUrl.isNotEmpty() && !result.contains(channel.streamUrl)) {
+            result.add(channel.streamUrl)
+        }
+        for (b in channel.backupUrls) {
+            if (b.isNotEmpty() && !result.contains(b)) {
+                result.add(b)
             }
         }
         return result

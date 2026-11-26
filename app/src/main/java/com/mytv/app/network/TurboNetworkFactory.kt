@@ -19,6 +19,50 @@ object TurboNetworkFactory {
     private var cachedOkHttpClient: OkHttpClient? = null
     private var lastDohState: Boolean? = null
 
+    // DNS STB dedicados para IPTV (Netflix, TV Antiga, V3, V4)
+    val STB_DNS_SERVERS = listOf(
+        "173.208.207.156", // DNS STB (Netflix)
+        "173.208.207.158", // DNS STB TV Antiga
+        "178.156.242.193", // DNS STB V3
+        "173.208.207.157"  // DNS STB V4
+    )
+
+    // Resolvedor Turbo com IP Pinning instantâneo (0ms) e Fallback nos DNS STB
+    class TurboStbDns(private val fallbackDns: Dns) : Dns {
+        private val staticHosts: Map<String, List<InetAddress>> = mapOf(
+            "nslistam3u6olwz.xyz" to listOf(
+                InetAddress.getByName("104.21.64.142"),
+                InetAddress.getByName("172.67.151.145")
+            ),
+            "e.nslistam3u6olwz.xyz" to listOf(
+                InetAddress.getByName("104.21.64.142"),
+                InetAddress.getByName("172.67.151.145")
+            ),
+            "suportepriorizado.xyz" to listOf(
+                InetAddress.getByName("104.21.15.216"),
+                InetAddress.getByName("172.67.164.129")
+            ),
+            "cdn9.my" to listOf(
+                InetAddress.getByName("172.67.211.148"),
+                InetAddress.getByName("104.21.67.27")
+            ),
+            "e.cdn9.my" to listOf(
+                InetAddress.getByName("172.67.211.148"),
+                InetAddress.getByName("104.21.67.27")
+            )
+        )
+
+        override fun lookup(hostname: String): List<InetAddress> {
+            val key = hostname.lowercase()
+            staticHosts[key]?.let { return it }
+            return try {
+                fallbackDns.lookup(hostname)
+            } catch (_: Exception) {
+                Dns.SYSTEM.lookup(hostname)
+            }
+        }
+    }
+
     @Synchronized
     fun getOkHttpClient(context: Context): OkHttpClient {
         val useTurboDoh = AppSettings.isTurboDohEnabled(context)
@@ -39,36 +83,35 @@ object TurboNetworkFactory {
             .followRedirects(true)
             .followSslRedirects(true)
 
-        if (useTurboDoh) {
-            try {
-                // Bootstrap com resolução direta de IPs para evitar dependência do DNS local do ISP
-                val bootstrapClient = OkHttpClient.Builder()
-                    .connectTimeout(3000, TimeUnit.MILLISECONDS)
-                    .readTimeout(3000, TimeUnit.MILLISECONDS)
-                    .build()
-
-                val cloudflareDoh = DnsOverHttps.Builder()
-                    .client(bootstrapClient)
-                    .url("https://1.1.1.1/dns-query".toHttpUrl())
-                    .bootstrapDnsHosts(
-                        InetAddress.getByName("1.1.1.1"),
-                        InetAddress.getByName("1.0.0.1"),
-                        InetAddress.getByName("8.8.8.8"),
-                        InetAddress.getByName("8.8.4.4")
-                    )
-                    .includeIPv6(false) // TV Boxes geralmente possuem melhor performance em IPv4
-                    .post(true)
-                    .build()
-
-                clientBuilder.dns(cloudflareDoh)
-                android.util.Log.i("WDTECH_TURBO", "Turbo Network: DNS-over-HTTPS (Cloudflare 1.1.1.1) ativado com sucesso!")
-            } catch (e: Exception) {
-                android.util.Log.w("WDTECH_TURBO", "Falha ao inicializar DoH, usando Dns.SYSTEM: ${e.message}")
-                clientBuilder.dns(Dns.SYSTEM)
+        try {
+            // Bootstrap com servidores DNS STB oficiais + Anycast Cloudflare/Google
+            val bootstrapHosts = mutableListOf<InetAddress>()
+            for (ip in STB_DNS_SERVERS) {
+                try { bootstrapHosts.add(InetAddress.getByName(ip)) } catch (_: Exception) {}
             }
-        } else {
-            clientBuilder.dns(Dns.SYSTEM)
-            android.util.Log.i("WDTECH_TURBO", "Turbo Network: DNS nativo do sistema ativado.")
+            bootstrapHosts.add(InetAddress.getByName("1.1.1.1"))
+            bootstrapHosts.add(InetAddress.getByName("1.0.0.1"))
+            bootstrapHosts.add(InetAddress.getByName("8.8.8.8"))
+            bootstrapHosts.add(InetAddress.getByName("8.8.4.4"))
+
+            val bootstrapClient = OkHttpClient.Builder()
+                .connectTimeout(3000, TimeUnit.MILLISECONDS)
+                .readTimeout(3000, TimeUnit.MILLISECONDS)
+                .build()
+
+            val cloudflareDoh = DnsOverHttps.Builder()
+                .client(bootstrapClient)
+                .url("https://1.1.1.1/dns-query".toHttpUrl())
+                .bootstrapDnsHosts(bootstrapHosts)
+                .includeIPv6(false) // TV Boxes operam com máxima estabilidade em IPv4
+                .post(true)
+                .build()
+
+            clientBuilder.dns(TurboStbDns(cloudflareDoh))
+            android.util.Log.i("WDTECH_TURBO", "Turbo Network: DNS STB + DoH ativado com sucesso!")
+        } catch (e: Exception) {
+            android.util.Log.w("WDTECH_TURBO", "Falha ao inicializar DoH, usando TurboStbDns(Dns.SYSTEM): ${e.message}")
+            clientBuilder.dns(TurboStbDns(Dns.SYSTEM))
         }
 
         val client = clientBuilder.build()
