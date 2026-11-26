@@ -1,30 +1,77 @@
 <resources>
-    <!-- Paleta Futurista / Cyber Glassmorphism -->
-    <color name="bg_cyber_dark">#080B12</color>
+    <!-- Paleta Oficial WDTECH Stream TV (Extraída do Protótipo HTML Fiel) -->
+    <color name="wd_bg">#080E19</color>
+    <color name="wd_home_radial_start">#142D50</color>
+    <color name="wd_home_radial_mid">#0A1425</color>
+    <color name="wd_home_radial_end">#070C15</color>
+
+    <color name="wd_header_border">#1C3048</color>
+    <color name="wd_side_bg">#101A29</color>
+    <color name="wd_side_border">#23364D</color>
+    <color name="wd_channel_divider">#26364B</color>
+    <color name="wd_main_bg">#080F1B</color>
+
+    <!-- Cores de Texto e Marcas -->
+    <color name="wd_brand_blue">#5AB5FF</color>
+    <color name="wd_text_white">#EDF5FF</color>
+    <color name="wd_text_muted">#9AAFCA</color>
+    <color name="wd_text_category">#AEBFD5</color>
+    <color name="wd_footer_text">#839BB8</color>
+
+    <!-- Destaque e Seleção Ativa -->
+    <color name="wd_category_active">#215B9F</color>
+    <color name="wd_category_focus">#1C3B63</color>
+    <color name="wd_channel_active">#23466D</color>
+    <color name="wd_channel_focus">#1E3F68</color>
+    <color name="wd_channel_tag">#2B476A</color>
+    <color name="wd_pill_blue">#205DA5</color>
+    <color name="wd_pill_focus">#2E7BD8</color>
+    <color name="wd_focus_glow">#79C4FF</color>
+    <color name="wd_player_accent">#398BEA</color>
+
+    <!-- Tiles do Dashboard Principal (4 Colunas) -->
+    <color name="wd_tile_big_1">#246EC3</color>
+    <color name="wd_tile_big_2">#163A6B</color>
+    <color name="wd_tile_mid_1">#1E4C82</color>
+    <color name="wd_tile_mid_2">#102642</color>
+    <color name="wd_tile_stroke">#315A86</color>
+
+    <!-- Ações Laterais (Configurar, Recarregar, Sair) -->
+    <color name="wd_action_bg">#111D2E</color>
+    <color name="wd_action_focus">#182A42</color>
+    <color name="wd_action_stroke">#294968</color>
+
+    <!-- Busca e Posters de Catálogo VOD -->
+    <color name="wd_search_bg">#172438</color>
+    <color name="wd_search_stroke">#314764</color>
+    <color name="wd_poster_stroke">#33455C</color>
+
+    <!-- Caixas de Diálogo / Modais -->
+    <color name="wd_dialog_bg">#142238</color>
+    <color name="wd_dialog_stroke">#345375</color>
+
+    <!-- Legado / Compatibilidade -->
+    <color name="bg_cyber_dark">#080E19</color>
     <color name="bg_panel_glass">#D00E1422</color>
-    <color name="bg_item_normal">#141C2B</color>
-    <color name="bg_item_focused">#1F2B42</color>
-    
-    <color name="neon_cyan">#00E5FF</color>
-    <color name="neon_cyan_glow">#4000E5FF</color>
+    <color name="bg_item_normal">#101A29</color>
+    <color name="bg_item_focused">#1E3F68</color>
+    <color name="neon_cyan">#5AB5FF</color>
+    <color name="neon_cyan_glow">#405AB5FF</color>
     <color name="neon_purple">#7C4DFF</color>
     <color name="neon_green">#00E676</color>
     <color name="neon_red">#FF1744</color>
-    <color name="brand_red">#00E5FF</color>
-    
-    <color name="text_high">#FFFFFF</color>
-    <color name="text_mid">#9BB0CF</color>
+    <color name="brand_red">#5AB5FF</color>
+    <color name="text_high">#EDF5FF</color>
+    <color name="text_mid">#9AAFCA</color>
     <color name="text_low">#5B6E8C</color>
-    <color name="text_white">#FFFFFF</color>
-    <color name="text_gray">#9BB0CF</color>
-    
-    <color name="tab_active_bg">#253550</color>
-    <color name="tab_active_stroke">#00E5FF</color>
-    <!-- Cores de Botões de Alto Contraste (Legibilidade Máxima na TV Box) -->
-    <color name="btn_focused_bg">#1A3B6B</color>
-    <color name="btn_focused_stroke">#00E5FF</color>
-    <color name="btn_normal_bg">#182234</color>
-    <color name="btn_normal_stroke">#2C3C56</color>
+    <color name="text_white">#EDF5FF</color>
+    <color name="text_gray">#9AAFCA</color>
+    <color name="tab_active_bg">#215B9F</color>
+    <color name="tab_active_stroke">#79C4FF</color>
+    <color name="btn_focused_bg">#2E7BD8</color>
+    <color name="btn_focused_stroke">#79C4FF</color>
+    <color name="btn_normal_bg">#205DA5</color>
+    <color name="btn_normal_stroke">#315A86</color>
     <color name="btn_text_focused">#FFFFFF</color>
-    <color name="btn_text_normal">#D0DFFA</color>
+    <color name="btn_text_normal">#EDF5FF</color>
 </resources>

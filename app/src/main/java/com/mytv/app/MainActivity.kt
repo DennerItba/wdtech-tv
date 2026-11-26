@@ -78,13 +78,16 @@ class MainActivity : AppCompatActivity() {
 
     private var currentMode: ScreenMode = ScreenMode.HOME_HUB
 
-    // --- 1. TELA HOME HUB (Imagem 2) ---
+    // --- 1. TELA HOME HUB (Protótipo HTML WDTECH STREAM TV) ---
     private lateinit var layoutHomeHub: View
-    private lateinit var hubTv: LinearLayout
-    private lateinit var hubFilmes: LinearLayout
-    private lateinit var hubSeries: LinearLayout
-    private lateinit var hubAjustes: LinearLayout
-    private lateinit var btnHomeReload: Button
+    private lateinit var hubTv: View
+    private lateinit var hubFilmes: View
+    private lateinit var hubSeries: View
+    private lateinit var hubAjustes: View
+    private lateinit var btnHomeReload: View
+    private var hubConta: View? = null
+    private var hubPlaylist: View? = null
+    private var btnActionExit: View? = null
     private lateinit var txtDeviceKey: TextView
     private lateinit var txtHomeVersion: TextView
 
@@ -93,8 +96,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnToggleMenu: Button
     private lateinit var txtHeaderBreadcrumb: TextView
 
-    // --- 2. TELA TV AO VIVO (Imagem 3) ---
+    // --- 2. TELA TV AO VIVO (3 Colunas Fiel ao HTML) ---
     private lateinit var layoutTvMode: View
+    private var rvTvCategories: RecyclerView? = null
+    private var tvCategoryAdapter: CategorySidebarAdapter? = null
+    private var btnTvBack: View? = null
+    private var btnVodBack: View? = null
+    private var btnTvSearch: View? = null
+    private var btnTvFavorite: Button? = null
+    private var btnTvFullscreen: View? = null
+
     private lateinit var btnRailSearch: ImageView
     private lateinit var btnRailFavorites: ImageView
     private lateinit var btnRailRecents: ImageView
@@ -211,6 +222,9 @@ class MainActivity : AppCompatActivity() {
         hubSeries = findViewById(R.id.hub_series)
         hubAjustes = findViewById(R.id.hub_ajustes)
         btnHomeReload = findViewById(R.id.btn_home_reload)
+        hubConta = findViewById(R.id.hub_conta)
+        hubPlaylist = findViewById(R.id.hub_playlist)
+        btnActionExit = findViewById(R.id.btn_action_exit)
         txtDeviceKey = findViewById(R.id.txt_device_key)
         txtHomeVersion = findViewById(R.id.txt_home_version)
 
@@ -230,6 +244,13 @@ class MainActivity : AppCompatActivity() {
         layoutTvCategoryHeader = findViewById(R.id.layout_tv_category_header)
         rvChannelList = findViewById(R.id.rv_channel_list)
         rvChannelList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        rvTvCategories = findViewById(R.id.rv_tv_categories)
+        btnTvBack = findViewById(R.id.btn_tv_back)
+        btnVodBack = findViewById(R.id.btn_vod_back)
+        btnTvSearch = findViewById(R.id.btn_tv_search)
+        btnTvFavorite = findViewById(R.id.btn_tv_favorite)
+        btnTvFullscreen = findViewById(R.id.btn_tv_fullscreen)
 
         // Player Preview e EPG
         playerPreviewContainer = findViewById(R.id.player_preview_container)
@@ -254,7 +275,7 @@ class MainActivity : AppCompatActivity() {
         txtVodCategoryTitle = findViewById(R.id.txt_vod_category_title)
         txtVodItemsCount = findViewById(R.id.txt_vod_items_count)
         rvVodGrid = findViewById(R.id.rv_vod_grid)
-        rvVodGrid.layoutManager = GridLayoutManager(this, 4)
+        rvVodGrid.layoutManager = GridLayoutManager(this, 6)
 
         // 4. Settings Mode
         layoutSettingsMode = findViewById(R.id.layout_settings_mode)
@@ -271,7 +292,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAdapters() {
-        // Channel Adapter
+        // TV Categories Sidebar Adapter (Coluna 1 do Live TV)
+        tvCategoryAdapter = CategorySidebarAdapter(
+            categories = emptyList(),
+            onCategoryFocused = { cat ->
+                setTvCategory(cat)
+            },
+            onCategoryClicked = { cat ->
+                setTvCategory(cat)
+                focusFirstChannel()
+            },
+            onNavigateRightToContent = {
+                focusFirstChannel()
+            },
+            onNavigateUpToTabs = {
+                btnTvBack?.requestFocus() ?: showHomeHub()
+            }
+        )
+        rvTvCategories?.adapter = tvCategoryAdapter
+        rvTvCategories?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        // Channel Adapter (Coluna 2 do Live TV)
         channelAdapter = ChannelListAdapter(
             channels = emptyList(),
             onChannelSelected = { channel ->
@@ -281,10 +322,10 @@ class MainActivity : AppCompatActivity() {
                 openFullScreenPlayer(channel)
             },
             onNavigateToCategories = {
-                btnRailCategories.requestFocus()
+                rvTvCategories?.requestFocus() ?: btnRailCategories.requestFocus()
             },
             onNavigateToPlayer = {
-                playerPreviewContainer.requestFocus()
+                btnTvSearch?.requestFocus() ?: playerPreviewContainer.requestFocus()
             }
         )
         rvChannelList.adapter = channelAdapter
@@ -365,7 +406,7 @@ class MainActivity : AppCompatActivity() {
         layoutVodCatalogMode.visibility = View.GONE
         layoutSettingsMode.visibility = View.GONE
 
-        txtHomeVersion.text = "Versão 3.1.0"
+        txtHomeVersion.text = "Versão 3.2.0"
         txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -390,6 +431,16 @@ class MainActivity : AppCompatActivity() {
         }
         btnHomeReload.setOnClickListener {
             reloadApplicationData()
+        }
+
+        hubConta?.setOnClickListener {
+            showAccountDialog()
+        }
+        hubPlaylist?.setOnClickListener {
+            showPlaylistDialog()
+        }
+        btnActionExit?.setOnClickListener {
+            showExitConfirmation()
         }
 
         btnToggleMenu.setOnClickListener {
@@ -453,6 +504,7 @@ class MainActivity : AppCompatActivity() {
                 ChannelRepository.getCategoriesForSection(MainSection.TV)
             )
             tvCategories = loaded
+            tvCategoryAdapter?.updateCategories(loaded)
             if (currentTvCategory == null && loaded.isNotEmpty()) {
                 currentTvCategory = loaded.first()
             }
@@ -488,6 +540,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTvModeListeners() {
+        btnTvBack?.setOnClickListener {
+            showHomeHub()
+        }
+        btnVodBack?.setOnClickListener {
+            showHomeHub()
+        }
+        btnTvSearch?.setOnClickListener {
+            Toast.makeText(this, "Navegue pela lista de canais", Toast.LENGTH_SHORT).show()
+            focusFirstChannel()
+        }
+        btnTvFavorite?.setOnClickListener {
+            currentPlayingChannel?.let { ch ->
+                val prefs = getSharedPreferences("wd_favorites", Context.MODE_PRIVATE)
+                val favSet = prefs.getStringSet("fav_channel_ids", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+                val isFav = favSet.contains(ch.id)
+                if (isFav) {
+                    favSet.remove(ch.id)
+                    btnTvFavorite?.text = "♡ Favoritar"
+                    Toast.makeText(this, "Canal removido dos Favoritos", Toast.LENGTH_SHORT).show()
+                } else {
+                    favSet.add(ch.id)
+                    btnTvFavorite?.text = "♥ Favoritado"
+                    Toast.makeText(this, "Canal adicionado aos Favoritos!", Toast.LENGTH_SHORT).show()
+                }
+                prefs.edit().putStringSet("fav_channel_ids", favSet).apply()
+            }
+        }
+        btnTvFullscreen?.setOnClickListener {
+            currentPlayingChannel?.let { openFullScreenPlayer(it) }
+        }
+
         btnRailSearch.setOnClickListener {
             Toast.makeText(this, "Navegue pela lista de canais", Toast.LENGTH_SHORT).show()
             focusFirstChannel()
@@ -1383,6 +1466,44 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun showAccountDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_simple_exit)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setDimAmount(0.75f)
+
+        val txtMsg = dialog.findViewById<TextView>(R.id.txt_dialog_exit_message)
+        val btnVoltar = dialog.findViewById<Button>(R.id.btn_dialog_exit_nao)
+        val btnOk = dialog.findViewById<Button>(R.id.btn_dialog_exit_sim)
+
+        txtMsg?.text = "Conta • Modo Demonstração\n\nChave: ${getDeviceKey(this)}\nServidor: cdn9.my:80\nStatus: Conectado e Ativo"
+        btnVoltar?.visibility = View.GONE
+        btnOk?.text = "Fechar"
+        btnOk?.setOnClickListener { dialog.dismiss() }
+        btnOk?.requestFocus()
+        dialog.show()
+    }
+
+    private fun showPlaylistDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_simple_exit)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setDimAmount(0.75f)
+
+        val txtMsg = dialog.findViewById<TextView>(R.id.txt_dialog_exit_message)
+        val btnVoltar = dialog.findViewById<Button>(R.id.btn_dialog_exit_nao)
+        val btnOk = dialog.findViewById<Button>(R.id.btn_dialog_exit_sim)
+
+        txtMsg?.text = "Mudar Lista IPTV\n\nLista autorizada ativa:\nhttp://cdn9.my:80 (726hjvc)\n2.341 canais carregados"
+        btnVoltar?.visibility = View.GONE
+        btnOk?.text = "Entendido"
+        btnOk?.setOnClickListener { dialog.dismiss() }
+        btnOk?.requestFocus()
+        dialog.show()
     }
 
     private fun showExitConfirmation() {

@@ -3,305 +3,471 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tv_bg">
-
-    <!-- Camada de Gradiente Escuro Cinematográfico Fundo -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#A0080D16" />
+    android:background="@color/wd_bg">
 
     <!-- ================================================================= -->
-    <!-- TELA 1: HOME HUB (TELA INICIAL - FIEL À IMAGEM 2)                -->
+    <!-- TELA 1: HOME HUB (DASHBOARD FIEL AO PROTÓTIPO HTML WDTECH STREAM TV) -->
     <!-- ================================================================= -->
     <RelativeLayout
         android:id="@+id/layout_home_hub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg_wd_home_radial"
         android:visibility="visible">
 
-        <!-- Topo: Relógio e WiFi à Direita -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="32dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_wifi_tv"
-                android:contentDescription="WiFi" />
-
-            <TextClock
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:format24Hour="HH:mm"
-                android:format12Hour="hh:mm a"
-                android:textColor="#FFFFFF"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- Centro do Hub: Logo + 4 Círculos Grandes + Botão Recarregar -->
-        <LinearLayout
+        <!-- HEADER SUPERIOR (HEIGHT 90DP) -->
+        <RelativeLayout
+            android:id="@+id/layout_hub_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="88dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp">
 
-            <!-- Logo e Emblema WDTECH TV Central -->
+            <!-- LOGO BRAND: WD (AZUL) TECH (BRANCO) + STREAM TV -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_centerVertical="true"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/img_home_logo"
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logo"
-                    android:contentDescription="WDTECH TV Logo" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="WD"
+                        android:textColor="@color/wd_brand_blue"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TECH"
+                        android:textColor="@color/wd_text_white"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:letterSpacing="0.1"
-                    android:shadowColor="#FFB300"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="12"
-                    android:text="WDTECH TV"
-                    android:textColor="#FFFFFF"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- 4 Grandes Botões Circulares Estilo Vivaon (Imagem 2) -->
-            <LinearLayout
-                android:id="@+id/layout_hub_circles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <!-- 1. HUB: TV AO VIVO -->
-                <LinearLayout
-                    android:id="@+id/hub_tv"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="14dp"
-                    android:background="@drawable/bg_hub_circle"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:nextFocusRight="@+id/hub_filmes"
-                    android:nextFocusDown="@+id/btn_home_reload">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:tint="#FFFFFF"
-                        android:src="@drawable/outline_live_tv_24"
-                        android:contentDescription="TV AO VIVO" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="TV AO VIVO"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- 2. HUB: FILMES -->
-                <LinearLayout
-                    android:id="@+id/hub_filmes"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="14dp"
-                    android:background="@drawable/bg_hub_circle"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:nextFocusLeft="@+id/hub_tv"
-                    android:nextFocusRight="@+id/hub_series"
-                    android:nextFocusDown="@+id/btn_home_reload">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:tint="#FFFFFF"
-                        android:src="@drawable/ic_movie_vod"
-                        android:contentDescription="FILMES" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="FILMES"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- 3. HUB: SÉRIES -->
-                <LinearLayout
-                    android:id="@+id/hub_series"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="14dp"
-                    android:background="@drawable/bg_hub_circle"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:nextFocusLeft="@+id/hub_filmes"
-                    android:nextFocusRight="@+id/hub_ajustes"
-                    android:nextFocusDown="@+id/btn_home_reload">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:tint="#FFFFFF"
-                        android:src="@drawable/ic_series_vod"
-                        android:contentDescription="SÉRIES" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="SÉRIES"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- 4. HUB: AJUSTES -->
-                <LinearLayout
-                    android:id="@+id/hub_ajustes"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="14dp"
-                    android:background="@drawable/bg_hub_circle"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:nextFocusLeft="@+id/hub_series"
-                    android:nextFocusDown="@+id/btn_home_reload">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:tint="#FFFFFF"
-                        android:src="@drawable/ic_settings"
-                        android:contentDescription="AJUSTES" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="AJUSTES"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Botão Recarregar o Aplicativo (Pill) -->
-            <Button
-                android:id="@+id/btn_home_reload"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="22dp"
-                android:background="@drawable/bg_vivaon_pill"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:text="🔄  Recarregar o aplicativo"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:nextFocusUp="@+id/hub_tv" />
-
-            <!-- Indicador Inferior -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="▼"
-                    android:textColor="#70FFFFFF"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="Próximos jogos &amp; Últimos adicionados"
-                    android:textColor="#8EA4C4"
+                    android:letterSpacing="0.3"
+                    android:text="STREAM TV"
+                    android:textColor="#A2B9D7"
                     android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-        </LinearLayout>
-
-        <!-- Rodapé do Hub: Chave do Dispositivo à Esquerda, Versão à Direita -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_alignParentBottom="true"
-            android:background="#A0060A12"
-            android:paddingStart="28dp"
-            android:paddingEnd="28dp">
-
-            <TextView
-                android:id="@+id/txt_device_key"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Chave do dispositivo: WD-9A88"
-                android:textColor="#C0D4EC"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_home_version"
+            <!-- LADO DIREITO: MODO DEMONSTRAÇÃO / STATUS + RELÓGIO -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="WDTECH TV v2.9.9"
-                android:textColor="#7A92B4"
-                android:textSize="12sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_wifi_tv"
+                    android:contentDescription="WiFi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MODO DEMONSTRAÇÃO"
+                    android:textColor="@color/wd_text_muted"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextClock
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:format24Hour="HH:mm"
+                    android:format12Hour="hh:mm a"
+                    android:textColor="@color/wd_text_white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Linha Divisória Inferior do Header -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/wd_header_border" />
         </RelativeLayout>
 
+        <!-- DASHBOARD CENTRAL EM 4 COLUNAS (FIEL AO GRID DO HTML) -->
+        <LinearLayout
+            android:id="@+id/layout_hub_circles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- COLUNA 1: TILE GRANDE 'TV AO VIVO' (OCUPA 2 LINHAS) -->
+            <FrameLayout
+                android:id="@+id/hub_tv"
+                android:layout_width="250dp"
+                android:layout_height="340dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_wd_tile_big"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:src="@drawable/ic_wd_tv_big"
+                        android:contentDescription="TV ao vivo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="TV ao vivo"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- COLUNAS 2 E 3: GRID 2x2 (FILMES, SÉRIES, CONTA, MUDAR LISTA) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="340dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical">
+
+                <!-- LINHA DE CIMA: FILMES E SÉRIES -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!-- TILE FILMES -->
+                    <FrameLayout
+                        android:id="@+id/hub_filmes"
+                        android:layout_width="160dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/bg_wd_tile_mid"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_wd_film"
+                                android:contentDescription="Filmes" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Filmes"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <!-- TILE SÉRIES -->
+                    <FrameLayout
+                        android:id="@+id/hub_series"
+                        android:layout_width="160dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_wd_tile_mid"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_wd_series"
+                                android:contentDescription="Séries" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Séries"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <!-- LINHA DE BAIXO: CONTA E MUDAR LISTA -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!-- TILE CONTA -->
+                    <FrameLayout
+                        android:id="@+id/hub_conta"
+                        android:layout_width="160dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/bg_wd_tile_mid"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:src="@drawable/ic_wd_user"
+                                android:contentDescription="Conta" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Conta"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <!-- TILE MUDAR LISTA -->
+                    <FrameLayout
+                        android:id="@+id/hub_playlist"
+                        android:layout_width="160dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_wd_tile_mid"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:src="@drawable/ic_wd_swap"
+                                android:contentDescription="Mudar lista" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Mudar lista"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- COLUNA 4: AÇÕES LATERAIS (CONFIGURAR, RECARREGAR, SAIR) -->
+            <LinearLayout
+                android:layout_width="220dp"
+                android:layout_height="340dp"
+                android:orientation="vertical">
+
+                <!-- 1. CONFIGURAR -->
+                <FrameLayout
+                    android:id="@+id/hub_ajustes"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_wd_action_btn"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="24dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_wd_settings"
+                            android:contentDescription="Configurar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="Configurar"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- 2. RECARREGAR -->
+                <FrameLayout
+                    android:id="@+id/btn_home_reload"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_wd_action_btn"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="24dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_wd_reload"
+                            android:contentDescription="Recarregar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="Recarregar"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- 3. SAIR -->
+                <FrameLayout
+                    android:id="@+id/btn_action_exit"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_wd_action_btn"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="24dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_wd_exit"
+                            android:contentDescription="Sair" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="Sair"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- FOOTER: TEXTO INSTITUCIONAL + D-PAD GUIDE -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A tecnologia em suas mãos. • Utilize as setas e Enter para navegar"
+                android:textColor="@color/wd_footer_text"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_device_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chave do dispositivo: SS5A88"
+                    android:textColor="@color/wd_text_muted"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/txt_home_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Versão 3.2.0"
+                    android:textColor="@color/wd_text_muted"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <!-- ================================================================= -->
-    <!-- TELA 2 & 3: CONTAINER DE CONTEÚDO (TV, VOD E AJUSTES)              -->
+    <!-- CONTAINER PRINCIPAL PARA TELAS INTERNAS (TV, VOD, SETTINGS)      -->
     <!-- ================================================================= -->
     <RelativeLayout
         android:id="@+id/layout_main_content"
@@ -309,253 +475,165 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <!-- Barra Superior Compacta com Botão Voltar para o Hub e Breadcrumb -->
-        <RelativeLayout
+        <!-- Barra de Navegação Superior (Compatibilidade) -->
+        <LinearLayout
             android:id="@+id/top_navigation_bar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="24dp"
-            android:gravity="center_vertical">
+            android:layout_height="0dp"
+            android:visibility="gone">
 
-            <!-- Botão Home / Voltar -->
-            <Button
-                android:id="@+id/btn_toggle_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/bg_vivaon_pill"
-                android:text="🏠 INÍCIO"
-                android:textColor="#FFFFFF"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:focusable="true"
-                android:clickable="true"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp" />
-
-            <!-- Breadcrumb da Seção -->
-            <TextView
-                android:id="@+id/txt_header_breadcrumb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="14dp"
-                android:layout_toEndOf="@id/btn_toggle_menu"
-                android:text="WDTECH TV • TV AO VIVO"
-                android:textColor="#00E5FF"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <!-- Relógio à Direita -->
-            <TextClock
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:format24Hour="HH:mm"
-                android:format12Hour="hh:mm a"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+            <Button android:id="@+id/btn_toggle_menu" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_header_breadcrumb" android:layout_width="0dp" android:layout_height="0dp" />
+        </LinearLayout>
 
         <!-- ============================================================= -->
-        <!-- MODO 1: TV AO VIVO (FIEL À IMAGEM 3)                         -->
+        <!-- TELA 2: TV AO VIVO (3 COLUNAS: 22% / 28% / 50%)              -->
         <!-- ============================================================= -->
         <LinearLayout
             android:id="@+id/layout_tv_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/top_navigation_bar"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="14dp"
-            android:visibility="visible">
+            android:baselineAligned="false"
+            android:visibility="gone">
 
-            <!-- Trilho Vertical de Acesso Rápido à Esquerda (Ícones) -->
+            <!-- COLUNA 1: SIDE RAIL DE CATEGORIAS (22% DA LARGURA) -->
             <LinearLayout
-                android:id="@+id/layout_quick_rail"
-                android:layout_width="48dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="top|center_horizontal"
-                android:orientation="vertical"
-                android:paddingTop="12dp">
-
-                <!-- 1. Busca -->
-                <ImageView
-                    android:id="@+id/btn_rail_search"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_rail_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="9dp"
-                    android:src="@drawable/ic_search_tv"
-                    android:contentDescription="Buscar"
-                    android:nextFocusRight="@+id/rv_channel_list" />
-
-                <!-- 2. Favoritos -->
-                <ImageView
-                    android:id="@+id/btn_rail_favorites"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_rail_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="9dp"
-                    android:src="@drawable/ic_heart_fav"
-                    android:contentDescription="Favoritos"
-                    android:nextFocusRight="@+id/rv_channel_list" />
-
-                <!-- 3. Recentes -->
-                <ImageView
-                    android:id="@+id/btn_rail_recents"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_rail_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="9dp"
-                    android:src="@drawable/ic_playback"
-                    android:contentDescription="Recentes"
-                    android:nextFocusRight="@+id/rv_channel_list" />
-
-                <!-- 4. Categorias -->
-                <ImageView
-                    android:id="@+id/btn_rail_categories"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_rail_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="9dp"
-                    android:src="@drawable/outline_live_tv_24"
-                    android:contentDescription="Categorias"
-                    android:nextFocusRight="@+id/rv_channel_list" />
-            </LinearLayout>
-
-            <!-- Coluna Central: Lista de Canais (com Header de Categoria) -->
-            <LinearLayout
-                android:layout_width="330dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                android:layout_weight="0.22"
+                android:background="@color/wd_side_bg"
                 android:orientation="vertical">
 
-                <!-- Header de Categoria (Ex: 🏷 Favoritos / Futebol) -->
-                <!-- Header de Categoria (Clique para abrir seletor de categorias) -->
+                <!-- Header Fixo da Coluna de Categorias: ‹ TV ao vivo -->
                 <LinearLayout
-                    android:id="@+id/layout_tv_category_header"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="64dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/bg_vivaon_pill"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:nextFocusLeft="@+id/btn_rail_categories"
-                    android:nextFocusDown="@+id/rv_channel_list">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
-                    <TextView
-                        android:id="@+id/txt_tv_category_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="🏷 Favoritos"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/btn_tv_back"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_wd_category_item"
+                        android:focusable="true"
+                        android:text="‹"
+                        android:textColor="@color/wd_text_white"
+                        android:textSize="22sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="▼ "
-                        android:textColor="#00E5FF"
-                        android:textSize="10sp" />
+                        android:layout_marginStart="8dp"
+                        android:text="TV ao vivo"
+                        android:textColor="@color/wd_text_white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/wd_side_border" />
+
+                <!-- Lista Vertical de Categorias -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_tv_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="12dp"
+                    android:clipToPadding="false" />
+            </LinearLayout>
+
+            <!-- Divisor Vertical 1 -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/wd_side_border" />
+
+            <!-- COLUNA 2: LISTA DE CANAIS (28% DA LARGURA) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.28"
+                android:background="@color/wd_side_bg"
+                android:orientation="vertical">
+
+                <!-- Header Fixo da Lista de Canais: Canais <badge> -->
+                <LinearLayout
+                    android:id="@+id/layout_tv_category_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp">
+
+                    <TextView
+                        android:id="@+id/txt_tv_category_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Canais"
+                        android:textColor="@color/wd_text_white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txt_category_badge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_netflix_badge"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="6dp"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:text="24"
-                        android:textColor="#00E5FF"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                        android:layout_marginStart="8dp"
+                        android:text="2341"
+                        android:textColor="@color/wd_text_muted"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
-                <!-- RecyclerView de Canais -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/wd_side_border" />
+
+                <!-- Lista Vertical de Canais -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_channel_list"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:descendantFocusability="afterDescendants"
-                    android:nextFocusLeft="@+id/btn_rail_favorites"
-                    android:nextFocusRight="@+id/player_preview_container"
-                    android:scrollbars="none" />
+                    android:paddingBottom="16dp" />
             </LinearLayout>
 
-            <!-- Coluna Direita: Preview Player + 3 Linhas de EPG (Imagem 3) -->
+            <!-- Divisor Vertical 2 -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/wd_side_border" />
+
+            <!-- COLUNA 3: PLAYER PREVIEW + INFO + AÇÕES (50% DA LARGURA) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="14dp"
-                android:layout_weight="1"
+                android:layout_weight="0.50"
+                android:background="@color/wd_main_bg"
                 android:orientation="vertical">
 
-                <!-- Topo: Player Preview com Barra Superior de Dica -->
+                <!-- Container do Player 16:9 -->
                 <RelativeLayout
                     android:id="@+id/player_preview_container"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_player_frame"
-                    android:clickable="true"
-                    android:focusable="true">
+                    android:layout_height="280dp"
+                    android:background="#0A111E">
 
-                    <!-- Surface do Player Preview -->
                     <androidx.media3.ui.PlayerView
                         android:id="@+id/player_preview_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:use_controller="false"
-                        app:resize_mode="fit"
-                        app:surface_type="texture_view" />
+                        app:surface_type="surface_view"
+                        app:resize_mode="fit" />
 
-                    <!-- Faixa Superior de Dica: "Para o menu de ação, pressione longamente o botão OK" -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:background="#B00A101C"
-                        android:gravity="center"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="6dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Para o menu de ação, pressione longamente o botão OK"
-                            android:textColor="#FFFFFF"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- Spinner de Conexão -->
+                    <!-- Loading / Carregando Stream -->
                     <LinearLayout
                         android:id="@+id/preview_loading_layout"
                         android:layout_width="wrap_content"
@@ -566,391 +644,378 @@
                         android:visibility="gone">
 
                         <ProgressBar
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:indeterminateTint="#00E5FF" />
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:indeterminate="true" />
 
                         <TextView
-                            android:id="@+id/txt_bitrate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="CONECTANDO SINAL..."
-                            android:textColor="#00E5FF"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            android:layout_marginTop="8dp"
+                            android:text="Conectando stream..."
+                            android:textColor="@color/wd_text_muted"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
+                    <!-- Bitrate Badge -->
+                    <TextView
+                        android:id="@+id/txt_bitrate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_wd_channel_tag"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:text="HD • 60 FPS"
+                        android:textColor="#FFFFFF"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <!-- Linha de Destaque Azul Inferior do Player (#398BEA) -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/wd_player_accent" />
                 </RelativeLayout>
 
-                <!-- Base: Programação EPG em 3 Linhas (Fiel à Imagem 3) -->
+                <!-- Painel de Informações do Canal e Botões de Ação -->
                 <LinearLayout
                     android:id="@+id/layout_epg_schedule_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-                    <!-- Linha 1: Programa Atual (Ponto Verde) -->
+                    <!-- Título do Canal -->
+                    <TextView
+                        android:id="@+id/txt_epg_now_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Selecione um canal"
+                        android:textColor="@color/wd_text_white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <!-- Informação de EPG / Status -->
+                    <TextView
+                        android:id="@+id/txt_epg_now_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Programação ao vivo • cdn9.my"
+                        android:textColor="@color/wd_text_muted"
+                        android:textSize="14sp" />
+
+                    <!-- Barra de Botões Pílula: Buscar, Favoritar, Tela Cheia -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="4dp"
-                        android:background="@drawable/bg_epg_row"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="9dp"
-                            android:layout_height="9dp"
-                            android:src="@drawable/ic_dot_green"
-                            android:contentDescription="Status" />
-
-                        <TextView
-                            android:id="@+id/txt_epg_now_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="Transmissão Ao Vivo"
+                        <Button
+                            android:id="@+id/btn_tv_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_wd_pill"
+                            android:focusable="true"
+                            android:paddingStart="22dp"
+                            android:paddingEnd="22dp"
+                            android:text="Buscar"
                             android:textColor="#FFFFFF"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/txt_epg_now_time"
+                        <Button
+                            android:id="@+id/btn_tv_favorite"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="14:14 - 16:29"
-                            android:textColor="#C0D0E8"
-                            android:textSize="11sp"
+                            android:layout_height="44dp"
+                            android:layout_marginStart="12dp"
+                            android:background="@drawable/bg_wd_pill"
+                            android:focusable="true"
+                            android:paddingStart="22dp"
+                            android:paddingEnd="22dp"
+                            android:text="♡ Favoritar"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btn_tv_fullscreen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:layout_marginStart="12dp"
+                            android:background="@drawable/bg_wd_pill"
+                            android:focusable="true"
+                            android:paddingStart="22dp"
+                            android:paddingEnd="22dp"
+                            android:text="Tela cheia"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Linha 2: Próximo Programa (Ponto Branco) -->
+                    <!-- Próximas Programações (EPG) -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="4dp"
-                        android:background="@drawable/bg_epg_row"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:src="@drawable/ic_dot_white"
-                            android:alpha="0.8"
-                            android:contentDescription="Status" />
-
-                        <TextView
-                            android:id="@+id/txt_epg_next_title"
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="Próxima Atração"
-                            android:textColor="#D0E0F0"
-                            android:textSize="12sp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/txt_epg_next_time"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/txt_epg_next_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Próximo programa"
+                                android:textColor="@color/wd_text_muted"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/txt_epg_next_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--:--"
+                                android:textColor="@color/wd_text_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="16:29 - 18:53"
-                            android:textColor="#A0B4D0"
-                            android:textSize="11sp" />
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_epg_third_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="A seguir"
+                                android:textColor="@color/wd_text_muted"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/txt_epg_third_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--:--"
+                                android:textColor="@color/wd_text_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
                     </LinearLayout>
-
-                    <!-- Linha 3: Programa Seguinte (Ponto Branco) -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_epg_row"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:src="@drawable/ic_dot_white"
-                            android:alpha="0.8"
-                            android:contentDescription="Status" />
-
-                        <TextView
-                            android:id="@+id/txt_epg_third_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="Programação da Noite"
-                            android:textColor="#D0E0F0"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/txt_epg_third_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="18:53 - 20:38"
-                            android:textColor="#A0B4D0"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <!-- ============================================================= -->
-        <!-- MODO 2: CATÁLOGO VOD FILMES & SÉRIES (FIEL À IMAGEM 1)       -->
+        <!-- TELA 3: CATÁLOGO VOD (FILMES E SÉRIES: 22% / 78%)             -->
         <!-- ============================================================= -->
         <LinearLayout
             android:id="@+id/layout_vod_catalog_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/top_navigation_bar"
             android:orientation="horizontal"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:paddingBottom="14dp"
+            android:baselineAligned="false"
             android:visibility="gone">
 
-            <!-- Coluna Esquerda: Botão Procurar + Lista de Categorias de Plataforma -->
-            <LinearLayout
-                android:layout_width="250dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <!-- Botão 🔍 Procurar (Topo da Coluna Esquerda como na Imagem 1) -->
-                <Button
-                    android:id="@+id/btn_vod_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/bg_vivaon_pill"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:text="🔍  Procurar"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:nextFocusDown="@+id/rv_category_sidebar"
-                    android:nextFocusRight="@+id/rv_vod_grid" />
-
-                <!-- Lista Vertical de Categorias (Filmes/Netflix, Filmes/Disney+, etc.) -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_category_sidebar"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:clipToPadding="false"
-                    android:descendantFocusability="afterDescendants"
-                    android:nextFocusUp="@+id/btn_vod_search"
-                    android:nextFocusRight="@+id/rv_vod_grid"
-                    android:scrollbars="none" />
-            </LinearLayout>
-
-            <!-- Área Central/Direita: Botões de Ação + Grade de Posters -->
+            <!-- COLUNA 1: SIDE RAIL DE CATEGORIAS VOD (22% DA LARGURA) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="14dp"
-                android:layout_weight="1"
+                android:layout_weight="0.22"
+                android:background="@color/wd_side_bg"
                 android:orientation="vertical">
 
-                <!-- Barra Superior de Ações com Bolinhas Coloridas (Imagem 1) -->
+                <!-- Header Fixo: ‹ Categorias -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="8dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
-                    <!-- 🔵 Menu -->
-                    <LinearLayout
-                        android:id="@+id/btn_vod_action_menu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:background="@drawable/bg_vivaon_pill"
-                        android:clickable="true"
+                    <Button
+                        android:id="@+id/btn_vod_back"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_wd_category_item"
                         android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="9dp"
-                            android:layout_height="9dp"
-                            android:src="@drawable/ic_dot_blue"
-                            android:contentDescription="Menu" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Menu"
-                            android:textColor="#FFFFFF"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- 🟡 Ordenar -->
-                    <LinearLayout
-                        android:id="@+id/btn_vod_action_sort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/bg_vivaon_pill"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="9dp"
-                            android:layout_height="9dp"
-                            android:src="@drawable/ic_dot_yellow"
-                            android:contentDescription="Ordenar" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Ordenar"
-                            android:textColor="#FFFFFF"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- 🟢 Favoritos -->
-                    <LinearLayout
-                        android:id="@+id/btn_vod_action_fav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/bg_vivaon_pill"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="9dp"
-                            android:layout_height="9dp"
-                            android:src="@drawable/ic_dot_green"
-                            android:contentDescription="Favoritos" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Favoritos"
-                            android:textColor="#FFFFFF"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- Contador e Título da Categoria Ativa -->
-                    <TextView
-                        android:id="@+id/txt_vod_category_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="Filmes/Netflix"
-                        android:textColor="#00E5FF"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                        android:text="‹"
+                        android:textColor="@color/wd_text_white"
+                        android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/txt_vod_items_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_netflix_badge"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="6dp"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:text="Carregando..."
-                        android:textColor="#A0B4D0"
-                        android:textSize="10sp"
+                        android:text="Categorias"
+                        android:textColor="@color/wd_text_white"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <!-- Grade de Posters (4 Colunas com OttPosterAdapter) -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/wd_side_border" />
+
+                <!-- RecyclerView de Categorias VOD -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_category_sidebar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="16dp" />
+            </LinearLayout>
+
+            <!-- Divisor Vertical -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/wd_side_border" />
+
+            <!-- COLUNA 2: GRADE DE POSTERS COM TOP BAR (78% DA LARGURA) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.78"
+                android:background="@color/wd_main_bg"
+                android:orientation="vertical">
+
+                <!-- TOP BAR FIXO: TÍTULO (CONTAGEM) + CAMPO DE BUSCA -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_vod_category_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Filmes"
+                            android:textColor="@color/wd_text_white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_vod_items_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="(1542)"
+                            android:textColor="@color/wd_text_muted"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <!-- Campo de Busca Estilizado -->
+                    <Button
+                        android:id="@+id/btn_vod_search"
+                        android:layout_width="260dp"
+                        android:layout_height="42dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_wd_search_input"
+                        android:focusable="true"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
+                        android:text="🔍 Buscar..."
+                        android:textColor="@color/wd_text_muted"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/wd_side_border" />
+
+                <!-- Grade de Posters VOD (6 Colunas) -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_vod_grid"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:descendantFocusability="afterDescendants"
-                    android:nextFocusLeft="@+id/rv_category_sidebar"
-                    android:scrollbars="none" />
+                    android:padding="20dp" />
             </LinearLayout>
-
         </LinearLayout>
 
         <!-- ============================================================= -->
-        <!-- MODO 3: AJUSTES DO SISTEMA                                   -->
+        <!-- TELA 4: AJUSTES / CONFIGURAÇÕES                               -->
         <!-- ============================================================= -->
         <LinearLayout
             android:id="@+id/layout_settings_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/top_navigation_bar"
+            android:background="@color/wd_bg"
             android:orientation="horizontal"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="16dp"
             android:visibility="gone">
 
-            <!-- Lista de Opções de Configuração -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_settings_list"
-                android:layout_width="340dp"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:scrollbars="none" />
+                android:layout_weight="0.35"
+                android:background="@color/wd_side_bg"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <!-- Painel de Detalhes da Configuração -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configurações"
+                    android:textColor="@color/wd_text_white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_settings_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp" />
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_settings_preview"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="24dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_vivaon_pill"
+                android:layout_weight="0.65"
+                android:background="@color/wd_main_bg"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:padding="26dp">
+                android:padding="32dp">
 
                 <TextView
                     android:id="@+id/txt_setting_preview_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Configuração"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/wd_text_white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -959,96 +1024,90 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_netflix_badge"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:text="PADRÃO"
-                    android:textColor="#00E5FF"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_wd_channel_tag"
+                    android:padding="6dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/txt_setting_preview_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_weight="1"
-                    android:lineSpacingExtra="3dp"
-                    android:text="Descrição do ajuste selecionado..."
-                    android:textColor="#C0D0E8"
-                    android:textSize="13sp" />
+                    android:gravity="center"
+                    android:textColor="@color/wd_text_muted"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_setting_preview_action"
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
-                    android:background="@drawable/bg_button_selector"
-                    android:focusable="true"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_wd_pill"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
-                    android:text="Executar Ação (OK)"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_playback_text_selector"
-                    android:textSize="13sp"
+                    android:text="Executar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
-
     </RelativeLayout>
 
-    <!-- Elementos Ocultos Mantidos para Compatibilidade de Código -->
+    <!-- ================================================================= -->
+    <!-- ELEMENTOS OCULTOS PARA COMPATIBILIDADE TOTAL COM KOTLIN           -->
+    <!-- ================================================================= -->
     <LinearLayout
-        android:id="@+id/layout_main_menu_tabs"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone">
-        <Button android:id="@+id/btn_menu_tv" android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btn_menu_filmes" android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btn_menu_series" android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btn_menu_futebol" android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btn_menu_infantil" android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btn_menu_settings" android:layout_width="0dp" android:layout_height="0dp" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_three_panels"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone">
-        <LinearLayout android:id="@+id/panel_sidebar" android:layout_width="0dp" android:layout_height="0dp">
-            <TextView android:id="@+id/txt_sidebar_section_title" android:layout_width="0dp" android:layout_height="0dp" />
+        <ImageView android:id="@+id/img_home_logo" android:layout_width="0dp" android:layout_height="0dp" />
+        <LinearLayout android:id="@+id/layout_quick_rail" android:layout_width="0dp" android:layout_height="0dp">
+            <Button android:id="@+id/btn_rail_search" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_rail_favorites" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_rail_recents" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_rail_categories" android:layout_width="0dp" android:layout_height="0dp" />
         </LinearLayout>
-        <LinearLayout android:id="@+id/panel_channels" android:layout_width="0dp" android:layout_height="0dp">
-            <TextView android:id="@+id/txt_selected_category_title" android:layout_width="0dp" android:layout_height="0dp" />
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_vod_list" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_vod_action_menu" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_vod_action_sort" android:layout_width="0dp" android:layout_height="0dp" />
+        <Button android:id="@+id/btn_vod_action_fav" android:layout_width="0dp" android:layout_height="0dp" />
+        <LinearLayout android:id="@+id/layout_main_menu_tabs" android:layout_width="0dp" android:layout_height="0dp">
+            <Button android:id="@+id/btn_menu_tv" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_menu_filmes" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_menu_series" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_menu_futebol" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_menu_infantil" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_menu_settings" android:layout_width="0dp" android:layout_height="0dp" />
         </LinearLayout>
-        <LinearLayout android:id="@+id/layout_vod_preview" android:layout_width="0dp" android:layout_height="0dp">
-            <TextView android:id="@+id/txt_vod_preview_title" android:layout_width="0dp" android:layout_height="0dp" />
-            <TextView android:id="@+id/txt_vod_preview_meta" android:layout_width="0dp" android:layout_height="0dp" />
-            <TextView android:id="@+id/txt_vod_preview_plot" android:layout_width="0dp" android:layout_height="0dp" />
-            <ImageView android:id="@+id/img_vod_preview_poster" android:layout_width="0dp" android:layout_height="0dp" />
-            <Button android:id="@+id/btn_vod_action" android:layout_width="0dp" android:layout_height="0dp" />
+        <LinearLayout android:id="@+id/layout_three_panels" android:layout_width="0dp" android:layout_height="0dp">
+            <LinearLayout android:id="@+id/panel_sidebar" android:layout_width="0dp" android:layout_height="0dp">
+                <TextView android:id="@+id/txt_sidebar_section_title" android:layout_width="0dp" android:layout_height="0dp" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/panel_channels" android:layout_width="0dp" android:layout_height="0dp">
+                <TextView android:id="@+id/txt_selected_category_title" android:layout_width="0dp" android:layout_height="0dp" />
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_vod_list" android:layout_width="0dp" android:layout_height="0dp" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/layout_vod_preview" android:layout_width="0dp" android:layout_height="0dp">
+                <TextView android:id="@+id/txt_vod_preview_title" android:layout_width="0dp" android:layout_height="0dp" />
+                <TextView android:id="@+id/txt_vod_preview_meta" android:layout_width="0dp" android:layout_height="0dp" />
+                <TextView android:id="@+id/txt_vod_preview_plot" android:layout_width="0dp" android:layout_height="0dp" />
+                <ImageView android:id="@+id/img_vod_preview_poster" android:layout_width="0dp" android:layout_height="0dp" />
+                <Button android:id="@+id/btn_vod_action" android:layout_width="0dp" android:layout_height="0dp" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/layout_vod_grid_container" android:layout_width="0dp" android:layout_height="0dp" />
         </LinearLayout>
-        <LinearLayout android:id="@+id/layout_vod_grid_container" android:layout_width="0dp" android:layout_height="0dp" />
+        <RelativeLayout android:id="@+id/layout_home_lancamentos" android:layout_width="0dp" android:layout_height="0dp">
+            <ImageView android:id="@+id/img_hero_backdrop" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_hero_badge" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_hero_title" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_hero_meta" android:layout_width="0dp" android:layout_height="0dp" />
+            <TextView android:id="@+id/txt_hero_plot" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_hero_watch" android:layout_width="0dp" android:layout_height="0dp" />
+            <Button android:id="@+id/btn_hero_open_menu" android:layout_width="0dp" android:layout_height="0dp" />
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_home_lancamentos" android:layout_width="0dp" android:layout_height="0dp" />
+        </RelativeLayout>
+        <Button android:id="@+id/btn_fullscreen" android:layout_width="0dp" android:layout_height="0dp" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_home_lancamentos"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone">
-        <ImageView android:id="@+id/img_hero_backdrop" android:layout_width="0dp" android:layout_height="0dp" />
-        <TextView android:id="@+id/txt_hero_badge" android:layout_width="0dp" android:layout_height="0dp" />
-        <TextView android:id="@+id/txt_hero_title" android:layout_width="0dp" android:layout_height="0dp" />
-        <TextView android:id="@+id/txt_hero_meta" android:layout_width="0dp" android:layout_height="0dp" />
-        <TextView android:id="@+id/txt_hero_plot" android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btn_hero_watch" android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btn_hero_open_menu" android:layout_width="0dp" android:layout_height="0dp" />
-        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_home_lancamentos" android:layout_width="0dp" android:layout_height="0dp" />
-    </LinearLayout>
-
-    <Button android:id="@+id/btn_fullscreen" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
 
 </RelativeLayout>

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:layout_marginStart="4dp"
-    android:layout_marginEnd="4dp"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp"
-    android:background="@drawable/bg_vivaon_pill"
+    android:layout_height="52dp"
+    android:background="@drawable/bg_wd_channel_item"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="false"
@@ -15,55 +11,68 @@
     android:paddingStart="12dp"
     android:paddingEnd="12dp">
 
-    <!-- Número do Canal (Fiel à foto da TV: 2, 3, 4, 5...) -->
+    <!-- Número do Canal (ex: 01, 02, 115) -->
     <TextView
         android:id="@+id/txt_row_number"
-        android:layout_width="28dp"
+        android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="2"
-        android:textColor="#C0D0E8"
-        android:textSize="13sp"
+        android:text="01"
+        android:textColor="@color/wd_text_muted"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
-    <!-- Logo Quadrada Arredondada do Canal -->
+    <!-- Tag Pill 'TV' (Fiel ao Protótipo HTML: .channel b) -->
+    <TextView
+        android:id="@+id/txt_row_tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:background="@drawable/bg_wd_channel_tag"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:text="TV"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
+    <!-- Logo Quadrada Discreta do Canal -->
     <FrameLayout
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/bg_rail_button"
-        android:padding="2dp">
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp">
 
         <ImageView
             android:id="@+id/img_row_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
             android:src="@drawable/logo"
             android:contentDescription="Logo" />
     </FrameLayout>
 
-    <!-- Nome do Canal em Destaque Branco -->
+    <!-- Nome do Canal -->
     <TextView
         android:id="@+id/txt_row_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Premiere Clubes FHD"
-        android:textColor="#FFFFFF"
-        android:textSize="13sp"
+        android:text="Globo SP FHD"
+        android:textColor="@color/wd_text_white"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
-    <!-- Ícone de Favorito (Coraçãozinho como na foto da TV) -->
+    <!-- Ícone de Favorito -->
     <ImageView
         android:id="@+id/btn_row_favorite"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:src="@drawable/ic_heart_fav"
         android:alpha="0.8"
         android:contentDescription="Favorito" />
