@@ -57,8 +57,10 @@ import com.mytv.app.model.MainSection
 import com.mytv.app.model.SettingItem
 import com.mytv.app.utils.AppSettings
 import com.mytv.app.utils.AppUpdateManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.ArrayList
 import kotlin.math.abs
 
@@ -173,18 +175,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        try {
+            setContentView(R.layout.activity_main)
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_INIT", "Erro fatal ao inflar activity_main", t)
+        }
 
         try {
             initViews()
         } catch (t: Throwable) {
             android.util.Log.e("WDTECH_INIT", "Erro ao inicializar views", t)
-        }
-
-        try {
-            setupPlayer()
-        } catch (t: Throwable) {
-            android.util.Log.e("WDTECH_INIT", "Erro ao inicializar player", t)
         }
 
         try {
@@ -197,25 +197,16 @@ class MainActivity : AppCompatActivity() {
             android.util.Log.e("WDTECH_INIT", "Erro ao configurar listeners", t)
         }
 
-        // Inicializa dados locais de canais imediatamente na memória (zero espera)
-        try {
-            val localCats = ChannelRepository.getCategoriesForSection(MainSection.TV)
-            if (localCats.isNotEmpty()) {
-                tvCategories = localCats
-                currentTvCategory = localCats.first()
-            }
-        } catch (t: Throwable) {
-            android.util.Log.e("WDTECH_INIT", "Erro ao carregar canais locais", t)
-        }
-
-        // Inicia na Tela Inicial (Home Hub - Imagem 2)
+        // Inicia na Tela Inicial (Home Hub - Imagem 2) instantaneamente (zero atraso)
         showHomeHub()
 
-        // Enriquece grade e EPG em segundo plano
+        // Carrega dados de canais e EPG em segundo plano sem travar o looper principal
         preloadTvData()
 
         // Verificação silenciosa de atualização
-        AppUpdateManager.checkForUpdates(this, isManualCheck = false)
+        try {
+            AppUpdateManager.checkForUpdates(this, isManualCheck = false)
+        } catch (_: Throwable) {}
     }
 
     private fun initViews() {
@@ -411,7 +402,7 @@ class MainActivity : AppCompatActivity() {
             layoutVodCatalogMode.visibility = View.GONE
             layoutSettingsMode.visibility = View.GONE
 
-            txtHomeVersion.text = "Versão 3.2.1"
+            txtHomeVersion.text = "Versão 3.2.2"
             txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
             Handler(Looper.getMainLooper()).postDelayed({
@@ -460,10 +451,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun reloadApplicationData() {
         Toast.makeText(this, "Recarregando canais e catálogos...", Toast.LENGTH_SHORT).show()
-        lifecycleScope.launch {
-            VodRepository.clearCache()
-            preloadTvData()
-            Toast.makeText(this@MainActivity, "WDTECH TV: Aplicativo recarregado com sucesso!", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                VodRepository.clearCache()
+                val loaded = EpgRepository.enrichCategories(
+                    ChannelRepository.getCategoriesForSection(MainSection.TV)
+                )
+                withContext(Dispatchers.Main) {
+                    if (!isFinishing && !isDestroyed) {
+                        tvCategories = loaded
+                        tvCategoryAdapter?.updateCategories(loaded)
+                        Toast.makeText(this@MainActivity, "WDTECH TV: Aplicativo recarregado com sucesso!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (t: Throwable) {
+                android.util.Log.e("WDTECH_RELOAD", "Erro ao recarregar", t)
+            }
         }
     }
 
@@ -497,6 +500,10 @@ class MainActivity : AppCompatActivity() {
 
         txtHeaderBreadcrumb.text = "WDTECH TV • TV AO VIVO"
 
+        if (exoPlayer == null) {
+            setupPlayer()
+        }
+
         if (tvCategories.isNotEmpty()) {
             val cat = targetCategory ?: currentTvCategory ?: tvCategories.first()
             setTvCategory(cat)
@@ -509,16 +516,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun preloadTvData(onLoaded: (() -> Unit)? = null) {
-        lifecycleScope.launch {
-            val loaded = EpgRepository.enrichCategories(
-                ChannelRepository.getCategoriesForSection(MainSection.TV)
-            )
-            tvCategories = loaded
-            tvCategoryAdapter?.updateCategories(loaded)
-            if (currentTvCategory == null && loaded.isNotEmpty()) {
-                currentTvCategory = loaded.first()
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val rawCats = ChannelRepository.getCategoriesForSection(MainSection.TV)
+                val loaded = EpgRepository.enrichCategories(rawCats)
+                withContext(Dispatchers.Main) {
+                    if (isFinishing || isDestroyed) return@withContext
+                    tvCategories = loaded
+                    tvCategoryAdapter?.updateCategories(loaded)
+                    if (currentTvCategory == null && loaded.isNotEmpty()) {
+                        currentTvCategory = loaded.first()
+                    }
+                    onLoaded?.invoke()
+                }
+            } catch (t: Throwable) {
+                android.util.Log.e("WDTECH_INIT", "Erro ao carregar dados de TV", t)
             }
-            onLoaded?.invoke()
         }
     }
 
@@ -1160,56 +1173,60 @@ class MainActivity : AppCompatActivity() {
     // PLAYER & PREVIEW ENGINE (Multi-CDN Failover & Watchdog)
     // =========================================================================
     private fun setupPlayer() {
-        val bufCfg = AppSettings.getBufferConfig(this)
+        try {
+            val bufCfg = AppSettings.getBufferConfig(this)
 
-        val loadControl = DefaultLoadControl.Builder()
-            .setBufferDurationsMs(
-                bufCfg.minBufferMs,
-                bufCfg.maxBufferMs,
-                bufCfg.bufferForPlaybackMs,
-                bufCfg.afterRebufferMs
-            )
-            .setPrioritizeTimeOverSizeThresholds(false)
-            .setBackBuffer(0, false)
-            .build()
+            val loadControl = DefaultLoadControl.Builder()
+                .setBufferDurationsMs(
+                    bufCfg.minBufferMs,
+                    bufCfg.maxBufferMs,
+                    bufCfg.bufferForPlaybackMs,
+                    bufCfg.afterRebufferMs
+                )
+                .setPrioritizeTimeOverSizeThresholds(false)
+                .setBackBuffer(0, false)
+                .build()
 
-        val renderersFactory = DefaultRenderersFactory(this).apply {
-            setEnableDecoderFallback(true)
-            setAllowedVideoJoiningTimeMs(4000)
-            setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
-        }
+            val renderersFactory = DefaultRenderersFactory(this).apply {
+                setEnableDecoderFallback(true)
+                setAllowedVideoJoiningTimeMs(4000)
+                setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF)
+            }
 
-        exoPlayer?.release()
-        val player = ExoPlayer.Builder(this, renderersFactory)
-            .setLoadControl(loadControl)
-            .build()
-        player.playWhenReady = true
-        player.addListener(object : Player.Listener {
-            override fun onPlaybackStateChanged(state: Int) {
-                when (state) {
-                    Player.STATE_BUFFERING -> {
-                        previewLoadingLayout.visibility = View.VISIBLE
-                        txtBitrate.text = "SINTONIZANDO..."
+            exoPlayer?.release()
+            val player = ExoPlayer.Builder(this, renderersFactory)
+                .setLoadControl(loadControl)
+                .build()
+            player.playWhenReady = true
+            player.addListener(object : Player.Listener {
+                override fun onPlaybackStateChanged(state: Int) {
+                    when (state) {
+                        Player.STATE_BUFFERING -> {
+                            previewLoadingLayout.visibility = View.VISIBLE
+                            txtBitrate.text = "SINTONIZANDO..."
+                        }
+                        Player.STATE_READY -> {
+                            cancelPreviewWatchdog()
+                            previewLoadingLayout.visibility = View.GONE
+                        }
+                        Player.STATE_ENDED -> {
+                            previewLoadingLayout.visibility = View.GONE
+                        }
+                        Player.STATE_IDLE -> {}
                     }
-                    Player.STATE_READY -> {
-                        cancelPreviewWatchdog()
-                        previewLoadingLayout.visibility = View.GONE
-                    }
-                    Player.STATE_ENDED -> {
-                        previewLoadingLayout.visibility = View.GONE
-                    }
-                    Player.STATE_IDLE -> {}
                 }
-            }
 
-            override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
-                cancelPreviewWatchdog()
-                currentPlayingChannel?.let { triggerPreviewFailover(it, "Erro no player: ${error.errorCodeName}") }
-            }
-        })
+                override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                    cancelPreviewWatchdog()
+                    currentPlayingChannel?.let { triggerPreviewFailover(it, "Erro no player: ${error.errorCodeName}") }
+                }
+            })
 
-        playerView.player = player
-        exoPlayer = player
+            playerView.player = player
+            exoPlayer = player
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_PLAYER", "Erro ao inicializar ExoPlayer", t)
+        }
     }
 
     private fun cancelPreviewWatchdog() {
@@ -1544,33 +1561,43 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (exoPlayer == null) {
-            setupPlayer()
-        }
-        if (currentMode == ScreenMode.TV) {
-            currentPlayingChannel?.let { playChannelPreview(it) }
+        try {
+            if (currentMode == ScreenMode.TV) {
+                if (exoPlayer == null) {
+                    setupPlayer()
+                }
+                currentPlayingChannel?.let { playChannelPreview(it) }
+            }
+        } catch (t: Throwable) {
+            android.util.Log.e("WDTECH_RESUME", "Erro em onResume", t)
         }
     }
 
     override fun onPause() {
         super.onPause()
-        cancelPreviewWatchdog()
-        zapHandler.removeCallbacksAndMessages(null)
-        exoPlayer?.pause()
+        try {
+            cancelPreviewWatchdog()
+            zapHandler.removeCallbacksAndMessages(null)
+            exoPlayer?.pause()
+        } catch (_: Throwable) {}
     }
 
     override fun onStop() {
         super.onStop()
-        cancelPreviewWatchdog()
-        zapHandler.removeCallbacksAndMessages(null)
-        exoPlayer?.stop()
+        try {
+            cancelPreviewWatchdog()
+            zapHandler.removeCallbacksAndMessages(null)
+            exoPlayer?.stop()
+        } catch (_: Throwable) {}
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        cancelPreviewWatchdog()
-        zapHandler.removeCallbacksAndMessages(null)
-        exoPlayer?.release()
-        exoPlayer = null
+        try {
+            cancelPreviewWatchdog()
+            zapHandler.removeCallbacksAndMessages(null)
+            exoPlayer?.release()
+            exoPlayer = null
+        } catch (_: Throwable) {}
     }
 }

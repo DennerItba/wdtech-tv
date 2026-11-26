@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
@@ -13,6 +14,10 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.mytv.app.data.ChannelRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -55,17 +60,15 @@ class SplashActivity : AppCompatActivity() {
 
     private fun setupVersionInfo() {
         val versionName = try {
-            packageManager.getPackageInfo(packageName, 0).versionName ?: "3.1.0"
+            packageManager.getPackageInfo(packageName, 0).versionName ?: "3.2.2"
         } catch (_: Exception) {
-            "3.1.0"
+            "3.2.2"
         }
         txtVersionBadge.text = "VERSÃO $versionName"
         txtFooter.text = "WDTECH TV v$versionName • 4K Ultra HD • Guia EPG Integrado • Leanback Edition"
     }
 
     private fun setupReadyState() {
-        // Garante que TODOS os elementos fiquem 100% visíveis imediatamente
-        // Evita qualquer tela preta por animações ou alpha zerado em Android TV
         layoutLogoContainer.alpha = 1f
         layoutLogoContainer.scaleX = 1f
         layoutLogoContainer.scaleY = 1f
@@ -83,15 +86,24 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun scheduleNavigation() {
-        // Transição suave e ultra rápida para a tela principal (sem travamento)
-        handler.postDelayed({
-            navigateToMain()
-        }, 650L)
+        // Pré-aquece a leitura de canais do assets em segundo plano (zero travamento na tela inicial)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                ChannelRepository.getCategories()
+            } catch (t: Throwable) {
+                Log.e("WDTECH_SPLASH", "Erro no pré-carregamento em background", t)
+            }
+        }
 
-        // Trava de segurança absoluta (Watchdog): nunca permite ficar preso na Splash
+        // Transição suave para a tela principal
         handler.postDelayed({
             navigateToMain()
-        }, 1200L)
+        }, 750L)
+
+        // Trava de segurança (Watchdog): nunca permite ficar preso na Splash
+        handler.postDelayed({
+            navigateToMain()
+        }, 1500L)
     }
 
     private fun navigateToMain() {
@@ -99,12 +111,14 @@ class SplashActivity : AppCompatActivity() {
         hasNavigated = true
         handler.removeCallbacksAndMessages(null)
 
-        val intent = Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
+        } catch (t: Throwable) {
+            Log.e("WDTECH_SPLASH", "Erro ao iniciar MainActivity", t)
         }
-        startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        finish()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
