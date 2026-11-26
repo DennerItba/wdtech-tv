@@ -442,6 +442,10 @@ class PlayerActivity : AppCompatActivity() {
         if (streamCandidates.isEmpty()) {
             streamCandidates = buildStreamCandidates(channel)
         }
+        if (streamCandidates.isEmpty()) {
+            hideBuffering()
+            return
+        }
         currentCandidateIndex = (currentCandidateIndex + 1) % streamCandidates.size
         val nextUrl = streamCandidates[currentCandidateIndex]
         android.util.Log.i("WDTECH_NETFLIX", "Failover suave contínuo [Candidato ${currentCandidateIndex + 1}/${streamCandidates.size}] para: $nextUrl ($reason)")
@@ -463,6 +467,10 @@ class PlayerActivity : AppCompatActivity() {
         streamCandidates = buildStreamCandidates(channel, customUrl)
         currentCandidateIndex = 0
         val targetUrl = streamCandidates.firstOrNull() ?: channel.streamUrl
+        if (targetUrl.isEmpty()) {
+            hideBuffering()
+            return
+        }
         startStreamInternal(channel, targetUrl)
     }
 

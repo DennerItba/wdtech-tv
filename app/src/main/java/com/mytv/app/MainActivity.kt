@@ -401,7 +401,7 @@ class MainActivity : AppCompatActivity() {
             layoutVodCatalogMode.visibility = View.GONE
             layoutSettingsMode.visibility = View.GONE
 
-            txtHomeVersion.text = "Versão 3.2.3"
+            txtHomeVersion.text = "Versão 3.2.4"
             txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
             Handler(Looper.getMainLooper()).postDelayed({
@@ -549,9 +549,12 @@ class MainActivity : AppCompatActivity() {
         val firstChannel = category.channels.firstOrNull()
         if (firstChannel != null) {
             updateEpgRows(firstChannel)
-            if (firstChannel.id != currentPlayingChannel?.id) {
-                playChannelPreview(firstChannel)
-            }
+            zapHandler.removeCallbacksAndMessages(null)
+            zapHandler.postDelayed({
+                if (firstChannel.id != currentPlayingChannel?.id && currentMode == ScreenMode.TV && !isFinishing && !isDestroyed) {
+                    playChannelPreview(firstChannel)
+                }
+            }, 350)
         }
 
         if (autoFocusChannel) {
@@ -1276,6 +1279,10 @@ class MainActivity : AppCompatActivity() {
         if (previewCandidates.isEmpty()) {
             previewCandidates = buildStreamCandidates(channel)
         }
+        if (previewCandidates.isEmpty()) {
+            previewLoadingLayout.visibility = View.GONE
+            return
+        }
         previewCandidateIndex = (previewCandidateIndex + 1) % previewCandidates.size
         val nextUrl = previewCandidates[previewCandidateIndex]
         android.util.Log.i("WDTECH_NETFLIX", "Preview failover [Candidato ${previewCandidateIndex + 1}/${previewCandidates.size}] para: $nextUrl ($reason)")
@@ -1287,6 +1294,10 @@ class MainActivity : AppCompatActivity() {
         cancelPreviewWatchdog()
         previewCandidates = buildStreamCandidates(channel)
         previewCandidateIndex = 0
+        if (previewCandidates.isEmpty()) {
+            previewLoadingLayout.visibility = View.GONE
+            return
+        }
         val targetUrl = previewCandidates.firstOrNull() ?: channel.streamUrl
         playChannelPreviewInternal(channel, targetUrl)
     }

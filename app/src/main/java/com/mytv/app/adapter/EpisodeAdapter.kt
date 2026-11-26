@@ -43,20 +43,24 @@ class SeasonAdapter(
             txtSeason.isSelected = isSelected
 
             txtSeason.setOnClickListener {
-                val prev = selectedIndex
-                selectedIndex = bindingAdapterPosition
-                notifyItemChanged(prev)
-                notifyItemChanged(selectedIndex)
-                onSeasonSelected(season)
+                val pos = bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION && pos < seasons.size) {
+                    selectedIndex = pos
+                    notifyDataSetChanged()
+                    onSeasonSelected(season)
+                }
             }
 
             txtSeason.setOnFocusChangeListener { _, hasFocus ->
+                val pos = bindingAdapterPosition
                 if (hasFocus) {
-                    val prev = selectedIndex
-                    selectedIndex = bindingAdapterPosition
-                    notifyItemChanged(prev)
-                    notifyItemChanged(selectedIndex)
-                    onSeasonSelected(season)
+                    if (pos != RecyclerView.NO_POSITION && pos < seasons.size) {
+                        selectedIndex = pos
+                        txtSeason.isSelected = true
+                        onSeasonSelected(season)
+                    }
+                } else {
+                    txtSeason.isSelected = (pos == selectedIndex)
                 }
             }
         }
