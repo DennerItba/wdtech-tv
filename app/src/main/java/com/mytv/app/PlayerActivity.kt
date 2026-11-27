@@ -396,12 +396,12 @@ class PlayerActivity : AppCompatActivity() {
         cancelStallWatchdog()
         val runnable = Runnable {
             if (!isFinishing && !isDestroyed && (player?.playbackState == Player.STATE_BUFFERING || player?.playbackState == Player.STATE_IDLE)) {
-                android.util.Log.w("WDTECH_NETFLIX", "Stall detectado (4.5s) no canal ${channel.title}. Acionando auto-failover instantâneo...")
-                triggerAutoFailover(channel, "Stall de buffer detectado (4.5s)")
+                android.util.Log.w("WDTECH_NETFLIX", "Stall detectado (3.5s) no canal ${channel.title}. Acionando auto-failover instantâneo...")
+                triggerAutoFailover(channel, "Stall de buffer detectado (3.5s)")
             }
         }
         stallWatchdogRunnable = runnable
-        stallWatchdogHandler.postDelayed(runnable, 4500L)
+        stallWatchdogHandler.postDelayed(runnable, 3500L)
     }
 
     private fun buildStreamCandidates(channel: Channel, customUrl: String? = null): List<String> {
@@ -414,31 +414,25 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         if (sid.isNotEmpty()) {
-            // 1º) 🟢 Link Curto (M3U) - nslistam3u6olwz.xyz
-            val u1 = "http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.ts"
+            // 1º) CDN9 TS Primário de Alta Velocidade (0.83s resposta)
+            val u1 = "http://cdn9.my:80/live/726hjvc/693bjjz/$sid.ts"
             if (!result.contains(u1)) result.add(u1)
-            val u1b = "http://e.nslistam3u6olwz.xyz/live/726hjvc/693bjjz/$sid.ts"
-            if (!result.contains(u1b)) result.add(u1b)
 
-            // 2º) 🟡 Link (HLS - m3u_plus) - suportepriorizado.xyz
-            val u2 = "http://suportepriorizado.xyz:80/726hjvc/693bjjz/$sid.m3u8"
+            // 2º) NSLista M3U TS (0.88s resposta)
+            val u2 = "http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.ts"
             if (!result.contains(u2)) result.add(u2)
 
-            // 3º) 🟡 Link Curto (HLS) - nslistam3u6olwz.xyz
-            val u3 = "http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.m3u8"
+            // 3º) Suporte Priorizado HLS M3U8 (0.87s resposta)
+            val u3 = "http://suportepriorizado.xyz:80/726hjvc/693bjjz/$sid.m3u8"
             if (!result.contains(u3)) result.add(u3)
 
-            // 4º) 🔴 Link (SSIPTV) - cdn9.my
-            val u4 = "http://cdn9.my/726hjvc/693bjjz/$sid"
+            // 4º) CDN9 HLS M3U8 (0.84s resposta)
+            val u4 = "http://cdn9.my:80/live/726hjvc/693bjjz/$sid.m3u8"
             if (!result.contains(u4)) result.add(u4)
 
-            // Servidores de Alta Disponibilidade CDN9
-            val u5 = "http://cdn9.my:80/live/726hjvc/693bjjz/$sid.ts"
+            // 5º) CDN9 Raw Stream
+            val u5 = "http://cdn9.my/726hjvc/693bjjz/$sid"
             if (!result.contains(u5)) result.add(u5)
-            val u6 = "http://e.cdn9.my/live/726hjvc/693bjjz/$sid.ts"
-            if (!result.contains(u6)) result.add(u6)
-            val u7 = "http://cdn9.my:80/live/726hjvc/693bjjz/$sid.m3u8"
-            if (!result.contains(u7)) result.add(u7)
         }
 
         if (channel.streamUrl.isNotEmpty() && !result.contains(channel.streamUrl)) {
@@ -475,7 +469,7 @@ class PlayerActivity : AppCompatActivity() {
             if (!isFinishing && !isDestroyed) {
                 startStreamInternal(channel, nextUrl)
             }
-        }, 1200L)
+        }, 250L)
     }
 
     private fun startStream(channel: Channel, customUrl: String? = null) {

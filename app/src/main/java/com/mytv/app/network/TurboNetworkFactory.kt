@@ -73,12 +73,12 @@ object TurboNetworkFactory {
         // Pool de conexões otimizado para streaming contínuo sem reabertura de sockets
         val pool = ConnectionPool(16, 5, TimeUnit.MINUTES)
 
-        // Timeouts rápidos (3.5s conexão / 5.0s leitura) para failover instantâneo quando canal estiver instável
+        // Timeouts rápidos (2.5s conexão / 4.0s leitura) para failover instantâneo quando canal estiver instável
         val clientBuilder = OkHttpClient.Builder()
             .connectionPool(pool)
-            .connectTimeout(3500, TimeUnit.MILLISECONDS)
-            .readTimeout(5000, TimeUnit.MILLISECONDS)
-            .writeTimeout(3500, TimeUnit.MILLISECONDS)
+            .connectTimeout(2500, TimeUnit.MILLISECONDS)
+            .readTimeout(4000, TimeUnit.MILLISECONDS)
+            .writeTimeout(3000, TimeUnit.MILLISECONDS)
             .retryOnConnectionFailure(true)
             .followRedirects(true)
             .followSslRedirects(true)

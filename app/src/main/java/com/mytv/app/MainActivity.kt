@@ -402,7 +402,7 @@ class MainActivity : AppCompatActivity() {
             layoutVodCatalogMode.visibility = View.GONE
             layoutSettingsMode.visibility = View.GONE
 
-            txtHomeVersion.text = "Versão 3.2.8"
+            txtHomeVersion.text = "Versão 3.2.9"
             txtDeviceKey.text = "Chave do dispositivo: " + getDeviceKey(this)
 
             Handler(Looper.getMainLooper()).postDelayed({
@@ -1415,23 +1415,20 @@ class MainActivity : AppCompatActivity() {
             .ifEmpty { Regex("""/(\d+)(?:\.ts|\.m3u8)?$""").find(channel.streamUrl)?.groupValues?.get(1) ?: "" }
 
         if (sid.isNotEmpty()) {
-            // 1º) 🟢 Link Curto (M3U) - nslistam3u6olwz.xyz
-            result.add("http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.ts")
-            result.add("http://e.nslistam3u6olwz.xyz/live/726hjvc/693bjjz/$sid.ts")
+            // 1º) CDN9 TS Primário de Alta Velocidade (0.83s resposta)
+            result.add("http://cdn9.my:80/live/726hjvc/693bjjz/$sid.ts")
 
-            // 2º) 🟡 Link (HLS - m3u_plus) - suportepriorizado.xyz
+            // 2º) NSLista M3U TS (0.88s resposta)
+            result.add("http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.ts")
+
+            // 3º) Suporte Priorizado HLS M3U8 (0.87s resposta)
             result.add("http://suportepriorizado.xyz:80/726hjvc/693bjjz/$sid.m3u8")
 
-            // 3º) 🟡 Link Curto (HLS) - nslistam3u6olwz.xyz
-            result.add("http://nslistam3u6olwz.xyz:80/live/726hjvc/693bjjz/$sid.m3u8")
-
-            // 4º) 🔴 Link (SSIPTV) - cdn9.my
-            result.add("http://cdn9.my/726hjvc/693bjjz/$sid")
-
-            // Servidores de Alta Disponibilidade CDN9
-            result.add("http://cdn9.my:80/live/726hjvc/693bjjz/$sid.ts")
-            result.add("http://e.cdn9.my/live/726hjvc/693bjjz/$sid.ts")
+            // 4º) CDN9 HLS M3U8 (0.84s resposta)
             result.add("http://cdn9.my:80/live/726hjvc/693bjjz/$sid.m3u8")
+
+            // 5º) CDN9 Raw Stream
+            result.add("http://cdn9.my/726hjvc/693bjjz/$sid")
         }
 
         if (channel.streamUrl.isNotEmpty() && !result.contains(channel.streamUrl)) {
